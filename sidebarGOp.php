@@ -49,7 +49,7 @@
 
 <?php
     $listaNavBar = [
-        ["vehiculos.php", "fas fa-car-side", "Vehiculos"],
+        ["OpVehiculos.php", "fas fa-car-side", "Vehiculos"],
 
     ];
 
