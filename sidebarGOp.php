@@ -50,7 +50,7 @@
 <?php
     $listaNavBar = [
         ["OpVehiculos.php", "fas fa-car-side", "Vehiculos"],
-
+        
     ];
 
     foreach ($listaNavBar as $entry) { 
