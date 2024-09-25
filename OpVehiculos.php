@@ -1,4 +1,7 @@
 <?php
+include "head.php";
+include "topNavBar.php";
+include "sidebarGop.php";
 // Conexión a la base de datos
 $servername = "localhost"; // Cambia según tu configuración
 $username = "root";
