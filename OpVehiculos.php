@@ -184,10 +184,23 @@ function modificarVehiculo() {
         alert("Por favor, selecciona un vehículo.");
         return;
     }
+
+    // Obtener datos de la fila seleccionada
+    const matricula = selectedRow.cells[0].innerText;
+    const modelo = selectedRow.cells[1].innerText;
+    const grupo = selectedRow.cells[2].innerText;
+    const disponible = selectedRow.cells[3].innerText;
+
+    // Cargar datos en el formulario del modal
+    document.getElementById('modificarMatricula').value = matricula; // Ahora editable
+    document.getElementById('modificarModelo').value = modelo;
+    document.getElementById('modificarGrupo').value = grupo;
+    document.getElementById('modificarDisponible').value = disponible;
+
+    // Mostrar el modal
     const modificarModal = new bootstrap.Modal(document.getElementById('modificarVehiculoModal'));
     modificarModal.show();
 }
-
 function renovarVehiculo() {
     if (!selectedRow) {
         alert("Por favor, selecciona un vehículo.");
