@@ -1,8 +1,4 @@
 <?php
-include "head.php";
-include "topNavBar.php";
-include "sidebarGop.php";
-
 // Conexión a la base de datos
 $servername = "localhost"; // Cambia según tu configuración
 $username = "root";
@@ -24,6 +20,7 @@ $sql = "SELECT * FROM vehiculos WHERE
         (modelo LIKE '%$modelo%') AND 
         (grupo LIKE '%$grupo%')";
 $result = $conn->query($sql);
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -73,10 +70,10 @@ $result = $conn->query($sql);
                 <tbody>
                     <?php while($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= $row['matricula'] ?></td>
-                        <td><?= $row['modelo'] ?></td>
-                        <td><?= $row['grupo'] ?></td>
-                        <td><?= $row['disponible'] ?></td>
+                        <td><?= $row['Matricula'] ?></td>
+                        <td><?= $row['Modelo'] ?></td>
+                        <td><?= $row['Grupo'] ?></td>
+                        <td><?= $row['Disponible'] ?></td>
                     </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -142,6 +139,4 @@ function renovarVehiculo() {
 </html>
 
 <?php
-$conn->close();
 ?>
-
