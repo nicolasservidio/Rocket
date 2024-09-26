@@ -34,6 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 
 // Redirigir de vuelta a la página anterior
-header("Location: OpVehiculos.php"); 
+header("Location: OpVehiculos.php"); // Cambia por el nombre de la página donde deseas redirigir
 exit();
 ?>

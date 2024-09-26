@@ -133,16 +133,16 @@ $conn->close();
 </div>
 
 <!-- Modal para modificar vehículo -->
-<div class="modal fade" id="modificarVehiculoModal" tabindex="-1" aria-labelledby="modificarVehiculoLabel" aria-hidden="true">
+<div class="modal fade" id="modificarVehiculoModal" tabindex="-1" aria-labelledby="modificarVehiculoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modificarVehiculoLabel">Modificar Vehículo</h5>
+                <h5 class="modal-title" id="modificarVehiculoModalLabel">Modificar Vehículo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="modificarVehiculoForm" action="ModificarVehiculo.php" method="post">
-                    <input type="hidden" name="matricula" id="modificarMatricula" required>
+                    <input type="hidden" name="matricula" id="modificarMatricula">
                     <div class="mb-3">
                         <label for="modificarModelo" class="form-label">Modelo</label>
                         <input type="text" class="form-control" name="modelo" id="modificarModelo" required>
@@ -192,7 +192,7 @@ function modificarVehiculo() {
     const disponible = selectedRow.cells[3].innerText;
 
     // Cargar datos en el formulario del modal
-    document.getElementById('modificarMatricula').value = matricula; // Ahora editable
+    document.getElementById('modificarMatricula').value = matricula;
     document.getElementById('modificarModelo').value = modelo;
     document.getElementById('modificarGrupo').value = grupo;
     document.getElementById('modificarDisponible').value = disponible;
