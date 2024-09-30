@@ -1,11 +1,9 @@
+
 <?php
-include "head.php";
-include "topNavBar.php";
-include "sidebarGop.php";
 // Conexión a la base de datos
 $servername = "localhost"; // Cambia según tu configuración
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "rocket";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -28,18 +26,58 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Filtrar Vehículos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon" />
+
+    <meta charset="UTF-8">
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ["Public Sans:300,400,500,600,700"]
+        },
+        custom: {
+            families: [
+                "Font Awesome 5 Solid",
+                "Font Awesome 5 Regular",
+                "Font Awesome 5 Brands",
+                "simple-line-icons",
+            ],
+            urls: ["assets/css/fonts.min.css"],
+        },
+        active: function() {
+            sessionStorage.fonts = true;
+        },
+    });
+    </script>
+
     <style>
         .selected-row {
             background-color: #d1e7dd; /* Color de selección */
         }
     </style>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
+
+<?php
+include "topNavBar.php";
+include "sidebarGop.php";
+?>
 
 <main class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light bg-gradient p-4">
     <div class="card col-8 bg-white p-4 rounded shadow mb-4">
@@ -77,11 +115,11 @@ $conn->close();
                 </thead>
                 <tbody>
                     <?php while($row = $result->fetch_assoc()): ?>
-                    <tr onclick="selectRow(this, '<?= $row['Matricula'] ?>')">
-                        <td><?= $row['Matricula'] ?></td>
-                        <td><?= $row['Modelo'] ?></td>
-                        <td><?= $row['Grupo'] ?></td>
-                        <td><?= $row['Disponible'] ?></td>
+                    <tr onclick="selectRow(this, '<?= $row['matricula'] ?>')">
+                        <td><?= $row['matricula'] ?></td>
+                        <td><?= $row['modelo'] ?></td>
+                        <td><?= $row['grupo'] ?></td>
+                        <td><?= $row['disponible'] ?></td>
                     </tr>
                     <?php endwhile; ?>
                 </tbody>
