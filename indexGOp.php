@@ -19,38 +19,40 @@
                 
             </div>
             <div class="row">
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-6 col-md-3"> 
+                    <a href="OpVehiculos.php">
                     <div class="card card-stats card-round">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-users"></i>
+                                        <i class="fas fa-car"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
+                                        <p class="card-category">Vehículos</p>
+                                        <h4 class="card-title">90</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div> 
+                    </a>
+                </div> 
                 <div class="col-sm-6 col-md-3">
                     <div class="card card-stats card-round">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="fas fa-user-check"></i>
+                                        <i class="fas fa-tint"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
+                                        <p class="card-category">Rutinas de Preparación</p>
+                                        <h4 class="card-title">13</h4>
                                     </div>
                                 </div>
                             </div>
@@ -63,13 +65,32 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-success bubble-shadow-small">
-                                        <i class="fas fa-luggage-cart"></i>
+                                        <i class="fas fa-cogs"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
+                                        <p class="card-category">Repuestos</p>
+                                        <h4 class="card-title">34</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fas fa-cubes"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Productos</p>
+                                        <h4 class="card-title">945</h4>
                                     </div>
                                 </div>
                             </div>
@@ -87,8 +108,8 @@
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
+                                        <p class="card-category">Reportes</p>
+                                        <h4 class="card-title">2</h4>
                                     </div>
                                 </div>
                             </div>
@@ -101,19 +122,19 @@
                     <div class="card card-round">
                         <div class="card-header">
                             <div class="card-head-row">
-                                <div class="card-title">User Statistics</div>
+                                <div class="card-title">Historial de Uso</div>
                                 <div class="card-tools">
                                     <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
                                         <span class="btn-label">
                                             <i class="fa fa-pencil"></i>
                                         </span>
-                                        Export
+                                        Exportar
                                     </a>
                                     <a href="#" class="btn btn-label-info btn-round btn-sm">
                                         <span class="btn-label">
                                             <i class="fa fa-print"></i>
                                         </span>
-                                        Print
+                                        Imprimir
                                     </a>
                                 </div>
                             </div>
@@ -130,27 +151,27 @@
                     <div class="card card-primary card-round">
                         <div class="card-header">
                             <div class="card-head-row">
-                                <div class="card-title">Daily Sales</div>
+                                <div class="card-title">Generación de Reportes</div>
                                 <div class="card-tools">
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-label-light dropdown-toggle" type="button"
                                             id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            Export
+                                            Reportes
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="#">Repuestos según vehículo</a>
+                                            <a class="dropdown-item" href="#">Productos según vehículo</a>
+                                            <!-- <a class="dropdown-item" href="#">Something else here</a> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-category">March 25 - April 02</div>
+                            <div class="card-category">Seleccioná un tipo de reporte</div>
                         </div>
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
-                                <h1>$4,578.58</h1>
+                                <!-- <h1>$4,578.58</h1> -->
                             </div>
                             <div class="pull-in">
                                 <canvas id="dailySalesChart"></canvas>
@@ -161,7 +182,7 @@
                         <div class="card-body pb-0">
                             <div class="h1 fw-bold float-end text-primary">+5%</div>
                             <h2 class="mb-2">17</h2>
-                            <p class="text-muted">Users online</p>
+                            <p class="text-muted">Vehículos en preparación</p>
                             <div class="pull-in sparkline-fix">
                                 <div id="lineChart"></div>
                             </div>
@@ -169,6 +190,7 @@
                     </div>
                 </div>
             </div>
+            <!-- 
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-round">
@@ -271,12 +293,13 @@
                     </div>
                 </div>
             </div>
+            -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="card card-round">
                         <div class="card-body">
                             <div class="card-head-row card-tools-still-right">
-                                <div class="card-title">New Customers</div>
+                                <div class="card-title">Contactos</div>
                                 <div class="card-tools">
                                     <div class="dropdown">
                                         <button class="btn btn-icon btn-clean me-0" type="button"
@@ -295,18 +318,17 @@
                             <div class="card-list py-4">
                                 <div class="item-list">
                                     <div class="avatar">
-                                        <img src="assets/img/jm_denis.jpg" alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        <span class="avatar-title rounded-circle border border-white">JD</span>
                                     </div>
                                     <div class="info-user ms-3">
                                         <div class="username">Jimmy Denis</div>
-                                        <div class="status">Graphic Designer</div>
+                                        <div class="status">Mesa Directiva</div>
                                     </div>
                                     <button class="btn btn-icon btn-link op-8 me-1">
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                                 <div class="item-list">
@@ -315,44 +337,43 @@
                                     </div>
                                     <div class="info-user ms-3">
                                         <div class="username">Chandra Felix</div>
-                                        <div class="status">Sales Promotion</div>
+                                        <div class="status">Mesa Directiva</div>
                                     </div>
                                     <button class="btn btn-icon btn-link op-8 me-1">
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                                 <div class="item-list">
                                     <div class="avatar">
-                                        <img src="assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle" />
+                                        <span class="avatar-title rounded-circle border border-white">TR</span>
                                     </div>
                                     <div class="info-user ms-3">
-                                        <div class="username">Talha</div>
-                                        <div class="status">Front End Designer</div>
+                                        <div class="username">Talha Ruiz</div>
+                                        <div class="status">Mesa Directiva</div>
                                     </div>
                                     <button class="btn btn-icon btn-link op-8 me-1">
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                                 <div class="item-list">
                                     <div class="avatar">
-                                        <img src="assets/img/chadengle.jpg" alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        <span class="avatar-title rounded-circle border border-white">C</span>
                                     </div>
                                     <div class="info-user ms-3">
                                         <div class="username">Chad</div>
-                                        <div class="status">CEO Zeleaf</div>
+                                        <div class="status">Responsable de Operaciones</div>
                                     </div>
                                     <button class="btn btn-icon btn-link op-8 me-1">
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                                 <div class="item-list">
@@ -362,13 +383,13 @@
                                     </div>
                                     <div class="info-user ms-3">
                                         <div class="username">Hizrian</div>
-                                        <div class="status">Web Designer</div>
+                                        <div class="status">Responsable Comercial</div>
                                     </div>
                                     <button class="btn btn-icon btn-link op-8 me-1">
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                                 <div class="item-list">
@@ -384,7 +405,7 @@
                                         <i class="far fa-envelope"></i>
                                     </button>
                                     <button class="btn btn-icon btn-link btn-danger op-8">
-                                        <i class="fas fa-ban"></i>
+                                        <i class="fas fa-bolt"></i>
                                     </button>
                                 </div>
                             </div>
@@ -395,7 +416,7 @@
                     <div class="card card-round">
                         <div class="card-header">
                             <div class="card-head-row card-tools-still-right">
-                                <div class="card-title">Transaction History</div>
+                                <div class="card-title">Últimos vehículos registrados</div>
                                 <div class="card-tools">
                                     <div class="dropdown">
                                         <button class="btn btn-icon btn-clean me-0" type="button"
@@ -418,10 +439,10 @@
                                 <table class="table align-items-center mb-0">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col">Payment Number</th>
-                                            <th scope="col" class="text-end">Date & Time</th>
-                                            <th scope="col" class="text-end">Amount</th>
-                                            <th scope="col" class="text-end">Status</th>
+                                            <th scope="col">Número de vehículo</th>
+                                            <th scope="col" class="text-end">Fecha & Hora</th>
+                                            <th scope="col" class="text-end">Matrícula</th>
+                                            <th scope="col" class="text-end">Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -430,12 +451,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10231
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -443,12 +464,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10232
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -456,12 +477,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10233
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -469,12 +490,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10234
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -482,12 +503,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10235
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -495,12 +516,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10236
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -508,12 +529,12 @@
                                                 <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                     <i class="fa fa-check"></i>
                                                 </button>
-                                                Payment from #10231
+                                                Vehículo #10237
                                             </th>
                                             <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                            <td class="text-end">$250.00</td>
+                                            <td class="text-end">AB 123 CD</td>
                                             <td class="text-end">
-                                                <span class="badge badge-success">Completed</span>
+                                                <span class="badge badge-success">Completado</span>
                                             </td>
                                         </tr>
                                     </tbody>
