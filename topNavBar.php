@@ -163,7 +163,7 @@
                           </div>
                           <div class="u-text">
                             <h4>USUARIO</h4>
-                            <p class="text-muted">Administrador</p>
+                            <p class="text-muted">Responsable de Almacén</p>
                             
                           </div>
                         </div>
