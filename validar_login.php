@@ -1,11 +1,11 @@
 <?php
+// Inicializar la variable de error
+$error_message = '';
 
 if (isset($_POST['userId']) && isset($_POST['password'])) {
-
-    $tbl_name="usuarios"; // Table name
-
-    $username=$_POST['userId']; // username sent from form
-    $password=$_POST['password']; // password sent from form
+    $tbl_name = "usuarios"; // Nombre de la tabla
+    $username = $_POST['userId']; // Usuario ingresado
+    $password = $_POST['password']; // Contraseña ingresada
 
     require "conn/conexion.php";
 
@@ -13,24 +13,23 @@ if (isset($_POST['userId']) && isset($_POST['password'])) {
     $stmt->bind_param("ss", $username, $password);
 
     $stmt->execute();
-
     $result = $stmt->get_result();
-
     $stmt->close();
     $conexion->close();
 
-
     if ($result->num_rows == 1) {
-        // Usuario encontrado, hacer algo aquí
+        // Usuario encontrado, redirigir a la página principal
         header('location: indexGOp.php');
-        die();
+        exit();
     } else {
-        // Usuario no encontrado
-        $popup = '<script> function loginIncorrecto() { alert("Login fallido. Usuario o contraseña incorrectos."); window.location = "index.php"; } </script>'.
-        '<script>loginIncorrecto();</script>';
-        echo $popup;
-        // echo "Login fallido. Usuario o contraseña incorrectos.";
+        // Usuario o contraseña incorrectos
+        $error_message = "Usuario o contraseña incorrectos";
     }
-
 }
 ?>
+
+<?php if ($error_message): ?>
+    <div class="alert alert-danger mt-3">
+        <?php echo $error_message; ?>
+    </div>
+<?php endif; ?>
