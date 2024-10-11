@@ -1,15 +1,6 @@
-
 <?php
-// Conexión a la base de datos
-$servername = "localhost"; // Cambia según tu configuración
-$username = "root";
-$password = "root";
-$dbname = "rocket";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+require_once "conn/conexion.php";
 
 // Filtrado de vehículos
 $matricula = isset($_POST['matricula']) ? $_POST['matricula'] : '';
@@ -20,63 +11,19 @@ $sql = "SELECT * FROM vehiculos WHERE
         (matricula LIKE '%$matricula%') AND 
         (modelo LIKE '%$modelo%') AND 
         (grupo LIKE '%$grupo%')";
-$result = $conn->query($sql);
-$conn->close();
+$result = $conexion->query($sql);
+$conexion->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Filtrar Vehículos</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-
-    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon" />
-
-    <meta charset="UTF-8">
-
-    <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-    WebFont.load({
-        google: {
-            families: ["Public Sans:300,400,500,600,700"]
-        },
-        custom: {
-            families: [
-                "Font Awesome 5 Solid",
-                "Font Awesome 5 Regular",
-                "Font Awesome 5 Brands",
-                "simple-line-icons",
-            ],
-            urls: ["assets/css/fonts.min.css"],
-        },
-        active: function() {
-            sessionStorage.fonts = true;
-        },
-    });
-    </script>
-
-    <style>
-        .selected-row {
-            background-color: #d1e7dd; /* Color de selección */
-        }
-    </style>
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
+<?php
+require_once "head.php";
+?>
 
 <body>
 
 <?php
-include "topNavBar.php";
-include "sidebarGop.php";
+require_once "topNavBar.php";
+require_once "sidebarGop.php";
 ?>
 
 <main class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light bg-gradient p-4">
