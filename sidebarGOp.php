@@ -50,6 +50,8 @@
 <?php
     $listaNavBar = [
         ["OpVehiculos.php", "fas fa-car-side", "Vehiculos"],  
+        ["reservas.php", "fas fa-clipboard-list", "Reservas"],
+        ["clientes.php", "fas fa-address-card", "Clientes"]
     ];
 
     foreach ($listaNavBar as $entry) { 
