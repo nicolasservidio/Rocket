@@ -1,6 +1,7 @@
 <?php
 
 require_once "conn/conexion.php";
+$MiConexion = ConexionBD();
 
 // Filtrado de vehículos
 $matricula = isset($_POST['matricula']) ? $_POST['matricula'] : '';
@@ -11,8 +12,8 @@ $sql = "SELECT * FROM vehiculos WHERE
         (matricula LIKE '%$matricula%') AND 
         (modelo LIKE '%$modelo%') AND 
         (grupo LIKE '%$grupo%')";
-$result = $conexion->query($sql);
-$conexion->close();
+$result = $MiConexion->query($sql);
+$MiConexion->close();
 ?>
 
 <?php

@@ -1,9 +1,12 @@
 <?php
 
-$conexion= mysqli_connect("localhost","root","root","rocket");
-$conexion->set_charset("utf8");
-
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
+function ConexionBD($Host = "localhost", $User = "root", $Password = "", $BaseDeDatos = "rocket") {
+    $linkConexion = mysqli_connect($Host, $User, $Password, $BaseDeDatos,);
+    if ($linkConexion != false) {
+        return $linkConexion;
+    } else {
+        die("No se pudo establecer la conexión.");
+    }
 }
+
 ?>
