@@ -1,32 +1,31 @@
 <?php
-// Conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "rocket";
+include('head.php');
+include('conn/conexion.php');
+$MiConexion = ConexionBD();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+// Verificar si el ID del cliente está presente en la URL
+if (isset($_GET['id'])) {
+    $idCliente = $_GET['id'];
 
-// Verificar si se recibió el ID
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
+    // Consulta para eliminar el cliente de la base de datos
+    $consulta = "DELETE FROM clientes WHERE idCliente = ?";
+    $stmt = $MiConexion->prepare($consulta);
+    $stmt->bind_param("i", $idCliente);
+    $stmt->execute();
 
-    // Eliminar el cliente
-    $sql = "DELETE FROM clientes WHERE Id=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-
-    if ($stmt->execute()) {
-        echo "Cliente eliminado exitosamente.";
+    // Verificar si la eliminación fue exitosa
+    if ($stmt->affected_rows > 0) {
+        // Redirigir al listado de clientes con un mensaje de éxito
+        header('Location: clientes.php?mensaje=El cliente ha sido eliminado correctamente.');
+        exit();
     } else {
-        echo "Error al eliminar cliente: " . $stmt->error;
+        // Si no se eliminó ningún registro, mostrar un mensaje de error
+        header('Location: clientes.php?mensaje=Error al eliminar el cliente.');
+        exit();
     }
-
-    $stmt->close();
+} else {
+    // Si no se pasa un ID, redirigir al listado de clientes
+    header('Location: clientes.php');
+    exit();
 }
-
-$conn->close();
 ?>

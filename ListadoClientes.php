@@ -5,7 +5,7 @@ function Listar_Clientes($vConexion) {
     $Listado = array();
 
     // Consulta SQL para obtener los datos de la tabla clientes, incluyendo los nuevos campos
-    $SQL = "SELECT Id, Documento, Nombre, Apellido, Email, Telefono, FechaNac, Direccion, Pais, Ciudad, RegistroCond, PaisExp, FechaExp, FechaVenc, Tarjeta, Vto
+    $SQL = "SELECT IdCliente, dniCliente, nombreCliente, apellidoCliente, mailCliente, telefonoCliente, direccionCliente
             FROM clientes";
 
     // Ejecutamos la consulta SQL
@@ -15,22 +15,13 @@ function Listar_Clientes($vConexion) {
     $i = 0;
     while ($data = mysqli_fetch_array($rs)) {
         // Llenamos el array $Listado con los resultados de la consulta
-        $Listado[$i]['ID'] = $data['Id'];
-        $Listado[$i]['DOCUMENTO'] = $data['Documento'];
-        $Listado[$i]['NOMBRE'] = $data['Nombre'];
-        $Listado[$i]['APELLIDO'] = $data['Apellido'];
-        $Listado[$i]['EMAIL'] = $data['Email'];
-        $Listado[$i]['TELEFONO'] = $data['Telefono'];
-        $Listado[$i]['FECHANAC'] = $data['FechaNac'];
-        $Listado[$i]['DIRECCION'] = $data['Direccion'];
-        $Listado[$i]['PAIS'] = $data['Pais'];
-        $Listado[$i]['CIUDAD'] = $data['Ciudad'];
-        $Listado[$i]['REGISTROCOND'] = $data['RegistroCond'];
-        $Listado[$i]['PAISEXP'] = $data['PaisExp'];
-        $Listado[$i]['FECHAEXP'] = $data['FechaExp'];
-        $Listado[$i]['FECHAVENC'] = $data['FechaVenc'];
-        $Listado[$i]['TARJETA'] = $data['Tarjeta'];
-        $Listado[$i]['VTO'] = $data['Vto'];
+        $Listado[$i]['ID'] = $data['IdCliente'];
+        $Listado[$i]['DOCUMENTO'] = $data['dniCliente'];
+        $Listado[$i]['NOMBRE'] = $data['nombreCliente'];
+        $Listado[$i]['APELLIDO'] = $data['apellidoCliente'];
+        $Listado[$i]['EMAIL'] = $data['mailCliente'];
+        $Listado[$i]['TELEFONO'] = $data['telefonoCliente'];
+        $Listado[$i]['DIRECCION'] = $data['direccionCliente'];
 
         $i++;
     }
