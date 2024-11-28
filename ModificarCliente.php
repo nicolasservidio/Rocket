@@ -1,4 +1,10 @@
 <?php
+
+session_start();
+
+require_once 'funciones/corroborar_usuario.php'; 
+Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
+
 include('head.php');
 include('conn/conexion.php');
 
