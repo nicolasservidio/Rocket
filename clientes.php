@@ -1,5 +1,4 @@
 <?php 
-
 session_start();
 
 require_once 'funciones/corroborar_usuario.php'; 
@@ -8,19 +7,27 @@ Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se ha
 include('conn/conexion.php');
 $MiConexion = ConexionBD();
 
+// Obtener filtros del formulario
+$filtros = [
+    'documento' => isset($_GET['documento']) ? trim($_GET['documento']) : '',
+    'nombre' => isset($_GET['nombre']) ? trim($_GET['nombre']) : '',
+    'apellido' => isset($_GET['apellido']) ? trim($_GET['apellido']) : '',
+    'email' => isset($_GET['email']) ? trim($_GET['email']) : '',
+    'telefono' => isset($_GET['telefono']) ? trim($_GET['telefono']) : '',
+    'direccion' => isset($_GET['direccion']) ? trim($_GET['direccion']) : '',
+];
+
+// Generar consulta filtrada
 include('ListadoClientes.php');
-$ListadoClientes = Listar_Clientes($MiConexion);
+$ListadoClientes = Listar_Clientes($MiConexion, $filtros);
 $CantidadClientes = count($ListadoClientes);
 
 include('head.php');
-
 ?>
 
 <body class="bg-light">
     <div class="wrapper" style="margin-bottom: 100px;">
-
         <?php 
-
         include('sidebarGOp.php');
         include('topNavBar.php');
 
@@ -29,6 +36,50 @@ include('head.php');
         }
         ?>
 
+        <!-- Formulario de filtro -->
+        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
+            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+            <h5 class="mb-4 text-secondary"><strong>Filtrar Clientes</strong></h5>
+            <form action="clientes.php" method="GET">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="documento" class="form-label">Documento</label>
+                        <input type="text" class="form-control" id="documento" name="documento" 
+                            value="<?= htmlspecialchars($filtros['documento']) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" 
+                            value="<?= htmlspecialchars($filtros['nombre']) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" 
+                            value="<?= htmlspecialchars($filtros['apellido']) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" 
+                            value="<?= htmlspecialchars($filtros['email']) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" 
+                            value="<?= htmlspecialchars($filtros['telefono']) ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" 
+                            value="<?= htmlspecialchars($filtros['direccion']) ?>">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <a href="clientes.php" class="btn btn-secondary">Limpiar Filtros</a>
+                </div>
+            </form>
+        </div>
+        
         <!-- Sección de Listado Clientes -->
         <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
             style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">

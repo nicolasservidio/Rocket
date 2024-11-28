@@ -1,32 +1,48 @@
 <?php
-function Listar_Clientes($vConexion) {
+function Listar_Clientes($MiConexion, $filtros = []) {
+    $query = "SELECT idCliente AS ID, dniCliente AS DOCUMENTO, nombreCliente AS NOMBRE, 
+              apellidoCliente AS APELLIDO, mailCliente AS EMAIL, telefonoCliente AS TELEFONO, 
+              direccionCliente AS DIRECCION FROM clientes WHERE 1=1";
 
-    // Inicializamos el array que contendrá los resultados
-    $Listado = array();
+    $params = [];
+    $types = '';
 
-    // Consulta SQL para obtener los datos de la tabla clientes, incluyendo los nuevos campos
-    $SQL = "SELECT idCliente, dniCliente, nombreCliente, apellidoCliente, mailCliente, telefonoCliente, direccionCliente
-            FROM clientes";
-
-    // Ejecutamos la consulta SQL
-    $rs = mysqli_query($vConexion, $SQL);
-    
-    // Comprobamos si la consulta devolvió algún resultado
-    $i = 0;
-    while ($data = mysqli_fetch_array($rs)) {
-        // Llenamos el array $Listado con los resultados de la consulta
-        $Listado[$i]['ID'] = $data['idCliente'];
-        $Listado[$i]['DOCUMENTO'] = $data['dniCliente'];
-        $Listado[$i]['NOMBRE'] = $data['nombreCliente'];
-        $Listado[$i]['APELLIDO'] = $data['apellidoCliente'];
-        $Listado[$i]['EMAIL'] = $data['mailCliente'];
-        $Listado[$i]['TELEFONO'] = $data['telefonoCliente'];
-        $Listado[$i]['DIRECCION'] = $data['direccionCliente'];
-
-        $i++;
+    if (!empty($filtros['documento'])) {
+        $query .= " AND dniCliente LIKE ?";
+        $params[] = "%" . $filtros['documento'] . "%";
+        $types .= 's';
+    }
+    if (!empty($filtros['nombre'])) {
+        $query .= " AND nombreCliente LIKE ?";
+        $params[] = "%" . $filtros['nombre'] . "%";
+        $types .= 's';
+    }
+    if (!empty($filtros['apellido'])) {
+        $query .= " AND apellidoCliente LIKE ?";
+        $params[] = "%" . $filtros['apellido'] . "%";
+        $types .= 's';
+    }
+    if (!empty($filtros['email'])) {
+        $query .= " AND mailCliente LIKE ?";
+        $params[] = "%" . $filtros['email'] . "%";
+        $types .= 's';
+    }
+    if (!empty($filtros['telefono'])) {
+        $query .= " AND telefonoCliente LIKE ?";
+        $params[] = "%" . $filtros['telefono'] . "%";
+        $types .= 's';
+    }
+    if (!empty($filtros['direccion'])) {
+        $query .= " AND direccionCliente LIKE ?";
+        $params[] = "%" . $filtros['direccion'] . "%";
+        $types .= 's';
     }
 
-    // Devolvemos el listado generado en el array $Listado
-    return $Listado;
+    $stmt = $MiConexion->prepare($query);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
-?>
