@@ -1,3 +1,4 @@
+
 <div class="main-panel ">
     <div class="main-header">
         <div class="main-header-logo">
@@ -46,7 +47,7 @@
                         <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                             <li>
                                 <div class="dropdown-title">
-                                    You have 4 new notification
+                                    Tenés 4 notificaciones nuevas
                                 </div>
                             </li>
                             <li>
@@ -57,8 +58,8 @@
                                                 <i class="fa fa-user-plus"></i>
                                             </div>
                                             <div class="notif-content">
-                                                <span class="block"> New user registered </span>
-                                                <span class="time">5 minutes ago</span>
+                                                <span class="block"> Nuevo usuario registrado </span>
+                                                <span class="time">Hace 5 minutos</span>
                                             </div>
                                         </a>
                                         <a href="#">
@@ -67,9 +68,9 @@
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
-                                                    Rahmad commented on Admin
+                                                    Rahmad le dejó un comentario a ADMIN
                                                 </span>
-                                                <span class="time">12 minutes ago</span>
+                                                <span class="time">Hace 12 minutos</span>
                                             </div>
                                         </a>
                                         <a href="#">
@@ -78,9 +79,9 @@
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
-                                                    Reza send messages to you
+                                                    Reza te envió un mensaje
                                                 </span>
-                                                <span class="time">12 minutes ago</span>
+                                                <span class="time">Hace 15 minutos</span>
                                             </div>
                                         </a>
                                         <a href="#">
@@ -88,15 +89,15 @@
                                                 <i class="fa fa-heart"></i>
                                             </div>
                                             <div class="notif-content">
-                                                <span class="block"> Farrah liked Admin </span>
-                                                <span class="time">17 minutes ago</span>
+                                                <span class="block"> Farrah le dejó un like a Admin </span>
+                                                <span class="time">Hace 17 minutos</span>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="see-all" href="javascript:void(0);">See all notifications<i
+                                <a class="see-all" href="javascript:void(0);">Ver todas las notificaciones<i
                                         class="fa fa-angle-right"></i>
                                 </a>
                             </li>
@@ -110,7 +111,7 @@
                             </div>
                             <span class="profile-username">
                                 <span class="op-7">Hola,</span>
-                                <span class="fw-bold">USUARIO</span>
+                                <span class="fw-bold"> <?php echo $_SESSION["Nombre"]; ?> </span>
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -122,8 +123,8 @@
                                                 class="avatar-img rounded" />
                                         </div>
                                         <div class="u-text">
-                                            <h4>USUARIO</h4>
-                                            <p class="text-muted">Responsable de Almacén</p>
+                                            <h4> <?php echo strtoupper($_SESSION["Nombre"]); ?> </h4>
+                                            <p class="text-muted"> <?php echo $_SESSION["Cargo"]; ?> </p>
 
                                         </div>
                                     </div>
@@ -131,7 +132,7 @@
                                 <li>
                                     <div class="dropdown-divider"></div>
 
-                                    <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                                    <a class="dropdown-item" href="cerrarsesion.php">Cerrar Sesión</a>
                                 </li>
                             </div>
                         </ul>

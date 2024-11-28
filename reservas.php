@@ -1,15 +1,24 @@
-<?php include('head.php')?>
+<?php 
+
+session_start();
+
+require_once 'funciones/corroborar_usuario.php'; 
+Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
+
+include('head.php');
+
+?>
 
 <body >
-    <?php 
-    include('sidebarGOp.php');
-    include('topNavBar.php');    
-    ?>
 
+    <div class="wrapper">
 
-    <div class="wrapper ">
+        <?php 
+        include('sidebarGOp.php');
+        include('topNavBar.php');    
+        ?>
 
-        <div class="container">
+        <div class="container" style="margin-top: 10%; margin-left: 1%;">
             <h3 class="fw-bold my-3">Reservas</h3>
 
             <!-- Formulario de filtros -->
@@ -75,19 +84,25 @@
             </div>
 
             <!-- Botones de acción -->
-            <div class="position-fixed bottom-0 w-100 py-3">
-        <div class="container d-flex justify-content-center">
-            <button type="button" class="btn btn-danger me-2">Nuevo</button>
-            <button type="button" class="btn btn-danger me-2">Modificar</button>
-            <button type="button" class="btn btn-danger me-2">Imprimir</button>
-            <button type="button" class="btn btn-danger">Anular</button>
-        </div>
-    </div>
+            <div style="margin-top: 8%;">
+                <div class="container d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger me-2">Nuevo</button>
+                    <button type="button" class="btn btn-danger me-2">Modificar</button>
+                    <button type="button" class="btn btn-danger me-2">Imprimir</button>
+                    <button type="button" class="btn btn-danger">Anular</button>
+                </div>
+            </div>
         </div>
 
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+        <div style="">
+            <?php require_once "foot.php"; ?>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
 </body>
 
 </html>

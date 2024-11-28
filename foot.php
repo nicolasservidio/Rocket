@@ -1,3 +1,16 @@
+
+<footer id="footer" class="footer" style="background: #262626; margin: #333333; border: #333333; ">
+    
+    <div style="color: grey; background: #262626; margin: #333333; border: #333333; text-align: center; padding-top: 2%; padding-bottom: 2%; ">
+        <div class="copyright">
+        &copy; Copyright <strong><span>Rocket</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        Developed by <span style="color: #1874d6;">Rocket Team</span>: <a href="https://www.linkedin.com/in/nicolas-servidio-del-monte/">NS</a> - <a href="https://www.linkedin.com/in/bruno-carossi-1b43b8178/">BC</a> - <a href="https://www.linkedin.com/in/facundo-mota-123380257/">FM</a>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>

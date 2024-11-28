@@ -1,35 +1,53 @@
 <?php
 // Inicializar la variable de error
 $error_message = '';
+$validaciones = '';
 
 if (isset($_POST['userId']) && isset($_POST['password'])) {
     $tbl_name = "usuarios"; // Nombre de la tabla
-    $username = $_POST['userId']; // Usuario ingresado
-    $password = $_POST['password']; // Contraseña ingresada
+    
+    require_once 'funciones/login validacion credenciales.php';
+    $validaciones = ValidarUsuario();
 
-    require "conn/conexion.php";
+    if (empty($validaciones)) {
 
-    $stmt = $conexion->prepare("SELECT * FROM $tbl_name WHERE usuario = ? AND contrasena = ?");
-    $stmt->bind_param("ss", $username, $password);
+        $username = $_POST['userId']; // Usuario ingresado, procesado y validado
+        $password = $_POST['password']; // Contraseña ingresada, procesada y validada
+    
+        require "conn/conexion.php";
+        $conexion = ConexionBD();
+    
+        $stmt = $conexion->prepare("SELECT * FROM $tbl_name WHERE usuario = ? AND contrasena = ?");
+        $stmt->bind_param("ss", $username, $password);
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conexion->close();
+    
+        if ($result->num_rows == 1) {
 
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $stmt->close();
-    $conexion->close();
-
-    if ($result->num_rows == 1) {
-        // Usuario encontrado, redirigir a la página principal
-        header('location: indexGOp.php');
-        exit();
-    } else {
-        // Usuario o contraseña incorrectos
-        $error_message = "Usuario o contraseña incorrectos";
+            // Usuario encontrado, se cargan datos en sesión y se redirige al correspondiente panel
+            $conexion = ConexionBD();
+            require "funciones/iniciar sesion.php";
+            Iniciar_Sesion($_POST['userId'], $_POST['password'], $conexion);
+        } 
+        else {
+            // Usuario o contraseña incorrectos
+            $error_message = "Las credenciales no existen.";
+        }
     }
-}
-?>
+    else {
+        $error_message = "Los datos son incorrectos. Intenta nuevamente. ";
+    }
 
-<?php if ($error_message): ?>
+}
+
+if ($error_message): ?>
     <div class="alert alert-danger mt-3">
-        <?php echo $error_message; ?>
+        <?php 
+        echo $error_message; 
+        echo $validaciones;
+        ?>        
     </div>
 <?php endif; ?>

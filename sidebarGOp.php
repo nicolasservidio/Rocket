@@ -1,12 +1,10 @@
+
 <div class="sidebar" data-background-color="dark">
     <div class="sidebar-logo">
         <!-- Logo Header -->
 
-
-
-
         <div class="logo-header" data-background-color="dark">
-            <a href="index.php" class="logo">
+            <a href="indexGOp.php" class="logo">
                 <img src="assets/img/logo-red.png" alt="navbar brand" class="navbar-brand" height="45" />
             </a>
             <div class="nav-toggle">
@@ -24,13 +22,11 @@
         <!-- End Logo Header -->
     </div>
 
-
-
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
                 <li class="nav-item active">
-                    <a data-bs-toggle="collapse" href="index.php" class="collapsed" aria-expanded="false">
+                    <a data-bs-toggle="collapse" href="indexGOp.php" class="collapsed" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Inicio</p>
                     </a>
@@ -38,27 +34,23 @@
                 </li>
 
                 <?php
-    $listaNavBar = [
-        ["OpVehiculos.php", "fas fa-car-side", "Vehiculos"],  
-        ["reservas.php", "fas fa-clipboard-list", "Reservas"],
-        ["clientes.php", "fas fa-address-card", "Clientes"]
-    ];
+                $listaNavBar = [
+                    ["OpVehiculos.php", "fas fa-car-side", "Vehiculos"],  
+                    ["reservas.php", "fas fa-clipboard-list", "Reservas"],
+                    ["clientes.php", "fas fa-address-card", "Clientes"]
+                ];
 
-    foreach ($listaNavBar as $entry) { 
-        echo 
-        "<li class=\"nav-item\">
-            <a href=\"$entry[0]\">
-                <i class=\"$entry[1]\"></i>
-                <p>$entry[2]</p>
-            </a>
-        </li>";
-        
-    };
-?>
-
-
-
-
+                foreach ($listaNavBar as $entry) { 
+                    echo 
+                    "<li class=\"nav-item\">
+                        <a href=\"$entry[0]\">
+                            <i class=\"$entry[1]\"></i>
+                            <p>$entry[2]</p>
+                        </a>
+                    </li>";
+                    
+                };
+                ?>
 
             </ul>
         </div>

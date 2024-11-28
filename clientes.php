@@ -1,23 +1,36 @@
-<?php include('head.php') ?>
+<?php 
+
+session_start();
+
+require_once 'funciones/corroborar_usuario.php'; 
+Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
+
+include('conn/conexion.php');
+$MiConexion = ConexionBD();
+
+include('ListadoClientes.php');
+$ListadoClientes = Listar_Clientes($MiConexion);
+$CantidadClientes = count($ListadoClientes);
+
+include('head.php');
+
+?>
 
 <body class="bg-light">
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom: 100px;">
+
         <?php 
-        include('conn/conexion.php');
-        $MiConexion = ConexionBD();
+
         include('sidebarGOp.php');
         include('topNavBar.php');
-        include('ListadoClientes.php');
-        $ListadoClientes = Listar_Clientes($MiConexion);
-        $CantidadClientes = count($ListadoClientes);
+
+        if (isset($_GET['mensaje'])) {
+            echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
+        }
         ?>
-        <?php
-if (isset($_GET['mensaje'])) {
-    echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
-}
-?>
+        
         <!-- Sección de Listado Clientes -->
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm">
+        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Clientes</strong></h5>
             <table class="table table-hover" id="tablaClientes">
                 <thead>
@@ -50,7 +63,7 @@ if (isset($_GET['mensaje'])) {
         </div>
 
         <!-- Botones -->
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#nuevoClienteModal">
                 <i class="fas fa-plus-circle"></i> Nuevo
             </button>
@@ -61,6 +74,11 @@ if (isset($_GET['mensaje'])) {
                 </button>
             </div>
         </div>
+
+        <div style="padding-top: 5%; padding-bottom: 20px;">
+            <?php require_once "foot.php"; ?>
+        </div>
+
     </div>
 
     <script>
