@@ -5,7 +5,7 @@ function Listar_Clientes($vConexion) {
     $Listado = array();
 
     // Consulta SQL para obtener los datos de la tabla clientes, incluyendo los nuevos campos
-    $SQL = "SELECT IdCliente, dniCliente, nombreCliente, apellidoCliente, mailCliente, telefonoCliente, direccionCliente
+    $SQL = "SELECT idCliente, dniCliente, nombreCliente, apellidoCliente, mailCliente, telefonoCliente, direccionCliente
             FROM clientes";
 
     // Ejecutamos la consulta SQL
@@ -15,7 +15,7 @@ function Listar_Clientes($vConexion) {
     $i = 0;
     while ($data = mysqli_fetch_array($rs)) {
         // Llenamos el array $Listado con los resultados de la consulta
-        $Listado[$i]['ID'] = $data['IdCliente'];
+        $Listado[$i]['ID'] = $data['idCliente'];
         $Listado[$i]['DOCUMENTO'] = $data['dniCliente'];
         $Listado[$i]['NOMBRE'] = $data['nombreCliente'];
         $Listado[$i]['APELLIDO'] = $data['apellidoCliente'];
