@@ -77,7 +77,7 @@ require_once "sidebarGop.php";
             </div>
             <br>
             <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
-            <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Listado completo</button>
+            <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
         </form>
 
     </div>
