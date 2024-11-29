@@ -133,7 +133,9 @@ include('head.php');
 
                             for ($i=0; $i < $CantidadReservas; $i++) { ?>     
 
-                                <tr onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
+                                <tr class='reserva' data-id='<?php $ListadoReservas[$i]['idReserva'] ?>' 
+                                    onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
+
                                     <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
                                     <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
@@ -158,12 +160,25 @@ include('head.php');
                 <!-- Botones de acción -->
                 <div style="margin-top: 8%;">
                     <div class="container d-flex justify-content-center">
-                        <button type="button" class="btn btn-danger me-2">Nuevo</button>
-                        <button type="button" class="btn btn-danger me-2">Modificar</button>
-                        <button type="button" class="btn btn-danger me-2">Imprimir</button>
-                        <button type="button" class="btn btn-danger">Anular</button>
+
+                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
+                            <i class="fas fa-plus-circle"></i> Nuevo
+                        </button>
+
+                        <button class="btn btn-primary me-2" id="btnModificar" onclick="modificarReserva()" disabled>
+                            Modificar
+                        </button>
+
+                        <button class="btn btn-warning me-2" id="btnEliminar" onclick="eliminarReserva()" disabled>
+                            Eliminar
+                        </button>
+
+                        <button type="button" class="btn btn-info">
+                            Imprimir
+                        </button>
                     </div>
                 </div>
+
             </div>
         </div>
 
