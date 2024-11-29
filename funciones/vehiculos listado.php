@@ -75,12 +75,24 @@ function Listar_Vehiculos($conexion) {
             $Listado[$i]['vModelo'] = $data['vModelo'];
             $Listado[$i]['vDescripcionModelo'] = $data['vDescripcionModelo'];
             $Listado[$i]['vCombustible'] = $data['vCombustible'];
+
+            if (is_null($data['vCombustible'])) {
+                $Listado[$i]['vCombustible'] = "A definir.";
+            }
+
             $Listado[$i]['vGrupo'] = $data['vGrupo'];
             $Listado[$i]['vDescripcionGrupo'] = $data['vDescripcionGrupo'];
             $Listado[$i]['vSucursal'] = $data['vSucursal'];
             $Listado[$i]['vSucursalDireccion'] = $data['vSucursalDireccion'];
             $Listado[$i]['vSucursalCiudad'] = $data['vSucursalCiudad'];
             $Listado[$i]['vSucursalTel'] = $data['vSucursalTel'];
+
+            if (is_null($data['vSucursalDireccion'])) {
+                $Listado[$i]['vSucursalDireccion'] = "A definir.";
+            }
+            if (is_null($data['vSucursalCiudad'])) {
+                $Listado[$i]['vSucursalCiudad'] = " ";
+            }
 
             $i++;
     }

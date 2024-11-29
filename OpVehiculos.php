@@ -14,8 +14,11 @@ $matricula = isset($_POST['Matricula']) ? $_POST['Matricula'] : '';
 $modelo = isset($_POST['Modelo']) ? $_POST['Modelo'] : '';
 $grupo = isset($_POST['Grupo']) ? $_POST['Grupo'] : '';
 
-// Incluyo el script con la funcion que genera mi listado
+    // Incluyo el script con la funcion que genera mi listado
 require_once 'funciones/vehiculos listado.php';
+
+$ListadoVehiculos = Listar_Vehiculos($conexion);
+$CantidadVehiculos = count($ListadoVehiculos);
 
 
 // Consulta por medio de formulario de Filtro
@@ -31,7 +34,7 @@ if (!empty($_POST['BotonFiltro'])) {
 }
 else {
 
-    // Listo la totalidad de los registros en la tabla "vehiculos" 
+    // Listo la totalidad de los registros en la tabla "vehiculos". 
     $ListadoVehiculos = Listar_Vehiculos($conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
@@ -44,16 +47,39 @@ if (!empty($_POST['BotonDesfiltrar'])) {
 }
 
 
-// Modificacion de vehiculo
+// Variables usadas en Registros, Modificaciones, etc.
 $matri = '';
 $dispo = '';
 $model = '';
 $grup = '';
 $combus = '';
 $sucurs = '';
+
+
+// Registrar nuevo vehiculo
+require_once 'funciones/RegistrarVehiculo.php';
+
+if (!empty($_POST['BotonRegistrarVehiculo'])) {
+
+    // Capturo los datos
+    $matri = $_POST['MatriculaREG'];
+    $matri = "$matri";
+    $model = $_POST['ModeloREG'];
+    $grup = $_POST['GrupoREG'];
+    $dispo = $_POST['DisponibilidadREG'];
+
+    Registrar_Vehiculo($matri, $model, $grup, $dispo, $conexion);
+
+    $_POST = array();
+    header('Location: OpVehiculos.php');
+    die();
+}
+
+
+// Modificacion de vehiculo
 require_once 'funciones/ModificarVehiculo.php';
 
-if (!empty($_POST['ModificarVehiculo'])) {
+if (!empty($_POST['BotonModificarVehiculo'])) {
 
     $matri = $_POST['MatriculaMOD'];
     $dispo = $_POST['DisponibilidadMOD'];
@@ -70,6 +96,7 @@ if (!empty($_POST['ModificarVehiculo'])) {
     header('Location: OpVehiculos.php');
     die();
 }
+
 
 // SELECCIONES para combo boxes
 require_once 'funciones/Select_Tablas.php';
@@ -97,81 +124,83 @@ require_once "topNavBar.php";
 require_once "sidebarGop.php";
 ?>
 
+<div style="margin-top: 8%; margin-bottom: 8%; min-height: 100%; ">
 
-<main class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light bg-gradient p-4">
+    <main class="d-flex flex-column justify-content-center align-items-center h-100 bg-light bg-gradient p-4">
 
-    <div class="card col-8 bg-white p-4 rounded shadow mb-4">
-        <h4 class="text-center mb-4">Filtrar Vehículos</h4>
+        <div class="card col-8 bg-white p-4 rounded shadow mb-4">
+            <h4 class="text-center mb-4">Filtrar Vehículos</h4>
 
-        <form method="post">
-            <div class="row">
+            <form method="post">
+                <div class="row">
 
-                <div class="col-md-4 mb-3">
-                    <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="text" class="form-control" id="matricula" name="Matricula" value="<?php echo !empty($_POST['Matricula']) ? $_POST['Matricula'] : ''; ?> ">
+                    <div class="col-md-4 mb-3">
+                        <label for="matricula" class="form-label">Matrícula</label>
+                        <input type="text" class="form-control" id="matricula" name="Matricula" value="<?php echo !empty($_POST['Matricula']) ? $_POST['Matricula'] : ''; ?> ">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="grupo" class="form-label">Grupo</label>
+                        <input type="text" class="form-control" id="grupo" name="Grupo" value="<?php echo !empty($_POST['Grupo']) ? $_POST['Grupo'] : ''; ?>">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="modelo" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="modelo" name="Modelo" value="<?php echo !empty($_POST['Modelo']) ? $_POST['Modelo'] : ''; ?>">
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="grupo" class="form-label">Grupo</label>
-                    <input type="text" class="form-control" id="grupo" name="Grupo" value="<?php echo !empty($_POST['Grupo']) ? $_POST['Grupo'] : ''; ?>">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="modelo" class="form-label">Modelo</label>
-                    <input type="text" class="form-control" id="modelo" name="Modelo" value="<?php echo !empty($_POST['Modelo']) ? $_POST['Modelo'] : ''; ?>">
-                </div>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
-            <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
-        </form>
+                <br>
+                <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
+                <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
+            </form>
 
-    </div>
-
-    <div class="card col-8 bg-white p-4 rounded shadow mb-4">
-        <h4 class="text-center mb-3">Lista de Vehículos</h4>
-        <div class="table-responsive">
-
-            <table class="table table-bordered table-hover" id="vehicleTable">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Matrícula</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Grupo</th>
-                        <th scope="col">Combustible</th>
-                        <th scope="col">Sucursal</th>
-                        <th scope="col">Disponibilidad</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php 
-                    for ($i=0; $i < $CantidadVehiculos; $i++) { ?>
-                    
-                    <tr onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')">
-                        <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
-                        <td> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> </td>
-                        <td> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> </td>
-                        <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
-                        <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalDireccion']}, 
-                                         {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> </td>
-                        <td> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
-                    </tr>
-                    <?php 
-                    } 
-                    ?>
-
-                </tbody>
-                
-            </table>
         </div>
-    </div>
 
-    <div class="d-flex justify-content-between col-8">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
-        <button type="button" class="btn btn-primary" onclick="modificarVehiculo()">Modificar</button>
-        <button type="button" class="btn btn-warning" onclick="renovarVehiculo()">Eliminar</button>
-    </div>
+        <div class="card col-8 bg-white p-4 rounded shadow mb-4">
+            <h4 class="text-center mb-3">Lista de Vehículos</h4>
+            <div class="table-responsive">
 
-</main>
+                <table class="table table-bordered table-hover" id="vehicleTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Matrícula</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Combustible</th>
+                            <th scope="col">Sucursal</th>
+                            <th scope="col">Disponibilidad</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php 
+                        for ($i=0; $i < $CantidadVehiculos; $i++) { ?>
+                        
+                        <tr onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')">
+                            <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
+                            <td> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> </td>
+                            <td> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> </td>
+                            <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
+                            <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalDireccion']}, 
+                                            {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> </td>
+                            <td> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
+                        </tr>
+                        <?php 
+                        } 
+                        ?>
+
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between col-8">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
+            <button type="button" class="btn btn-primary" onclick="modificarVehiculo()">Modificar</button>
+            <button type="button" class="btn btn-warning" onclick="renovarVehiculo()">Eliminar</button>
+        </div>
+
+    </main>
+</div>
 
 <!-- Modal para nuevo vehículo -->
 <div class="modal fade" id="nuevoVehiculo" tabindex="-1" aria-labelledby="nuevoVehiculoLabel" aria-hidden="true">
@@ -184,20 +213,38 @@ require_once "sidebarGop.php";
             <div class="modal-body">
 
                 <!-- Form para agregar vehículo -->
-                <form action="NuevoVehiculo.php" method="post">
+                <form method="post">
 
                     <div class="mb-3">
                         <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" name="matricula" value="" required>
+                        <input type="text" class="form-control" name="MatriculaREG" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo" value="" required>
+                        <select class="form-select" aria-label="Selector" id="selector" name="ModeloREG" required>
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoModelo contiene datos antes de procesarlo
+                            if (!empty($ListadoModelo)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadModelo; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['ModeloREG']) && $_POST['ModeloREG'] == $ListadoModelo[$i]['IdModelo']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected>{$ListadoModelo[$i]['NombreModelo']}</option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
+
                     </div>
 
                     <div class="mb-3">
                         <label for="grupo" class="form-label">Grupo</label>
-                        <select class="form-select" aria-label="Selector" id="selector" name="Grupo">
+                        <select class="form-select" aria-label="Selector" id="selector" name="GrupoREG" required>
                             <option value="" selected>Selecciona una opción</option>
 
                             <?php 
@@ -206,7 +253,7 @@ require_once "sidebarGop.php";
                                 $selected = '';
                                 for ($i = 0; $i < $CantidadGrupo; $i++) {
                                     // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($_POST['Grupo']) && $_POST['Grupo'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
+                                    $selected = (!empty($_POST['GrupoREG']) && $_POST['GrupoREG'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
                                     echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
                                 }
                             } 
@@ -219,13 +266,13 @@ require_once "sidebarGop.php";
 
                     <div class="mb-3">
                         <label for="disponible" class="form-label">Disponible</label>
-                        <select class="form-select" name="disponible">
-                            <option value="Sí">Sí</option>
-                            <option value="No">No</option>
+                        <select class="form-select" name="DisponibilidadREG" required>
+                            <option value="S">Sí</option>
+                            <option value="N">No</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button type="submit" class="btn btn-primary" name="BotonRegistrarVehiculo" value="RegistrandoVehiculo" >Agregar</button>
                 </form>
 
             </div>
@@ -298,7 +345,7 @@ require_once "sidebarGop.php";
                             <option value="" selected>Selecciona una opción</option>
 
                             <?php 
-                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            // Asegúrate de que $ListadoCombustible contiene datos antes de procesarlo
                             if (!empty($ListadoCombustible)) {
                                 $selected = '';
                                 for ($i = 0; $i < $CantidadCombustible; $i++) {
@@ -320,7 +367,7 @@ require_once "sidebarGop.php";
                             <option value="" selected>Selecciona una opción</option>
 
                             <?php 
-                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            // Asegúrate de que $ListadoSucursal contiene datos antes de procesarlo
                             if (!empty($ListadoSucursal)) {
                                 $selected = '';
                                 for ($i = 0; $i < $CantidadSucursal; $i++) {
@@ -344,22 +391,14 @@ require_once "sidebarGop.php";
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" name="ModificarVehiculo" value="Modificando">Modificar</button>                    
+                    <button type="submit" class="btn btn-primary" name="BotonModificarVehiculo" value="ModificandoVeh">Modificar</button>                    
                 </form>
-
-
-
-
-
 
             </div>
         </div>
     </div>
 </div>
 
-<div style="padding-bottom: 20px;">
-    <?php require_once "foot.php"; ?>
-</div>
 
 <script>
 let selectedRow = null;
@@ -430,6 +469,11 @@ function renovarVehiculo() {
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<div style="">
+    <?php require_once "foot.php"; ?>
+</div>
+
 </body>
 </html>
 
