@@ -67,10 +67,13 @@ if (!empty($_POST['ModificarVehiculo'])) {
     die();
 }
 
+// Registrar vehiculo
 require_once 'funciones/SelectGrupo.php';
 
 $ListadoGrupo = Listar_Grupo($conexion);
 $CantidadGrupo = count($ListadoGrupo);
+
+
 
 require_once "head.php";
 ?>
@@ -167,34 +170,41 @@ require_once "sidebarGop.php";
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+                <!-- Form para agregar vehículo -->
                 <form action="NuevoVehiculo.php" method="post">
+
                     <div class="mb-3">
                         <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" name="matricula" required>
+                        <input type="text" class="form-control" name="matricula" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo" required>
+                        <input type="text" class="form-control" name="modelo" value="" required>
                     </div>
+
                     <div class="mb-3">
-    <label for="grupo" class="form-label">Grupo</label>
-    <select class="form-select" aria-label="Selector" id="selector" name="Grupo">
-        <option value="" selected>Selecciona una opción</option>
-        <?php 
-        // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
-        if (!empty($ListadoGrupo)) {
-            $selected = '';
-            for ($i = 0; $i < $CantidadGrupo; $i++) {
-                // Lógica para verificar si el grupo debe estar seleccionado
-                $selected = (!empty($_POST['Grupo']) && $_POST['Grupo'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
-                echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
-            }
-        } else {
-            echo "<option value=''>No se encontraron grupos</option>";
-        }
-        ?>
-    </select>
-</div>
+                        <label for="grupo" class="form-label">Grupo</label>
+                        <select class="form-select" aria-label="Selector" id="selector" name="Grupo">
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            if (!empty($ListadoGrupo)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadGrupo; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['Grupo']) && $_POST['Grupo'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="disponible" class="form-label">Disponible</label>
                         <select class="form-select" name="disponible">
@@ -202,8 +212,10 @@ require_once "sidebarGop.php";
                             <option value="No">No</option>
                         </select>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Agregar</button>
                 </form>
+
             </div>
         </div>
     </div>
