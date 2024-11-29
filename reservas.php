@@ -46,6 +46,9 @@ require_once 'funciones/Select_Tablas.php';
 $ListadoVehiculos = Listar_Vehiculos($conexion);
 $CantidadVehiculos = count($ListadoVehiculos);
 
+$ListadoClientes = Listar_Clientes($conexion);
+$CantidadClientes = count($ListadoClientes);
+
 
 
 include('head.php');
@@ -176,7 +179,7 @@ include('head.php');
                             Modificar
                         </button>
 
-                        <button class="btn btn-warning me-2" id="btnEliminar" onclick="eliminarReserva()" disabled>
+                        <button class="btn btn-danger me-2" id="btnEliminar" onclick="eliminarReserva()" disabled>
                             Eliminar
                         </button>
 
@@ -185,10 +188,6 @@ include('head.php');
                         </button>
                     </div>
                 </div>
-
-
-
-
 
 
                 <!-- Modal para Nueva Reserva -->
@@ -206,7 +205,28 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idCliente" class="form-label">Cliente</label>
-                                        <input type="text" class="form-control" id="idCliente" name="idCliente" required>
+
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idCliente" required>
+                                            <option value="" selected>Selecciona una opción</option>
+
+                                            <?php 
+                                            // Asegúrate de que $ListadoClientes contiene datos antes de procesarlo
+                                            if (!empty($ListadoClientes)) {
+                                                $selected = '';
+                                                for ($i = 0; $i < $CantidadClientes; $i++) {
+                                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                                    $selected = (!empty($_POST['idCliente']) && $_POST['idCliente'] == $ListadoClientes[$i]['idCliente']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoClientes[$i]['idCliente']}' $selected> 
+                                                        {$ListadoClientes[$i]['apellidoCliente']} {$ListadoClientes[$i]['nombreCliente']} ({$ListadoClientes[$i]['dniCliente']}) <br> 
+                                                        TEL: {$ListadoClientes[$i]['telefonoCliente']} 
+                                                    </option>";
+                                                }
+                                            } 
+                                            else {
+                                                echo "<option value=''>No se encontraron clientes</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
 
                                     <div class="mb-3">
@@ -239,12 +259,12 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
-                                        <input type="date" class="form-control" id="fecharetiro" name="fecharetiro" required>
+                                        <input type="date" class="form-control" id="fecharetiro" name="fecharetiro" value="" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
-                                        <input type="date" class="form-control" id="fechadevolucion" name="fechadevolucion" required>
+                                        <input type="date" class="form-control" id="fechadevolucion" name="fechadevolucion" value="" required>
                                     </div>
 
                                 </div>
@@ -256,17 +276,6 @@ include('head.php');
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
             </div>

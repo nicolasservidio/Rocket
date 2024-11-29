@@ -148,4 +148,37 @@ function Listar_Vehiculos($vConexion) {
 }
 
 
+
+// EMITIR LISTADO de Clientes
+function Listar_Clientes($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idCliente,
+                   nombreCliente,
+                   apellidoCliente,
+                   dniCliente,
+                   telefonoCliente
+            FROM clientes ; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['idCliente'] = $data['idCliente'];
+            $Listado[$i]['nombreCliente'] = $data['nombreCliente'];
+            $Listado[$i]['apellidoCliente'] = $data['apellidoCliente'];
+            $Listado[$i]['dniCliente'] = $data['dniCliente'];
+            $Listado[$i]['telefonoCliente'] = $data['telefonoCliente'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
+
 ?>

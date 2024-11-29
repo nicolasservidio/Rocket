@@ -40,33 +40,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Procesamiento de las fechas
-    $fechaEspanol = $fecharetiro;
-    $fechaEspanol = date_parse($fechaEspanol);
+    $fechaEspanol = date_parse($fecharetiro);
     $year = $fechaEspanol['year'];
     $mo = $fechaEspanol['month'];
     $day = $fechaEspanol['day'];
-    $$fecharetiro = "$year-$mo-$day";
+    $fecharetiroIngles = "$year-$mo-$day";
     
-    $fechaEspanol = $fechadevolucion;
-    $fechaEspanol = date_parse($fechaEspanol);
+    $fechaEspanol = date_parse($fechadevolucion);
     $year = $fechaEspanol['year'];
     $mo = $fechaEspanol['month'];
     $day = $fechaEspanol['day'];
-    $fechadevolucion = "$year-$mo-$day";
+    $fechadevolucionIngles = "$year-$mo-$day";
 
     // Conexión y consulta
     $MiConexion = ConexionBD();
 
     $SQL = "INSERT INTO `reservas-vehiculos` (numeroReserva,
-                                                fechaReserva, 
-                                                fechaInicioReserva, 
-                                                FechaFinReserva, 
-                                                idCliente, 
-                                                idVehiculo) 
+                                             fechaReserva, 
+                                             fechaInicioReserva, 
+                                             FechaFinReserva, 
+                                             idCliente, 
+                                             idVehiculo) 
               VALUES ($numreserva, 
                      NOW(), 
-                     $fecharetiro, 
-                     $fechadevolucion, 
+                     '$fecharetiroIngles', 
+                     '$fechadevolucionIngles', 
                      $idCliente, 
                      $idVehiculo); ";
 
