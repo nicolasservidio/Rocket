@@ -5,7 +5,7 @@ function Listar_Grupo($vConexion) {
 
     //1) genero la consulta que deseo
     $SQL = "SELECT G.idGrupo, G.nombreGrupo
-        FROM grupos-vehiculos G";
+        FROM `grupos-vehiculos` G";
 
     //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
      $rs = mysqli_query($vConexion, $SQL);
