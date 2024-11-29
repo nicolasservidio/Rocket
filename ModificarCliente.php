@@ -46,34 +46,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <body class="bg-light">
-    <div class="wrapper">
-        <?php include('sidebarGOp.php'); include('topNavBar.php'); ?>
-        
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm">
-            <h5 class="mb-4 text-secondary"><strong>Modificar Cliente</strong></h5>
-            <form method="POST">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($cliente['nombreCliente']); ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($cliente['apellidoCliente']); ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($cliente['mailCliente']); ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo htmlspecialchars($cliente['telefonoCliente']); ?>" required>
-                </div>
-                <div class="mb-3">
-                    <label for="direccion" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo htmlspecialchars($cliente['direccionCliente']); ?>" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            </form>
+    <div style="min-height: 100%">
+        <div class="wrapper">
+            <?php include('sidebarGOp.php'); include('topNavBar.php'); ?>
+            
+            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+
+                <h5 class="mb-4 text-secondary"><strong>Modificar Cliente</strong></h5>
+
+                <!-- Formulario para modificar el cliente -->
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($cliente['nombreCliente']); ?>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($cliente['apellidoCliente']); ?>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($cliente['mailCliente']); ?>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo htmlspecialchars($cliente['telefonoCliente']); ?>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo htmlspecialchars($cliente['direccionCliente']); ?>" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
