@@ -229,7 +229,6 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idCliente" class="form-label">Cliente</label>
-
                                         <select class="form-select" aria-label="Selector" id="selector" name="idCliente" required>
                                             <option value="" selected>Selecciona una opción</option>
 
@@ -260,7 +259,6 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idVehiculo" class="form-label">Vehículo</label>
-
                                         <select class="form-select" aria-label="Selector" id="selector" name="idVehiculo" required>
                                             <option value="" selected>Selecciona una opción</option>
 
