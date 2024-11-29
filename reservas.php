@@ -167,7 +167,7 @@ include('head.php');
 
                             for ($i=0; $i < $CantidadReservas; $i++) { ?>     
 
-                                <tr class='reserva' data-id='<?php $ListadoReservas[$i]['idReserva'] ?>' 
+                                <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
                                     onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
 
                                     <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
