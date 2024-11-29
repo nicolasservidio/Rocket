@@ -114,7 +114,7 @@ include('head.php');
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th style='color: #0a8acf;'><h3>#</h3></th>
+                                <th style='color: #d19513;'><h3>#</h3></th>
                                 <th>Nro</th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
@@ -134,7 +134,7 @@ include('head.php');
                             for ($i=0; $i < $CantidadReservas; $i++) { ?>     
 
                                 <tr onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
-                                    <td><span style='color: #0a8acf;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                    <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
                                     <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
