@@ -27,6 +27,7 @@ include('head.php');
 
 <body class="bg-light">
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
+        
         <?php 
         include('sidebarGOp.php');
         include('topNavBar.php');

@@ -21,14 +21,14 @@ include('head.php');
 
 <body >
 
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
 
         <?php 
         include('sidebarGOp.php');
         include('topNavBar.php');    
         ?>
 
-        <div class="container" style="margin-top: 10%; margin-left: 1%;">
+        <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
             <h3 class="fw-bold my-3">Reservas</h3>
 
             <!-- Formulario de filtros -->
@@ -73,57 +73,60 @@ include('head.php');
             </form>
 
             <!-- Tabla de reservas -->
-            <div class="table-responsive mt-4">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style='color: #0a8acf;'><h3>#</h3></th>
-                            <th>Nro</th>
-                            <th>Apellido</th>
-                            <th>Nombre</th>
-                            <th>DNI</th>
-                            <th>Matrícula</th>
-                            <th>Grupo</th>
-                            <th>Modelo</th>
-                            <th>Fec. Ret.</th>
-                            <th>Fec. Dev.</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php
-                        $contador = 1; 
-
-                        for ($i=0; $i < $CantidadReservas; $i++) { ?>     
-
-                            <tr onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
-                                <td><span style='color: #0a8acf;'><h4> <?php echo $contador; ?> </h4></span></td>
-                                <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
-                                <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+            <div style="margin-top: 5%; padding-bottom: 100px;">
+                <div class="table-responsive mt-4" style="max-width: 97%; border: 1px solid #444444; border-radius: 14px;">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style='color: #0a8acf;'><h3>#</h3></th>
+                                <th>Nro</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>DNI</th>
+                                <th>Matrícula</th>
+                                <th>Grupo</th>
+                                <th>Modelo</th>
+                                <th>Fec. Ret.</th>
+                                <th>Fec. Dev.</th>
                             </tr>
-                            <?php $contador++; ?>
-                        <?php 
-                        } 
-                        ?>
+                        </thead>
 
-                    </tbody>
-                </table>
-            </div>
+                        <tbody>
+                            <?php
+                            $contador = 1; 
 
-            <!-- Botones de acción -->
-            <div style="margin-top: 8%;">
-                <div class="container d-flex justify-content-center">
-                    <button type="button" class="btn btn-danger me-2">Nuevo</button>
-                    <button type="button" class="btn btn-danger me-2">Modificar</button>
-                    <button type="button" class="btn btn-danger me-2">Imprimir</button>
-                    <button type="button" class="btn btn-danger">Anular</button>
+                            for ($i=0; $i < $CantidadReservas; $i++) { ?>     
+
+                                <tr onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
+                                    <td><span style='color: #0a8acf;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                    <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
+                                    <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+                                </tr>
+                                <?php $contador++; ?>
+                            <?php 
+                            } 
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            
+
+                <!-- Botones de acción -->
+                <div style="margin-top: 8%;">
+                    <div class="container d-flex justify-content-center">
+                        <button type="button" class="btn btn-danger me-2">Nuevo</button>
+                        <button type="button" class="btn btn-danger me-2">Modificar</button>
+                        <button type="button" class="btn btn-danger me-2">Imprimir</button>
+                        <button type="button" class="btn btn-danger">Anular</button>
+                    </div>
                 </div>
             </div>
         </div>
