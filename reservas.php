@@ -32,14 +32,12 @@ else {
     $CantidadReservas = count($ListadoReservas);
 }
 
-/*
-if (!empty($_POST['BotonDesfiltrar'])) {
 
-        // Listo la totalidad de los registros en la tabla "vehiculos" 
-        $ListadoVehiculos = Listar_Vehiculos($conexion);
-        $CantidadVehiculos = count($ListadoVehiculos);
+if (!empty($_POST['BotonLimpiarFiltros'])) {
+
+    header('Location: reservas.php');
+    die();
 }
-*/
 
 
 
@@ -57,50 +55,58 @@ include('head.php');
         ?>
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
-            <h3 class="fw-bold my-3">Reservas</h3>
 
-            <!-- Formulario de filtros -->
-            <form class="row g-3" method="post">
+            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #16719e; border-radius: 14px;">
+                <div style='color: #0a8acf; margin-bottom: 30px;'> <h3 class="fw-bold"> Reservas </h3> </div>
 
-                <div class="col-md-2">
-                    <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="numero" name="NumeroReserva" value="">
-                </div>
+                <!-- Formulario de filtros -->
+                <form class="row g-3" method="post">
 
-                <div class="col-md-2">
-                    <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="text" class="form-control" id="matricula" name="MatriculaReserva" value="">
-                </div>
-
-                <div class="col-md-2">
-                    <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="ApellidoReserva" value="">
-                </div>
-
-                <div class="col-md-2">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="NombreReserva" value="">
-                </div>
-
-                <div class="col-md-2">
-                    <label for="documento" class="form-label">Documento</label>
-                    <input type="text" class="form-control" id="documento" name="DocReserva" value="">
-                </div>
-
-                <div class="col-md-3">
-                    <label for="retiro" class="form-label">Retiro entre</label>
-                    <div class="d-flex">
-                        <input type="date" class="form-control me-2" name="RetiroDesde" value="">
-                        <input type="date" class="form-control" name="RetiroHasta" value="">
+                    <div class="col-md-2">
+                        <label for="numero" class="form-label">Número</label>
+                        <input type="text" class="form-control" id="numero" name="NumeroReserva" value=" <?php echo !empty($_POST['NumeroReserva']) ? $_POST['NumeroReserva'] : ''; ?> ">
                     </div>
-                </div>
 
-                <div class="col-md-2 d-flex align-items-end">
-                    <button type="submit" class="btn btn-danger w-100" name="BotonFiltrar" value="FiltrandoReservas">
-                        <i class="fas fa-filter"></i> Filtrar
-                    </button>
-                </div>
-            </form>
+                    <div class="col-md-2">
+                        <label for="matricula" class="form-label">Matrícula</label>
+                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva" value=" <?php echo !empty($_POST['MatriculaReserva']) ? $_POST['MatriculaReserva'] : ''; ?> ">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva" value=" <?php echo !empty($_POST['ApellidoReserva']) ? $_POST['ApellidoReserva'] : ''; ?> ">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="NombreReserva" value=" <?php echo !empty($_POST['NombreReserva']) ? $_POST['NombreReserva'] : ''; ?> ">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="documento" class="form-label">Documento</label>
+                        <input type="text" class="form-control" id="documento" name="DocReserva" value=" <?php echo !empty($_POST['DocReserva']) ? $_POST['DocReserva'] : ''; ?> ">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="retiro" class="form-label">Retiro entre</label>
+                        <div class="d-flex">
+                            <input type="date" class="form-control me-2" name="RetiroDesde" value=" <?php echo !empty($_POST['RetiroDesde']) ? $_POST['RetiroDesde'] : ''; ?> ">
+                            <input type="date" class="form-control" name="RetiroHasta" value=" <?php echo !empty($_POST['RetiroHasta']) ? $_POST['RetiroHasta'] : ''; ?> ">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-info w-100" name="BotonFiltrar" value="FiltrandoReservas">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-warning w-100" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
+                            <i class="fas fa-ban"></i> LimpiarFiltros
+                        </button>
+                    </div>
+                </form>
+            </div>
 
             <!-- Tabla de reservas -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
