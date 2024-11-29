@@ -207,9 +207,9 @@ include('head.php');
                             Eliminar
                         </button>
 
-                        <button type="button" class="btn btn-info">
+                        <a href="ReporteReservas.php"> <button class="btn btn-info">
                             Imprimir
-                        </button>
+                        </button></a>
                     </div>
                 </div>
 
