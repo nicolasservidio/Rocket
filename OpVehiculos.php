@@ -49,6 +49,8 @@ $matri = '';
 $dispo = '';
 $model = '';
 $grup = '';
+$combus = '';
+$sucurs = '';
 require_once 'funciones/ModificarVehiculo.php';
 
 if (!empty($_POST['ModificarVehiculo'])) {
@@ -57,22 +59,32 @@ if (!empty($_POST['ModificarVehiculo'])) {
     $dispo = $_POST['DisponibilidadMOD'];
     $model = $_POST['ModeloMOD'];
     $grup = $_POST['GrupoMOD'];
+    $combus = $_POST['CombustibleMOD'];
+    $sucurs = $_POST['SucursalMOD'];
 
-    $MensajeModificacion = Corroborar_Modificacion($matri, $dispo, $model, $grup);
+    $MensajeModificacion = Corroborar_Modificacion($matri, $dispo, $model, $grup, $combus, $sucurs);
 
-    Modificar_Vehiculo($matri, $dispo, $model, $grup, $conexion);
+    Modificar_Vehiculo($matri, $dispo, $model, $grup, $combus, $sucurs, $conexion);
 
     $_POST = array();
     header('Location: OpVehiculos.php');
     die();
 }
 
-// Registrar vehiculo
-require_once 'funciones/SelectGrupo.php';
+// SELECCIONES para combo boxes
+require_once 'funciones/Select_Tablas.php';
 
 $ListadoGrupo = Listar_Grupo($conexion);
 $CantidadGrupo = count($ListadoGrupo);
 
+$ListadoModelo = Listar_Modelo($conexion);
+$CantidadModelo = count($ListadoModelo);
+
+$ListadoCombustible = Listar_Combustible($conexion);
+$CantidadCombustible = count($ListadoCombustible);
+
+$ListadoSucursal = Listar_Sucursal($conexion);
+$CantidadSucursal = count($ListadoSucursal);
 
 
 require_once "head.php";
@@ -233,24 +245,112 @@ require_once "sidebarGop.php";
 
                 <!-- Form para modificar -->
                 <form id="modificarVehiculoForm" method="post">
+
                     <input type="hidden" id="modificarMatricula" name="MatriculaMOD">
+
                     <div class="mb-3">
                         <label for="modificarModelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modificarModelo" name="ModeloMOD" value="" required>
+                        <select class="form-select" aria-label="Selector" id="modificarModelo" name="ModeloMOD" required>
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoModelo contiene datos antes de procesarlo
+                            if (!empty($ListadoModelo)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadModelo; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['ModeloMOD']) && $_POST['ModeloMOD'] == $ListadoModelo[$i]['IdModelo']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected>{$ListadoModelo[$i]['NombreModelo']}</option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="modificarGrupo" class="form-label">Grupo</label>
-                        <input type="text" class="form-control" id="modificarGrupo" name="GrupoMOD" value="" required>
+                        <select class="form-select" aria-label="Selector" id="modificarGrupo" name="GrupoMOD" required>
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            if (!empty($ListadoGrupo)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadGrupo; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['GrupoMOD']) && $_POST['GrupoMOD'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="modificarCombustible" class="form-label">Combustible</label>
+                        <select class="form-select" aria-label="Selector" id="modificarCombustible" name="CombustibleMOD" required>
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            if (!empty($ListadoCombustible)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadCombustible; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['CombustibleMOD']) && $_POST['CombustibleMOD'] == $ListadoCombustible[$i]['IdCombustible']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoCombustible[$i]['IdCombustible']}' $selected>{$ListadoCombustible[$i]['TipoCombustible']}</option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modificarSucursal" class="form-label">Sucursal</label>
+                        <select class="form-select" aria-label="Selector" id="modificarSucursal" name="SucursalMOD" required>
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+                            if (!empty($ListadoSucursal)) {
+                                $selected = '';
+                                for ($i = 0; $i < $CantidadSucursal; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['SucursalMOD']) && $_POST['SucursalMOD'] == $ListadoSucursal[$i]['IdSucursal']) ? 'selected' : '';
+                                    echo "<option value='{$ListadoSucursal[$i]['IdSucursal']}' $selected> {$ListadoSucursal[$i]['DireccionSucursal']}, {$ListadoSucursal[$i]['CiudadSucursal']} </option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''>No se encontraron grupos</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="modificarDisponible" class="form-label">Disponible</label>
-                        <select class="form-select" id="modificarDisponible" name="DisponibilidadMOD">
+                        <select class="form-select" id="modificarDisponible" name="DisponibilidadMOD" required>
                             <option value="S">Sí</option>
                             <option value="N">No</option>
                         </select>
                     </div>
+
                     <button type="submit" class="btn btn-primary" name="ModificarVehiculo" value="Modificando">Modificar</button>                    
                 </form>
+
+
+
+
+
 
             </div>
         </div>
@@ -285,12 +385,16 @@ function modificarVehiculo() {
     const matricula = selectedRow.cells[0].innerText;
     const modelo = selectedRow.cells[1].innerText;
     const grupo = selectedRow.cells[2].innerText;
-    const disponible = selectedRow.cells[3].innerText;
+    const combustible = selectedRow.cells[3].innerText;
+    const sucursal = selectedRow.cells[4].innerText;
+    const disponible = selectedRow.cells[5].innerText;
 
     // Cargar datos en el formulario del modal
     document.getElementById('modificarMatricula').value = matricula;
     document.getElementById('modificarModelo').value = modelo;
     document.getElementById('modificarGrupo').value = grupo;
+    document.getElementById('modificarCombustible').value = combustible;
+    document.getElementById('modificarSucursal').value = sucursal;
     document.getElementById('modificarDisponible').value = disponible;
 
     // Mostrar el modal

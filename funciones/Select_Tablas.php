@@ -1,0 +1,115 @@
+<?php
+
+// EMITIR LISTADO de Grupos
+function Listar_Grupo($vConexion) {
+
+    $Listado=array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT G.idGrupo, G.nombreGrupo
+        FROM `grupos-vehiculos` G; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdGrupo'] = $data['idGrupo'];
+            $Listado[$i]['NombreGrupo'] = $data['nombreGrupo'];
+            
+            $i++;
+    }
+
+
+    //devuelvo el listado generado en el array $Listado. (Podra salir vacio o con datos)..
+    return $Listado;
+
+}
+
+
+// EMITIR LISTADO de Modelos
+function Listar_Modelo($vConexion) {
+
+    $Listado=array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idModelo, nombreModelo, descripcionModelo
+        FROM modelos; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdModelo'] = $data['idModelo'];
+            $Listado[$i]['NombreModelo'] = $data['nombreModelo'];
+            $Listado[$i]['DescripcionModelo'] = $data['descripcionModelo'];
+            
+            $i++;
+    }
+
+
+    //devuelvo el listado generado en el array $Listado. (Podra salir vacio o con datos)..
+    return $Listado;
+
+}
+
+
+// EMITIR LISTADO de Combustibles
+function Listar_Combustible($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idCombustible, tipoCombustible
+        FROM combustibles; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdCombustible'] = $data['idCombustible'];
+            $Listado[$i]['TipoCombustible'] = $data['tipoCombustible'];
+            
+            $i++;
+    }
+
+    return $Listado;
+
+}
+
+
+// EMITIR LISTADO de Sucursales
+function Listar_Sucursal($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idSucursal, numeroSucursal, direccionSucursal, ciudadSucursal, telefonoSucursal
+        FROM sucursales; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdSucursal'] = $data['idSucursal'];
+            $Listado[$i]['NumeroSucursal'] = $data['numeroSucursal'];
+            $Listado[$i]['DireccionSucursal'] = $data['direccionSucursal'];
+            $Listado[$i]['CiudadSucursal'] = $data['ciudadSucursal'];
+            $Listado[$i]['TelefonoSucursal'] = $data['telefonoSucursal'];
+            
+            $i++;
+    }
+
+    return $Listado;
+
+}
+
+
+?>
