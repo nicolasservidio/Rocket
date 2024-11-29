@@ -67,20 +67,36 @@ else {
 
 
 // A continuación se hace UPDATE de los datos luego de cliquear el botón "Guardar Cambios" (los elementos POST proceden de este mismo archivo)
+$mensajeError = "";
 
-$mensaje = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva'])) {
 
     $idCliente = $reserva['IDCliente'];
-    $numreserva = $_POST['NumeroReserva'];
+    $numreserva = $reserva['NumeroReserva'];
     $idVehiculo = $_POST['VehiculosDisponibles'];
-    $fecharetiro = $_POST['FechaRetiro'];
-    $fechadevolucion = $_POST['FechaDevolucion'];
+//    $fecharetiro = $_POST['FechaRetiro'];
+//    $fechadevolucion = $_POST['FechaDevolucion'];
+
+    // Se cambia formato de las fechas y se almacenan para el update:
+    $fechaEspanol = $_POST['FechaRetiro'];
+    $fechaEspanol = date_parse($fechaEspanol);
+    $year = $fechaEspanol['year'];
+    $mo = $fechaEspanol['month'];
+    $day = $fechaEspanol['day'];
+    $fechaIngles = "$year-$mo-$day";
+    $fecharetiro = $fechaIngles;
+
+    $fechaEspanol = $_POST['FechaDevolucion'];
+    $fechaEspanol = date_parse($fechaEspanol);
+    $year = $fechaEspanol['year'];
+    $mo = $fechaEspanol['month'];
+    $day = $fechaEspanol['day'];
+    $fechaIngles = "$year-$mo-$day";
+    $fechadevolucion = $fechaIngles;
 
     require_once 'funciones/CRUD-Reservas.php';
     
-    if (Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true) { 
+    if ($idVehiculo) {  // Aquí se corroboraba fecha. Registro para implementar más adelante: "Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true" 
 
         // Actualizar los datos del cliente
         $ModificacionReserva = "UPDATE `reservas-vehiculos` 
@@ -92,100 +108,121 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     idVehiculo = $idVehiculo 
                                 WHERE idReserva = $idReserva"; 
 
-
         $rs = mysqli_query($conexion, $ModificacionReserva);
 
         if (!$rs) {
-            //si surge un error, finalizo la ejecucion del script con un mensaje
+
+            $mensajeError = "No se pudo acceder a la base de datos.";
+            //si surge un error, finalizo la ejecucion del script con un mensaje            
             die('<h4>Error al intentar modificar el vehículo.</h4>');
         }
 
         // Redirigir después de la actualización
-        header('Location: clientes.php');
+        header('Location: reservas.php');
         exit();
     }
 
     else {
-        $mensaje = "Usted debe reservar con al menos un día de antelación.";
+        $mensajeError = "No se puede realizar la reserva.";
     }
-
 }
+
 
 ?>
 
 <body class="bg-light">
-    <div class="wrapper">
-        <?php include('sidebarGOp.php'); include('topNavBar.php'); ?>
-        
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm">
-            <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
+    <div style="min-height: 100%">
+        <div class="wrapper">
+            <?php 
+            
+            include('sidebarGOp.php'); 
+            include('topNavBar.php'); 
+            
+            ?>
+            
+            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+                
+                <?php 
 
-            <!-- Formulario para modificar la reserva -->
-            <form method="POST">
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="NombreCliente" 
-                           value=" <?php echo htmlspecialchars($reserva['NombreCliente']); ?> " disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="ApellidoCliente" 
-                           value=" <?php echo htmlspecialchars($reserva['ApellidoCliente']); ?>" disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="documento" class="form-label">Documento</label>
-                    <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                           value=" <?php echo htmlspecialchars($reserva['DocumentoCliente']); ?> " disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="numero" class="form-label">Número de Reserva</label>
-                    <input type="text" class="form-control" id="numero" name="NumeroReserva" 
-                           value=" <?php echo htmlspecialchars($reserva['NumeroReserva']); ?> " disabled>
-                </div>
-
-                <div class="mb-3">
-                    <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
-                    <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" name="VehiculosDisponibles" >
-                        <option value="" selected>Selecciona una opción</option>
-
+                if ($mensajeError) { ?>
+                    <div class="alert alert-danger mt-3"> 
                         <?php 
-                        if (!empty($vehiculosDisponibles)) {
-                            $selected = '';
+                            echo "Error al intentar modificar el vehículo. <br><br>"; 
+                            echo $mensajeError; 
+                        ?>        
+                    </div>
+                <?php } 
+                ?>
 
-                            for ($i = 0; $i < $cantidadVehiculos; $i++) {
-                                // Lógica para verificar si el grupo debe estar seleccionado
-                                $selected = (!empty($_POST['VehiculosDisponibles']) && $_POST['VehiculosDisponibles'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
-                                echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
-                                    MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
-                                </option>";
+                <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
+                
+                <!-- Formulario para modificar la reserva -->
+                <form method="POST">
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="NombreCliente" 
+                            value=" <?php echo htmlspecialchars($reserva['NombreCliente']); ?> " disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="ApellidoCliente" 
+                            value=" <?php echo htmlspecialchars($reserva['ApellidoCliente']); ?>" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="documento" class="form-label">Documento</label>
+                        <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
+                            value=" <?php echo htmlspecialchars($reserva['DocumentoCliente']); ?> " disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Número de Reserva</label>
+                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
+                            value=" <?php echo htmlspecialchars($reserva['NumeroReserva']); ?> " disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
+                        <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" name="VehiculosDisponibles" >
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            if (!empty($vehiculosDisponibles)) {
+                                $selected = '';
+
+                                for ($i = 0; $i < $cantidadVehiculos; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($_POST['VehiculosDisponibles']) && $_POST['VehiculosDisponibles'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
+                                    echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
+                                        MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
+                                    </option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
                             }
-                        } 
-                        else {
-                            echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+                            ?>
+                        </select>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
-                    <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                           value=" <?php echo htmlspecialchars($reserva['FechaRetiro']); ?> " required>
-                </div>
+                    <div class="mb-3">
+                        <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
+                        <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
+                            value=" <?php echo htmlspecialchars($reserva['FechaRetiro']); ?> " required>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
-                    <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                           value=" <?php echo htmlspecialchars($reserva['FechaDevolucion']); ?> " required>
-                </div>
+                    <div class="mb-3">
+                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                        <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
+                            value=" <?php echo htmlspecialchars($reserva['FechaDevolucion']); ?> " required>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-            </form>
+                    <button type="submit" class="btn btn-primary" name="BotonModificarReserva" value="modificandoReserva"; >Guardar Cambios</button>
+                </form>
 
+            </div>
         </div>
     </div>
 
