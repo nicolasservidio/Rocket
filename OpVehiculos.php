@@ -22,7 +22,6 @@ require_once 'funciones/vehiculos listado.php';
 if (!empty($_POST['BotonFiltro'])) {
 
     require_once 'funciones/vehiculo consulta.php';
-
     Procesar_Consulta();
 
     $ListadoVehiculos = array();
@@ -45,6 +44,30 @@ if (!empty($_POST['BotonDesfiltrar'])) {
 }
 
 
+// Modificacion de vehiculo
+$matri = '';
+$dispo = '';
+$model = '';
+$grup = '';
+require_once 'funciones/ModificarVehiculo.php';
+
+if (!empty($_POST['ModificarVehiculo'])) {
+
+    $matri = $_POST['MatriculaMOD'];
+    $dispo = $_POST['DisponibilidadMOD'];
+    $model = $_POST['ModeloMOD'];
+    $grup = $_POST['GrupoMOD'];
+
+    $MensajeModificacion = Corroborar_Modificacion($matri, $dispo, $model, $grup);
+
+    Modificar_Vehiculo($matri, $dispo, $model, $grup, $conexion);
+
+    $_POST = array();
+    header('Location: OpVehiculos.php');
+    die();
+}
+
+
 require_once "head.php";
 ?>
 
@@ -55,7 +78,9 @@ require_once "topNavBar.php";
 require_once "sidebarGop.php";
 ?>
 
+
 <main class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light bg-gradient p-4">
+
     <div class="card col-8 bg-white p-4 rounded shadow mb-4">
         <h4 class="text-center mb-4">Filtrar Vehículos</h4>
 
@@ -126,6 +151,7 @@ require_once "sidebarGop.php";
         <button type="button" class="btn btn-primary" onclick="modificarVehiculo()">Modificar</button>
         <button type="button" class="btn btn-warning" onclick="renovarVehiculo()">Eliminar</button>
     </div>
+
 </main>
 
 <!-- Modal para nuevo vehículo -->
@@ -173,25 +199,28 @@ require_once "sidebarGop.php";
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="modificarVehiculoForm" action="ModificarVehiculo.php" method="post">
-                    <input type="hidden" name="matricula" id="modificarMatricula">
+
+                <!-- Form para modificar -->
+                <form id="modificarVehiculoForm" method="post">
+                    <input type="hidden" id="modificarMatricula" name="MatriculaMOD">
                     <div class="mb-3">
                         <label for="modificarModelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo" id="modificarModelo" required>
+                        <input type="text" class="form-control" id="modificarModelo" name="ModeloMOD" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="modificarGrupo" class="form-label">Grupo</label>
-                        <input type="text" class="form-control" name="grupo" id="modificarGrupo" required>
+                        <input type="text" class="form-control" id="modificarGrupo" name="GrupoMOD" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="modificarDisponible" class="form-label">Disponible</label>
-                        <select class="form-select" name="disponible" id="modificarDisponible">
-                            <option value="Sí">Sí</option>
-                            <option value="No">No</option>
+                        <select class="form-select" id="modificarDisponible" name="DisponibilidadMOD">
+                            <option value="S">Sí</option>
+                            <option value="N">No</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Modificar</button>
+                    <button type="submit" class="btn btn-primary" name="ModificarVehiculo" value="Modificando">Modificar</button>                    
                 </form>
+
             </div>
         </div>
     </div>
