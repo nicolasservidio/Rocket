@@ -112,7 +112,7 @@ function Listar_Sucursal($vConexion) {
 
 
 // EMITIR LISTADO de Vehiculos
-function Listar_Vehiculos($vConexion) {
+function Listar_VehiculosReservados($vConexion) {
 
     $Listado = array();
 

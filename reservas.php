@@ -43,7 +43,7 @@ if (!empty($_POST['BotonLimpiarFiltros'])) {
 // SELECCIONES para combo boxes
 require_once 'funciones/Select_Tablas.php';
 
-$ListadoVehiculos = Listar_Vehiculos($conexion);
+$ListadoVehiculos = Listar_VehiculosReservados($conexion);
 $CantidadVehiculos = count($ListadoVehiculos);
 
 $ListadoClientes = Listar_Clientes($conexion);
