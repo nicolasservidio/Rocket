@@ -108,7 +108,43 @@ function Listar_Sucursal($vConexion) {
     }
 
     return $Listado;
+}
 
+
+// EMITIR LISTADO de Vehiculos
+function Listar_Vehiculos($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT v.idVehiculo as IdVehiculo,
+                   v.matricula as matricula,
+                   v.idModelo,
+                   v.idGrupoVehiculo,
+                   m.idModelo, 
+                   m.nombreModelo as modelo, 
+                   m.descripcionModelo, 
+                   g.idGrupo,
+                   g.nombreGrupo as grupo
+            FROM vehiculos v, modelos m, `grupos-vehiculos` g 
+            WHERE v.idModelo = m.idModelo 
+            AND v.idGrupoVehiculo = g.idGrupo; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdVehiculo'] = $data['IdVehiculo'];
+            $Listado[$i]['matricula'] = $data['matricula'];
+            $Listado[$i]['modelo'] = $data['modelo'];
+            $Listado[$i]['grupo'] = $data['grupo'];
+            
+            $i++;
+    }
+
+    return $Listado;
 }
 
 

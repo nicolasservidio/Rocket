@@ -40,6 +40,13 @@ if (!empty($_POST['BotonLimpiarFiltros'])) {
 }
 
 
+// SELECCIONES para combo boxes
+require_once 'funciones/Select_Tablas.php';
+
+$ListadoVehiculos = Listar_Vehiculos($conexion);
+$CantidadVehiculos = count($ListadoVehiculos);
+
+
 
 include('head.php');
 
@@ -162,7 +169,7 @@ include('head.php');
                     <div class="container d-flex justify-content-center">
 
                         <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
-                            <i class="fas fa-plus-circle"></i> Nuevo
+                            <i class="fas fa-plus-circle"></i> Nueva
                         </button>
 
                         <button class="btn btn-primary me-2" id="btnModificar" onclick="modificarReserva()" disabled>
@@ -178,6 +185,89 @@ include('head.php');
                         </button>
                     </div>
                 </div>
+
+
+
+
+
+
+                <!-- Modal para Nueva Reserva -->
+                <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="nuevoRegistroModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="nuevoRegistroModalLabel">Agregar Nueva Reserva</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Form -->
+                            <form action="Nueva_Reserva.php" method="post">
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="idCliente" class="form-label">Cliente</label>
+                                        <input type="text" class="form-control" id="idCliente" name="idCliente" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="numreserva" class="form-label">Número de reserva</label>
+                                        <input type="text" class="form-control" id="numreserva" name="numreserva" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="idVehiculo" class="form-label">Vehículo</label>
+
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idVehiculo" required>
+                                            <option value="" selected>Selecciona una opción</option>
+
+                                            <?php 
+                                            // Asegúrate de que $ListadoVehiculos contiene datos antes de procesarlo
+                                            if (!empty($ListadoVehiculos)) {
+                                                $selected = '';
+                                                for ($i = 0; $i < $CantidadVehiculos; $i++) {
+                                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                                    $selected = (!empty($_POST['idVehiculo']) && $_POST['idVehiculo'] == $ListadoVehiculos[$i]['IdVehiculo']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoVehiculos[$i]['IdVehiculo']}' $selected> {$ListadoVehiculos[$i]['matricula']} - {$ListadoVehiculos[$i]['modelo']} - {$ListadoVehiculos[$i]['grupo']}  </option>";
+                                                }
+                                            } 
+                                            else {
+                                                echo "<option value=''>No se encontraron vehículos</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
+                                        <input type="date" class="form-control" id="fecharetiro" name="fecharetiro" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                                        <input type="date" class="form-control" id="fechadevolucion" name="fechadevolucion" required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
             </div>
         </div>
