@@ -199,4 +199,21 @@ function Consulta_Reservas($numReserva, $matricula, $apellido, $nombre, $dni, $r
 }
 
 
+function Corroborar_FechasReserva($fecharetiro, $fechadevolucion) {
+ 
+    $Fecha_actual = date("d-m-y");
+    $Fecha_manana = date("d-m-y",strtotime($Fecha_actual."+ 1 day"));
+
+    if ($fecharetiro <= $Fecha_actual || $fechadevolucion <= $Fecha_actual) {
+        return false; 
+    } 
+    elseif ($fecharetiro < $fechadevolucion) {
+        return false;
+    }
+    else {
+        return true;
+    }
+
+}
+
 ?>

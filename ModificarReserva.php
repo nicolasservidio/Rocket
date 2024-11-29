@@ -40,7 +40,7 @@ if (isset($_GET['id'])) {
                         g.nombreGrupo as Grupo,
                         g.descripcionGrupo 
                  FROM `reservas-vehiculos` r, clientes c, vehiculos v, modelos m, `grupos-vehiculos` g 
-                 WHERE idReserva = $idReserva 
+                 WHERE r.idReserva = $idReserva 
                  AND r.idCliente = c.idCliente 
                  AND r.idVehiculo = v.idVehiculo 
                  AND v.idModelo = m.idModelo 
@@ -65,29 +65,51 @@ else {
     exit();
 }
 
+
 // A continuación se hace UPDATE de los datos luego de cliquear el botón "Guardar Cambios" (los elementos POST proceden de este mismo archivo)
-/*
+
+$mensaje = "";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $idCliente = $_POST['idCliente'];
-    $numreserva = $_POST['numreserva'];
-    $idVehiculo = $_POST['idVehiculo'];
-    $fecharetiro = $_POST['fecharetiro'];
-    $fechadevolucion = $_POST['fechadevolucion'];
 
-    // Actualizar los datos del cliente
-    $consulta = "UPDATE `reservas-vehiculos` 
-                 SET numeroReserva = ?, idVehiculo = ?, mailCliente = ?, telefonoCliente = ?, direccionCliente = ? 
-                 WHERE idCliente = ?";
+    $idCliente = $reserva['IDCliente'];
+    $numreserva = $_POST['NumeroReserva'];
+    $idVehiculo = $_POST['VehiculosDisponibles'];
+    $fecharetiro = $_POST['FechaRetiro'];
+    $fechadevolucion = $_POST['FechaDevolucion'];
 
-    $stmt = $MiConexion->prepare($consulta);
-    $stmt->bind_param("sssssi", $nombre, $apellido, $email, $telefono, $direccion, $idReserva);
-    $stmt->execute();
+    require_once 'funciones/CRUD-Reservas.php';
+    
+    if (Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true) { 
 
-    // Redirigir después de la actualización
-    header('Location: clientes.php');
-    exit();
+        // Actualizar los datos del cliente
+        $ModificacionReserva = "UPDATE `reservas-vehiculos` 
+                                SET numeroReserva = $numreserva, 
+                                    fechaReserva = NOW(), 
+                                    fechaInicioReserva = '$fecharetiro', 
+                                    FechaFinReserva = '$fechadevolucion', 
+                                    idCliente = $idCliente, 
+                                    idVehiculo = $idVehiculo 
+                                WHERE idReserva = $idReserva"; 
+
+
+        $rs = mysqli_query($conexion, $ModificacionReserva);
+
+        if (!$rs) {
+            //si surge un error, finalizo la ejecucion del script con un mensaje
+            die('<h4>Error al intentar modificar el vehículo.</h4>');
+        }
+
+        // Redirigir después de la actualización
+        header('Location: clientes.php');
+        exit();
+    }
+
+    else {
+        $mensaje = "Usted debe reservar con al menos un día de antelación.";
+    }
+
 }
-*/
 
 ?>
 
