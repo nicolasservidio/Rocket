@@ -14,6 +14,34 @@ $ListadoReservas = Listar_Reservas($conexion);
 $CantidadReservas = count($ListadoReservas);
 
 
+// Consulta por medio de formulario de Filtro
+if (!empty($_POST['BotonFiltrar'])) {
+
+    // require_once 'funciones/vehiculo consulta.php';
+    Procesar_Consulta();
+
+    $ListadoReservas = array();
+    $CantidadReservas = '';
+    $ListadoReservas = Consulta_Reservas($_POST['NumeroReserva'], $_POST['MatriculaReserva'], $_POST['ApellidoReserva'], $_POST['NombreReserva'], $_POST['DocReserva'], $_POST['RetiroDesde'], $_POST['RetiroHasta'], $conexion);
+    $CantidadReservas = count($ListadoReservas);
+}
+else {
+
+    // Listo la totalidad de los registros en la tabla "vehiculos". 
+    $ListadoReservas = Listar_Reservas($conexion);
+    $CantidadReservas = count($ListadoReservas);
+}
+
+/*
+if (!empty($_POST['BotonDesfiltrar'])) {
+
+        // Listo la totalidad de los registros en la tabla "vehiculos" 
+        $ListadoVehiculos = Listar_Vehiculos($conexion);
+        $CantidadVehiculos = count($ListadoVehiculos);
+}
+*/
+
+
 
 include('head.php');
 
@@ -68,7 +96,9 @@ include('head.php');
                 </div>
 
                 <div class="col-md-2 d-flex align-items-end">
-                    <button type="button" class="btn btn-danger w-100"><i class="fas fa-filter"></i> Filtrar</button>
+                    <button type="submit" class="btn btn-danger w-100" name="BotonFiltrar" value="FiltrandoReservas">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
                 </div>
             </form>
 
