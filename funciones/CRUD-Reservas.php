@@ -67,39 +67,39 @@ function Listar_Reservas($conexion) {
     return $Listado;
 }
 
-function Procesar_Consulta() {
+function Procesar_ConsultaReservas() {
 
-        $_POST['NumeroReserva'] = trim($_POST['NumeroReserva']);
-        $_POST['NumeroReserva'] = strip_tags($_POST['NumeroReserva']);
+        $_GET['NumeroReserva'] = trim($_GET['NumeroReserva']);
+        $_GET['NumeroReserva'] = strip_tags($_GET['NumeroReserva']);
 
-        $_POST['MatriculaReserva'] = trim($_POST['MatriculaReserva']);
-        $_POST['MatriculaReserva'] = strip_tags($_POST['MatriculaReserva']);
+        $_GET['MatriculaReserva'] = trim($_GET['MatriculaReserva']);
+        $_GET['MatriculaReserva'] = strip_tags($_GET['MatriculaReserva']);
 
-        $_POST['ApellidoReserva'] = trim($_POST['ApellidoReserva']);
-        $_POST['ApellidoReserva'] = strip_tags($_POST['ApellidoReserva']);
+        $_GET['ApellidoReserva'] = trim($_GET['ApellidoReserva']);
+        $_GET['ApellidoReserva'] = strip_tags($_GET['ApellidoReserva']);
     
-        $_POST['NombreReserva'] = trim($_POST['NombreReserva']);
-        $_POST['NombreReserva'] = strip_tags($_POST['NombreReserva']);
+        $_GET['NombreReserva'] = trim($_GET['NombreReserva']);
+        $_GET['NombreReserva'] = strip_tags($_GET['NombreReserva']);
 
-        $_POST['DocReserva'] = trim($_POST['DocReserva']);
-        $_POST['DocReserva'] = strip_tags($_POST['DocReserva']);
+        $_GET['DocReserva'] = trim($_GET['DocReserva']);
+        $_GET['DocReserva'] = strip_tags($_GET['DocReserva']);
 
         // Se cambia formato de las fechas:
-        $fechaEspanol = $_POST['RetiroDesde'];
+        $fechaEspanol = $_GET['RetiroDesde'];
         $fechaEspanol = date_parse($fechaEspanol);
         $year = $fechaEspanol['year'];
         $mo = $fechaEspanol['month'];
         $day = $fechaEspanol['day'];
         $fechaIngles = "$year/$mo/$day";
-        $_POST['RetiroDesde'] = $fechaIngles;
+        $_GET['RetiroDesde'] = $fechaIngles;
 
-        $fechaEspanol = $_POST['RetiroHasta'];
+        $fechaEspanol = $_GET['RetiroHasta'];
         $fechaEspanol = date_parse($fechaEspanol);
         $year = $fechaEspanol['year'];
         $mo = $fechaEspanol['month'];
         $day = $fechaEspanol['day'];
         $fechaIngles = "$year/$mo/$day";
-        $_POST['RetiroHasta'] = $fechaIngles;
+        $_GET['RetiroHasta'] = $fechaIngles;
 
 }
 

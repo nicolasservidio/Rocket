@@ -8,6 +8,18 @@ Corroborar_Usuario();
 require_once "conn/conexion.php";
 $conexion = ConexionBD();
 
+// Obtener filtros del formulario
+$filtros = [
+    'numero' => isset($_GET['NumeroReserva']) ? trim($_GET['NumeroReserva']) : '',
+    'matricula' => isset($_GET['MatriculaReserva']) ? trim($_GET['MatriculaReserva']) : '',
+    'apellido' => isset($_GET['ApellidoReserva']) ? trim($_GET['ApellidoReserva']) : '',
+    'nombre' => isset($_GET['NombreReserva']) ? trim($_GET['NombreReserva']) : '',
+    'documento' => isset($_GET['DocReserva']) ? trim($_GET['DocReserva']) : '',
+    'retirodesde' => isset($_GET['RetiroDesde']) ? trim($_GET['RetiroDesde']) : '',
+    'retirohasta' => isset($_GET['RetiroHasta']) ? trim($_GET['RetiroHasta']) : '',
+];
+
+
 // Generación del listado de reservas
 require_once 'funciones/CRUD-Reservas.php';
 $ListadoReservas = Listar_Reservas($conexion);
@@ -15,14 +27,14 @@ $CantidadReservas = count($ListadoReservas);
 
 
 // Consulta por medio de formulario de Filtro
-if (!empty($_POST['BotonFiltrar'])) {
+if (!empty($_GET['BotonFiltrar'])) {
 
     // require_once 'funciones/vehiculo consulta.php';
-    Procesar_Consulta();
+    Procesar_ConsultaReservas();
 
     $ListadoReservas = array();
     $CantidadReservas = '';
-    $ListadoReservas = Consulta_Reservas($_POST['NumeroReserva'], $_POST['MatriculaReserva'], $_POST['ApellidoReserva'], $_POST['NombreReserva'], $_POST['DocReserva'], $_POST['RetiroDesde'], $_POST['RetiroHasta'], $conexion);
+    $ListadoReservas = Consulta_Reservas($_GET['NumeroReserva'], $_GET['MatriculaReserva'], $_GET['ApellidoReserva'], $_GET['NombreReserva'], $_GET['DocReserva'], $_GET['RetiroDesde'], $_GET['RetiroHasta'], $conexion);
     $CantidadReservas = count($ListadoReservas);
 }
 else {
@@ -32,8 +44,7 @@ else {
     $CantidadReservas = count($ListadoReservas);
 }
 
-
-if (!empty($_POST['BotonLimpiarFiltros'])) {
+if (!empty($_GET['BotonLimpiarFiltros'])) {
 
     header('Location: reservas.php');
     die();
@@ -62,6 +73,11 @@ include('head.php');
         <?php 
         include('sidebarGOp.php');
         include('topNavBar.php');    
+
+        if (isset($_GET['mensaje'])) {
+            echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
+        }
+
         ?>
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
@@ -70,38 +86,46 @@ include('head.php');
                 <div style='color: #0a8acf; margin-bottom: 30px;'> <h3 class="fw-bold"> Reservas </h3> </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" method="post">
+                <form class="row g-3" action="reservas.php" method="get">
 
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroReserva" value=" <?php echo !empty($_POST['NumeroReserva']) ? $_POST['NumeroReserva'] : ''; ?> ">
+                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
+                               value=" <?= htmlspecialchars($filtros['numero']) ?> " >
                     </div>
 
                     <div class="col-md-2">
                         <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva" value=" <?php echo !empty($_POST['MatriculaReserva']) ? $_POST['MatriculaReserva'] : ''; ?> ">
+                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva" 
+                               value=" <?= htmlspecialchars($filtros['matricula']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva" value=" <?php echo !empty($_POST['ApellidoReserva']) ? $_POST['ApellidoReserva'] : ''; ?> ">
+                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva" 
+                               value=" <?= htmlspecialchars($filtros['apellido']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreReserva" value=" <?php echo !empty($_POST['NombreReserva']) ? $_POST['NombreReserva'] : ''; ?> ">
+                        <input type="text" class="form-control" id="nombre" name="NombreReserva" 
+                               value=" <?= htmlspecialchars($filtros['nombre']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="DocReserva" value=" <?php echo !empty($_POST['DocReserva']) ? $_POST['DocReserva'] : ''; ?> ">
+                        <input type="text" class="form-control" id="documento" name="DocReserva" 
+                               value=" <?= htmlspecialchars($filtros['documento']) ?> ">
                     </div>
 
                     <div class="col-md-3">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
-                            <input type="date" class="form-control me-2" name="RetiroDesde" value=" <?php echo !empty($_POST['RetiroDesde']) ? $_POST['RetiroDesde'] : ''; ?> ">
-                            <input type="date" class="form-control" name="RetiroHasta" value=" <?php echo !empty($_POST['RetiroHasta']) ? $_POST['RetiroHasta'] : ''; ?> ">
+                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
+                                   value=" <?= htmlspecialchars($filtros['retirodesde']) ?> ">
+
+                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
+                                   value=" <?= htmlspecialchars($filtros['retirohasta']) ?> ">
                         </div>
                     </div>
 
@@ -121,7 +145,7 @@ include('head.php');
             <!-- Tabla de reservas -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
                 <div class="table-responsive mt-4" style="max-width: 97%; border: 1px solid #444444; border-radius: 14px;">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="tablaReservas">
                         <thead>
                             <tr>
                                 <th style='color: #d19513;'><h3>#</h3></th>
@@ -286,7 +310,43 @@ include('head.php');
         </div>
     </div>
 
+
+    <script>
+        let reservaSeleccionada = null;
+
+        // Selección de fila en la Tabla de Reservas al hacer clic en la misma
+        document.querySelectorAll('#tablaReservas .reserva').forEach(row => {
+            row.addEventListener('click', () => {
+                // Desmarcar cualquier fila previamente seleccionada
+                document.querySelectorAll('.reserva').forEach(row => row.classList.remove('table-active'));
+                // Marcar la fila seleccionada
+                row.classList.add('table-active');
+                reservaSeleccionada = row.dataset.id;
+                // Habilitar los botones
+                document.getElementById('btnModificar').disabled = false;
+                document.getElementById('btnEliminar').disabled = false;
+            });
+        });
+
+        // Función para redirigir a ModificarCliente.php con el ID del cliente seleccionado
+        function modificarReserva() {
+            if (reservaSeleccionada) {
+                window.location.href = 'ModificarReserva.php?id=' + reservaSeleccionada;
+            }
+        }
+
+        // Función para redirigir a EliminarCliente.php con el ID del cliente seleccionado
+        function eliminarReserva() {
+            if (reservaSeleccionada) {
+                if (confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
+                    window.location.href = 'EliminarReserva.php?id=' + reservaSeleccionada;
+                }
+            }
+        }
+    </script>
+
     <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     

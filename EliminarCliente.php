@@ -1,6 +1,8 @@
 <?php
+
 include('head.php');
 include('conn/conexion.php');
+
 $MiConexion = ConexionBD();
 
 // Verificar si el ID del cliente está presente en la URL
@@ -23,9 +25,11 @@ if (isset($_GET['id'])) {
         header('Location: clientes.php?mensaje=Error al eliminar el cliente.');
         exit();
     }
-} else {
+} 
+else {
     // Si no se pasa un ID, redirigir al listado de clientes
     header('Location: clientes.php');
     exit();
 }
+
 ?>

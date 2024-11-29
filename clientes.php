@@ -80,10 +80,11 @@ include('head.php');
                 </div>
             </form>
         </div>
+
         <!-- Sección de Listado Clientes -->
         <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Clientes</strong></h5>
-            <table class="table table-hover" id="tablaClientes">
+            <table class="table table-hover" id="tablaClientes" >
                 <thead>
                     <tr>
                         <th style='color: #bd399e;'><h3>#</h3></th>
