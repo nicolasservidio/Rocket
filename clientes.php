@@ -26,7 +26,7 @@ include('head.php');
 ?>
 
 <body class="bg-light">
-    <div class="wrapper" style="margin-bottom: 100px;">
+    <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
         <?php 
         include('sidebarGOp.php');
         include('topNavBar.php');
@@ -85,6 +85,7 @@ include('head.php');
             <table class="table table-hover" id="tablaClientes">
                 <thead>
                     <tr>
+                        <th style='color: #bd399e;'><h3>#</h3></th>
                         <th>ID Cliente</th>
                         <th>Documento</th>
                         <th>Nombre</th>
@@ -96,8 +97,11 @@ include('head.php');
                 </thead>
                 <tbody>
                     <?php
+                    $contador = "1";
+
                     for ($i = 0; $i < $CantidadClientes; $i++) {
                         echo "<tr class='cliente' data-id='" . $ListadoClientes[$i]['ID'] . "'>
+                            <td><span style='color: #bd399e;'><h3>" . $contador . "</h3></span></td>
                             <td>" . $ListadoClientes[$i]['ID'] . "</td>
                             <td>" . $ListadoClientes[$i]['DOCUMENTO'] . "</td>
                             <td>" . $ListadoClientes[$i]['NOMBRE'] . "</td>
@@ -106,6 +110,7 @@ include('head.php');
                             <td>" . $ListadoClientes[$i]['TELEFONO'] . "</td>
                             <td>" . $ListadoClientes[$i]['DIRECCION'] . "</td>
                         </tr>";
+                        $contador++;
                     }
                     ?>
                 </tbody>
@@ -133,6 +138,8 @@ include('head.php');
                 <h5 class="modal-title" id="nuevoClienteModalLabel">Agregar Nuevo Cliente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <!-- Form -->
             <form action="NuevoCliente.php" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">

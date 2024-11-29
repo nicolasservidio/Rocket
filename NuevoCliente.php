@@ -3,12 +3,18 @@ session_start();
 require_once 'conn/conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $documento = trim($_POST['documento']);
-    $nombre = trim($_POST['nombre']);
-    $apellido = trim($_POST['apellido']);
-    $email = trim($_POST['email']);
-    $telefono = trim($_POST['telefono']);
-    $direccion = trim($_POST['direccion']);
+    $documento = strip_tags($_POST['documento']);
+    $documento = trim($documento);
+    $nombre = strip_tags($_POST['nombre']);
+    $nombre = trim($nombre);
+    $apellido = strip_tags($_POST['apellido']);
+    $apellido = trim($apellido);
+    $email = strip_tags($_POST['email']);
+    $email = trim($email);
+    $telefono = strip_tags($_POST['telefono']);
+    $telefono = trim($telefono);
+    $direccion = strip_tags($_POST['direccion']);
+    $direccion = trim($direccion);
 
     // Validaciones básicas
     $errores = [];
