@@ -412,7 +412,7 @@ function renovarVehiculo() {
     if (confirm(`¿Estás seguro de que deseas eliminar el vehículo con matrícula ${matricula}?`)) {
         // Realizar llamada AJAX para eliminar el vehículo
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "EliminarVehiculo.php", true);
+        xhr.open("POST", "funciones/EliminarVehiculo.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onload = function() {
             if (xhr.status === 200) {
