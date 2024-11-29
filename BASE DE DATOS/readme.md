@@ -1,6 +1,6 @@
 # Base de Datos
 
-Última versión de la BD. Necesario implementarla para que el sistema funcione correctamente.
+Versiones de la BD. Necesario implementar la primera versión (v 0.1) para que el sistema funcione correctamente.
 
 <br>
 
