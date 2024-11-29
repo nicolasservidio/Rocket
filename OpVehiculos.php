@@ -67,6 +67,10 @@ if (!empty($_POST['ModificarVehiculo'])) {
     die();
 }
 
+require_once 'funciones/SelectGrupo.php';
+
+$ListadoGrupo = Listar_Grupo($conexion);
+$CantidadGrupo = count($ListadoGrupo);
 
 require_once "head.php";
 ?>
@@ -173,9 +177,24 @@ require_once "sidebarGop.php";
                         <input type="text" class="form-control" name="modelo" required>
                     </div>
                     <div class="mb-3">
-                        <label for="grupo" class="form-label">Grupo</label>
-                        <input type="text" class="form-control" name="grupo" required>
-                    </div>
+    <label for="grupo" class="form-label">Grupo</label>
+    <select class="form-select" aria-label="Selector" id="selector" name="Grupo">
+        <option value="" selected>Selecciona una opción</option>
+        <?php 
+        // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
+        if (!empty($ListadoGrupo)) {
+            $selected = '';
+            for ($i = 0; $i < $CantidadGrupo; $i++) {
+                // Lógica para verificar si el grupo debe estar seleccionado
+                $selected = (!empty($_POST['Grupo']) && $_POST['Grupo'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
+                echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
+            }
+        } else {
+            echo "<option value=''>No se encontraron grupos</option>";
+        }
+        ?>
+    </select>
+</div>
                     <div class="mb-3">
                         <label for="disponible" class="form-label">Disponible</label>
                         <select class="form-select" name="disponible">
