@@ -37,10 +37,11 @@ include('head.php');
         }
         ?>
 
-        <!-- Formulario de filtro -->
         <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
-            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;"> 
             <h5 class="mb-4 text-secondary"><strong>Filtrar Clientes</strong></h5>
+
+            <!-- Formulario de filtro -->
             <form action="clientes.php" method="GET">
                 <div class="row">
                     <div class="col-md-2">
@@ -120,63 +121,63 @@ include('head.php');
         </div>
 
         <!-- Botones -->
-<div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
-    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#nuevoClienteModal">
-        <i class="fas fa-plus-circle"></i> Nuevo
-    </button>
-    <div>
-        <button class="btn btn-primary" id="btnModificar" onclick="modificarCliente()" disabled>Modificar Cliente</button>
-        <button class="btn btn-danger" id="btnEliminar" onclick="eliminarCliente()" disabled>
-            <i class="fas fa-trash-alt"></i> Eliminar
-        </button>
-    </div>
-</div>
-
-<!-- Modal para Nuevo Cliente -->
-<div class="modal fade" id="nuevoClienteModal" tabindex="-1" aria-labelledby="nuevoClienteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="nuevoClienteModalLabel">Agregar Nuevo Cliente</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#nuevoClienteModal">
+                <i class="fas fa-plus-circle"></i> Nuevo
+            </button>
+            <div>
+                <button class="btn btn-primary" id="btnModificar" onclick="modificarCliente()" disabled>Modificar Cliente</button>
+                <button class="btn btn-danger" id="btnEliminar" onclick="eliminarCliente()" disabled>
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
             </div>
-
-            <!-- Form -->
-            <form action="NuevoCliente.php" method="POST">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="documento" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
+
+        <!-- Modal para Nuevo Cliente -->
+        <div class="modal fade" id="nuevoClienteModal" tabindex="-1" aria-labelledby="nuevoClienteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="nuevoClienteModalLabel">Agregar Nuevo Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Form -->
+                    <form action="NuevoCliente.php" method="POST">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="documento" class="form-label">Documento</label>
+                                <input type="text" class="form-control" id="documento" name="documento" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="apellido" class="form-label">Apellido</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div style="padding-top: 5%; padding-bottom: 20px;">
             <?php require_once "foot.php"; ?>

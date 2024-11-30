@@ -67,7 +67,6 @@ include('head.php');
 ?>
 
 <body >
-
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
 
         <?php 
@@ -336,7 +335,7 @@ include('head.php');
         // Función para redirigir a EliminarCliente.php con el ID del cliente seleccionado
         function eliminarReserva() {
             if (reservaSeleccionada) {
-                if (confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
+                if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
                     window.location.href = 'EliminarReserva.php?id=' + reservaSeleccionada;
                 }
             }
