@@ -66,7 +66,16 @@ include('head.php');
 
 ?>
 
-<body >
+<body style="margin: 0 auto;">
+
+<style>
+
+.form-control:focus {
+    border-color: #c7240e;
+}
+
+</style>
+
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
 
         <?php 
@@ -81,9 +90,9 @@ include('head.php');
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
-            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #16719e; border-radius: 14px;">
-                <div style='color: #0a8acf; margin-bottom: 30px;'> 
-                    <h3 class="fw-bold"> Reservas </h3> 
+            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
+                <div style='color: #c7240e; margin-bottom: 30px;'> 
+                    <h3 class="fw-bold"> Contratos </h3> 
                 </div>
 
                 <!-- Formulario de filtros -->
@@ -120,6 +129,33 @@ include('head.php');
                     </div>
 
                     <div class="col-md-3">
+                        <label for="estado" class="form-label">Estado del Contrato</label>
+                        <input type="text" class="form-control" id="estado" name="EstadoContrato" 
+                               value=" <?= htmlspecialchars($filtros['documento']) ?> ">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="preciodia" class="form-label">Precio por día</label>
+                        <input type="text" class="form-control" id="preciodia" name="PrecioDiaContrato" 
+                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Filtrar por precio hasta los..." >
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="cantidaddias" class="form-label">Cantidad de días</label>
+                        <input type="text" class="form-control" id="cantidaddias" name="CantidadDiasContrato" 
+                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Cantidad exacta de días">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="montototal" class="form-label">Monto total</label>
+                        <input type="text" class="form-control" id="montototal" name="MontoTotalContrato" 
+                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Filtrar por monto total hasta los...">
+                    </div>
+
+                    <div class="col-md-2" style="margin-bottom: 100px;">
+                    </div>
+
+                    <div class="col-md-3">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
@@ -130,8 +166,19 @@ include('head.php');
                         </div>
                     </div>
 
+                    <div class="col-md-3">
+                        <label for="retiro" class="form-label">Devolución entre</label>
+                        <div class="d-flex">
+                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
+                                   value=" <?= htmlspecialchars($filtros['retirodesde']) ?> ">
+
+                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
+                                   value=" <?= htmlspecialchars($filtros['retirohasta']) ?> ">
+                        </div>
+                    </div>
+
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-info w-100" name="BotonFiltrar" value="FiltrandoReservas">
+                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoReservas">
                             <i class="fas fa-filter"></i> Filtrar
                         </button>
                     </div>
@@ -145,20 +192,25 @@ include('head.php');
 
             <!-- Tabla de reservas -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
-                <div class="table-responsive mt-4" style="max-width: 97%; border: 1px solid #444444; border-radius: 14px;">
+                <div class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
                     <table class="table table-striped table-hover" id="tablaReservas">
                         <thead>
                             <tr>
-                                <th style='color: #d19513;'><h3>#</h3></th>
-                                <th>Nro</th>
+                                <th style='color: #c7240e;'><h3>#</h3></th>
+                                <th>Contrato</th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
                                 <th>DNI</th>
                                 <th>Matrícula</th>
-                                <th>Grupo</th>
-                                <th>Modelo</th>
-                                <th>Fec. Ret.</th>
-                                <th>Fec. Dev.</th>
+                                <th>Vehiculo</th>
+                                <th>Fecha Ret.</th>
+                                <th>Fecha Dev.</th>
+                                <th>Oficina Ret.</th>
+                                <th>Oficina Dev.</th>
+                                <th>Estado Contrato</th>
+                                <th>Precio día</th>
+                                <th>Cantidad días</th>
+                                <th>Monto total</th>
                             </tr>
                         </thead>
 
@@ -171,16 +223,21 @@ include('head.php');
                                 <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
                                     onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
 
-                                    <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                    <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
                                     <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
+                                    <td> <?php echo "{$ListadoReservas[$i]['vehiculoModelo']} — {$ListadoReservas[$i]['vehiculoGrupo']}"; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
                                     <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo " "; ?> </td>
                                 </tr>
                                 <?php $contador++; ?>
                             <?php 
@@ -196,11 +253,11 @@ include('head.php');
                 <div style="margin-top: 8%;">
                     <div class="container d-flex justify-content-center">
 
-                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
+                        <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
                             <i class="fas fa-plus-circle"></i> Nueva
                         </button>
 
-                        <button class="btn btn-primary me-2" id="btnModificar" onclick="modificarReserva()" disabled>
+                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarReserva()" disabled>
                             Modificar
                         </button>
 

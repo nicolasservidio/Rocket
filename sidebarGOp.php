@@ -40,6 +40,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item" id="clientes" onclick="activarItem(this, 'clientes')" >
+                    <a aria-expanded="false" href="clientes.php" >
+                        <i class="fas fa-address-card" ></i>
+                        <p> Clientes </p>
+                    </a>
+                </li>
+
                 <li class="nav-item" id="reservas" onclick="activarItem(this, 'reservas')" >
                     <a aria-expanded="false" href="reservas.php" >
                         <i class="fas fa-clipboard-list" ></i>
@@ -47,10 +54,10 @@
                     </a>
                 </li>
 
-                <li class="nav-item" id="clientes" onclick="activarItem(this, 'clientes')" >
-                    <a aria-expanded="false" href="clientes.php" >
-                        <i class="fas fa-address-card" ></i>
-                        <p> Clientes </p>
+                <li class="nav-item" id="contratos" onclick="activarItem(this, 'contratos')" >
+                    <a aria-expanded="false" href="contratosAlquiler.php" >
+                        <i class="fas fa-file-signature" ></i>
+                        <p> Contratos </p>
                     </a>
                 </li>
 
