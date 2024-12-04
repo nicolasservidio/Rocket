@@ -15,72 +15,143 @@ require_once 'funciones/CRUD-Reservas.php';
 $ListadoReservas = Listar_Reservas($conexion);
 $CantidadReservas = count($ListadoReservas);
 
-
-
 include('head.php');
 
 ?>
 
-<body class="bg-light">
-    <div style="min-height: 100%; margin: auto; max-width: 70%;">
-        <div class="wrapper">
-            
-            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; border: 1px solid #444444; border-radius: 14px;">
+<body class="bg-light" style="margin-top: 2%; margin-bottom: 0;">
 
-                <h2 class="mb-4 text-secondary"><strong>Reporte: Reservas de vehículos </strong></h2>
+    <!-- Logo Header --> <!-- CUIDADO: Arroja error fatal si no tienen instalada la extensión "GD" de PHP en XAMPP. Para resolver el error, seguir instructivo: https://www.geeksforgeeks.org/how-to-install-php-gd-in-windows/ -->  
+    <div style="margin: 0 auto; padding: 0 0 20px 41%;">
+        <span style=""> 
+            <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" /> 
+        </span>
+    </div>
+    <!-- End Logo Header -->
+
+    <div style="margin: 0 auto; max-width: 95%;">
+        <div class="" style="">
+            
+            <div class="p-5 mb-4 bg-white shadow-sm" 
+                 style="margin: 0; padding: 20px; border: 2px solid #a80a0a; border-radius: 14px;">
+
+                <h2 class="mb-4 text-secondary" style="padding-bottom: 10px;">
+                    <strong>Reporte: Reservas de vehículos </strong>
+                </h2>
                 
                 <!-- Tabla con reporte de reservas -->
                 <table class="table table-striped table-hover" id="tablaReservas">
-                        <thead>
-                            <tr>
-                                <th style='color: #d19513;'><h3>#</h3></th>
-                                <th>Nro</th>
-                                <th>Apellido</th>
-                                <th>Nombre</th>
-                                <th>DNI</th>
-                                <th>Matrícula</th>
-                                <th>Grupo</th>
-                                <th>Modelo</th>
-                                <th>Fec. Ret.</th>
-                                <th>Fec. Dev.</th>
+                    <thead>
+                        <tr>
+                            <th style="margin: 0 auto; padding: 0 5px 0 0; color: #d45313; font-size: 22px;">
+                                <h3>#</h3>
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Nro
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Apellido
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Nombre
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                DNI
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Matrícula
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Grupo
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Modelo
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Fec. Ret.
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Fec. Dev.
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php
+                        $contador = 1; 
+
+                        for ($i=0; $i < $CantidadReservas; $i++) { ?>     
+
+                            <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
+                                onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')" >
+
+                                <td style="">
+                                    <span style="color: #d45313; font-size: 17px; margin: 0 auto; padding: 0;"> 
+                                        <h4> <?php echo $contador; ?> </h4>
+                                    </span>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['numeroReserva']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['nombreCliente']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['dniCliente']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> 
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> 
+                                </td>
                             </tr>
-                        </thead>
+                            <?php $contador++; ?>
 
-                        <tbody>
-                            <?php
-                            $contador = 1; 
+                        <?php 
+                        } 
+                        ?>
 
-                            for ($i=0; $i < $CantidadReservas; $i++) { ?>     
-
-                                <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
-                                    onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')" >
-
-                                    <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
-                                    <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
-                                </tr>
-                                <?php $contador++; ?>
-                            <?php 
-                            } 
-                            ?>
-
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>                    
 
             </div>
         </div>
     </div>
 
-    <div style="">
-            <?php require_once "foot.php"; ?>
-        </div>
+    <div style="margin-top: 30px;">
+        <?php require_once "foot.php"; ?>
+    </div>
 
 </body>
 </html>
@@ -92,18 +163,14 @@ $html = ob_get_clean();
 // Creando un objeto de tipo Dompdf para trabajar con todas las funcionalidades de conversión del documento HTML a PDF
 require_once 'administrador/dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
-$dompdf = new Dompdf();
-
-
+$dompdf = new Dompdf();  // Este objeto me permitirá trabajar con todas las funcionalidades de conversión de HTML a PDF
 
 // Activamos la opción que nos permite mostrar imágenes, por si la tabla llegara a contenerlas
 $options = $dompdf->getOptions();  // solo recupero la opción
 $options->set(array('isRemoteEnabled' => true));  // estoy activando con true esa opción, que es "isRemoteEnabled" 
 $dompdf->setOptions($options);  // y se lo estoy pasando nuevamente al objeto $dompdf, para que se pueda mostrar dicha imagen
 
-
 // Probemos:
-
 $dompdf->loadHtml($html);
 
 // genero el documento PDF:

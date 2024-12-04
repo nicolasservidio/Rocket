@@ -15,17 +15,15 @@ require_once 'funciones/CRUD-Reservas.php';
 $ListadoReservas = Listar_Reservas($conexion);
 $CantidadReservas = count($ListadoReservas);
 
-
-
 include('head.php');
 
 ?>
 
 <body class="bg-light">
-    <div style="min-height: 100%; margin: auto; max-width: 70%;">
-        <div class="wrapper" style="margin-bottom: 100px;">
+    <div style="margin: auto; max-width: 70%;">
+        <div class="" style="margin-bottom: 120px;">
             
-            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; border: 1px solid #444444; border-radius: 14px;">
+            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; border: 2px solid #5250ab; border-radius: 14px;">
 
                 <h2 class="mb-4 text-secondary"><strong>Reporte: Reservas de vehículos </strong></h2>
                 
@@ -75,10 +73,15 @@ include('head.php');
                 </table>                    
 
                 <!-- Botón de acción -->
-                <div style="margin-top: 8%;">
+                <div style="margin-top: 5%; margin-bottom: 3%;">
                     <div class="container d-flex justify-content-center">
+                        <span style="margin-right: 10%;">
+                            <a href="reservas.php"> <button class="btn" style="color: white; background-color: #5250ab;" >
+                                Volver
+                            </button></a>
+                        </span>
 
-                        <a href="ReporteReservas_pdf.php"> <button class="btn btn-warning">
+                        <a href="ReporteReservas_pdf.php"> <button class="btn btn-warning" >
                             Imprimir
                         </button></a>
                     </div>
