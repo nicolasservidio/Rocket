@@ -156,14 +156,14 @@ function Procesar_ConsultaContratos() {
 
 }
 
-$Mensaje = "3232";
+
 function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, $estadoContrato, $precioDia, $cantidadDias, $montoTotal, $retiroDesde, $retiroHasta, $devolucionDesde, $devolucionHasta, $conexion) {
 
     if (empty($numContrato)) {
         $numContrato = "ZZZZZZ";
     }
     if (empty($matricula)) {
-        $matricula = "ZZZZZZ";
+        $matricula = "&&&&&&";
     }
     if (empty($apellido)) {
         $apellido = "9999999";
@@ -179,13 +179,13 @@ function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, 
     }
 
     if (empty($precioDia)) {
-        $precioDia = 9999999999;
+        $precioDia = "0";
     }
     if (empty($cantidadDias)) {
-        $cantidadDias = 9999999999;
+        $cantidadDias = "0";
     }
     if (empty($montoTotal)) {
-        $montoTotal = 9999999999;
+        $montoTotal = "0";
     }
 
     if (empty($retiroDesde)) {
@@ -248,7 +248,7 @@ function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, 
             AND v.idSucursal = s.idSucursal 
             AND ca.idDetalleContrato = dc.idDetalleContrato 
             AND ca.idEstadoContrato = ec.idEstadoContrato 
-            AND (ca.idContrato LIKE '$numContrato%' 
+            AND (ca.idContrato = '$numContrato%' 
                 OR v.matricula LIKE '$matricula%' 
                 OR c.apellidoCliente LIKE '$apellido%' 
                 OR c.nombreCliente LIKE '$nombre%' 
@@ -257,17 +257,12 @@ function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, 
                 OR dc.precioPorDiaContrato <= '$precioDia' 
                 OR dc.cantidadDiasContrato = '$cantidadDias' 
                 OR dc.montoTotalContrato <= '$montoTotal' 
-                OR ca.fechaInicioContrato BETWEEN '$retiroDesde%' AND '$retiroHasta%' 
-                OR ca.fechaFinContrato BETWEEN '$devolucionDesde%' AND '$devolucionHasta%') 
+                OR (ca.fechaInicioContrato BETWEEN '$retiroDesde%' AND '$retiroHasta%') 
+                OR (ca.fechaFinContrato BETWEEN '$devolucionDesde%' AND '$devolucionHasta%')) 
             ORDER BY ca.fechaInicioContrato, ca.fechaFinContrato, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
 
 
     $rs = mysqli_query($conexion, $SQL);
-
-    if (!$rs) { 
-        $Mensaje = "La búsqueda no se realizó";
-        return $Mensaje;
-    }
         
     // El resultado debe organizarse en una matriz, entonces lo recorro:
     $i = 0;

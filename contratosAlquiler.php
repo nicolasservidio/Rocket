@@ -32,7 +32,6 @@ $ListadoContratos = Listar_Contratos($conexion);
 $CantidadContratos = count($ListadoContratos);
 
 
-
 // Consulta por medio de formulario de Filtro
 if (!empty($_GET['BotonFiltrar'])) {
 
@@ -68,7 +67,6 @@ $ListadoClientes = Listar_Clientes($conexion);
 $CantidadClientes = count($ListadoClientes);
 
 
-
 include('head.php');
 
 ?>
@@ -89,10 +87,6 @@ include('head.php');
         include('sidebarGOp.php');
         include('topNavBar.php');    
 
-        if ($Mensaje != "") {
-            echo '<div class="alert alert-danger" role="alert">' . $Mensaje . '</div>';
-        }
-
         if (isset($_GET['mensaje'])) {
             echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
         }
@@ -112,43 +106,43 @@ include('head.php');
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número</label>
                         <input type="text" class="form-control" id="numero" name="NumeroContrato" 
-                               value=" <?= htmlspecialchars($filtros['numero']) ?> " >
+                               value="<?= htmlspecialchars($filtros['numero']) ?>" >
                     </div>
 
                     <div class="col-md-2">
                         <label for="matricula" class="form-label">Matrícula</label>
                         <input type="text" class="form-control" id="matricula" name="MatriculaContrato" 
-                               value=" <?= htmlspecialchars($filtros['matricula']) ?> ">
+                               value="<?= htmlspecialchars($filtros['matricula']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
                         <input type="text" class="form-control" id="apellido" name="ApellidoContrato" 
-                               value=" <?= htmlspecialchars($filtros['apellido']) ?> ">
+                               value="<?= htmlspecialchars($filtros['apellido']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="NombreContrato" 
-                               value=" <?= htmlspecialchars($filtros['nombre']) ?> ">
+                               value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
                         <input type="text" class="form-control" id="documento" name="DocContrato" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> ">
+                               value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
 
                     <div class="col-md-3">
                         <label for="estado" class="form-label">Estado del Contrato</label>
                         <input type="text" class="form-control" id="estado" name="EstadoContrato" 
-                               value=" <?= htmlspecialchars($filtros['estado']) ?> ">
+                               value="<?= htmlspecialchars($filtros['estado']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="preciodia" class="form-label">Precio por día</label>
                         <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="preciodia" name="PrecioDiaContrato" 
-                               value=" <?= htmlspecialchars($filtros['preciodia']) ?> " title="Filtrar por precio hasta los..." >
+                               value="<?= htmlspecialchars($filtros['preciodia']) ?>" title="Filtrar por precio hasta los..." >
                     </div>
 
                     <?php 
@@ -158,13 +152,13 @@ include('head.php');
                     <div class="col-md-2">
                         <label for="cantidaddias" class="form-label">Cantidad de días</label>
                         <input type="number" min="<? echo $minCantDias; ?>" max="<?php echo $maxCantDias; ?>" class="form-control" id="cantidaddias" name="CantidadDiasContrato" 
-                               value=" <?= htmlspecialchars($filtros['cantidaddias']) ?> " title="Cantidad exacta de días entre 1 y 45">
+                               value="<?= htmlspecialchars($filtros['cantidaddias']) ?>" title="Cantidad exacta de días entre 1 y 45">
                     </div>
 
                     <div class="col-md-2">
                         <label for="montototal" class="form-label">Monto total</label>
                         <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="montototal" name="MontoTotalContrato" 
-                               value=" <?= htmlspecialchars($filtros['montototal']) ?> " title="Filtrar por monto total hasta los...">
+                               value="<?= htmlspecialchars($filtros['montototal']) ?>" title="Filtrar por monto total hasta los...">
                     </div>
 
                     <div class="col-md-2" style="margin-bottom: 100px;">
@@ -174,10 +168,10 @@ include('head.php');
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
-                                   value=" <?= htmlspecialchars($filtros['retirodesde']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
 
                             <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
-                                   value=" <?= htmlspecialchars($filtros['retirohasta']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
                         </div>
                     </div>
 
@@ -185,10 +179,10 @@ include('head.php');
                         <label for="devolucion" class="form-label">Devolución entre</label>
                         <div class="d-flex">
                             <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
-                                   value=" <?= htmlspecialchars($filtros['devoluciondesde']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
 
                             <input type="date" id="devolucionhasta" class="form-control" name="DevolucionHasta" 
-                                   value=" <?= htmlspecialchars($filtros['devolucionhasta']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['devolucionhasta']) ?>">
                         </div>
                     </div>
 
