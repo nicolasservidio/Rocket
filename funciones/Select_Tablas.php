@@ -218,5 +218,32 @@ function Listar_Clientes($vConexion) {
     return $Listado;
 }
 
+// EMITIR LISTADO de Estados de un contrato
+function Listar_EstadosContrato($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idEstadoContrato, 
+                   estadoContrato, 
+                   descripcionEstadoContrato 
+            FROM `estados-contratos` ; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdEstadoContrato'] = $data['idEstadoContrato'];
+            $Listado[$i]['EstadoContrato'] = $data['estadoContrato'];
+            $Listado[$i]['DescripcionEstadoContrato'] = $data['descripcionEstadoContrato'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
 
 ?>

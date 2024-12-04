@@ -10,46 +10,65 @@ include('conn/conexion.php');
 
 $conexion = ConexionBD();
 
-// Primero se traen los datos de la reserva y de vehículos disponibles para mostrar en pantalla y permitir la selección
+// Primero se traen los datos del contrato para mostrar en pantalla y permitir modificar las fechas, precio por día, total y el estado
 if (isset($_GET['id'])) {
-    $idReserva = $_GET['id'];
+    $idContrato = $_GET['id'];
 
-    $reserva = array();
+    $contrato = array();
 
-    // Obtener los datos de la reserva
-    $ConsultaReservas = "SELECT r.idReserva,
-                        r.numeroReserva as NumeroReserva,
-                        r.fechaInicioReserva as FechaRetiro,
-                        r.FechaFinReserva as FechaDevolucion,
-                        r.idCliente as IDCliente,
-                        r.idVehiculo as IDVehiculo,
-                        c.idCliente,
-                        c.nombreCliente as NombreCliente,
-                        c.apellidoCliente as ApellidoCliente,
-                        c.nacionalidadCliente, 
-                        c.dniCliente as DocumentoCliente,
-                        v.idVehiculo,
-                        v.matricula as Matricula,
-                        v.disponibilidad as Disponibilidad,
-                        v.idModelo,
-                        v.idGrupoVehiculo,
-                        m.idModelo, 
-                        m.nombreModelo as Modelo,
-                        m.descripcionModelo,
-                        g.idGrupo,
-                        g.nombreGrupo as Grupo,
-                        g.descripcionGrupo 
-                 FROM `reservas-vehiculos` r, clientes c, vehiculos v, modelos m, `grupos-vehiculos` g 
-                 WHERE r.idReserva = $idReserva 
-                 AND r.idCliente = c.idCliente 
-                 AND r.idVehiculo = v.idVehiculo 
-                 AND v.idModelo = m.idModelo 
-                 AND v.idGrupoVehiculo = g.idGrupo; ";
+    // Obtener los datos del contrato seleccionado
+    $SQL = "SELECT c.idContrato as cIdContrato, 
+                    c.fechaInicioContrato as cFechaInicioContrato, 
+                    c.fechaFinContrato as cFechaFinContrato, 
+                    c.fechaEntrega as cFechaEntrega, 
+                    c.fechaDevolucion as cFechaDevolucion, 
+                    c.idCliente as cIdCliente, 
+                    c.idVehiculo as cIdVehiculo, 
+                    c.idVendedor as cIdVendedor, 
+                    c.idDetalleContrato as cIdDetalleContrato, 
+                    c.idEstadoContrato as cIdEstadoContrato,
+
+                    cl.idCliente as clIdCliente,
+                    cl.nombreCliente as clNombreCliente,
+                    cl.apellidoCliente as clApellidoCliente,
+                    cl.dniCliente as clDniCliente,
+
+                    v.idVehiculo as vIdVehiculo,
+                    v.matricula as vMatricula,
+                    v.idModelo as vIdModelo,
+                    v.idGrupoVehiculo as vIdGrupoVehiculo,
+                    v.idSucursal as vIdSucursal, 
+
+                    m.idModelo as  mIdModelo,
+                    m.nombreModelo as mNombreModelo,
+                    g.idGrupo as gIdGrupo,
+                    g.nombreGrupo as gNombreGrupo, 
+
+                    s.idSucursal as sIdSucursal, 
+                    s.direccionSucursal as sDireccionSucursal, 
+                    s.ciudadSucursal as sCiudadSucursal, 
+
+                    dc.idDetalleContrato as dcIdDetalleContrato, 
+                    dc.precioPorDiaContrato as dcPrecioPorDiaContrato, 
+                    dc.cantidadDiasContrato as dcCantidadDiasContrato, 
+                    dc.montoTotalContrato as dcMontoTotalContrato, 
+                    
+                    ec.idEstadoContrato as ecIdEstadoContrato, 
+                    ec.estadoContrato as ecEstadoContrato 
+            FROM `contratos-alquiler` c, clientes cl, vehiculos v, modelos m, `grupos-vehiculos` g, `detalle-contratos` dc, `estados-contratos` ec, sucursales s   
+            WHERE c.idContrato = $idContrato 
+            AND c.idCliente = cl.idCliente 
+            AND c.idVehiculo = v.idVehiculo 
+            AND v.idModelo = m.idModelo 
+            AND v.idGrupoVehiculo = g.idGrupo 
+            AND v.idSucursal = s.idSucursal 
+            AND c.idDetalleContrato = dc.idDetalleContrato
+            AND c.idEstadoContrato = ec.idEstadoContrato; ";
 
 
-    $rs = mysqli_query($conexion, $ConsultaReservas);
+    $rs = mysqli_query($conexion, $SQL);
 
-    $reserva = mysqli_fetch_array($rs);
+    $contrato = mysqli_fetch_array($rs);
 
     // Se traen todos los vehículos disponibles:
 
@@ -58,22 +77,28 @@ if (isset($_GET['id'])) {
     require_once 'funciones/Select_Tablas.php';
     $vehiculosDisponibles = Listar_Vehiculos_Disponibles($conexion);
     $cantidadVehiculos = count($vehiculosDisponibles);
+
+    $estadosContrato = Listar_EstadosContrato($conexion);
+    $cantidadEstados = count($estadosContrato);
 } 
+
 else {
-    // Si no se pasa un ID, se redirige al listado de reservas
-    header('Location: reservas.php');
+    // Si no se pasa un ID, se redirige al listado de contratos
+    header("Location: contratosAlquiler.php?mensaje=No se encontró el contrato seleccionado. ");
     exit();
 }
 
-
-// A continuación se hace UPDATE de los datos luego de cliquear el botón "Guardar Cambios" (los elementos POST proceden de este mismo archivo)
+// Por último se hace UPDATE de los datos luego de cliquear el botón "Guardar Cambios" (los elementos POST proceden del form debajo)
 $mensajeError = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrato'])) {
 
-    $idCliente = $reserva['IDCliente'];
-    $numreserva = $reserva['NumeroReserva'];
+    $idContrato = $contrato['cIdContrato'];
+    $idDetalleContrato = $contrato['dcIdDetalleContrato'];
+    $idCliente = $contrato['cIdCliente'];
     $idVehiculo = $_POST['VehiculosDisponibles'];
+    $estadoContrato = $_POST['EstadoDelContrato'];
+    $precioPorDia = $contrato['dcPrecioPorDiaContrato'];
 //    $fecharetiro = $_POST['FechaRetiro'];
 //    $fechadevolucion = $_POST['FechaDevolucion'];
 
@@ -83,55 +108,95 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
     $year = $fechaEspanol['year'];
     $mo = $fechaEspanol['month'];
     $day = $fechaEspanol['day'];
-    $fechaIngles = "$year-$mo-$day";
-    $fecharetiro = $fechaIngles;
+    $fechaRetiroIngles = "$year-$mo-$day";
+
+    $fecharetiro = $fechaRetiroIngles;
 
     $fechaEspanol = $_POST['FechaDevolucion'];
     $fechaEspanol = date_parse($fechaEspanol);
     $year = $fechaEspanol['year'];
     $mo = $fechaEspanol['month'];
     $day = $fechaEspanol['day'];
-    $fechaIngles = "$year-$mo-$day";
-    $fechadevolucion = $fechaIngles;
+    $fechaDevolucionIngles = "$year-$mo-$day";
+
+    $fechadevolucion = $fechaDevolucionIngles; 
+
+
+    // Cálculo de cantidad de días
+    $min_date = "$fechaRetiroIngles";
+    $max_date = "$fechaDevolucionIngles";
+    $dif_min = new DateTime($min_date);
+    $dif_max = new DateTime($max_date);
+    $intervalo = $dif_min->diff($dif_max);
+    $diferenciaDias = $intervalo->days;
+
+    $diferenciaDias = intval($diferenciaDias);
+/*    $horas_totales = $intervalo->format('%d:%H:%i'); */
+
+
+    // Monto total:
+    $montoTotal = $diferenciaDias * $precioPorDia;
+
 
     require_once 'funciones/CRUD-Reservas.php';
     
     if ($idVehiculo) {  // Aquí se corroboraba fecha. Registro para implementar más adelante: "Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true" 
 
-        // Actualizar los datos del cliente
-        $ModificacionReserva = "UPDATE `reservas-vehiculos` 
-                                SET numeroReserva = $numreserva, 
-                                    fechaReserva = NOW(), 
-                                    fechaInicioReserva = '$fecharetiro', 
-                                    FechaFinReserva = '$fechadevolucion', 
-                                    idCliente = $idCliente, 
-                                    idVehiculo = $idVehiculo 
-                                WHERE idReserva = $idReserva"; 
+        // Actualizar los datos del detalle del contrato
+        $ModificacionDetalleContrato = "UPDATE `detalle-contratos` 
+                                SET precioPorDiaContrato = $precioPorDia, 
+                                    cantidadDiasContrato = $diferenciaDias, 
+                                    montoTotalContrato = $montoTotal, 
+                                    estadoContrato = 'El estado ha sido modificado' 
+                                WHERE idDetalleContrato = $idDetalleContrato; "; 
 
-        $rs = mysqli_query($conexion, $ModificacionReserva);
+        $rs = mysqli_query($conexion, $ModificacionDetalleContrato);
 
         if (!$rs) {
 
-            $mensajeError = "No se pudo acceder a la base de datos.";
-            //si surge un error, finalizo la ejecucion del script con un mensaje            
-            die('<h4>Error al intentar modificar el vehículo.</h4>');
+            $mensajeError = "No se pudo acceder al detalle del contrato en la base de datos.";
+            header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensajeError));
+            exit();
         }
+        else {
 
-        // Redirigir después de la actualización
-        header('Location: reservas.php');
-        exit();
+            // Actualizar los datos del contrato
+            $ModificacionContrato = "UPDATE `contratos-alquiler` 
+                                    SET fechaInicioContrato = '$fecharetiro', 
+                                        fechaFinContrato = '$fechadevolucion', 
+                                        idCliente = $idCliente, 
+                                        idVehiculo = $idVehiculo,
+                                        idEstadoContrato = $estadoContrato 
+                                    WHERE idContrato = $idContrato; "; 
+
+            $rs = mysqli_query($conexion, $ModificacionContrato);
+
+            if (!$rs) {
+
+                $mensajeError = "No se pudo acceder al contrato en la base de datos.";
+                header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensajeError));
+                exit();
+            }
+            else {
+
+                // Redirigir después de la actualización
+                header("Location: contratosAlquiler.php?mensaje=Contrato modificado exitosamente! ");
+                exit();
+            }
+        }
     }
 
     else {
-        $mensajeError = "No se puede realizar la reserva.";
+        header("Location: contratosAlquiler.php?mensaje=No se puede realizar la modificación del contrato.");
+        exit();
     }
 }
 
 
 ?>
 
-<body class="bg-light">
-    <div style="min-height: 100%">
+<body class="bg-light" style="margin: 0 auto;">
+    <div style="min-height: 100%; margin-bottom: 100px;">
         <div class="wrapper">
             <?php 
             
@@ -147,40 +212,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                 if ($mensajeError) { ?>
                     <div class="alert alert-danger mt-3"> 
                         <?php 
-                            echo "Error al intentar modificar el vehículo. <br><br>"; 
+                            echo "Error al intentar modificar el contrato. <br><br>"; 
                             echo $mensajeError; 
                         ?>        
                     </div>
                 <?php } 
                 ?>
 
-                <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
+                <h5 class="mb-4 text-secondary"><strong>Modificar Contrato</strong></h5>
                 
-                <!-- Formulario para modificar la reserva -->
+                <!-- Formulario para modificar el contrato -->
                 <form method="POST">
 
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['NombreCliente']); ?> " disabled>
+                        <label for="idcontrato" class="form-label">Contrato</label>
+                        <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
+                            value="Identificador del contrato: <?php echo htmlspecialchars($contrato['cIdContrato']); ?> " disabled>
                     </div>
 
                     <div class="mb-3">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['ApellidoCliente']); ?>" disabled>
+                        <label for="cliente" class="form-label">Cliente</label>
+                        <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
+                            value="<?php echo htmlspecialchars($contrato['clApellidoCliente']); echo ", "; 
+                                          echo htmlspecialchars($contrato['clNombreCliente']); ?>" disabled>
                     </div>
 
                     <div class="mb-3">
-                        <label for="documento" class="form-label">Documento</label>
+                        <label for="documento" class="form-label">Documento del Cliente</label>
                         <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['DocumentoCliente']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="numero" class="form-label">Número de Reserva</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
-                            value=" <?php echo htmlspecialchars($reserva['NumeroReserva']); ?> " disabled>
+                            value=" <?php echo htmlspecialchars($contrato['clDniCliente']); ?> " disabled>
                     </div>
 
                     <div class="mb-3">
@@ -192,12 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                             if (!empty($vehiculosDisponibles)) {
                                 $selected = '';
 
-                                for ($i = 0; $i < $cantidadVehiculos; $i++) {
+                                for ($i = 0; $i < $cantidadVehiculos; $i++) {  
                                     // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($_POST['VehiculosDisponibles']) && $_POST['VehiculosDisponibles'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
+                                    $selected = (!empty($contrato['vIdVehiculo']) && $contrato['vIdVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
                                     echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
-                                        MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
-                                    </option>";
+                                            MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
+                                          </option>";
                                 }
                             } 
                             else {
@@ -210,16 +270,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                     <div class="mb-3">
                         <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
                         <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                            value=" <?php echo htmlspecialchars($reserva['FechaRetiro']); ?> " required>
+                            value="<?php echo htmlspecialchars($contrato['cFechaInicioContrato']); ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
                         <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value=" <?php echo htmlspecialchars($reserva['FechaDevolucion']); ?> " required>
+                            value="<?php echo htmlspecialchars($contrato['cFechaFinContrato']); ?>" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" name="BotonModificarReserva" value="modificandoReserva"; >Guardar Cambios</button>
+                    <div class="mb-3">
+                        <label for="preciopordia" class="form-label">Precio por día</label>
+                        <input type="text" class="form-control" id="preciopordia" name="PrecioPorDia" 
+                            value="$ <?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?> USD por día." disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="estadocontrato" class="form-label"> Estado del Contrato </label>
+                        <select class="form-select" aria-label="Selector" id="estadocontrato" name="EstadoDelContrato" >
+                            <option value="" selected>Selecciona una opción</option>
+
+                            <?php 
+                            if (!empty($estadosContrato)) {
+                                $selected = '';
+
+                                for ($i = 0; $i < $cantidadEstados; $i++) {
+                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                    $selected = (!empty($contrato['ecIdEstadoContrato']) && $contrato['ecIdEstadoContrato'] == $estadosContrato[$i]['IdEstadoContrato']) ? 'selected' : '';
+                                    echo "<option value='{$estadosContrato[$i]['IdEstadoContrato']}' $selected > 
+                                            {$estadosContrato[$i]['EstadoContrato']}  
+                                          </option>";
+                                }
+                            } 
+                            else {
+                                echo "<option value=''> No se pueden recuperar los diferentes estados de un contrato. </option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" name="BotonModificarContrato" value="modificandoContrato"; >Guardar Cambios</button>
                 </form>
 
             </div>
