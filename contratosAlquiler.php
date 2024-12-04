@@ -10,43 +10,50 @@ $conexion = ConexionBD();
 
 // Obtener filtros del formulario
 $filtros = [
-    'numero' => isset($_GET['NumeroReserva']) ? trim($_GET['NumeroReserva']) : '',
-    'matricula' => isset($_GET['MatriculaReserva']) ? trim($_GET['MatriculaReserva']) : '',
-    'apellido' => isset($_GET['ApellidoReserva']) ? trim($_GET['ApellidoReserva']) : '',
-    'nombre' => isset($_GET['NombreReserva']) ? trim($_GET['NombreReserva']) : '',
-    'documento' => isset($_GET['DocReserva']) ? trim($_GET['DocReserva']) : '',
+    'numero' => isset($_GET['NumeroContrato']) ? trim($_GET['NumeroContrato']) : '',
+    'matricula' => isset($_GET['MatriculaContrato']) ? trim($_GET['MatriculaContrato']) : '',
+    'apellido' => isset($_GET['ApellidoContrato']) ? trim($_GET['ApellidoContrato']) : '',
+    'nombre' => isset($_GET['NombreContrato']) ? trim($_GET['NombreContrato']) : '',
+    'documento' => isset($_GET['DocContrato']) ? trim($_GET['DocContrato']) : '',
+    'estado' => isset($_GET['EstadoContrato']) ? trim($_GET['EstadoContrato']) : '',
+    'preciodia' => isset($_GET['PrecioDiaContrato']) ? trim($_GET['PrecioDiaContrato']) : '',
+    'cantidaddias' => isset($_GET['CantidadDiasContrato']) ? trim($_GET['CantidadDiasContrato']) : '',
+    'montototal' => isset($_GET['MontoTotalContrato']) ? trim($_GET['MontoTotalContrato']) : '',
     'retirodesde' => isset($_GET['RetiroDesde']) ? trim($_GET['RetiroDesde']) : '',
     'retirohasta' => isset($_GET['RetiroHasta']) ? trim($_GET['RetiroHasta']) : '',
+    'devoluciondesde' => isset($_GET['DevolucionDesde']) ? trim($_GET['DevolucionDesde']) : '',
+    'devolucionhasta' => isset($_GET['DevolucionHasta']) ? trim($_GET['DevolucionHasta']) : '',
 ];
 
 
-// Generación del listado de reservas
-require_once 'funciones/CRUD-Reservas.php';
-$ListadoReservas = Listar_Reservas($conexion);
-$CantidadReservas = count($ListadoReservas);
+// Generación del listado de contratos
+require_once 'funciones/CRUD-Contratos.php';
+$ListadoContratos = Listar_Contratos($conexion);
+$CantidadContratos = count($ListadoContratos);
+
 
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_GET['BotonFiltrar'])) {
 
     // require_once 'funciones/vehiculo consulta.php';
-    Procesar_ConsultaReservas();
+    Procesar_ConsultaContratos();
 
-    $ListadoReservas = array();
-    $CantidadReservas = '';
-    $ListadoReservas = Consulta_Reservas($_GET['NumeroReserva'], $_GET['MatriculaReserva'], $_GET['ApellidoReserva'], $_GET['NombreReserva'], $_GET['DocReserva'], $_GET['RetiroDesde'], $_GET['RetiroHasta'], $conexion);
-    $CantidadReservas = count($ListadoReservas);
+    $ListadoContratos = array();
+    $CantidadContratos = '';
+    $ListadoContratos = Consulta_Contratos($_GET['NumeroContrato'], $_GET['MatriculaContrato'], $_GET['ApellidoContrato'], $_GET['NombreContrato'], $_GET['DocContrato'], $_GET['EstadoContrato'], $_GET['PrecioDiaContrato'], $_GET['CantidadDiasContrato'], $_GET['MontoTotalContrato'], $_GET['RetiroDesde'], $_GET['RetiroHasta'], $_GET['DevolucionDesde'], $_GET['DevolucionHasta'], $conexion);
+    $CantidadContratos = count($ListadoContratos);
 }
 else {
 
-    // Listo la totalidad de los registros en la tabla "vehiculos". 
-    $ListadoReservas = Listar_Reservas($conexion);
-    $CantidadReservas = count($ListadoReservas);
+    // Listo la totalidad de los registros en la tabla "contratos". 
+    $ListadoContratos = Listar_Contratos($conexion);
+    $CantidadContratos = count($ListadoContratos);
 }
 
 if (!empty($_GET['BotonLimpiarFiltros'])) {
 
-    header('Location: reservas.php');
+    header('Location: contratosAlquiler.php');
     die();
 }
 
@@ -82,6 +89,10 @@ include('head.php');
         include('sidebarGOp.php');
         include('topNavBar.php');    
 
+        if ($Mensaje != "") {
+            echo '<div class="alert alert-danger" role="alert">' . $Mensaje . '</div>';
+        }
+
         if (isset($_GET['mensaje'])) {
             echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
         }
@@ -96,60 +107,64 @@ include('head.php');
                 </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" action="reservas.php" method="get">
+                <form class="row g-3" action="contratosAlquiler.php" method="get">
 
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
+                        <input type="text" class="form-control" id="numero" name="NumeroContrato" 
                                value=" <?= htmlspecialchars($filtros['numero']) ?> " >
                     </div>
 
                     <div class="col-md-2">
                         <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva" 
+                        <input type="text" class="form-control" id="matricula" name="MatriculaContrato" 
                                value=" <?= htmlspecialchars($filtros['matricula']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva" 
+                        <input type="text" class="form-control" id="apellido" name="ApellidoContrato" 
                                value=" <?= htmlspecialchars($filtros['apellido']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreReserva" 
+                        <input type="text" class="form-control" id="nombre" name="NombreContrato" 
                                value=" <?= htmlspecialchars($filtros['nombre']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="DocReserva" 
+                        <input type="text" class="form-control" id="documento" name="DocContrato" 
                                value=" <?= htmlspecialchars($filtros['documento']) ?> ">
                     </div>
 
                     <div class="col-md-3">
                         <label for="estado" class="form-label">Estado del Contrato</label>
                         <input type="text" class="form-control" id="estado" name="EstadoContrato" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> ">
+                               value=" <?= htmlspecialchars($filtros['estado']) ?> ">
                     </div>
 
                     <div class="col-md-2">
                         <label for="preciodia" class="form-label">Precio por día</label>
-                        <input type="text" class="form-control" id="preciodia" name="PrecioDiaContrato" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Filtrar por precio hasta los..." >
+                        <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="preciodia" name="PrecioDiaContrato" 
+                               value=" <?= htmlspecialchars($filtros['preciodia']) ?> " title="Filtrar por precio hasta los..." >
                     </div>
 
+                    <?php 
+                    $minCantDias = 1;
+                    $maxCantDias = 45;
+                    ?>
                     <div class="col-md-2">
                         <label for="cantidaddias" class="form-label">Cantidad de días</label>
-                        <input type="text" class="form-control" id="cantidaddias" name="CantidadDiasContrato" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Cantidad exacta de días">
+                        <input type="number" min="<? echo $minCantDias; ?>" max="<?php echo $maxCantDias; ?>" class="form-control" id="cantidaddias" name="CantidadDiasContrato" 
+                               value=" <?= htmlspecialchars($filtros['cantidaddias']) ?> " title="Cantidad exacta de días entre 1 y 45">
                     </div>
 
                     <div class="col-md-2">
                         <label for="montototal" class="form-label">Monto total</label>
-                        <input type="text" class="form-control" id="montototal" name="MontoTotalContrato" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> " title="Filtrar por monto total hasta los...">
+                        <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="montototal" name="MontoTotalContrato" 
+                               value=" <?= htmlspecialchars($filtros['montototal']) ?> " title="Filtrar por monto total hasta los...">
                     </div>
 
                     <div class="col-md-2" style="margin-bottom: 100px;">
@@ -167,18 +182,18 @@ include('head.php');
                     </div>
 
                     <div class="col-md-3">
-                        <label for="retiro" class="form-label">Devolución entre</label>
+                        <label for="devolucion" class="form-label">Devolución entre</label>
                         <div class="d-flex">
-                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
-                                   value=" <?= htmlspecialchars($filtros['retirodesde']) ?> ">
+                            <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
+                                   value=" <?= htmlspecialchars($filtros['devoluciondesde']) ?> ">
 
-                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
-                                   value=" <?= htmlspecialchars($filtros['retirohasta']) ?> ">
+                            <input type="date" id="devolucionhasta" class="form-control" name="DevolucionHasta" 
+                                   value=" <?= htmlspecialchars($filtros['devolucionhasta']) ?> ">
                         </div>
                     </div>
 
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoReservas">
+                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoContratos">
                             <i class="fas fa-filter"></i> Filtrar
                         </button>
                     </div>
@@ -190,21 +205,21 @@ include('head.php');
                 </form>
             </div>
 
-            <!-- Tabla de reservas -->
+            <!-- Tabla de contratos -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
                 <div class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
-                    <table class="table table-striped table-hover" id="tablaReservas">
+                    <table class="table table-striped table-hover" id="tablaContratos">
                         <thead>
                             <tr>
                                 <th style='color: #c7240e;'><h3>#</h3></th>
                                 <th>Contrato</th>
+                                <th>Fecha Ret.</th>
+                                <th>Fecha Dev.</th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
                                 <th>DNI</th>
                                 <th>Matrícula</th>
                                 <th>Vehiculo</th>
-                                <th>Fecha Ret.</th>
-                                <th>Fecha Dev.</th>
                                 <th>Oficina Ret.</th>
                                 <th>Oficina Dev.</th>
                                 <th>Estado Contrato</th>
@@ -218,26 +233,26 @@ include('head.php');
                             <?php
                             $contador = 1; 
 
-                            for ($i=0; $i < $CantidadReservas; $i++) { ?>     
+                            for ($i=0; $i < $CantidadContratos; $i++) { ?>     
 
-                                <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
-                                    onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
+                                <tr class='contrato' data-id='<?php echo $ListadoContratos[$i]['IdContrato']; ?>' 
+                                    onclick="selectRow(this, '<?= $ListadoContratos[$i]['IdContrato'] ?>')">
 
                                     <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
-                                    <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
-                                    <td> <?php echo "{$ListadoReservas[$i]['vehiculoModelo']} — {$ListadoReservas[$i]['vehiculoGrupo']}"; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
-                                    <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
-                                    <td> <?php echo " "; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['IdContrato']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['apellidoCliente']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['nombreCliente']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['dniCliente']; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['vehiculoMatricula']; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['vehiculoModelo']}, {$ListadoContratos[$i]['vehiculoGrupo']}"; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
+                                    <td> <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?> </td>
+                                    <td> <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?> </td>
                                 </tr>
                                 <?php $contador++; ?>
                             <?php 
@@ -257,11 +272,11 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva
                         </button>
 
-                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarReserva()" disabled>
+                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarContrato()" disabled>
                             Modificar
                         </button>
 
-                        <button class="btn btn-danger me-2" id="btnEliminar" onclick="eliminarReserva()" disabled>
+                        <button class="btn btn-danger me-2" id="btnEliminar" onclick="eliminarContrato()" disabled>
                             Eliminar
                         </button>
 
@@ -370,11 +385,11 @@ include('head.php');
     <script>
         let reservaSeleccionada = null;
 
-        // Selección de fila en la Tabla de Reservas al hacer clic en la misma
-        document.querySelectorAll('#tablaReservas .reserva').forEach(row => {
+        // Selección de fila en la Tabla de Contratos al hacer clic en la misma
+        document.querySelectorAll('#tablaContratos .contrato').forEach(row => {
             row.addEventListener('click', () => {
                 // Desmarcar cualquier fila previamente seleccionada
-                document.querySelectorAll('.reserva').forEach(row => row.classList.remove('table-active'));
+                document.querySelectorAll('.contrato').forEach(row => row.classList.remove('table-active'));
                 // Marcar la fila seleccionada
                 row.classList.add('table-active');
                 reservaSeleccionada = row.dataset.id;
@@ -385,14 +400,14 @@ include('head.php');
         });
 
         // Función para redirigir a ModificarCliente.php con el ID del cliente seleccionado
-        function modificarReserva() {
+        function modificarContrato() {
             if (reservaSeleccionada) {
                 window.location.href = 'ModificarReserva.php?id=' + reservaSeleccionada;
             }
         }
 
         // Función para redirigir a EliminarCliente.php con el ID del cliente seleccionado
-        function eliminarReserva() {
+        function eliminarContrato() {
             if (reservaSeleccionada) {
                 if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
                     window.location.href = 'EliminarReserva.php?id=' + reservaSeleccionada;
