@@ -403,15 +403,15 @@ include('head.php');
         // Función para redirigir a ModificarCliente.php con el ID del cliente seleccionado
         function modificarContrato() {
             if (reservaSeleccionada) {
-                window.location.href = 'ModificarReserva.php?id=' + reservaSeleccionada;
+                window.location.href = 'ModificarContrato.php?id=' + reservaSeleccionada;
             }
         }
 
         // Función para redirigir a EliminarCliente.php con el ID del cliente seleccionado
         function eliminarContrato() {
             if (reservaSeleccionada) {
-                if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
-                    window.location.href = 'EliminarReserva.php?id=' + reservaSeleccionada;
+                if (confirm('¿Estás seguro de que quieres eliminar este contrato?')) {
+                    window.location.href = 'EliminarContrato.php?id=' + reservaSeleccionada;
                 }
             }
         }
