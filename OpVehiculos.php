@@ -154,11 +154,12 @@ require_once "head.php";
 
             </div>
 
-            <div class="card col-8 bg-white p-4 rounded shadow mb-4">
-                <h4 class="text-center mb-3">Lista de Vehículos</h4>
+            <!-- Tabla de vehículos -->
+            <div class="card col-8 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
+                <h4 class="text-center mb-3">Listado de Vehículos</h4>
                 <div class="table-responsive">
 
-                    <table class="table table-bordered table-hover" id="vehicleTable">
+                    <table class="table table-bordered table-hover" id="tablaVehiculos">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Matrícula</th>
@@ -174,7 +175,9 @@ require_once "head.php";
                             <?php 
                             for ($i=0; $i < $CantidadVehiculos; $i++) { ?>
                             
-                            <tr onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')">
+                            <tr class='vehiculo' 
+                                onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')" >
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
                                 <td> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> </td>
                                 <td> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> </td>
@@ -298,7 +301,7 @@ require_once "head.php";
                         <div class="mb-3">
                             <label for="modificarModelo" class="form-label">Modelo</label>
                             <select class="form-select" aria-label="Selector" id="modificarModelo" name="ModeloMOD" required>
-                                <option value="" selected>Selecciona una opción</option>
+                                <option value="" selected> Selecciona una opción </option>
 
                                 <?php 
                                 // Asegúrate de que $ListadoModelo contiene datos antes de procesarlo
@@ -307,7 +310,7 @@ require_once "head.php";
                                     for ($i = 0; $i < $CantidadModelo; $i++) {
                                         // Lógica para verificar si el grupo debe estar seleccionado
                                         $selected = (!empty($_POST['ModeloMOD']) && $_POST['ModeloMOD'] == $ListadoModelo[$i]['IdModelo']) ? 'selected' : '';
-                                        echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected>{$ListadoModelo[$i]['NombreModelo']}</option>";
+                                        echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected> {$ListadoModelo[$i]['NombreModelo']} </option>";
                                     }
                                 } 
                                 else {
@@ -401,6 +404,21 @@ require_once "head.php";
     
 
     <script>
+
+    let vehiculoSeleccionado = null;
+
+    // Sombreado de fila en la Tabla de Vehiculos al hacer clic en la misma
+    document.querySelectorAll('#tablaVehiculos .vehiculo').forEach(row => {
+        row.addEventListener('click', () => {
+            // Desmarcar cualquier fila previamente seleccionada
+            document.querySelectorAll('.vehiculo').forEach(row => row.classList.remove('table-active'));
+            // Marcar la fila seleccionada
+            row.classList.add('table-active');
+            vehiculoSeleccionado = row.dataset.id;
+        });
+    });
+
+    // Selección de fila en la Tabla de Vehiculos al hacer clic en la misma
     let selectedRow = null;
 
     function selectRow(row, matricula) {
@@ -409,6 +427,7 @@ require_once "head.php";
         }
         selectedRow = row;
         selectedRow.classList.add('selected-row');
+
         
         // Guardar matrícula del vehículo seleccionado
         document.getElementById('modificarMatricula').value = matricula;
@@ -428,7 +447,7 @@ require_once "head.php";
         const sucursal = selectedRow.cells[4].innerText;
         const disponible = selectedRow.cells[5].innerText;
 
-        // Cargar datos en el formulario del modal
+        // Cargar datos en el formulario del modal 
         document.getElementById('modificarMatricula').value = matricula;
         document.getElementById('modificarModelo').value = modelo;
         document.getElementById('modificarGrupo').value = grupo;
