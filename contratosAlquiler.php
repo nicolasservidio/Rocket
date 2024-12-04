@@ -281,17 +281,17 @@ include('head.php');
                 </div>
 
 
-                <!-- Modal para Nueva Reserva -->
+                <!-- Modal para Nuevo Contrato -->
                 <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="nuevoRegistroModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="nuevoRegistroModalLabel">Agregar Nueva Reserva</h5>
+                                <h5 class="modal-title" id="nuevoRegistroModalLabel">Agregar Nuevo Contrato</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <!-- Form -->
-                            <form action="Nueva_Reserva.php" method="post">
+                            <form action="Nuevo_Contrato.php" method="post">
                                 <div class="modal-body">
 
                                     <div class="mb-3">
@@ -318,11 +318,12 @@ include('head.php');
                                             ?>
                                         </select>
                                     </div>
-
+                                        <!-- 
                                     <div class="mb-3">
                                         <label for="numreserva" class="form-label">Número de reserva</label>
                                         <input type="text" class="form-control" id="numreserva" name="numreserva" required>
                                     </div>
+                                    -->
 
                                     <div class="mb-3">
                                         <label for="idVehiculo" class="form-label">Vehículo</label>
@@ -354,6 +355,12 @@ include('head.php');
                                     <div class="mb-3">
                                         <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
                                         <input type="date" class="form-control" id="fechadevolucion" name="fechadevolucion" value="" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="preciopordia" class="form-label">Precio por día</label>
+                                        <input type="number" min="20" max="999999999" step="0.01" title="Superior a 20 USD obligatoriamente."
+                                               class="form-control" id="preciopordia" name="precioporDia" required>
                                     </div>
 
                                 </div>
