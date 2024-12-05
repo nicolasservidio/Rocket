@@ -149,9 +149,17 @@ include('head.php');
         </div>
     </div>
 
-    <div style="margin-top: 30px;">
-        <?php require_once "foot.php"; ?>
+<footer id="footer" class="footer" style="margin-top: 80px; background: #b54d0d; margin: #333333; border: #333333; ">
+    
+    <div style="color: white; background: #b54d0d; margin: #333333; border: #333333; text-align: center; padding-top: 2%; padding-bottom: 2%; ">
+        <div class="copyright">
+        &copy; Copyright <strong><span>Rocket</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        Developed by <span style="color: white;">Rocket Team</span>: <a href="https://www.linkedin.com/in/nicolas-servidio-del-monte/" style="color: black;" >NS</a> - <a href="https://www.linkedin.com/in/bruno-carossi-1b43b8178/" style="color: black;" >BC</a> - <a href="https://www.linkedin.com/in/facundo-mota-123380257/" style="color: black;" >FM</a>
+        </div>
     </div>
+</footer><!-- End Footer -->
 
 </body>
 </html>
