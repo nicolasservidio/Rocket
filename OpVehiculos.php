@@ -14,7 +14,8 @@ $matricula = isset($_POST['Matricula']) ? $_POST['Matricula'] : '';
 $modelo = isset($_POST['Modelo']) ? $_POST['Modelo'] : '';
 $grupo = isset($_POST['Grupo']) ? $_POST['Grupo'] : '';
 
-    // Incluyo el script con la funcion que genera mi listado
+
+// Incluyo el script con la funcion que genera mi listado
 require_once 'funciones/vehiculos listado.php';
 
 $ListadoVehiculos = Listar_Vehiculos($conexion);

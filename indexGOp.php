@@ -5,6 +5,15 @@ session_start();
 require_once 'funciones/corroborar_usuario.php'; 
 Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
 
+require_once "conn/conexion.php";
+$conexion = ConexionBD();
+
+// Incluyo el script con la funcion que genera mi listado
+require_once 'funciones/vehiculos listado.php';
+
+$ListadoVehiculos = Listar_Vehiculos($conexion);
+$CantidadVehiculos = count($ListadoVehiculos);
+
 include('head.php');
 
 ?>
@@ -43,7 +52,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Vehículos</p>
-                                                <h4 class="card-title">90</h4>
+                                                <h4 class="card-title"> <?php echo $CantidadVehiculos; ?> </h4>
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +72,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Rutinas de Preparación</p>
-                                                <h4 class="card-title">13</h4>
+                                                <h4 class="card-title">En construcción</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +91,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Repuestos</p>
-                                                <h4 class="card-title">34</h4>
+                                                <h4 class="card-title">En construcción</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +110,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Productos</p>
-                                                <h4 class="card-title">945</h4>
+                                                <h4 class="card-title">En construcción</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +129,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Reportes</p>
-                                                <h4 class="card-title">2</h4>
+                                                <h4 class="card-title">En construcción</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -158,6 +167,7 @@ include('head.php');
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-4">
                             <div class="card card-primary card-round">
                                 <div class="card-header">
@@ -171,6 +181,7 @@ include('head.php');
                                                     Reportes
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Operaciones</a>
                                                     <a class="dropdown-item" href="#">Repuestos según vehículo</a>
                                                     <a class="dropdown-item" href="#">Productos según vehículo</a>
                                                     <!-- <a class="dropdown-item" href="#">Something else here</a> -->
@@ -181,25 +192,28 @@ include('head.php');
                                     <div class="card-category">Seleccioná un tipo de reporte</div>
                                 </div>
                                 <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <!-- <h1>$4,578.58</h1> -->
+                                    <div class="mb-4 mt-5">
+                                        <a href="ReporteReservas.php"> <h2 style="color: white;" >Reservas de vehículos</h2> </a>
+                                        <a href="ReporteContratos.php"> <h2 style="color: white;" >Contratos de alquiler</h2> </a>
                                     </div>
                                     <div class="pull-in">
                                         <canvas id="dailySalesChart"></canvas>
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="card card-round">
                                 <div class="card-body pb-0">
                                     <div class="h1 fw-bold float-end text-primary">+5%</div>
-                                    <h2 class="mb-2">17</h2>
-                                    <p class="text-muted">Vehículos en preparación</p>
+                                    <h2 class="mb-2"> NA </h2>
+                                    <p class="text-muted">Vehículos en preparación (En construcción) </p>
                                     <div class="pull-in sparkline-fix">
                                         <div id="lineChart"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <!-- 
                     <div class="row">
@@ -423,6 +437,7 @@ include('head.php');
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-8">
                             <div class="card card-round">
                                 <div class="card-header">
@@ -446,7 +461,9 @@ include('head.php');
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
-                                        <!-- Projects table -->
+
+                                        <!-- Tabla de vehículos -->
+
                                         <table class="table align-items-center mb-0">
                                             <thead class="thead-light">
                                                 <tr>
@@ -456,98 +473,44 @@ include('head.php');
                                                     <th scope="col" class="text-end">Estado</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10231
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10232
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10233
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10234
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10235
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10236
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                        Vehículo #10237
-                                                    </th>
-                                                    <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                                                    <td class="text-end">AB 123 CD</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-success">Completado</span>
-                                                    </td>
-                                                </tr>
+
+                                                <?php 
+
+                                                $decremento = 6;
+
+                                                for ($i= ($CantidadVehiculos - 7); $i < $CantidadVehiculos; $i++) { 
+                                                    
+                                                    $ultimosSiete = $CantidadVehiculos - $decremento;
+                                                    
+                                                    ?>
+
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                                <i class="fa fa-check"></i>
+                                                            </button>
+                                                            Vehículo #<?php echo $ultimosSiete; ?>
+                                                        </th>
+
+                                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+
+                                                        <td class="text-end">AB 123 CD</td>
+
+                                                        <td class="text-end">
+                                                            <span class="badge badge-success">Completado</span>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <?php 
+                                                    $decremento = $decremento - 1;
+                                                    ?>
+                                                <?php 
+                                                } 
+                                                ?>
+
                                             </tbody>
                                         </table>
                                     </div>
