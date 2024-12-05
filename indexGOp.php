@@ -11,7 +11,7 @@ $conexion = ConexionBD();
 // Incluyo el script con la funcion que genera mi listado
 require_once 'funciones/vehiculos listado.php';
 
-$ListadoVehiculos = Listar_Vehiculos($conexion);
+$ListadoVehiculos = ListarVehiculos_OrderByFecha($conexion);
 $CantidadVehiculos = count($ListadoVehiculos);
 
 include('head.php');
@@ -468,9 +468,9 @@ include('head.php');
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th scope="col">Número de vehículo</th>
-                                                    <th scope="col" class="text-end">Fecha & Hora</th>
+                                                    <th scope="col" class="text-end">Fecha de Compra</th>
                                                     <th scope="col" class="text-end">Matrícula</th>
-                                                    <th scope="col" class="text-end">Estado</th>
+                                                    <th scope="col" class="text-end">Incorporación a Flota</th>
                                                 </tr>
                                             </thead>
 
@@ -494,9 +494,9 @@ include('head.php');
                                                             Vehículo #<?php echo $ultimosSiete; ?>
                                                         </th>
 
-                                                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                                                        <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vFechaCompra'];  ?> </td>
 
-                                                        <td class="text-end">AB 123 CD</td>
+                                                        <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vMatricula'];  ?> </td>
 
                                                         <td class="text-end">
                                                             <span class="badge badge-success">Completado</span>
