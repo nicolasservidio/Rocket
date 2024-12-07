@@ -52,7 +52,19 @@ function Listar_Reservas($conexion) {
             $Listado[$i]['cantidadDiasReserva'] = $data['rCantidadDiasReserva'];
             $Listado[$i]['totalReserva'] = $data['rTotalReserva'];
             $Listado[$i]['idSucursal'] = $data['rIdSucursal'];            
-            $Listado[$i]['idContrato'] = $data['rIdContrato'];            
+            $Listado[$i]['idContrato'] = $data['rIdContrato']; 
+            
+            $Listado[$i]['ContratoAsociado'] = " ";
+            $Listado[$i]['ContratoColorAdvertencia'] = " ";
+            if (is_null($Listado[$i]['idContrato'])) {
+                $Listado[$i]['ContratoAsociado'] = "No registrado";
+                $Listado[$i]['ContratoColorAdvertencia'] = "danger";
+            }
+            else {
+                $Listado[$i]['ContratoAsociado'] = "Registrado";
+                $Listado[$i]['ContratoColorAdvertencia'] = "success";
+            }
+
             $Listado[$i]['idCliente'] = $data['rIdCliente'];
             $Listado[$i]['apellidoCliente'] = $data['cApellidoCliente'];
             $Listado[$i]['nombreCliente'] = $data['cNombreCliente'];

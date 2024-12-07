@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
     $idDetalleContrato = $contrato['dcIdDetalleContrato'];
     $idCliente = $contrato['cIdCliente'];
     $idVehiculo = $_POST['VehiculosDisponibles'];
-    $estadoContrato = $_POST['EstadoDelContrato'];
-    $precioPorDia = $contrato['dcPrecioPorDiaContrato'];
+    $estadoContrato = $_POST['EstadoDelContrato']; 
+    $precioPorDia = $_POST['PrecioPorDia'];  
 //    $fecharetiro = $_POST['FechaRetiro'];
 //    $fechadevolucion = $_POST['FechaDevolucion'];
 
@@ -144,11 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
 
         // Actualizar los datos del detalle del contrato
         $ModificacionDetalleContrato = "UPDATE `detalle-contratos` 
-                                SET precioPorDiaContrato = $precioPorDia, 
-                                    cantidadDiasContrato = $diferenciaDias, 
-                                    montoTotalContrato = $montoTotal, 
-                                    estadoContrato = 'El estado ha sido modificado' 
-                                WHERE idDetalleContrato = $idDetalleContrato; "; 
+                                        SET precioPorDiaContrato = $precioPorDia, 
+                                            cantidadDiasContrato = $diferenciaDias, 
+                                            montoTotalContrato = $montoTotal, 
+                                            estadoContrato = 'El estado ha sido modificado' 
+                                        WHERE idDetalleContrato = $idDetalleContrato; "; 
 
         $rs = mysqli_query($conexion, $ModificacionDetalleContrato);
 
@@ -279,10 +279,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
                             value="<?php echo htmlspecialchars($contrato['cFechaFinContrato']); ?>" required>
                     </div>
 
+                    <style>
+                        .input-container {
+
+                        display: flex;
+                        align-items: center;
+                        }
+                    </style>
+
                     <div class="mb-3">
                         <label for="preciopordia" class="form-label">Precio por día</label>
-                        <input type="text" class="form-control" id="preciopordia" name="PrecioPorDia" 
-                            value="$ <?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?> USD por día." disabled>
+                        <div class="input-container"> 
+                            <input type="number" min="20" max="999999999" step="0.01" class="form-control" style="max-width: 120px;"
+                                   id="preciopordia" name="PrecioPorDia" title="Mayor a $ 20 USD"
+                                   value="<?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?>" > 
+                            <span style="padding: 0 0 0 10px;"> $ USD por día </span>
+                        </div> 
                     </div>
 
                     <div class="mb-3">

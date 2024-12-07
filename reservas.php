@@ -159,6 +159,7 @@ include('head.php');
                                 <th>Modelo</th>
                                 <th>Fec. Ret.</th>
                                 <th>Fec. Dev.</th>
+                                <th>Contrato</th>
                             </tr>
                         </thead>
 
@@ -172,15 +173,30 @@ include('head.php');
                                     onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
 
                                     <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
+
                                     <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
+
                                     <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+
+                                    <td> 
+                                        <span class="badge badge-<?php echo $ListadoReservas[$i]['ContratoColorAdvertencia']; ?>" > 
+                                            <?php echo $ListadoReservas[$i]['ContratoAsociado']; ?> 
+                                        </span> 
+                                    </td>
                                 </tr>
                                 <?php $contador++; ?>
                             <?php 

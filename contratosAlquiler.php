@@ -243,7 +243,7 @@ include('head.php');
                                     <td> <?php echo "{$ListadoContratos[$i]['vehiculoModelo']}, {$ListadoContratos[$i]['vehiculoGrupo']}"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
-                                    <td> <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> </td>
+                                    <td> <span class="badge badge-success"> <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> </span> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?> </td>
