@@ -176,16 +176,29 @@ require_once "head.php";
                             <?php 
                             for ($i=0; $i < $CantidadVehiculos; $i++) { ?>
                             
-                            <tr class='vehiculo' 
+                            <tr class='vehiculo'                                 
+                                data-matricula="<?= $ListadoVehiculos[$i]['vMatricula'] ?>" 
+                                data-modelo="<?= $ListadoVehiculos[$i]['vModelo'] ?>" 
+                                data-grupo="<?= $ListadoVehiculos[$i]['vGrupo'] ?>" 
+                                data-combustible="<?= $ListadoVehiculos[$i]['vCombustible'] ?>" 
+                                data-sucursal="<?= "{$ListadoVehiculos[$i]['vSucursalDireccion']}, {$ListadoVehiculos[$i]['vSucursalCiudad']}" ?>" 
+                                data-disponibilidad="<?= $ListadoVehiculos[$i]['vDisponibilidad'] ?>" 
                                 onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')" >
 
                                 <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> </td>
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> </td>
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
+
                                 <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalDireccion']}, 
-                                                {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> </td>
+                                                {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> 
+                                </td>
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
+
                             </tr>
                             <?php 
                             } 
@@ -294,23 +307,36 @@ require_once "head.php";
                 </div>
                 <div class="modal-body">
 
+                    <!-- Recupero los datos de la fila seleccionada en el listado -->
+                    <?php 
+
+                    // Variables a utilizar en el modal de modificación de vehículos:
+                    $matriculaModal = isset($_SESSION['matriculaModal']) ? $_SESSION['matriculaModal'] : '';
+                    $modeloModal = isset($_SESSION['modeloModal']) ? $_SESSION['modeloModal'] : '';
+                    $grupoModal = isset($_SESSION['grupoModal']) ? $_SESSION['grupoModal'] : '';
+                    $combustibleModal = isset($_SESSION['combustibleModal']) ? $_SESSION['combustibleModal'] : '';
+                    $sucursalModal = isset($_SESSION['sucursalModal']) ? $_SESSION['sucursalModal'] : '';
+                    $disponibilidadModal = isset($_SESSION['disponibilidadModal']) ? $_SESSION['disponibilidadModal'] : '';
+                    ?>
+                    
                     <!-- Form para modificar -->
                     <form id="modificarVehiculoForm" method="post">
 
-                        <input type="hidden" id="modificarMatricula" name="MatriculaMOD">
+                        <input type="hidden" id="modificarMatricula" name="MatriculaMOD" value="<?php echo $matriculaModal; ?>" > 
 
                         <div class="mb-3">
                             <label for="modificarModelo" class="form-label">Modelo</label>
                             <select class="form-select" aria-label="Selector" id="modificarModelo" name="ModeloMOD" required>
-                                <option value="" selected> Selecciona una opción </option>
+                                <option> Selecciona una opción </option>
 
                                 <?php 
                                 // Asegúrate de que $ListadoModelo contiene datos antes de procesarlo
                                 if (!empty($ListadoModelo)) {
                                     $selected = '';
                                     for ($i = 0; $i < $CantidadModelo; $i++) {
-                                        // Lógica para verificar si el grupo debe estar seleccionado
-                                        $selected = (!empty($_POST['ModeloMOD']) && $_POST['ModeloMOD'] == $ListadoModelo[$i]['IdModelo']) ? 'selected' : '';
+                                        // Lógica para verificar si el modelo debe estar seleccionado
+                                        $selected = ($modeloModal == $ListadoModelo[$i]['NombreModelo']) ? 'selected' : '';
+
                                         echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected> {$ListadoModelo[$i]['NombreModelo']} </option>";
                                     }
                                 } 
@@ -324,7 +350,7 @@ require_once "head.php";
                         <div class="mb-3">
                             <label for="modificarGrupo" class="form-label">Grupo</label>
                             <select class="form-select" aria-label="Selector" id="modificarGrupo" name="GrupoMOD" required>
-                                <option value="" selected>Selecciona una opción</option>
+                                <option>Selecciona una opción</option>
 
                                 <?php 
                                 // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
@@ -332,7 +358,7 @@ require_once "head.php";
                                     $selected = '';
                                     for ($i = 0; $i < $CantidadGrupo; $i++) {
                                         // Lógica para verificar si el grupo debe estar seleccionado
-                                        $selected = (!empty($_POST['GrupoMOD']) && $_POST['GrupoMOD'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
+                                        $selected = ($grupoModal == $ListadoGrupo[$i]['NombreGrupo']) ? 'selected' : '';
                                         echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
                                     }
                                 } 
@@ -346,7 +372,7 @@ require_once "head.php";
                         <div class="mb-3">
                             <label for="modificarCombustible" class="form-label">Combustible</label>
                             <select class="form-select" aria-label="Selector" id="modificarCombustible" name="CombustibleMOD" required>
-                                <option value="" selected>Selecciona una opción</option>
+                                <option> Selecciona una opción</option>
 
                                 <?php 
                                 // Asegúrate de que $ListadoCombustible contiene datos antes de procesarlo
@@ -354,7 +380,7 @@ require_once "head.php";
                                     $selected = '';
                                     for ($i = 0; $i < $CantidadCombustible; $i++) {
                                         // Lógica para verificar si el grupo debe estar seleccionado
-                                        $selected = (!empty($_POST['CombustibleMOD']) && $_POST['CombustibleMOD'] == $ListadoCombustible[$i]['IdCombustible']) ? 'selected' : '';
+                                        $selected = ($combustibleModal == $ListadoCombustible[$i]['TipoCombustible']) ? 'selected' : '';
                                         echo "<option value='{$ListadoCombustible[$i]['IdCombustible']}' $selected>{$ListadoCombustible[$i]['TipoCombustible']}</option>";
                                     }
                                 } 
@@ -368,7 +394,7 @@ require_once "head.php";
                         <div class="mb-3">
                             <label for="modificarSucursal" class="form-label">Sucursal</label>
                             <select class="form-select" aria-label="Selector" id="modificarSucursal" name="SucursalMOD" required>
-                                <option value="" selected>Selecciona una opción</option>
+                                <option>Selecciona una opción </option>
 
                                 <?php 
                                 // Asegúrate de que $ListadoSucursal contiene datos antes de procesarlo
@@ -376,7 +402,7 @@ require_once "head.php";
                                     $selected = '';
                                     for ($i = 0; $i < $CantidadSucursal; $i++) {
                                         // Lógica para verificar si el grupo debe estar seleccionado
-                                        $selected = (!empty($_POST['SucursalMOD']) && $_POST['SucursalMOD'] == $ListadoSucursal[$i]['IdSucursal']) ? 'selected' : '';
+                                        $selected = ($sucursalModal == "{$ListadoSucursal[$i]['DireccionSucursal']}, {$ListadoSucursal[$i]['CiudadSucursal']}") ? 'selected' : '';
                                         echo "<option value='{$ListadoSucursal[$i]['IdSucursal']}' $selected> {$ListadoSucursal[$i]['DireccionSucursal']}, {$ListadoSucursal[$i]['CiudadSucursal']} </option>";
                                     }
                                 } 
@@ -428,10 +454,32 @@ require_once "head.php";
         }
         selectedRow = row;
         selectedRow.classList.add('selected-row');
-
         
         // Guardar matrícula del vehículo seleccionado
         document.getElementById('modificarMatricula').value = matricula;
+
+        // Guardar datos del vehículo seleccionado 
+        const matriculaModal = row.dataset.matricula;
+        const modeloModal = row.dataset.modelo;
+        const grupoModal = row.dataset.grupo;
+        const combustibleModal = row.dataset.combustible;
+        const sucursalModal = row.dataset.sucursal;
+        const disponibilidadModal = row.dataset.disponibilidad;
+
+        // Enviar datos al servidor mediante AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "guardar_datos_vehiculo.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log("Datos del vehículo guardados en variables PHP.");
+            } else {
+                console.error("Error al guardar los datos del vehículo: " + xhr.responseText);
+            }
+        };
+
+        xhr.send(`matriculaModal=${encodeURIComponent(matriculaModal)}&modeloModal=${encodeURIComponent(modeloModal)}&grupoModal=${encodeURIComponent(grupoModal)}&combustibleModal=${encodeURIComponent(combustibleModal)}&sucursalModal=${encodeURIComponent(sucursalModal)}&disponibilidadModal=${encodeURIComponent(disponibilidadModal)}`);
+
     }
 
     function modificarVehiculo() {
@@ -439,22 +487,6 @@ require_once "head.php";
             alert("Por favor, selecciona un vehículo.");
             return;
         }
-
-        // Obtener datos de la fila seleccionada
-        const matricula = selectedRow.cells[0].innerText;
-        const modelo = selectedRow.cells[1].innerText;
-        const grupo = selectedRow.cells[2].innerText;
-        const combustible = selectedRow.cells[3].innerText;
-        const sucursal = selectedRow.cells[4].innerText;
-        const disponible = selectedRow.cells[5].innerText;
-
-        // Cargar datos en el formulario del modal 
-        document.getElementById('modificarMatricula').value = matricula;
-        document.getElementById('modificarModelo').value = modelo;
-        document.getElementById('modificarGrupo').value = grupo;
-        document.getElementById('modificarCombustible').value = combustible;
-        document.getElementById('modificarSucursal').value = sucursal;
-        document.getElementById('modificarDisponible').value = disponible;
 
         // Mostrar el modal
         const modificarModal = new bootstrap.Modal(document.getElementById('modificarVehiculoModal'));

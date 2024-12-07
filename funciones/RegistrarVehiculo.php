@@ -15,8 +15,8 @@ function Registrar_Vehiculo($matricula, $modelo, $grupo, $disponible, $conn) {
     if (!empty($matricula)) {
 
         // Inserto en la BD
-        $SQL = "INSERT INTO vehiculos (matricula, idModelo, idGrupoVehiculo, disponibilidad, idCombustible, idSucursal) 
-                VALUES ('$matricula', $modelo, $grupo, '$disponible', 9, 3); ";
+        $SQL = "INSERT INTO vehiculos (matricula, fechaCompra, idModelo, idGrupoVehiculo, disponibilidad, idCombustible, idSucursal) 
+                VALUES ('$matricula', NOW(), $modelo, $grupo, '$disponible', 9, 3); ";
         
 
         $rs = mysqli_query($conn, $SQL);
