@@ -20,7 +20,7 @@ include('head.php');
 ?>
 
 <body class="bg-light">
-    <div style="margin: auto; max-width: 70%;">
+    <div style="margin: auto; max-width: 80%;">
         <div class="" style="margin-bottom: 120px;">
             
             <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; border: 2px solid #5250ab; border-radius: 14px;">
@@ -41,6 +41,7 @@ include('head.php');
                             <th>Modelo</th>
                             <th>Fec. Ret.</th>
                             <th>Fec. Dev.</th>
+                            <th>Montos</th>
                         </tr>
                     </thead>
 
@@ -48,21 +49,40 @@ include('head.php');
                         <?php
                         $contador = 1; 
 
-                        for ($i=0; $i < $CantidadReservas; $i++) { ?>     
+                        for ($i=0; $i < $CantidadReservas; $i++) { ?> 
 
                             <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
                                 onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')" >
 
                                 <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
+
                                 <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['apellidoCliente']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['nombreCliente']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['dniCliente']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['vehiculoMatricula']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['vehiculoGrupo']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['vehiculoModelo']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
+
                                 <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+
+                                <td> 
+                                    <span style="font-size: 12px; color: purple;"> 
+                                        <?php echo "$ {$ListadoReservas[$i]['precioPorDiaReserva']} USD/día <br>
+                                                    {$ListadoReservas[$i]['cantidadDiasReserva']} días <br> 
+                                                    Total: $ {$ListadoReservas[$i]['totalReserva']} USD"; 
+                                        ?> 
+                                    </span> 
+                                </td>
+
                             </tr>
                             <?php $contador++; ?>
                         <?php 

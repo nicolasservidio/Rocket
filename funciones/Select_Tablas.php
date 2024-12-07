@@ -125,7 +125,8 @@ function Listar_VehiculosReservados($vConexion) {
                    m.nombreModelo as modelo, 
                    m.descripcionModelo, 
                    g.idGrupo,
-                   g.nombreGrupo as grupo
+                   g.nombreGrupo as grupo, 
+                   v.idSucursal as IdSucursal 
             FROM vehiculos v, modelos m, `grupos-vehiculos` g 
             WHERE v.idModelo = m.idModelo 
             AND v.idGrupoVehiculo = g.idGrupo; ";
@@ -140,6 +141,7 @@ function Listar_VehiculosReservados($vConexion) {
             $Listado[$i]['matricula'] = $data['matricula'];
             $Listado[$i]['modelo'] = $data['modelo'];
             $Listado[$i]['grupo'] = $data['grupo'];
+            $Listado[$i]['IdSucursal'] = $data['IdSucursal'];
             
             $i++;
     }

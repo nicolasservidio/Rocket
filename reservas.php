@@ -159,6 +159,7 @@ include('head.php');
                                 <th>Modelo</th>
                                 <th>Fec. Ret.</th>
                                 <th>Fec. Dev.</th>
+                                <th>Montos</th>
                                 <th>Contrato</th>
                             </tr>
                         </thead>
@@ -191,6 +192,15 @@ include('head.php');
                                     <td> <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> </td>
 
                                     <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
+
+                                    <td> 
+                                        <span style="font-size: 12px;"> 
+                                            <?php echo "$ {$ListadoReservas[$i]['precioPorDiaReserva']} USD/día <br>
+                                                        {$ListadoReservas[$i]['cantidadDiasReserva']} días <br> 
+                                                        Total: $ {$ListadoReservas[$i]['totalReserva']} USD"; 
+                                            ?> 
+                                        </span> 
+                                    </td>
 
                                     <td> 
                                         <span class="badge badge-<?php echo $ListadoReservas[$i]['ContratoColorAdvertencia']; ?>" > 
@@ -294,6 +304,24 @@ include('head.php');
                                             }
                                             ?>
                                         </select>
+                                    </div>
+
+                                    <style>
+                                        .input-container {
+
+                                        display: flex;
+                                        align-items: center;
+                                        }
+                                    </style>
+
+                                    <div class="mb-3">
+                                        <label for="preciopordia" class="form-label">Precio por día</label>
+                                        <div class="input-container"> 
+                                            <input type="number" min="20" max="999999999" step="0.01" class="form-control" style="max-width: 120px;"
+                                                id="preciopordia" name="PrecioPorDia" title="Mayor a $ 20 USD"
+                                                value="" required> 
+                                            <span style="padding: 0 0 0 10px;"> $ USD por día </span>
+                                        </div> 
                                     </div>
 
                                     <div class="mb-3">

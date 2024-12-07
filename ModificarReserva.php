@@ -140,7 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
             
             ?>
             
-            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            <div class="p-5 mb-4 bg-white shadow-sm" 
+                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
                 
                 <?php 
 
@@ -194,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
 
                                 for ($i = 0; $i < $cantidadVehiculos; $i++) {
                                     // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($_POST['VehiculosDisponibles']) && $_POST['VehiculosDisponibles'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
+                                    $selected = (!empty($reserva['IDVehiculo']) && $reserva['IDVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
                                     echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
                                         MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
                                     </option>";
@@ -210,13 +211,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                     <div class="mb-3">
                         <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
                         <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                            value=" <?php echo htmlspecialchars($reserva['FechaRetiro']); ?> " required>
+                            value="<?php echo htmlspecialchars($reserva['FechaRetiro']); ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
                         <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value=" <?php echo htmlspecialchars($reserva['FechaDevolucion']); ?> " required>
+                            value="<?php echo htmlspecialchars($reserva['FechaDevolucion']); ?>" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary" name="BotonModificarReserva" value="modificandoReserva"; >Guardar Cambios</button>

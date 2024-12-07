@@ -263,7 +263,7 @@ include('head.php');
                     <div class="container d-flex justify-content-center">
 
                         <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
-                            <i class="fas fa-plus-circle"></i> Nueva
+                            <i class="fas fa-plus-circle"></i> Nuevo
                         </button>
 
                         <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarContrato()" disabled>

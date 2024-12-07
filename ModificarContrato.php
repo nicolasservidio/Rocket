@@ -205,7 +205,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
             
             ?>
             
-            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            <div class="p-5 mb-4 bg-white shadow-sm" 
+                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
                 
                 <?php 
 
@@ -292,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
                         <div class="input-container"> 
                             <input type="number" min="20" max="999999999" step="0.01" class="form-control" style="max-width: 120px;"
                                    id="preciopordia" name="PrecioPorDia" title="Mayor a $ 20 USD"
-                                   value="<?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?>" > 
+                                   value="<?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?>" required> 
                             <span style="padding: 0 0 0 10px;"> $ USD por día </span>
                         </div> 
                     </div>

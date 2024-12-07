@@ -39,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    $estadocontrato = 1;
+    $preciopordia = $_POST['PrecioPorDia'];
+
     // Procesamiento de las fechas
     $fechaEspanol = date_parse($fecharetiro);
     $year = $fechaEspanol['year'];
@@ -52,21 +55,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $day = $fechaEspanol['day'];
     $fechadevolucionIngles = "$year-$mo-$day";
 
+    // Cálculo de cantidad de días
+    $min_date = "$fecharetiroIngles";
+    $max_date = "$fechadevolucionIngles";
+    $dif_min = new DateTime($min_date);
+    $dif_max = new DateTime($max_date);
+    $intervalo = $dif_min->diff($dif_max);
+    $diferenciaDias = $intervalo->days;
+
+    $diferenciaDias = intval($diferenciaDias);
+/*    $horas_totales = $intervalo->format('%d:%H:%i'); */
+
+    // Monto total:
+    $montoTotal = $diferenciaDias * $preciopordia;
+
+
     // Conexión y consulta
     $MiConexion = ConexionBD();
 
-    // Insertando la reserva en la tabla de reservas 
+    
+    // Antes de insertar la reserva, necesito el ID de la sucursal en la que se encuentra el vehículo, tal como se encuentra especificado en la tabla "vehiculos"
+    
+    $IdSucursal = array();
+
+    $SQL_IdSucursal = "SELECT idSucursal FROM vehiculos WHERE idVehiculo = $idVehiculo; ";
+
+    $rs = mysqli_query($MiConexion, $SQL_IdSucursal);
+    $data = mysqli_fetch_array($rs);
+    $IdSucursal['IdSucursal'] = $data['idSucursal'];
+
+    $idSucursal = $IdSucursal['IdSucursal'];
+
+
+    // Ahora sí, insertando la reserva en la tabla de reservas 
     $SQL = "INSERT INTO `reservas-vehiculos` (numeroReserva,
                                              fechaReserva, 
                                              fechaInicioReserva, 
                                              FechaFinReserva, 
+                                             precioPorDiaReserva,
+                                             cantidadDiasReserva, 
+                                             totalReserva, 
                                              idCliente, 
+                                             idSucursal, 
                                              idVehiculo) 
               VALUES ($numreserva, 
                      NOW(), 
                      '$fecharetiroIngles', 
                      '$fechadevolucionIngles', 
+                     $preciopordia,
+                     $diferenciaDias,
+                     $montoTotal, 
                      $idCliente, 
+                     $idSucursal, 
                      $idVehiculo); ";
 
     
@@ -76,11 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensaje = "Error al agregar reserva: ";
     }
     else {
-
-        $estadocontrato = 1;
-        $preciopordia = 0;
-        $diferenciaDias = 0;
-        $montoTotal = 0;
 
         // Registro en el 'Detalle del Contrato'
         $SQL_DetalleContrato = "INSERT INTO `detalle-contratos` (precioPorDiaContrato,

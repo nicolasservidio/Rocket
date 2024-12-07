@@ -76,11 +76,15 @@ include('head.php');
                             </th>
 
                             <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
-                                Fec. Ret.
+                                Fecha Ret.
                             </th>
 
                             <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
-                                Fec. Dev.
+                                Fecha Dev.
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white;">
+                                Monto
                             </th>
                         </tr>
                     </thead>
@@ -129,11 +133,24 @@ include('head.php');
                                 </td>
 
                                 <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
-                                    <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> 
+                                    <span style="font-size: 11px;">
+                                        <?php echo $ListadoReservas[$i]['fechaInicioReserva']; ?> 
+                                    </span>
                                 </td>
 
                                 <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
-                                    <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> 
+                                    <span style="font-size: 11px;"> 
+                                        <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> 
+                                    </span>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000;"> 
+                                    <span style="font-size: 12px; color: #a80a0a;"> 
+                                        <?php echo "$ {$ListadoReservas[$i]['precioPorDiaReserva']} USD/día <br>
+                                                    {$ListadoReservas[$i]['cantidadDiasReserva']} días <br> 
+                                                    Total: $ {$ListadoReservas[$i]['totalReserva']} USD"; 
+                                        ?> 
+                                    </span> 
                                 </td>
                             </tr>
                             <?php $contador++; ?>
