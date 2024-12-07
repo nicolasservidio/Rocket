@@ -14,6 +14,11 @@ require_once 'funciones/vehiculos listado.php';
 $ListadoVehiculos = ListarVehiculos_OrderByFecha($conexion);
 $CantidadVehiculos = count($ListadoVehiculos);
 
+require_once 'funciones/Select_Tablas.php';
+$ListadoUsuarios = Listar_Usuarios($conexion);
+$CantidadUsuarios = count($ListadoUsuarios);
+
+
 include('head.php');
 
 ?>
@@ -129,7 +134,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Reportes</p>
-                                                <h4 class="card-title">En construcción</h4>
+                                                <h4 class="card-title">2</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -319,6 +324,7 @@ include('head.php');
                         </div>
                     </div>
                     -->
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card card-round">
@@ -340,99 +346,49 @@ include('head.php');
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="card-list py-4">
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span class="avatar-title rounded-circle border border-white">JD</span>
+
+                                        <?php 
+                                        
+                                        $decrementoUsuarios = 6;
+
+                                        for ($i= ($CantidadUsuarios - 7); $i < $CantidadUsuarios; $i++) { 
+                                                    
+                                            $ultimosSieteUsuarios = $CantidadUsuarios - $decrementoUsuarios;
+                                            
+                                            ?>
+
+                                            <div class="item-list">
+                                                <div class="avatar">
+                                                    <span class="avatar-title rounded-circle border border-white bg-primary"> 
+                                                        <?php echo substr($ListadoUsuarios[$i]['NombreUsuario'], 0, 1); ?> 
+                                                    </span>
+                                                </div>
+
+                                                <div class="info-user ms-3">
+                                                    <div class="username"> <?php echo $ListadoUsuarios[$i]['NombreUsuario']; ?> </div>
+                                                    <div class="status"> Username: <?php echo $ListadoUsuarios[$i]['Usuario']; ?> </div>
+                                                    <div class="status"> <?php echo $ListadoUsuarios[$i]['NombreCargo']; ?> </div>
+                                                </div>
+
+                                                <button class="btn btn-icon btn-link op-8 me-1">
+                                                    <i class="far fa-envelope"></i>
+                                                </button>
+
+                                                <button class="btn btn-icon btn-link btn-danger op-8">
+                                                    <i class="fas fa-bolt"></i>
+                                                </button>
                                             </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Jimmy Denis</div>
-                                                <div class="status">Mesa Directiva</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span class="avatar-title rounded-circle border border-white">CF</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Chandra Felix</div>
-                                                <div class="status">Mesa Directiva</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span class="avatar-title rounded-circle border border-white">TR</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Talha Ruiz</div>
-                                                <div class="status">Mesa Directiva</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span class="avatar-title rounded-circle border border-white">C</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Chad</div>
-                                                <div class="status">Responsable de Operaciones</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span
-                                                    class="avatar-title rounded-circle border border-white bg-primary">H</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Hizrian</div>
-                                                <div class="status">Responsable Comercial</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
-                                        <div class="item-list">
-                                            <div class="avatar">
-                                                <span
-                                                    class="avatar-title rounded-circle border border-white bg-secondary">F</span>
-                                            </div>
-                                            <div class="info-user ms-3">
-                                                <div class="username">Farrah</div>
-                                                <div class="status">Marketing</div>
-                                            </div>
-                                            <button class="btn btn-icon btn-link op-8 me-1">
-                                                <i class="far fa-envelope"></i>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-danger op-8">
-                                                <i class="fas fa-bolt"></i>
-                                            </button>
-                                        </div>
+
+                                            <?php 
+                                                $decrementoUsuarios = $decrementoUsuarios - 1;
+                                            ?>
+
+                                        <?php 
+                                        } 
+                                        ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -478,11 +434,11 @@ include('head.php');
 
                                                 <?php 
 
-                                                $decremento = 6;
+                                                $decremento = 8;
 
-                                                for ($i= ($CantidadVehiculos - 7); $i < $CantidadVehiculos; $i++) { 
+                                                for ($i= ($CantidadVehiculos - 9); $i < $CantidadVehiculos; $i++) { 
                                                     
-                                                    $ultimosSiete = $CantidadVehiculos - $decremento;
+                                                    $numerovehiculo = $CantidadVehiculos - $decremento;
                                                     
                                                     ?>
 
@@ -491,7 +447,7 @@ include('head.php');
                                                             <button class="btn btn-icon btn-round btn-success btn-sm me-2">
                                                                 <i class="fa fa-check"></i>
                                                             </button>
-                                                            Vehículo #<?php echo $ultimosSiete; ?>
+                                                            Vehículo #<?php echo $numerovehiculo; ?>
                                                         </th>
 
                                                         <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vFechaCompra'];  ?> </td>

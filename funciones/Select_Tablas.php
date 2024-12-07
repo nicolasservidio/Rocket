@@ -247,5 +247,73 @@ function Listar_EstadosContrato($vConexion) {
     return $Listado;
 }
 
+// EMITIR LISTADO de Usuarios del Sistema
+
+function Listar_Usuarios($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT u.id as IdUsuario, 
+                   u.nombre as NombreUsuario, 
+                   u.usuario as Usuario,
+                   u.id_cargo,
+                   c.id as IdCargo, 
+                   c.descripcion as NombreCargo 
+            FROM usuarios u, cargo c 
+            WHERE u.id_cargo = c.id; ";
+
+    $rs = mysqli_query($vConexion, $SQL);
+        
+    $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdUsuario'] = $data['IdUsuario'];
+            $Listado[$i]['NombreUsuario'] = $data['NombreUsuario'];
+            $Listado[$i]['Usuario'] = $data['Usuario'];
+            $Listado[$i]['IdCargo'] = $data['IdCargo'];
+            $Listado[$i]['NombreCargo'] = $data['NombreCargo'];
+
+            if ($Listado[$i]['NombreCargo'] == "ADMINISTRADOR") {
+                $Listado[$i]['NombreCargo'] = "Administrador del sistema"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "GERENTE_OPERACIONES") {
+                $Listado[$i]['NombreCargo'] = "Gerente de Operaciones"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "GERENTE_COMERCIAL") {
+                $Listado[$i]['NombreCargo'] = "Gerente Comercial"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "GERENTE_TALLER") {
+                $Listado[$i]['NombreCargo'] = "Gerente de Taller"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "ENCARGADO_ATPUBLICO") {
+                $Listado[$i]['NombreCargo'] = "Encargado de Atención al Público"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "ENCARGADO_VENTAS") {
+                $Listado[$i]['NombreCargo'] = "Encargado de Ventas"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "ENCARGADO_TALLER") {
+                $Listado[$i]['NombreCargo'] = "Encargado de Taller"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "ENCARGADO_COMPRAS") {
+                $Listado[$i]['NombreCargo'] = "Encargado de Compras"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "OPERATIVO_ATPUBLICO") {
+                $Listado[$i]['NombreCargo'] = "Operario de Atención al Público"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "OPERATIVO_VENTAS") {
+                $Listado[$i]['NombreCargo'] = "Operario de Ventas"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "OPERATIVO_TALLER") {
+                $Listado[$i]['NombreCargo'] = "Operario de Taller"; 
+            }
+            if ($Listado[$i]['NombreCargo'] == "OPERATIVO_COMPRAS") {
+                $Listado[$i]['NombreCargo'] = "Operario de Compras"; 
+            }
+            
+            $i++;
+    }
+
+    return $Listado;
+}
 
 ?>
