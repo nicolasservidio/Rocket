@@ -335,11 +335,16 @@ include('head.php');
 
     </style>
 
+    <!-- JS Gráfico principal -->
     <script src="administrador/highcharts/code/highcharts.js"></script>
     <script src="administrador/highcharts/code/modules/exporting.js"></script>
     <script src="administrador/highcharts/code/modules/export-data.js"></script>
     <script src="administrador/highcharts/code/modules/accessibility.js"></script>
 
+    <!-- JS Gráfico de pastel -->
+    <script src="administrador/highcharts/code/modules/variable-pie.js"></script>
+
+    <!-- Título -->
     <div style="margin: auto; max-width: 95%; padding: 70px 0 5px 0;">
         <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
             <h3 class="mb-1 " style="padding: 0; margin: 5px 0 0 0;" >
@@ -348,9 +353,10 @@ include('head.php');
         </div>
     </div>
 
+    <!-- Gráfico principal -->
     <figure class="highcharts-figure">
-        <div id="container" style="padding: 50px 0 0 0; min-height: 700px !important;"></div>
-        <p class="highcharts-description" style="padding: 40px 0 0 0; text-align: justify;">
+        <div id="first" style="padding: 50px 0 0 0; min-height: 700px !important;"></div>
+        <p class="highcharts-description" style="padding: 40px 20px 0 20px; text-align: justify;">
             El gráfico muestra etiquetas asociadas a una serie de tiempo en el eje de abscisas y frecuencias absolutas en el eje de ordenadas. 
             Esto incrementa notablemente la comprensión y legibilidad de los diferentes datasets incluidos en el diagrama. 
             Se incluyen cuatro (4) datasets, correspondiendo tres de ellos a datos segmentados en función del estado del contrato, y el restante al acumulado total de contratos por mes.
@@ -359,7 +365,7 @@ include('head.php');
 
 
 	<script type="text/javascript">
-        Highcharts.chart('container', {
+        Highcharts.chart('first', {
             chart: {
                 type: 'line'
             },
@@ -446,7 +452,97 @@ include('head.php');
         });
 	</script>
 
+    <div style="margin: 0 auto; padding: 50px;"> </div>
 
+    <!-- Gráfico de pastel -->
+    <figure class="highcharts-figure">
+        <div id="second"></div>
+        <p class="highcharts-description" style="padding: 40px 20px 0 20px; text-align: justify;">
+            Los <b>gráficos circulares de radio variable</b> son utilizados para visualizar una segunda dimensión en un gráfico de pastel. 
+            En este gráfico, los meses con mayor cantidad de contratos en estado «Finalizado» sobresalen hacia el observador, 
+            mientras que el ancho de cada porción corresponde a la cantidad total de contratos en el mes.
+        </p>
+    </figure>
+
+    <script type="text/javascript">
+        
+        Highcharts.chart('second', {
+            chart: {
+                type: 'variablepie'
+            },
+            title: {
+                text: 'Meses comparados por cantidad total de contratos y contratos finalizados.'
+            },
+            subtitle: {
+                text: 'Source: Rocket'
+            },
+            tooltip: {
+                headerFormat: '',
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+                    'Total de contratos: <b>{point.y}</b><br/>' +
+                    'Contratos finalizados: <b>{point.z}</b><br/>'
+            },
+            series: [{
+                minPointSize: 10,
+                innerSize: '20%',
+                zMin: 0,
+                name: 'countries',
+                data: [{
+                    name: 'Ene',
+                    y: <?php echo $acumulado_ENE2024_Total;?>,
+                    z: <?php echo $acumulado_ENE2024_Finalizados;?>
+                }, {
+                    name: 'Feb',
+                    y: <?php echo $acumulado_FEB2024_Total;?>,
+                    z: <?php echo $acumulado_FEB2024_Finalizados;?>
+                }, {
+                    name: 'Mar',
+                    y: <?php echo $acumulado_MAR2024_Total;?>,
+                    z: <?php echo $acumulado_MAR2024_Finalizados;?>
+                }, {
+                    name: 'Abr',
+                    y: <?php echo $acumulado_ABR2024_Total;?>,
+                    z: <?php echo $acumulado_ABR2024_Finalizados;?>
+                }, {
+                    name: 'May',
+                    y: <?php echo $acumulado_MAY2024_Total;?>,
+                    z: <?php echo $acumulado_MAY2024_Finalizados;?>
+                }, {
+                    name: 'Jun',
+                    y: <?php echo $acumulado_JUN2024_Total;?>,
+                    z: <?php echo $acumulado_JUN2024_Finalizados;?>
+                }, {
+                    name: 'Jul',
+                    y: <?php echo $acumulado_JUL2024_Total;?>,
+                    z: <?php echo $acumulado_JUL2024_Finalizados;?>
+                }, {
+                    name: 'Ago',
+                    y: <?php echo $acumulado_AGO2024_Total;?>,
+                    z: <?php echo $acumulado_AGO2024_Finalizados;?>
+                }, {
+                    name: 'Sep',
+                    y: <?php echo $acumulado_SEP2024_Total;?>,
+                    z: <?php echo $acumulado_SEP2024_Finalizados;?>
+                }, {
+                    name: 'Oct',
+                    y: <?php echo $acumulado_OCT2024_Total;?>,
+                    z: <?php echo $acumulado_OCT2024_Finalizados;?>
+                }, {
+                    name: 'Nov',
+                    y: <?php echo $acumulado_NOV2024_Total;?>,
+                    z: <?php echo $acumulado_NOV2024_Finalizados;?>
+                }, {
+                    name: 'Dic',
+                    y: <?php echo $acumulado_DIC2024_Total;?>,
+                    z: <?php echo $acumulado_DIC2024_Finalizados;?>
+                }
+                ]
+            }]
+        });
+
+	</script>
+
+    <!-- Tabla de datos -->
     <div style="margin: auto; max-width: 95%;">
         <div class="" style="margin-bottom: 120px;">
             
@@ -573,7 +669,7 @@ include('head.php');
                             </button></a>
                         </span>
 
-                        <a href="ReporteContratos_pdf.php"> <button class="btn btn-warning" >
+                        <a href="ReporteContratos_FrecMensuales_pdf.php"> <button class="btn btn-warning" >
                             Imprimir
                         </button></a>
                     </div>
