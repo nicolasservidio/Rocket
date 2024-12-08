@@ -290,14 +290,27 @@ include('head.php');
                     </div>
                 </div>
 
+                <style>
+                    .hoverImage {
+                        position: relative;
+                        align-self: stretch;
+                        height: 650px;
+                        flex-shrink: 0;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        max-width: 100%;
+                        }
+                </style>
+
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;" >
                             <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes segmentados por estado </a>
                         </h4>
+
                         <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
-                            <div class="mb-1 " style="padding: 0; margin: 50px 0 0 0;">
-                                <img src="assets/img/reports/reporte-contratosmensualesestados.png" alt="Contratos por mes segmentados por estado" 
+                            <div class="mb-1 hoverImageWrapper" style="padding: 0; margin: 50px 0 0 0;">
+                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.png" alt="Contratos por mes segmentados por estado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
@@ -306,10 +319,11 @@ include('head.php');
                             .btn-inversion {
                                 padding-left: 30px; 
                                 padding-right: 30px; 
-                                background-color: #122010; 
-                                color: red; 
-                                border: 1px solid red; 
-                                border-radius: 14px;
+                                background-color: #262626; 
+                                color: #e04709; 
+                                font-weight: 500;
+                                border: 1px solid #d64004; 
+                                border-radius: 20px;
 
                                 transition: all 0.5s ease-in-out;
                                 -webkit-transition: all 0.5s ease-in-out;
@@ -319,6 +333,7 @@ include('head.php');
                             .btn-inversion:hover {
                                 background-color: #a80a0a;
                                 color: white;
+                                font-weight: 100;
                                 border: 1px solid #a80a0a;
                             }
                         </style>
@@ -326,8 +341,8 @@ include('head.php');
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
                             <a href="ReporteContratos_FrecMensuales.php"> 
                                 <button class="btn btn-inversion">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16"> <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/> </svg> 
-                                Reporte
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16"> <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/> </svg> 
+                                    Reporte
                                 </button>
                             </a>
                         </div>
@@ -437,6 +452,34 @@ include('head.php');
         </div>
     </div>
 
+    <script>
+        // Efecto sobre la imagen del reporte
+        window.onload = function() {
+
+            const imageElement = document.querySelector('.hoverImage');
+            
+            if (imageElement) {
+                const handleMouseMove = (e) => {
+                let rect = imageElement.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+        
+                let dx = (x - rect.width / 2) / (rect.width / 2);
+                let dy = (y - rect.height / 2) / (rect.height / 2);
+        
+                imageElement.style.transform = `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
+                };
+
+                const handleMouseLeave = () => {
+                imageElement.style.transform = "";
+                };
+
+                imageElement.addEventListener('mousemove', handleMouseMove);
+                imageElement.addEventListener('mouseleave', handleMouseLeave);
+            }
+        }
+
+    </script>
 
     <script>
         let reservaSeleccionada = null;
