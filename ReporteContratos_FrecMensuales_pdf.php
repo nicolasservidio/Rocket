@@ -573,7 +573,7 @@ include('head.php');
                             </button></a>
                         </span>
 
-                        <a href="ReporteContratos_FrecMensuales_pdf.php"> <button class="btn btn-warning" >
+                        <a href="ReporteContratos_pdf.php"> <button class="btn btn-warning" >
                             Imprimir
                         </button></a>
                     </div>
@@ -592,6 +592,29 @@ include('head.php');
 
 <?php
 $html = ob_get_clean();
-echo $html; // La variable $html ahora contiene la totalidad de la página. Imprimo en pantalla para que se continue viendo la página web
+// echo $html; // La variable $html ahora contiene la totalidad de la página. Imprimo en pantalla para que se continue viendo la página web
+
+// Creando un objeto de tipo Dompdf para trabajar con todas las funcionalidades de conversión del documento HTML a PDF
+require_once 'administrador/dompdf/autoload.inc.php';
+use Dompdf\Dompdf;
+$dompdf = new Dompdf();  // Este objeto me permitirá trabajar con todas las funcionalidades de conversión de HTML a PDF
+
+// Activamos la opción que nos permite mostrar imágenes, por si la tabla llegara a contenerlas
+$options = $dompdf->getOptions();  // solo recupero la opción
+$options->set(array('isRemoteEnabled' => true));  // estoy activando con true esa opción, que es "isRemoteEnabled" 
+$dompdf->setOptions($options);  // y se lo estoy pasando nuevamente al objeto $dompdf, para que se pueda mostrar dicha imagen
+
+// Probemos:
+$dompdf->loadHtml($html);
+
+// genero el documento PDF:
+$dompdf->setPaper('A4', 'landscape');  // el formato entre paréntesis. Probar "letter" en lugar de los dos argumentos que se usan aquí
+
+// Hacemos el render, es decir todo lo que le asignamos al objeto $dompdf se renderiza, se hace visible
+$dompdf->render();
+
+// Pero, para que podamos ver el documento en el navegador y para que podamos descargarlo desde el navegador, necesitamos trabajar con "dompdf" y "stream" señanando el nombre del archivo:
+
+$dompdf->stream("reporte_reservas.pdf", array("Attachment" => false)); // false es para que se abra directamente en el navegador. True es para que se descargue
 
 ?>

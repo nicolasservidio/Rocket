@@ -278,6 +278,61 @@ include('head.php');
                             Imprimir
                         </button></a>
                     </div>
+
+                </div>
+
+                <!-- Reportes estadísticos -->
+                <div style="margin: auto; max-width: 95%; padding: 150px 0 5px 0;">
+                    <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
+                        <h2 class="mb-1 " style="padding: 0; margin: 10px 0 0 0;" >
+                            <strong style="color: #a80a0a;">Reportes Estadísticos</strong> 
+                        </h2>
+                    </div>
+                </div>
+
+                <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
+                    <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
+                        <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;" >
+                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes segmentados por estado </a>
+                        </h4>
+                        <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
+                            <div class="mb-1 " style="padding: 0; margin: 50px 0 0 0;">
+                                <img src="assets/img/reports/reporte-contratosmensualesestados.png" alt="Contratos por mes segmentados por estado" 
+                                    style="max-width: 99%; border-radius: 25px;">
+                            </div>
+                        </a>
+
+                        <style>
+                            .btn-inversion {
+                                padding-left: 30px; 
+                                padding-right: 30px; 
+                                background-color: #122010; 
+                                color: red; 
+                                border: 1px solid red; 
+                                border-radius: 14px;
+
+                                transition: all 0.5s ease-in-out;
+                                -webkit-transition: all 0.5s ease-in-out;
+                                -moz-transition: all 0.5s ease-in-out;
+                                -o-transition: all 0.5s ease-in-out;
+                            }
+                            .btn-inversion:hover {
+                                background-color: #a80a0a;
+                                color: white;
+                                border: 1px solid #a80a0a;
+                            }
+                        </style>
+                        
+                        <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
+                            <a href="ReporteContratos_FrecMensuales.php"> 
+                                <button class="btn btn-inversion">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16"> <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/> </svg> 
+                                Reporte
+                                </button>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
 
 

@@ -134,7 +134,7 @@ include('head.php');
                                         <div class="col col-stats ms-3 ms-sm-0">
                                             <div class="numbers">
                                                 <p class="card-category">Reportes</p>
-                                                <h4 class="card-title">2</h4>
+                                                <h4 class="card-title">3</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -198,8 +198,9 @@ include('head.php');
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="mb-4 mt-5">
-                                        <a href="ReporteReservas.php"> <h2 style="color: white;" >Reservas de vehículos</h2> </a>
-                                        <a href="ReporteContratos.php"> <h2 style="color: white;" >Contratos de alquiler</h2> </a>
+                                        <a href="ReporteReservas.php"> <h2 style="color: white; font-weight: 100;" >Reservas de vehículos</h2> </a>
+                                        <a href="ReporteContratos.php"> <h2 style="color: white; font-weight: 100;" >Contratos de alquiler</h2> </a>
+                                        <a href="ReporteContratos_FrecMensuales.php"> <h4 style="color: white; font-weight: 100;"> Contratos por mes segmentados por estado </h4> </a>
                                     </div>
                                     <div class="pull-in">
                                         <canvas id="dailySalesChart"></canvas>
