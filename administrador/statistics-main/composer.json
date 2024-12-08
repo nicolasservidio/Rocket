@@ -1,0 +1,57 @@
+{
+    "name": "hi-folks/statistics",
+    "description": "PHP package that provides functions for calculating mathematical statistics of numeric data.",
+    "keywords": [
+        "hi-folks",
+        "statistics"
+    ],
+    "homepage": "https://github.com/hi-folks/statistics",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roberto B.",
+            "email": "roberto.butti@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2|^8.3|^8.4"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13",
+        "pestphp/pest": "^2.0",
+        "phpstan/phpstan": "^1.3",
+        "rector/rector": "^1"
+    },
+    "autoload": {
+        "psr-4": {
+            "HiFolks\\Statistics\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HiFolks\\Statistics\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "format": "vendor/bin/pint",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "static-code": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "rector-dry-run": "rector process --dry-run",
+        "rector": "rector process",
+        "all-check": [
+            "@format",
+            "@test",
+            "@static-code"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

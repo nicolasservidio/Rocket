@@ -542,6 +542,156 @@ include('head.php');
 
 	</script>
 
+
+
+    <!-- MEDIDAS ESTADÍSTICAS DESCRIPTIVAS -->
+    <?php 
+
+    require_once "administrador/statistics-main/src/Stat.php";
+    use HiFolks\Statistics\Stat;
+
+    require_once "administrador/statistics-main/src/Freq.php";
+    use HiFolks\Statistics\Freq;
+
+    require_once "administrador/statistics-main/src/Math.php";
+    use HiFolks\Statistics\Math;
+
+    // Array para medidas de posición
+    $stat_contratosTotales = array();
+    $stat_contratosTotales[] = $acumulado_ENE2024_Total;
+    $stat_contratosTotales[] = $acumulado_FEB2024_Total;
+    $stat_contratosTotales[] = $acumulado_MAR2024_Total;
+    $stat_contratosTotales[] = $acumulado_ABR2024_Total;
+    $stat_contratosTotales[] = $acumulado_MAY2024_Total;
+    $stat_contratosTotales[] = $acumulado_JUN2024_Total;
+    $stat_contratosTotales[] = $acumulado_JUL2024_Total;
+    $stat_contratosTotales[] = $acumulado_AGO2024_Total;
+    $stat_contratosTotales[] = $acumulado_SEP2024_Total;
+    $stat_contratosTotales[] = $acumulado_OCT2024_Total;
+    $stat_contratosTotales[] = $acumulado_NOV2024_Total;
+    $stat_contratosTotales[] = $acumulado_DIC2024_Total;
+
+    ?>
+
+    <div style="margin: auto; max-width: 35%; padding: 120px 0 0px 0;">
+        <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
+            <h4 class="mb-1 " style="padding: 0; margin: 5px 0 0 0;" >
+                <strong style="color: #a80a0a;">Medidas descriptivas</strong> 
+            </h4>
+
+            <!-- POSICIÓN -->
+            <h5 class="mb-1 " style="padding: 0; margin: 25px 0 0 0;" >
+                <strong>Posición</strong> (contratos totales)
+            </h5>
+
+            <div style="padding: 20px 0 0 40px;">
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="La media aritmética es la suma de los datos dividida por el número de puntos de datos. Se la suele llamar “promedio”, aunque es solo uno de los muchos promedios matemáticos. Es una medida de la ubicación central de los datos.">
+                        &#xf059;
+                    </i> 
+                    <strong>Media aritmética:</strong> 
+
+                    <?php 
+                    $mean = Stat::mean($stat_contratosTotales); 
+                    echo $mean; 
+                    ?>
+                </p> 
+
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="Mediana (valor medio) de los datos numéricos, utilizando el conocido método “mean of middle two”: la mediana de un conjunto de números cuando el número de valores es par.">
+                        &#xf059;
+                    </i>
+                    <strong>Mediana:</strong> 
+
+                    <?php 
+                    $median = Stat::median($stat_contratosTotales); 
+                    echo $median; 
+                    ?>
+                </p>
+
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="La moda simple (i.e., el valor más común o frecuente) para un conjunto de datos discretos o nominales. De no existir valores o datos repetidos, la moda no existirá.">
+                        &#xf059;
+                    </i> 
+                    <strong>Moda:</strong> 
+
+                    <?php                     
+                    $mode = Stat::mode($stat_contratosTotales); 
+
+                    if (empty($mode)) {
+                        $mode = "No existente";
+                    }
+                    echo $mode; 
+                    ?>
+                </p>
+
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767; padding: 20px 0 0 0;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="El cuartil inferior, o primer cuartil (Q1), es el valor por debajo del cual se encuentran el 25% de los data points cuando estos se organizan en orden creciente. Por ejemplo, un Q1=10 significa que el 25% de los datos presentan un valor menor a 10.">
+                        &#xf059;
+                    </i>
+                    <strong>Q1 (primer cuartil):</strong> 
+
+                    <?php                     
+                    $percentile = Stat::firstQuartile($stat_contratosTotales); 
+                    echo $percentile; 
+                    ?>
+                </p>
+
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="El cuartil superior, o tercer cuartil (Q3), es el valor por debajo del cual se encuentran el 75% de los data points cuando estos se organizan en orden creciente. Por ejemplo, un Q3=10 significa que el 75% de los datos presentan un valor menor a 10.">
+                        &#xf059;
+                    </i>
+                    <strong>Q3 (tercer cuartil):</strong> 
+
+                    <?php                     
+                    $percentile = Stat::thirdQuartile($stat_contratosTotales); 
+                    echo $percentile; 
+                    ?>
+                </p>
+            </div>
+
+            <!-- DISPERSIÓN -->
+            <h5 class="mb-1 " style="padding: 0; margin: 25px 0 0 0;" >
+                <strong>Dispersión</strong> (contratos totales)
+            </h5>
+
+            <div style="padding: 20px 0 0 40px;">
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="La desviación estándar de la población, es decir, del conjunto total de los datos y no de una muestra. Es una medida de la cantidad de variación o dispersión de un conjunto de valores. Una desviación estándar baja indica que los valores tienden a estar cerca de la media del conjunto, mientras que una desviación estándar alta indica que los valores están distribuidos en un rango más amplio.">
+                        &#xf059;
+                    </i>
+                    <strong>Desviación estándar:</strong> 
+
+                    <?php 
+                    $stdev = Stat::pstdev($stat_contratosTotales); 
+                    echo $stdev; 
+                    ?>
+                </p> 
+
+                <p style="font-family: Cambria Math; font-size: 18px; color: #6b6767;"> 
+                    <i style="font-size:15px; color: #a80a0a;" class="fa" 
+                       title="La varianza es una medida de dispersión de los puntos de datos con respecto a la media. Una varianza baja indica que los puntos de datos son generalmente similares y no varían mucho con respecto a la media. Una alta varianza indica que los valores de los datos tienen mayor variabilidad y están más dispersos respecto de la media. Aquí se muestra la varianza de toda la población de datos y no sólo de una muestra.">
+                        &#xf059;
+                    </i>
+                    <strong>Varianza:</strong> 
+
+                    <?php 
+                    $variance = Stat::pvariance($stat_contratosTotales); 
+                    echo $variance; 
+                    ?>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    
+
     <!-- Tabla de datos -->
     <div style="margin: auto; max-width: 95%;">
         <div class="" style="margin-bottom: 120px;">
