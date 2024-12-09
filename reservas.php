@@ -92,41 +92,41 @@ include('head.php');
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número</label>
                         <input type="text" class="form-control" id="numero" name="NumeroReserva" 
-                               value=" <?= htmlspecialchars($filtros['numero']) ?> " >
+                               value="<?= htmlspecialchars($filtros['numero']) ?>" >
                     </div>
 
                     <div class="col-md-2">
                         <label for="matricula" class="form-label">Matrícula</label>
                         <input type="text" class="form-control" id="matricula" name="MatriculaReserva" 
-                               value=" <?= htmlspecialchars($filtros['matricula']) ?> ">
+                               value="<?= htmlspecialchars($filtros['matricula']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
                         <input type="text" class="form-control" id="apellido" name="ApellidoReserva" 
-                               value=" <?= htmlspecialchars($filtros['apellido']) ?> ">
+                               value="<?= htmlspecialchars($filtros['apellido']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="NombreReserva" 
-                               value=" <?= htmlspecialchars($filtros['nombre']) ?> ">
+                               value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
                         <input type="text" class="form-control" id="documento" name="DocReserva" 
-                               value=" <?= htmlspecialchars($filtros['documento']) ?> ">
+                               value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
 
                     <div class="col-md-3">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
-                                   value=" <?= htmlspecialchars($filtros['retirodesde']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
 
                             <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
-                                   value=" <?= htmlspecialchars($filtros['retirohasta']) ?> ">
+                                   value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
                         </div>
                     </div>
 
