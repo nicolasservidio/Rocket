@@ -5,6 +5,8 @@ include('conn/conexion.php');
 
 $MiConexion = ConexionBD();
 
+// hola
+
 // Verificar si el ID del contrato está presente en la URL
 if (isset($_GET['id'])) {
     $idContrato = $_GET['id'];
