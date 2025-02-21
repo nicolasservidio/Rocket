@@ -119,7 +119,8 @@ include('head.php');
                                value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="w-100"></div> <!-- salto de linea -->
+                    <div class="col-md-4">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
@@ -130,6 +131,7 @@ include('head.php');
                         </div>
                     </div>
 
+                    <div class="w-100"></div>
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-info w-100" name="BotonFiltrar" value="FiltrandoReservas">
                             <i class="fas fa-filter"></i> Filtrar
@@ -145,7 +147,7 @@ include('head.php');
 
             <!-- Tabla de reservas -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
-                <div class="table-responsive mt-4" style="max-width: 97%; border: 1px solid #444444; border-radius: 14px;">
+                <div class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
                     <table class="table table-striped table-hover" id="tablaReservas">
                         <thead>
                             <tr>

@@ -83,7 +83,8 @@ include('head.php');
         </div>
 
         <!-- Sección de Listado Clientes -->
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
+             style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Clientes</strong></h5>
             <table class="table table-hover" id="tablaClientes" >
                 <thead>

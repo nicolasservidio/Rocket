@@ -133,7 +133,8 @@ include('head.php');
                                value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="w-100"></div> <!-- salto de linea -->
+                    <div class="col-md-2">
                         <label for="estado" class="form-label">Estado del Contrato</label>
                         <input type="text" class="form-control" id="estado" name="EstadoContrato" 
                                value="<?= htmlspecialchars($filtros['estado']) ?>">
@@ -161,10 +162,11 @@ include('head.php');
                                value="<?= htmlspecialchars($filtros['montototal']) ?>" title="Filtrar por monto total hasta los...">
                     </div>
 
-                    <div class="col-md-2" style="margin-bottom: 100px;">
+                    <div class="col-md-2">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="w-100"></div> <!-- salto de linea -->
+                    <div class="col-md-4">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
@@ -175,7 +177,7 @@ include('head.php');
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="devolucion" class="form-label">Devolución entre</label>
                         <div class="d-flex">
                             <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
@@ -186,6 +188,10 @@ include('head.php');
                         </div>
                     </div>
 
+                    <div class="col-md-2">
+                    </div>
+
+                    <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoContratos">
                             <i class="fas fa-filter"></i> Filtrar

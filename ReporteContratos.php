@@ -19,13 +19,15 @@ include('head.php');
 
 ?>
 
-<body class="bg-light">
-    <div style="margin: auto; max-width: 95%;">
-        <div class="" style="margin-bottom: 120px;">
+<body class="bg-light" style="margin: 0 auto;">
+    <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
+        <div class="container" style="max-width: 97%;">
             
-            <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; border: 2px solid #a80a0a; border-radius: 14px;">
+            <div class="table-responsive p-5 mb-4 bg-white shadow-sm" style="max-width: 97%; max-height: 700px; margin-top: 10%; border: 2px solid #a80a0a; border-radius: 14px;">
 
-                <h2 class="mb-4 " style="color: #a80a0a; padding: 0 0 20px 0;" ><strong>Reporte: Contratos de arrendamiento de vehículos </strong></h2>
+                <h2 class="mb-4 " style="color: #a80a0a; padding: 0 0 20px 0;" >
+                    <strong>Reporte: Contratos de arrendamiento de vehículos </strong>
+                </h2>
                 
                 <!-- Tabla con reporte de contratos -->
 
@@ -81,28 +83,28 @@ include('head.php');
                         ?>
                     </tbody>
                 </table>                    
-
-                <!-- Botón de acción -->
-                <div style="margin-top: 5%; margin-bottom: 3%;">
-                    <div class="container d-flex justify-content-center">
-                        <span style="margin-right: 10%;">
-                            <a href="contratosAlquiler.php"> <button class="btn" style="color: white; background-color: #a80a0a;" >
-                                Volver
-                            </button></a>
-                        </span>
-
-                        <a href="ReporteContratos_pdf.php"> <button class="btn btn-warning" >
-                            Imprimir
-                        </button></a>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
 
-    <div style="">
-        <?php require_once "foot.php"; ?>
+        <!-- Botón de acción -->
+        <div style="margin-top: 5%; margin-bottom: 5%;">
+            <div class="container d-flex justify-content-center">
+                <span style="margin-right: 10%;">
+                    <a href="contratosAlquiler.php"> <button class="btn" style="color: white; background-color: #a80a0a;" >
+                        Volver
+                    </button></a>
+                </span>
+
+                <a href="ReporteContratos_pdf.php"> <button class="btn btn-warning" >
+                    Imprimir
+                </button></a>
+            </div>
+        </div>
+
+        <div style="">
+            <?php require_once "foot.php"; ?>
+        </div>
+
     </div>
 
 </body>

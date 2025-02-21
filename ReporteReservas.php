@@ -20,7 +20,7 @@ include('head.php');
 ?>
 
 <body class="bg-light">
-    <div style="margin: auto; max-width: 80%;">
+    <div style="margin: auto; max-width: 90%;">
         <div class="" style="margin-bottom: 120px;">
             
             <div class="p-5 mb-4 bg-white shadow-sm" style="margin-top: 10%; border: 2px solid #5250ab; border-radius: 14px;">
