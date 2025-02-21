@@ -305,7 +305,12 @@ include('head.php');
                         object-fit: cover;
                         border-radius: 10px;
                         max-width: 100%;
-                        }
+                    }
+                    .centrar {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 </style>
 
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
@@ -315,8 +320,9 @@ include('head.php');
                         </h4>
 
                         <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
-                            <div class="mb-1 hoverImageWrapper" style="padding: 0; margin: 50px 0 0 0;">
-                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.png" alt="Contratos por mes segmentados por estado" 
+                            <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
+                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.jpeg" 
+                                    alt="Contratos por mes segmentados por estado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
