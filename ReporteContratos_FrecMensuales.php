@@ -471,7 +471,7 @@ include('head.php');
                 type: 'variablepie'
             },
             title: {
-                text: 'Meses comparados por cantidad total de contratos y contratos finalizados.'
+                text: 'Meses comparados por cantidad total de contratos y contratos finalizados'
             },
             subtitle: {
                 text: 'Source: Rocket'
@@ -486,7 +486,7 @@ include('head.php');
                 minPointSize: 10,
                 innerSize: '20%',
                 zMin: 0,
-                name: 'countries',
+                name: 'contratos',
                 data: [{
                     name: 'Ene',
                     y: <?php echo $acumulado_ENE2024_Total;?>,
