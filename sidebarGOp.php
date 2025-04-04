@@ -61,6 +61,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item" id="entregas" onclick="activarItem(this, 'entregas')" >
+                    <a aria-expanded="false" href="entregaVehiculo.php" >
+                        <i class="fas fa-user" ></i>
+                        <p> Entregas </p>
+                    </a>
+                </li>
+
 
                 <?php  
                 /* Dejo el registro de que utilizábamos este algoritmo, pero ya no lo necesitamos. No utilizar porque se rompe el script de JS */
