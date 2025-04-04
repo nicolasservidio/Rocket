@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2024 a las 03:43:19
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 05, 2025 at 12:27 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `rocket`
+-- Database: `rocket`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `accesorios-vehiculos`
+-- Table structure for table `accesorios-vehiculos`
 --
 
 CREATE TABLE `accesorios-vehiculos` (
@@ -42,7 +42,7 @@ CREATE TABLE `accesorios-vehiculos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cargo`
+-- Table structure for table `cargo`
 --
 
 CREATE TABLE `cargo` (
@@ -51,7 +51,7 @@ CREATE TABLE `cargo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Volcado de datos para la tabla `cargo`
+-- Dumping data for table `cargo`
 --
 
 INSERT INTO `cargo` (`id`, `descripcion`) VALUES
@@ -71,7 +71,7 @@ INSERT INTO `cargo` (`id`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clientes`
+-- Table structure for table `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -99,7 +99,7 @@ CREATE TABLE `clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `clientes`
+-- Dumping data for table `clientes`
 --
 
 INSERT INTO `clientes` (`idCliente`, `nombreCliente`, `apellidoCliente`, `nacionalidadCliente`, `dniCliente`, `nroPasaporteCliente`, `mailCliente`, `telefonoCliente`, `ciudadCliente`, `direccionCliente`, `comprobanteDomicilio`, `propositoAlquiler`, `licenciaConducir`, `licenciaInternacionalConducir`, `tarjetaCredito_titular`, `tarjetaCredito_numero`, `tarjetaCredito_vencim`, `tarjetaCredito_codSeguridad`, `seguroCliente_nombre`, `seguroCliente_tipo`, `seguroCliente_descripcion`) VALUES
@@ -121,7 +121,7 @@ INSERT INTO `clientes` (`idCliente`, `nombreCliente`, `apellidoCliente`, `nacion
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `combustibles`
+-- Table structure for table `combustibles`
 --
 
 CREATE TABLE `combustibles` (
@@ -130,7 +130,7 @@ CREATE TABLE `combustibles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `combustibles`
+-- Dumping data for table `combustibles`
 --
 
 INSERT INTO `combustibles` (`idCombustible`, `tipoCombustible`) VALUES
@@ -147,7 +147,7 @@ INSERT INTO `combustibles` (`idCombustible`, `tipoCombustible`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contratos-alquiler`
+-- Table structure for table `contratos-alquiler`
 --
 
 CREATE TABLE `contratos-alquiler` (
@@ -164,7 +164,7 @@ CREATE TABLE `contratos-alquiler` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `contratos-alquiler`
+-- Dumping data for table `contratos-alquiler`
 --
 
 INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFinContrato`, `fechaEntrega`, `fechaDevolucion`, `idCliente`, `idVehiculo`, `idVendedor`, `idDetalleContrato`, `idEstadoContrato`) VALUES
@@ -174,7 +174,7 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (4, '2024-12-06', '2024-12-09', NULL, NULL, 6, 2, NULL, 4, 6),
 (5, '2024-12-08', '2024-12-10', NULL, NULL, 7, 19, NULL, 5, 4),
 (7, '2024-12-09', '2024-12-14', NULL, NULL, 11, 6, NULL, 7, 5),
-(8, '2024-12-11', '2024-12-13', NULL, NULL, 17, 24, NULL, 8, 2),
+(8, '2024-12-11', '2024-12-13', NULL, NULL, 17, 24, NULL, 8, 4),
 (10, '2024-12-14', '2024-12-16', NULL, NULL, 7, 28, NULL, 10, 2),
 (11, '2024-12-15', '2024-12-17', NULL, NULL, 8, 20, NULL, 11, 2),
 (12, '2024-12-17', '2024-12-20', NULL, NULL, 7, 32, NULL, 12, 2),
@@ -183,7 +183,7 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (15, '2024-12-14', '2025-01-04', NULL, NULL, 12, 36, NULL, 15, 2),
 (16, '2024-12-31', '2025-01-04', NULL, NULL, 15, 35, NULL, 16, 3),
 (17, '2025-01-01', '2025-01-03', NULL, NULL, 1, 24, NULL, 17, 1),
-(18, '2025-01-02', '2025-01-04', NULL, NULL, 3, 1, NULL, 18, 1),
+(18, '2025-01-02', '2025-01-04', NULL, NULL, 3, 1, NULL, 18, 4),
 (19, '2024-01-01', '2024-01-05', NULL, NULL, 6, 2, NULL, 19, 6),
 (20, '2024-01-02', '2024-01-07', NULL, NULL, 4, 32, NULL, 20, 6),
 (21, '2024-01-02', '2024-01-05', NULL, NULL, 5, 3, NULL, 21, 6),
@@ -294,12 +294,13 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (126, '2024-11-02', '2024-11-07', NULL, NULL, 12, 2, NULL, 126, 6),
 (127, '2024-11-07', '2024-11-10', NULL, NULL, 5, 23, NULL, 127, 6),
 (128, '2024-11-12', '2024-11-14', NULL, NULL, 6, 24, NULL, 128, 3),
-(129, '2024-11-13', '2024-11-15', NULL, NULL, 11, 24, NULL, 129, 6);
+(129, '2024-11-13', '2024-11-15', NULL, NULL, 11, 24, NULL, 129, 6),
+(130, '2025-01-02', '2025-01-04', NULL, NULL, 6, 23, NULL, 130, 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cuentas-clientes`
+-- Table structure for table `cuentas-clientes`
 --
 
 CREATE TABLE `cuentas-clientes` (
@@ -311,7 +312,7 @@ CREATE TABLE `cuentas-clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `cuentas-clientes`
+-- Dumping data for table `cuentas-clientes`
 --
 
 INSERT INTO `cuentas-clientes` (`idCuentaCliente`, `nombreUsuarioCliente`, `passwordCliente`, `idCliente`, `idEstadoCuentaCliente`) VALUES
@@ -323,7 +324,7 @@ INSERT INTO `cuentas-clientes` (`idCuentaCliente`, `nombreUsuarioCliente`, `pass
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle-contratos`
+-- Table structure for table `detalle-contratos`
 --
 
 CREATE TABLE `detalle-contratos` (
@@ -338,7 +339,7 @@ CREATE TABLE `detalle-contratos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `detalle-contratos`
+-- Dumping data for table `detalle-contratos`
 --
 
 INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `cantidadDiasContrato`, `montoTotalContrato`, `condicionesContrato`, `estadoContrato`, `idEntregaVehiculo`, `idDevVehiculo`) VALUES
@@ -468,12 +469,13 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 (126, 110, 5, 550, NULL, 'El estado ha sido modificado', NULL, NULL),
 (127, 125, 3, 375, NULL, 'El estado ha sido modificado', NULL, NULL),
 (128, 125, 2, 250, NULL, 'El estado ha sido modificado', NULL, NULL),
-(129, 135, 2, 270, NULL, 'El estado ha sido modificado', NULL, NULL);
+(129, 135, 2, 270, NULL, 'El estado ha sido modificado', NULL, NULL),
+(130, 55, 2, 110, NULL, 'El estado ha sido modificado', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle-pedidoaproveedor`
+-- Table structure for table `detalle-pedidoaproveedor`
 --
 
 CREATE TABLE `detalle-pedidoaproveedor` (
@@ -492,7 +494,7 @@ CREATE TABLE `detalle-pedidoaproveedor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `devoluciones-vehiculos`
+-- Table structure for table `devoluciones-vehiculos`
 --
 
 CREATE TABLE `devoluciones-vehiculos` (
@@ -512,7 +514,7 @@ CREATE TABLE `devoluciones-vehiculos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empleados`
+-- Table structure for table `empleados`
 --
 
 CREATE TABLE `empleados` (
@@ -532,21 +534,31 @@ CREATE TABLE `empleados` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `entregas-vehiculos`
+-- Table structure for table `entregas-vehiculos`
 --
 
 CREATE TABLE `entregas-vehiculos` (
   `idEntrega` int(11) NOT NULL,
   `fechaEntrega` date NOT NULL,
-  `horaEntrega` varchar(5) NOT NULL,
+  `horaEntrega` varchar(8) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idContrato` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Dumping data for table `entregas-vehiculos`
+--
+
+INSERT INTO `entregas-vehiculos` (`idEntrega`, `fechaEntrega`, `horaEntrega`, `idCliente`, `idContrato`) VALUES
+(1, '2024-01-01', '07:00', 6, 19),
+(2, '2025-01-02', '07:35', 6, 130),
+(3, '2025-01-02', '13:15', 3, 18),
+(4, '2024-12-11', '15:00', 17, 8);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estados-contratos`
+-- Table structure for table `estados-contratos`
 --
 
 CREATE TABLE `estados-contratos` (
@@ -556,7 +568,7 @@ CREATE TABLE `estados-contratos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `estados-contratos`
+-- Dumping data for table `estados-contratos`
 --
 
 INSERT INTO `estados-contratos` (`idEstadoContrato`, `estadoContrato`, `descripcionEstadoContrato`) VALUES
@@ -570,7 +582,7 @@ INSERT INTO `estados-contratos` (`idEstadoContrato`, `estadoContrato`, `descripc
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estados-cuentacliente`
+-- Table structure for table `estados-cuentacliente`
 --
 
 CREATE TABLE `estados-cuentacliente` (
@@ -579,7 +591,7 @@ CREATE TABLE `estados-cuentacliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `estados-cuentacliente`
+-- Dumping data for table `estados-cuentacliente`
 --
 
 INSERT INTO `estados-cuentacliente` (`idEstadoCuenta`, `Denominacion`) VALUES
@@ -589,7 +601,7 @@ INSERT INTO `estados-cuentacliente` (`idEstadoCuenta`, `Denominacion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estados-pedidoaproveedor`
+-- Table structure for table `estados-pedidoaproveedor`
 --
 
 CREATE TABLE `estados-pedidoaproveedor` (
@@ -599,7 +611,7 @@ CREATE TABLE `estados-pedidoaproveedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `estados-pedidoaproveedor`
+-- Dumping data for table `estados-pedidoaproveedor`
 --
 
 INSERT INTO `estados-pedidoaproveedor` (`idEstadoPedido`, `estadoPedido`, `descripcionEstadoPedido`) VALUES
@@ -614,7 +626,7 @@ INSERT INTO `estados-pedidoaproveedor` (`idEstadoPedido`, `estadoPedido`, `descr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `feedbacks-clientes`
+-- Table structure for table `feedbacks-clientes`
 --
 
 CREATE TABLE `feedbacks-clientes` (
@@ -626,7 +638,7 @@ CREATE TABLE `feedbacks-clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `feedbacks-clientes`
+-- Dumping data for table `feedbacks-clientes`
 --
 
 INSERT INTO `feedbacks-clientes` (`idFeedbackCliente`, `descripcionFeedback`, `puntuacionFeedback`, `idVehiculo`, `idCuentaCliente`) VALUES
@@ -636,7 +648,7 @@ INSERT INTO `feedbacks-clientes` (`idFeedbackCliente`, `descripcionFeedback`, `p
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `grupos-vehiculos`
+-- Table structure for table `grupos-vehiculos`
 --
 
 CREATE TABLE `grupos-vehiculos` (
@@ -646,7 +658,7 @@ CREATE TABLE `grupos-vehiculos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `grupos-vehiculos`
+-- Dumping data for table `grupos-vehiculos`
 --
 
 INSERT INTO `grupos-vehiculos` (`idGrupo`, `nombreGrupo`, `descripcionGrupo`) VALUES
@@ -667,7 +679,7 @@ INSERT INTO `grupos-vehiculos` (`idGrupo`, `nombreGrupo`, `descripcionGrupo`) VA
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `intereses-clientes`
+-- Table structure for table `intereses-clientes`
 --
 
 CREATE TABLE `intereses-clientes` (
@@ -678,7 +690,7 @@ CREATE TABLE `intereses-clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `intereses-clientes`
+-- Dumping data for table `intereses-clientes`
 --
 
 INSERT INTO `intereses-clientes` (`idInteresCliente`, `motivoDeInteres`, `idVehiculo`, `idCuentaCliente`) VALUES
@@ -688,7 +700,7 @@ INSERT INTO `intereses-clientes` (`idInteresCliente`, `motivoDeInteres`, `idVehi
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `mantenimientos-vehiculos`
+-- Table structure for table `mantenimientos-vehiculos`
 --
 
 CREATE TABLE `mantenimientos-vehiculos` (
@@ -706,7 +718,7 @@ CREATE TABLE `mantenimientos-vehiculos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `modelos`
+-- Table structure for table `modelos`
 --
 
 CREATE TABLE `modelos` (
@@ -716,7 +728,7 @@ CREATE TABLE `modelos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `modelos`
+-- Dumping data for table `modelos`
 --
 
 INSERT INTO `modelos` (`idModelo`, `nombreModelo`, `descripcionModelo`) VALUES
@@ -734,7 +746,7 @@ INSERT INTO `modelos` (`idModelo`, `nombreModelo`, `descripcionModelo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pedido-a-proveedor`
+-- Table structure for table `pedido-a-proveedor`
 --
 
 CREATE TABLE `pedido-a-proveedor` (
@@ -749,7 +761,7 @@ CREATE TABLE `pedido-a-proveedor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preparaciones-vehiculos`
+-- Table structure for table `preparaciones-vehiculos`
 --
 
 CREATE TABLE `preparaciones-vehiculos` (
@@ -765,7 +777,7 @@ CREATE TABLE `preparaciones-vehiculos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `productos-vehiculo`
+-- Table structure for table `productos-vehiculo`
 --
 
 CREATE TABLE `productos-vehiculo` (
@@ -782,7 +794,7 @@ CREATE TABLE `productos-vehiculo` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `proveedores`
+-- Table structure for table `proveedores`
 --
 
 CREATE TABLE `proveedores` (
@@ -798,7 +810,7 @@ CREATE TABLE `proveedores` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `repuestos-vehiculos`
+-- Table structure for table `repuestos-vehiculos`
 --
 
 CREATE TABLE `repuestos-vehiculos` (
@@ -816,7 +828,7 @@ CREATE TABLE `repuestos-vehiculos` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `reservas-vehiculos`
+-- Table structure for table `reservas-vehiculos`
 --
 
 CREATE TABLE `reservas-vehiculos` (
@@ -835,7 +847,7 @@ CREATE TABLE `reservas-vehiculos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `reservas-vehiculos`
+-- Dumping data for table `reservas-vehiculos`
 --
 
 INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, `fechaInicioReserva`, `FechaFinReserva`, `precioPorDiaReserva`, `cantidadDiasReserva`, `totalReserva`, `idCliente`, `idContrato`, `idSucursal`, `idVehiculo`) VALUES
@@ -975,7 +987,7 @@ INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sucursales`
+-- Table structure for table `sucursales`
 --
 
 CREATE TABLE `sucursales` (
@@ -987,7 +999,7 @@ CREATE TABLE `sucursales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `sucursales`
+-- Dumping data for table `sucursales`
 --
 
 INSERT INTO `sucursales` (`idSucursal`, `numeroSucursal`, `direccionSucursal`, `ciudadSucursal`, `telefonoSucursal`) VALUES
@@ -1000,7 +1012,7 @@ INSERT INTO `sucursales` (`idSucursal`, `numeroSucursal`, `direccionSucursal`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo-insumo`
+-- Table structure for table `tipo-insumo`
 --
 
 CREATE TABLE `tipo-insumo` (
@@ -1012,7 +1024,7 @@ CREATE TABLE `tipo-insumo` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -1024,7 +1036,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `contrasena`, `id_cargo`) VALUES
@@ -1039,7 +1051,7 @@ INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `contrasena`, `id_cargo`) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vehiculos`
+-- Table structure for table `vehiculos`
 --
 
 CREATE TABLE `vehiculos` (
@@ -1065,11 +1077,11 @@ CREATE TABLE `vehiculos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `vehiculos`
+-- Dumping data for table `vehiculos`
 --
 
 INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `fechaCompra`, `anio`, `numeroMotor`, `numeroChasis`, `puertas`, `asientos`, `esAutomatico`, `aireAcondicionado`, `dirHidraulica`, `estadoFisicoDelVehiculo`, `disponibilidad`, `kilometraje`, `idModelo`, `idCombustible`, `idGrupoVehiculo`, `idSucursal`) VALUES
-(1, 'AB468FG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 6, 8, 13, 1),
+(1, 'AB468FG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, 6, 8, 13, 1),
 (2, 'AA070DE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 1, 4, 12, 2),
 (3, 'AC340FY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 2, 7, 12, 1),
 (6, 'ADCS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 5, 3, 6, 2),
@@ -1081,7 +1093,7 @@ INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `fechaCompra`, `ani
 (23, 'JHGP77F', NULL, '2024-10-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 8, 4, 10, 1),
 (24, 'NE32SR', NULL, '2024-10-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 8, 9, 2, 1),
 (25, 'XY909BM', NULL, '2024-10-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 5, 2, 1, 2),
-(28, 'WYS88A', NULL, '2024-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 6, 9, 1, 3),
+(28, 'WYS88A', NULL, '2024-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, 6, 9, 1, 3),
 (30, 'XY33BM', NULL, '2024-11-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 4, 9, 3, 3),
 (32, 'BLABLA9', NULL, '2024-12-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 1, 6, 12, 4),
 (35, 'ROR99C', NULL, '2024-12-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 2, 3, 4, 4),
@@ -1090,7 +1102,7 @@ INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `fechaCompra`, `ani
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vendedores`
+-- Table structure for table `vendedores`
 --
 
 CREATE TABLE `vendedores` (
@@ -1101,7 +1113,7 @@ CREATE TABLE `vendedores` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `verificaciones-vehiculos`
+-- Table structure for table `verificaciones-vehiculos`
 --
 
 CREATE TABLE `verificaciones-vehiculos` (
@@ -1115,11 +1127,11 @@ CREATE TABLE `verificaciones-vehiculos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `accesorios-vehiculos`
+-- Indexes for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
   ADD PRIMARY KEY (`idAccesorio`),
@@ -1128,25 +1140,25 @@ ALTER TABLE `accesorios-vehiculos`
   ADD KEY `idVehiculoHospedante` (`idVehiculoHospedante`);
 
 --
--- Indices de la tabla `cargo`
+-- Indexes for table `cargo`
 --
 ALTER TABLE `cargo`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `clientes`
+-- Indexes for table `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`idCliente`);
 
 --
--- Indices de la tabla `combustibles`
+-- Indexes for table `combustibles`
 --
 ALTER TABLE `combustibles`
   ADD PRIMARY KEY (`idCombustible`);
 
 --
--- Indices de la tabla `contratos-alquiler`
+-- Indexes for table `contratos-alquiler`
 --
 ALTER TABLE `contratos-alquiler`
   ADD PRIMARY KEY (`idContrato`),
@@ -1157,7 +1169,7 @@ ALTER TABLE `contratos-alquiler`
   ADD KEY `idEstadoContrato` (`idEstadoContrato`);
 
 --
--- Indices de la tabla `cuentas-clientes`
+-- Indexes for table `cuentas-clientes`
 --
 ALTER TABLE `cuentas-clientes`
   ADD PRIMARY KEY (`idCuentaCliente`),
@@ -1165,7 +1177,7 @@ ALTER TABLE `cuentas-clientes`
   ADD KEY `estado cuenta` (`idEstadoCuentaCliente`);
 
 --
--- Indices de la tabla `detalle-contratos`
+-- Indexes for table `detalle-contratos`
 --
 ALTER TABLE `detalle-contratos`
   ADD PRIMARY KEY (`idDetalleContrato`),
@@ -1173,7 +1185,7 @@ ALTER TABLE `detalle-contratos`
   ADD KEY `idDevVehiculo` (`idDevVehiculo`);
 
 --
--- Indices de la tabla `detalle-pedidoaproveedor`
+-- Indexes for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
   ADD PRIMARY KEY (`idDetallePedidoAProveedor`),
@@ -1182,7 +1194,7 @@ ALTER TABLE `detalle-pedidoaproveedor`
   ADD KEY `idAccesorioVehiculo` (`idAccesorioVehiculo`);
 
 --
--- Indices de la tabla `devoluciones-vehiculos`
+-- Indexes for table `devoluciones-vehiculos`
 --
 ALTER TABLE `devoluciones-vehiculos`
   ADD PRIMARY KEY (`idDevolucion`),
@@ -1192,14 +1204,14 @@ ALTER TABLE `devoluciones-vehiculos`
   ADD KEY `idVerificacion` (`idVerificacion`);
 
 --
--- Indices de la tabla `empleados`
+-- Indexes for table `empleados`
 --
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`idEmpleado`),
   ADD KEY `idSucursal` (`idSucursal`);
 
 --
--- Indices de la tabla `entregas-vehiculos`
+-- Indexes for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
   ADD PRIMARY KEY (`idEntrega`),
@@ -1207,25 +1219,25 @@ ALTER TABLE `entregas-vehiculos`
   ADD KEY `idContrato` (`idContrato`);
 
 --
--- Indices de la tabla `estados-contratos`
+-- Indexes for table `estados-contratos`
 --
 ALTER TABLE `estados-contratos`
   ADD PRIMARY KEY (`idEstadoContrato`);
 
 --
--- Indices de la tabla `estados-cuentacliente`
+-- Indexes for table `estados-cuentacliente`
 --
 ALTER TABLE `estados-cuentacliente`
   ADD PRIMARY KEY (`idEstadoCuenta`);
 
 --
--- Indices de la tabla `estados-pedidoaproveedor`
+-- Indexes for table `estados-pedidoaproveedor`
 --
 ALTER TABLE `estados-pedidoaproveedor`
   ADD PRIMARY KEY (`idEstadoPedido`);
 
 --
--- Indices de la tabla `feedbacks-clientes`
+-- Indexes for table `feedbacks-clientes`
 --
 ALTER TABLE `feedbacks-clientes`
   ADD PRIMARY KEY (`idFeedbackCliente`),
@@ -1233,13 +1245,13 @@ ALTER TABLE `feedbacks-clientes`
   ADD KEY `idCuentaCliente` (`idCuentaCliente`);
 
 --
--- Indices de la tabla `grupos-vehiculos`
+-- Indexes for table `grupos-vehiculos`
 --
 ALTER TABLE `grupos-vehiculos`
   ADD PRIMARY KEY (`idGrupo`);
 
 --
--- Indices de la tabla `intereses-clientes`
+-- Indexes for table `intereses-clientes`
 --
 ALTER TABLE `intereses-clientes`
   ADD PRIMARY KEY (`idInteresCliente`),
@@ -1247,7 +1259,7 @@ ALTER TABLE `intereses-clientes`
   ADD KEY `cuenta del cliente` (`idCuentaCliente`);
 
 --
--- Indices de la tabla `mantenimientos-vehiculos`
+-- Indexes for table `mantenimientos-vehiculos`
 --
 ALTER TABLE `mantenimientos-vehiculos`
   ADD PRIMARY KEY (`idMantenimiento`),
@@ -1256,13 +1268,13 @@ ALTER TABLE `mantenimientos-vehiculos`
   ADD KEY `idProductoUsado` (`idProductoUsado`);
 
 --
--- Indices de la tabla `modelos`
+-- Indexes for table `modelos`
 --
 ALTER TABLE `modelos`
   ADD PRIMARY KEY (`idModelo`);
 
 --
--- Indices de la tabla `pedido-a-proveedor`
+-- Indexes for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
   ADD PRIMARY KEY (`idPedido`),
@@ -1271,7 +1283,7 @@ ALTER TABLE `pedido-a-proveedor`
   ADD KEY `idEstadoPedido` (`idEstadoPedido`);
 
 --
--- Indices de la tabla `preparaciones-vehiculos`
+-- Indexes for table `preparaciones-vehiculos`
 --
 ALTER TABLE `preparaciones-vehiculos`
   ADD PRIMARY KEY (`idPreparacion`),
@@ -1280,7 +1292,7 @@ ALTER TABLE `preparaciones-vehiculos`
   ADD KEY `idProductoUsado` (`idProductoUsado`);
 
 --
--- Indices de la tabla `productos-vehiculo`
+-- Indexes for table `productos-vehiculo`
 --
 ALTER TABLE `productos-vehiculo`
   ADD PRIMARY KEY (`idProducto`),
@@ -1289,14 +1301,14 @@ ALTER TABLE `productos-vehiculo`
   ADD KEY `idVehiculoDestinatario` (`idVehiculoDestinatario`);
 
 --
--- Indices de la tabla `proveedores`
+-- Indexes for table `proveedores`
 --
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`idProveedor`),
   ADD KEY `idTipoInsumo` (`idTipoInsumo`);
 
 --
--- Indices de la tabla `repuestos-vehiculos`
+-- Indexes for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
   ADD PRIMARY KEY (`idRepuesto`),
@@ -1305,7 +1317,7 @@ ALTER TABLE `repuestos-vehiculos`
   ADD KEY `idVehiculoHospedante` (`idVehiculoHospedante`);
 
 --
--- Indices de la tabla `reservas-vehiculos`
+-- Indexes for table `reservas-vehiculos`
 --
 ALTER TABLE `reservas-vehiculos`
   ADD PRIMARY KEY (`idReserva`),
@@ -1315,19 +1327,19 @@ ALTER TABLE `reservas-vehiculos`
   ADD KEY `idVehiculo` (`idVehiculo`);
 
 --
--- Indices de la tabla `sucursales`
+-- Indexes for table `sucursales`
 --
 ALTER TABLE `sucursales`
   ADD PRIMARY KEY (`idSucursal`);
 
 --
--- Indices de la tabla `tipo-insumo`
+-- Indexes for table `tipo-insumo`
 --
 ALTER TABLE `tipo-insumo`
   ADD PRIMARY KEY (`idTipoInsumo`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
@@ -1335,7 +1347,7 @@ ALTER TABLE `usuarios`
   ADD KEY `id_cargo_2` (`id_cargo`);
 
 --
--- Indices de la tabla `vehiculos`
+-- Indexes for table `vehiculos`
 --
 ALTER TABLE `vehiculos`
   ADD PRIMARY KEY (`idVehiculo`),
@@ -1345,215 +1357,215 @@ ALTER TABLE `vehiculos`
   ADD KEY `sucursal` (`idSucursal`);
 
 --
--- Indices de la tabla `vendedores`
+-- Indexes for table `vendedores`
 --
 ALTER TABLE `vendedores`
   ADD PRIMARY KEY (`idVendedor`),
   ADD KEY `idEmpleado` (`idEmpleado`);
 
 --
--- Indices de la tabla `verificaciones-vehiculos`
+-- Indexes for table `verificaciones-vehiculos`
 --
 ALTER TABLE `verificaciones-vehiculos`
   ADD PRIMARY KEY (`idVerificacion`),
   ADD KEY `idVehiculo` (`idVehiculo`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `accesorios-vehiculos`
+-- AUTO_INCREMENT for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
   MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `cargo`
+-- AUTO_INCREMENT for table `cargo`
 --
 ALTER TABLE `cargo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT de la tabla `clientes`
+-- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
   MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT de la tabla `combustibles`
+-- AUTO_INCREMENT for table `combustibles`
 --
 ALTER TABLE `combustibles`
   MODIFY `idCombustible` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT de la tabla `contratos-alquiler`
+-- AUTO_INCREMENT for table `contratos-alquiler`
 --
 ALTER TABLE `contratos-alquiler`
-  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
--- AUTO_INCREMENT de la tabla `cuentas-clientes`
+-- AUTO_INCREMENT for table `cuentas-clientes`
 --
 ALTER TABLE `cuentas-clientes`
   MODIFY `idCuentaCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `detalle-contratos`
+-- AUTO_INCREMENT for table `detalle-contratos`
 --
 ALTER TABLE `detalle-contratos`
-  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
--- AUTO_INCREMENT de la tabla `detalle-pedidoaproveedor`
+-- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
   MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `devoluciones-vehiculos`
+-- AUTO_INCREMENT for table `devoluciones-vehiculos`
 --
 ALTER TABLE `devoluciones-vehiculos`
   MODIFY `idDevolucion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `empleados`
+-- AUTO_INCREMENT for table `empleados`
 --
 ALTER TABLE `empleados`
   MODIFY `idEmpleado` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `entregas-vehiculos`
+-- AUTO_INCREMENT for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
-  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `estados-contratos`
+-- AUTO_INCREMENT for table `estados-contratos`
 --
 ALTER TABLE `estados-contratos`
   MODIFY `idEstadoContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `estados-cuentacliente`
+-- AUTO_INCREMENT for table `estados-cuentacliente`
 --
 ALTER TABLE `estados-cuentacliente`
   MODIFY `idEstadoCuenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `estados-pedidoaproveedor`
+-- AUTO_INCREMENT for table `estados-pedidoaproveedor`
 --
 ALTER TABLE `estados-pedidoaproveedor`
   MODIFY `idEstadoPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `feedbacks-clientes`
+-- AUTO_INCREMENT for table `feedbacks-clientes`
 --
 ALTER TABLE `feedbacks-clientes`
   MODIFY `idFeedbackCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `grupos-vehiculos`
+-- AUTO_INCREMENT for table `grupos-vehiculos`
 --
 ALTER TABLE `grupos-vehiculos`
   MODIFY `idGrupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT de la tabla `intereses-clientes`
+-- AUTO_INCREMENT for table `intereses-clientes`
 --
 ALTER TABLE `intereses-clientes`
   MODIFY `idInteresCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `mantenimientos-vehiculos`
+-- AUTO_INCREMENT for table `mantenimientos-vehiculos`
 --
 ALTER TABLE `mantenimientos-vehiculos`
   MODIFY `idMantenimiento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `modelos`
+-- AUTO_INCREMENT for table `modelos`
 --
 ALTER TABLE `modelos`
   MODIFY `idModelo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `pedido-a-proveedor`
+-- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
   MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `preparaciones-vehiculos`
+-- AUTO_INCREMENT for table `preparaciones-vehiculos`
 --
 ALTER TABLE `preparaciones-vehiculos`
   MODIFY `idPreparacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `productos-vehiculo`
+-- AUTO_INCREMENT for table `productos-vehiculo`
 --
 ALTER TABLE `productos-vehiculo`
   MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `proveedores`
+-- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
   MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `repuestos-vehiculos`
+-- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
   MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `reservas-vehiculos`
+-- AUTO_INCREMENT for table `reservas-vehiculos`
 --
 ALTER TABLE `reservas-vehiculos`
   MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
--- AUTO_INCREMENT de la tabla `sucursales`
+-- AUTO_INCREMENT for table `sucursales`
 --
 ALTER TABLE `sucursales`
   MODIFY `idSucursal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `tipo-insumo`
+-- AUTO_INCREMENT for table `tipo-insumo`
 --
 ALTER TABLE `tipo-insumo`
   MODIFY `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `vehiculos`
+-- AUTO_INCREMENT for table `vehiculos`
 --
 ALTER TABLE `vehiculos`
   MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT de la tabla `vendedores`
+-- AUTO_INCREMENT for table `vendedores`
 --
 ALTER TABLE `vendedores`
   MODIFY `idVendedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `verificaciones-vehiculos`
+-- AUTO_INCREMENT for table `verificaciones-vehiculos`
 --
 ALTER TABLE `verificaciones-vehiculos`
   MODIFY `idVerificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `accesorios-vehiculos`
+-- Constraints for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
   ADD CONSTRAINT `accesorios-vehiculos_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1561,7 +1573,7 @@ ALTER TABLE `accesorios-vehiculos`
   ADD CONSTRAINT `accesorios-vehiculos_ibfk_3` FOREIGN KEY (`idVehiculoHospedante`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `contratos-alquiler`
+-- Constraints for table `contratos-alquiler`
 --
 ALTER TABLE `contratos-alquiler`
   ADD CONSTRAINT `contratos-alquiler_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1571,21 +1583,21 @@ ALTER TABLE `contratos-alquiler`
   ADD CONSTRAINT `contratos-alquiler_ibfk_5` FOREIGN KEY (`idEstadoContrato`) REFERENCES `estados-contratos` (`idEstadoContrato`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `cuentas-clientes`
+-- Constraints for table `cuentas-clientes`
 --
 ALTER TABLE `cuentas-clientes`
   ADD CONSTRAINT `cliente` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `estado cuenta` FOREIGN KEY (`idEstadoCuentaCliente`) REFERENCES `estados-cuentacliente` (`idEstadoCuenta`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `detalle-contratos`
+-- Constraints for table `detalle-contratos`
 --
 ALTER TABLE `detalle-contratos`
   ADD CONSTRAINT `detalle-contratos_ibfk_1` FOREIGN KEY (`idEntregaVehiculo`) REFERENCES `entregas-vehiculos` (`idEntrega`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `detalle-contratos_ibfk_2` FOREIGN KEY (`idDevVehiculo`) REFERENCES `devoluciones-vehiculos` (`idDevolucion`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `detalle-pedidoaproveedor`
+-- Constraints for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
   ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_1` FOREIGN KEY (`idRepuestoVehiculo`) REFERENCES `repuestos-vehiculos` (`idRepuesto`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1593,7 +1605,7 @@ ALTER TABLE `detalle-pedidoaproveedor`
   ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_3` FOREIGN KEY (`idAccesorioVehiculo`) REFERENCES `accesorios-vehiculos` (`idAccesorio`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `devoluciones-vehiculos`
+-- Constraints for table `devoluciones-vehiculos`
 --
 ALTER TABLE `devoluciones-vehiculos`
   ADD CONSTRAINT `devoluciones-vehiculos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1602,34 +1614,34 @@ ALTER TABLE `devoluciones-vehiculos`
   ADD CONSTRAINT `devoluciones-vehiculos_ibfk_4` FOREIGN KEY (`idVerificacion`) REFERENCES `verificaciones-vehiculos` (`idVerificacion`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `empleados`
+-- Constraints for table `empleados`
 --
 ALTER TABLE `empleados`
   ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `entregas-vehiculos`
+-- Constraints for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
   ADD CONSTRAINT `entregas-vehiculos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `entregas-vehiculos_ibfk_2` FOREIGN KEY (`idContrato`) REFERENCES `contratos-alquiler` (`idContrato`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `feedbacks-clientes`
+-- Constraints for table `feedbacks-clientes`
 --
 ALTER TABLE `feedbacks-clientes`
   ADD CONSTRAINT `feedbacks-clientes_ibfk_1` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `feedbacks-clientes_ibfk_2` FOREIGN KEY (`idCuentaCliente`) REFERENCES `cuentas-clientes` (`idCuentaCliente`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `intereses-clientes`
+-- Constraints for table `intereses-clientes`
 --
 ALTER TABLE `intereses-clientes`
   ADD CONSTRAINT `cuenta del cliente` FOREIGN KEY (`idCuentaCliente`) REFERENCES `cuentas-clientes` (`idCuentaCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `vehiculo` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `mantenimientos-vehiculos`
+-- Constraints for table `mantenimientos-vehiculos`
 --
 ALTER TABLE `mantenimientos-vehiculos`
   ADD CONSTRAINT `mantenimientos-vehiculos_ibfk_1` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1637,7 +1649,7 @@ ALTER TABLE `mantenimientos-vehiculos`
   ADD CONSTRAINT `mantenimientos-vehiculos_ibfk_3` FOREIGN KEY (`idProductoUsado`) REFERENCES `productos-vehiculo` (`idProducto`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `pedido-a-proveedor`
+-- Constraints for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
   ADD CONSTRAINT `pedido-a-proveedor_ibfk_1` FOREIGN KEY (`idDetallePedido`) REFERENCES `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1645,7 +1657,7 @@ ALTER TABLE `pedido-a-proveedor`
   ADD CONSTRAINT `pedido-a-proveedor_ibfk_3` FOREIGN KEY (`idEstadoPedido`) REFERENCES `estados-pedidoaproveedor` (`idEstadoPedido`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `preparaciones-vehiculos`
+-- Constraints for table `preparaciones-vehiculos`
 --
 ALTER TABLE `preparaciones-vehiculos`
   ADD CONSTRAINT `preparaciones-vehiculos_ibfk_1` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1653,7 +1665,7 @@ ALTER TABLE `preparaciones-vehiculos`
   ADD CONSTRAINT `preparaciones-vehiculos_ibfk_3` FOREIGN KEY (`idProductoUsado`) REFERENCES `productos-vehiculo` (`idProducto`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `productos-vehiculo`
+-- Constraints for table `productos-vehiculo`
 --
 ALTER TABLE `productos-vehiculo`
   ADD CONSTRAINT `productos-vehiculo_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1661,13 +1673,13 @@ ALTER TABLE `productos-vehiculo`
   ADD CONSTRAINT `productos-vehiculo_ibfk_3` FOREIGN KEY (`idVehiculoDestinatario`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `proveedores`
+-- Constraints for table `proveedores`
 --
 ALTER TABLE `proveedores`
   ADD CONSTRAINT `proveedores_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `repuestos-vehiculos`
+-- Constraints for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
   ADD CONSTRAINT `repuestos-vehiculos_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1675,7 +1687,7 @@ ALTER TABLE `repuestos-vehiculos`
   ADD CONSTRAINT `repuestos-vehiculos_ibfk_3` FOREIGN KEY (`idVehiculoHospedante`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `reservas-vehiculos`
+-- Constraints for table `reservas-vehiculos`
 --
 ALTER TABLE `reservas-vehiculos`
   ADD CONSTRAINT `reservas-vehiculos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1684,13 +1696,13 @@ ALTER TABLE `reservas-vehiculos`
   ADD CONSTRAINT `reservas-vehiculos_ibfk_4` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `usuarios`
+-- Constraints for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `cargo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `vehiculos`
+-- Constraints for table `vehiculos`
 --
 ALTER TABLE `vehiculos`
   ADD CONSTRAINT `combustible` FOREIGN KEY (`idCombustible`) REFERENCES `combustibles` (`idCombustible`) ON DELETE SET NULL ON UPDATE SET NULL,
@@ -1699,13 +1711,13 @@ ALTER TABLE `vehiculos`
   ADD CONSTRAINT `sucursal` FOREIGN KEY (`idSucursal`) REFERENCES `sucursales` (`idSucursal`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `vendedores`
+-- Constraints for table `vendedores`
 --
 ALTER TABLE `vendedores`
   ADD CONSTRAINT `vendedores_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
--- Filtros para la tabla `verificaciones-vehiculos`
+-- Constraints for table `verificaciones-vehiculos`
 --
 ALTER TABLE `verificaciones-vehiculos`
   ADD CONSTRAINT `verificaciones-vehiculos_ibfk_1` FOREIGN KEY (`idVehiculo`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
