@@ -24,7 +24,7 @@ include('head.php');
     <!-- Logo Header --> <!-- CUIDADO: Arroja error fatal si no tienen instalada la extensión "GD" de PHP en XAMPP. Para resolver el error, seguir instructivo: https://www.geeksforgeeks.org/how-to-install-php-gd-in-windows/ -->  
     <div style="margin: 0 auto; padding: 0 0 20px 41%;">
         <span style=""> 
-            <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" /> 
+            <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Proyectos/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" /> 
         </span>
     </div>
     <!-- End Logo Header -->
