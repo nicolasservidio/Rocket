@@ -211,7 +211,7 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
                     ec.idEstadoContrato as ecIdEstadoContrato,
                     ec.estadoContrato as ecEstadoContrato 
 
-            FROM `Devolucion-vehiculos` e, `contratos-alquiler` ca, clientes c, vehiculos v, modelos m, `grupos-vehiculos` g, `detalle-contratos` dc, `estados-contratos` ec, sucursales s 
+            FROM `devoluciones-vehiculos` e, `contratos-alquiler` ca, clientes c, vehiculos v, modelos m, `grupos-vehiculos` g, `detalle-contratos` dc, `estados-contratos` ec, sucursales s 
             WHERE e.idCliente = c.idCliente 
             AND e.idContrato = ca.idContrato 
             AND ca.idCliente = c.idCliente 
