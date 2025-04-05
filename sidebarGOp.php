@@ -68,6 +68,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item" id="devoluciones" onclick="activarItem(this, 'devoluciones')" >
+                    <a aria-expanded="false" href="devolucionVehiculo.php" >
+                        <i class="fas fa-user" ></i>
+                        <p> Devoluciones </p>
+                    </a>
+                </li>
+
 
                 <?php  
                 /* Dejo el registro de que utilizábamos este algoritmo, pero ya no lo necesitamos. No utilizar porque se rompe el script de JS */
