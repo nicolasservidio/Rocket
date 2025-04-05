@@ -216,6 +216,10 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva entrega
                         </button>
 
+                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarEntrega()" disabled>
+                            Modificar oficina de retiro
+                        </button>
+
                         <a href="ReporteEntregas.php"> <button class="btn btn-info">
                             Imprimir listado
                         </button></a>
@@ -401,7 +405,7 @@ include('head.php');
                                                 }
                                             } 
                                             else {
-                                                echo "<option value=''>No se encontraron clientes con estado Firmado.</option>";
+                                                echo "<option value=''>No se encontraron clientes.</option>";
                                             }
                                             ?>
                                         </select>
@@ -474,10 +478,17 @@ include('head.php');
                 entregaSeleccionada = row.dataset.id;
 
                 // Habilitar los botones
-//                document.getElementById('btnModificar').disabled = false;
+                document.getElementById('btnModificar').disabled = false;
 //                document.getElementById('btnEliminar').disabled = false;
             });
         });
+
+        // Función para redirigir a ModificarCliente.php con el ID del cliente seleccionado
+        function modificarEntrega() {
+            if (entregaSeleccionada) {
+                window.location.href = 'modificarEntrega.php?id=' + entregaSeleccionada;
+            }
+        }
 
     </script>
 

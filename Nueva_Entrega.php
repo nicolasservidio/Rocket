@@ -14,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errores = [];
 
     if (empty($idContrato)) {
-        $errores[] = "La selección de un contrato es obligatoria.";
+        $errores[] = "La selección de un contrato es obligatoria. ";
     }
     if (empty($fechaentrega)) {
-        $errores[] = "Registrá la fecha de entrega al cliente.";
+        $errores[] .= "Registrá la fecha de entrega al cliente. ";
     }
     if (empty($horaentrega)) {
-        $errores[] = "Registrá la hora de entrega al cliente.";
+        $errores[] .= "Registrá la hora de entrega al cliente.";
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fechaentregaIngles = "$year-$mo-$day";
     
     // Procesamiento de horas
-    //creo que no necesito porque el control html arrojaría un string
+    // No se requiere
 
     // Conexión y consulta
     $MiConexion = ConexionBD();
