@@ -251,7 +251,7 @@ include('head.php');
 
                         <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
-                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.jpeg" 
+                                <img class="hoverImage" src="assets/img/reports/reporte-entregasporcliente.png" 
                                     alt="Número de entregas por cliente seleccionado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
