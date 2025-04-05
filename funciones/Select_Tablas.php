@@ -220,6 +220,41 @@ function Listar_Clientes($vConexion) {
     return $Listado;
 }
 
+
+// EMITIR LISTADO de Clientes
+function Listar_Clientes_AtoZ($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT idCliente,
+                   nombreCliente,
+                   apellidoCliente,
+                   dniCliente,
+                   telefonoCliente
+            FROM clientes 
+            ORDER BY apellidoCliente, nombreCliente, dniCliente; ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['idCliente'] = $data['idCliente'];
+            $Listado[$i]['nombreCliente'] = $data['nombreCliente'];
+            $Listado[$i]['apellidoCliente'] = $data['apellidoCliente'];
+            $Listado[$i]['dniCliente'] = $data['dniCliente'];
+            $Listado[$i]['telefonoCliente'] = $data['telefonoCliente'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
+
+
 // EMITIR LISTADO de Estados de un contrato
 function Listar_EstadosContrato($vConexion) {
 

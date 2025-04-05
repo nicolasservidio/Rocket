@@ -57,6 +57,12 @@ require_once 'funciones/Select_Tablas.php';
 $ListadoContratos = Listar_Contratos_Firmados($conexion);
 $CantidadContratos = count($ListadoContratos);
 
+// SELECCIONES para combo boxes del modal para generar reporte "Entregas de vehículos según cliente"
+require_once 'funciones/Select_Tablas.php';
+
+$ListadoClientes = Listar_Clientes_AtoZ($conexion);
+$CantidadClientes = count($ListadoClientes);
+
 
 include('head.php');
 
@@ -246,13 +252,18 @@ include('head.php');
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;" >
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Entregas de vehículos por cliente </a>
+                            <strong style="color: #a80a0a;" data-bs-toggle="modal" data-bs-target="#reporteEntregasPorClienteModal">
+                                Reporte:
+                            </strong> 
+                            <a href="#" style="color: black;" data-bs-toggle="modal" data-bs-target="#reporteEntregasPorClienteModal">
+                                Entregas de vehículos por cliente 
+                            </a>
                         </h4>
 
-                        <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
+                        <a href="#" style="color: black;" data-bs-toggle="modal" data-bs-target="#reporteEntregasPorClienteModal"> 
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
                                 <img class="hoverImage" src="assets/img/reports/reporte-entregasporcliente.png" 
-                                    alt="Número de entregas por cliente seleccionado" 
+                                    alt="Entregas de vehículos a cliente seleccionado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
@@ -281,7 +292,7 @@ include('head.php');
                         </style>
                         
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
-                            <a href="ReporteContratos_FrecMensuales.php"> 
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#reporteEntregasPorClienteModal"> 
                                 <button class="btn btn-inversion">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16"> <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/> </svg> 
                                     Reporte
@@ -352,6 +363,60 @@ include('head.php');
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal para Generar reporte de Entregas de vehículos por Cliente -->
+                <div class="modal fade" id="reporteEntregasPorClienteModal" tabindex="-1" aria-labelledby="reporteEntregasPorClienteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reporteEntregasPorClienteModalLabel">Generar reporte: Entregas por cliente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Form -->
+                            <form action="ReporteEntregasPorCliente.php" method="post">
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="idCliente" class="form-label">Seleccionar cliente</label>
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idCliente" title="<?php echo $CantidadClientes ?> clientes encontrados" required>
+                                            <option value="" selected>Selecciona una opción</option>
+
+                                            <?php 
+                                            // Asegurate de que $ListadoClientes contiene datos antes de procesarlo
+                                            if (!empty($ListadoClientes)) {
+                                                $selected = '';
+                                                for ($i = 0; $i < $CantidadClientes; $i++) {
+                                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                                    $selected = (!empty($_POST['idCliente']) && $_POST['idCliente'] == $ListadoClientes[$i]['idCliente']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoClientes[$i]['idCliente']}' $selected>  
+                                                        {$ListadoClientes[$i]['apellidoCliente']} {$ListadoClientes[$i]['nombreCliente']} (DNI: {$ListadoClientes[$i]['dniCliente']}) 
+                                                    </option>";
+                                                }
+                                            } 
+                                            else {
+                                                echo "<option value=''>No se encontraron clientes con estado Firmado.</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                        <!-- 
+                                    <div class="mb-3">
+                                        <label for="numreserva" class="form-label">Número de reserva</label>
+                                        <input type="text" class="form-control" id="numreserva" name="numreserva" required>
+                                    </div>
+                                    -->
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-dark">Generar</button>
                                 </div>
                             </form>
                         </div>
