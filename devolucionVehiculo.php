@@ -92,7 +92,7 @@ include('head.php');
                 </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" action="DevolucionVehiculo.php" method="get">
+                <form class="row g-3" action="devolucionVehiculo.php" method="get">
 
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Nº contrato</label>
@@ -126,7 +126,7 @@ include('head.php');
 
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-4">
-                        <label for="Deviro" class="form-label">Devolucion entre</label>
+                        <label for="retiro" class="form-label">Devolucion entre</label>
                         <div class="d-flex">
                             <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
                                    value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
@@ -181,7 +181,7 @@ include('head.php');
 
                             for ($i=0; $i < $CantidadDevolucion; $i++) { ?>     
 
-                                <tr class='Devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
+                                <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
                                     onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
 
                                     <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
@@ -229,7 +229,7 @@ include('head.php');
                 <style>
                     .hoverImage {
                         position: relative;
-                        align-self: stDevch;
+                        align-self: stretch;
                         height: 650px;
                         flex-shrink: 0;
                         object-fit: cover;
@@ -246,13 +246,13 @@ include('head.php');
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;" >
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Devolucion de vehículos por cliente </a>
+                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Devoluciones de vehículos </a>
                         </h4>
 
                         <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
                                 <img class="hoverImage" src="assets/img/reports/reporte-Devolucionporcliente.png" 
-                                    alt="Número de Devolucion por cliente seleccionado" 
+                                    alt="Número de devolucion por cliente seleccionado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
@@ -339,13 +339,13 @@ include('head.php');
                                     -->
 
                                     <div class="mb-3">
-                                        <label for="fechaDevolucion" class="form-label">Fecha de Devolucion</label>
-                                        <input type="date" class="form-control" id="fechaDevolucion" name="fechaDevolucion" value="" required>
+                                        <label for="fechadevolucion" class="form-label">Fecha de Devolucion</label>
+                                        <input type="date" class="form-control" id="fechadevolucion" name="fechadevolucion" value="" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="horaDevolucion" class="form-label">Hora de Devolucion</label>
-                                        <input type="time" class="form-control" id="horaDevolucion" name="horaDevolucion" value="" required>
+                                        <label for="horadevolucion" class="form-label">Hora de Devolucion</label>
+                                        <input type="time" class="form-control" id="horadevolucion" name="horadevolucion" value="" required>
                                     </div>
 
                                 </div>
@@ -397,16 +397,16 @@ include('head.php');
     </script>
 
     <script>
-        let Devolucioneleccionada = null;
+        let devolucionSeleccionada = null;
 
         // Selección de fila en la Tabla de Devolucion al hacer clic en la misma
-        document.querySelectorAll('#tablaDevolucion .Devolucion').forEach(row => {
+        document.querySelectorAll('#tablaDevolucion .devolucion').forEach(row => {
             row.addEventListener('click', () => {
                 // Desmarcar cualquier fila previamente seleccionada
-                document.querySelectorAll('.Devolucion').forEach(row => row.classList.remove('table-active'));
+                document.querySelectorAll('.devolucion').forEach(row => row.classList.remove('table-active'));
                 // Marcar la fila seleccionada
                 row.classList.add('table-active');
-                Devolucioneleccionada = row.dataset.id;
+                devolucioneleccionada = row.dataset.id;
 
                 // Habilitar los botones
 //                document.getElementById('btnModificar').disabled = false;

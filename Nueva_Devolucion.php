@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $IdCliente = $IdCliente['IdCliente'];
 
     // Ahora sí, registro la devolucion del vehículo
-    $SQL_devolucionVehiculo = "INSERT INTO `devoluciones-vehiculos` (fechaDevolucion,
+    $SQL_DevolucionVehiculo = "INSERT INTO `devoluciones-vehiculos` (fechaDevolucion,
                                                             horaDevolucion, 
                                                             idCliente,
                                                             idContrato) 

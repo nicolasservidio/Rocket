@@ -141,7 +141,7 @@ function Procesar_ConsultaDevolucion() {
 }
 
 
-function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni, $DevolucionDesde, $DevolucionHasta, $conexion) {
+function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni, $devolucionDesde, $devolucionHasta, $conexion) {
 
     if (empty($numContrato)) {
         $numContrato = "ZZZZZZ";
@@ -159,11 +159,11 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
         $dni = "ZZZZZZ";
     }
 
-    if (empty($DevolucionDesde)) {
-        $DevolucionDesde = "ZZZZZZ";
+    if (empty($devolucionDesde)) {
+        $devolucionDesde = "ZZZZZZ";
     }
-    if (empty($DevolucionHasta)) {
-        $DevolucionHasta = "ZZZZZZ";
+    if (empty($devolucionHasta)) {
+        $devolucionHasta = "ZZZZZZ";
     }
 
     $Listado = array();
@@ -226,7 +226,7 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
                 OR c.apellidoCliente LIKE '$apellido%' 
                 OR c.nombreCliente LIKE '$nombre%' 
                 OR c.dniCliente LIKE '$dni%' 
-                OR (e.fechaDevolucion BETWEEN '$DevolucionDesde%' AND '$DevolucionHasta%')) 
+                OR (e.fechaDevolucion BETWEEN '$devolucionDesde%' AND '$devolucionHasta%')) 
             ORDER BY e.fechaDevolucion, e.horaDevolucion, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
 
 
