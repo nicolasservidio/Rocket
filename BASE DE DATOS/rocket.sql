@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2025 at 08:08 PM
+-- Generation Time: Apr 06, 2025 at 08:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -850,7 +850,8 @@ INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `d
 (6, 'Repuestos SA', 'repuestossa@repuestosa.com', 'Rodriguez 9182, Cordoba Capital', 8888222999, '', NULL, 828828888, 'Responsable Inscripto'),
 (7, 'Limpiezas SA', 'limpiezassa@limpiezassa.com', 'Tucuman 1626, CABA', 8282884611, '', NULL, 7227727272, 'Responsable Inscripto'),
 (8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', 'Guemes 88176, Cordoba Capital', 888299927166, '', NULL, 88165353511, 'Responsable Inscripto'),
-(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', 'Guemes 1020, Córdoba Capital', 9991828888, '', NULL, 99100938777, 'Responsable Inscripto');
+(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', 'Guemes 1020, Córdoba Capital', 9991828888, '', NULL, 99100938777, 'Responsable Inscripto'),
+(11, 'TuVehiculo SA', 'proveedores@tvsa.com', 'Cuyo 8389, CABA', 8822228889, '', NULL, 99922200002, 'Responsable Inscripto');
 
 -- --------------------------------------------------------
 
@@ -1556,7 +1557,7 @@ ALTER TABLE `productos-vehiculo`
 -- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `repuestos-vehiculos`

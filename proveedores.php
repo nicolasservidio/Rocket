@@ -50,7 +50,7 @@ include('head.php');
                             value="<?= htmlspecialchars($filtros['cuit']) ?>">
                     </div>
                     <div class="col-md-2">
-                        <label for="nombre" class="form-label">Nombre / <br> Razon Social<br></label>
+                        <label for="nombre" class="form-label">Nombre (Razon Social)</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" 
                             value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
@@ -148,27 +148,27 @@ include('head.php');
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="cuit" class="form-label">Cuit</label>
-                                <input type="text" class="form-control" id="cuit" name="cuit" required>
+                                <input type="text" class="form-control" id="cuit" name="cuit" title="El Cuit debe ser un número mayor a 0" required>
                             </div>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre o Razon Social</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                <input type="text" class="form-control" id="nombre" name="nombre" title="Campo obligatorio" required>
                             </div>
                             <div class="mb-3">
                                 <label for="iva" class="form-label">Condicion IVA</label>
-                                <input type="text" class="form-control" id="iva" name="iva" required>
+                                <input type="text" class="form-control" id="iva" name="iva" title="Campo obligatorio" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" title="Campo obligatorio" required>
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                                <input type="text" class="form-control" id="telefono" name="telefono" title="El teléfono debe contener entre 7 y 15 dígitos" required>
                             </div>
                             <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" required>
+                                <input type="text" class="form-control" id="direccion" name="direccion" title="Campo obligatorio" required>
                             </div>
                         </div>
                         <div class="modal-footer">
