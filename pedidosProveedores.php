@@ -27,8 +27,8 @@ $filtros = [
 
 
 // Generación del listado de contratos
-require_once 'funciones/CRUD-Contratos.php';
-$ListadoContratos = Listar_Contratos($conexion);
+require_once 'funciones/CRUD-Contratos.php';   // Llamar al archivo CRUD-PedidosProv.php   (es solo plantilla, hay que construir el codigo)
+$ListadoContratos = Listar_Contratos($conexion); // usar función Listar_PedidosProv($conexion)
 $CantidadContratos = count($ListadoContratos);
 
 

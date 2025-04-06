@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2025 at 08:18 PM
+-- Generation Time: Apr 07, 2025 at 12:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -33,9 +33,9 @@ CREATE TABLE `accesorios-vehiculos` (
   `descripcionAccesorio` varchar(200) DEFAULT NULL COMMENT 'Campo optativo con una descripción del accesorio, en caso de requerirse',
   `precioAccesorio` float NOT NULL,
   `estadoAccesorio` varchar(100) DEFAULT NULL COMMENT 'Campo optativo con referencias al estado del accesorio',
-  `disponibilidadAccesorio` varchar(1) NOT NULL COMMENT 'Campo de un solo caracter, S (sí) para disponible, N (no) para no disponible',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
+  `disponibilidadAccesorio` varchar(1) DEFAULT NULL COMMENT 'Campo de un solo caracter, S (sí) para disponible, N (no) para no disponible',
   `idVehiculoHospedante` int(11) DEFAULT NULL COMMENT 'Campo optativo para el caso de que un accesorio esté siendo utilizado en un vehículo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -484,12 +484,10 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 
 CREATE TABLE `detalle-pedidoaproveedor` (
   `idDetallePedidoAProveedor` int(11) NOT NULL,
-  `descripcionPedido` varchar(200) DEFAULT NULL COMMENT 'Se sugiere colocar breve descripción del insumo pedido a proveedor.',
+  `idPedido` int(11) DEFAULT NULL COMMENT 'Llave foránea hacia el encabezado',
   `precioPorUnidad` float NOT NULL,
   `cantidadUnidades` int(11) NOT NULL,
-  `montoTotalPedido` float NOT NULL,
-  `condicionesDeEntrega` varchar(200) DEFAULT NULL COMMENT 'Campo opcional que permite registrar condiciones pactadas de entrega.',
-  `estadoDelPedido` varchar(200) DEFAULT NULL COMMENT 'Campo opcional que permite incorporar información adicional sobre el estado del pedido, en caso de ser necesario.',
+  `subtotal` float NOT NULL,
   `idRepuestoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idProductoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idAccesorioVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.'
@@ -780,10 +778,12 @@ INSERT INTO `modelos` (`idModelo`, `nombreModelo`, `descripcionModelo`) VALUES
 CREATE TABLE `pedido-a-proveedor` (
   `idPedido` int(11) NOT NULL,
   `fechaPedido` date NOT NULL,
-  `fechaEntregaPedido` date NOT NULL,
-  `idDetallePedido` int(11) DEFAULT NULL COMMENT 'Detalle de la transacción.',
+  `fechaEntregaPedido` date DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
-  `idEstadoPedido` int(11) DEFAULT NULL
+  `idEstadoPedido` int(11) DEFAULT NULL,
+  `aclaracionesEstadoPedido` varchar(200) DEFAULT NULL COMMENT 'Campo opcional que permite incorporar información adicional sobre el estado del pedido, en caso de ser necesario.',
+  `condicionesDeEntrega` varchar(200) DEFAULT NULL COMMENT 'Campo opcional que permite registrar condiciones pactadas de entrega.',
+  `totalPedido` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -862,12 +862,12 @@ INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `d
 CREATE TABLE `repuestos-vehiculos` (
   `idRepuesto` int(11) NOT NULL,
   `nombreRepuesto` varchar(100) NOT NULL,
-  `descripcionRepuesto` varchar(200) NOT NULL,
+  `descripcionRepuesto` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del repuesto',
   `precioRepuesto` float NOT NULL,
   `estadoRepuesto` varchar(100) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre el estado del repuesto',
-  `disponibilidadRepuesto` char(1) NOT NULL COMMENT 'N (no) para no disponible, S (sí) para disponible',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
+  `disponibilidadRepuesto` char(1) DEFAULT NULL COMMENT 'N (no) para no disponible, S (sí) para disponible',
   `idVehiculoHospedante` int(11) DEFAULT NULL COMMENT 'El vehículo que lleva el repuesto en caso de encontrarse no disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -1238,7 +1238,8 @@ ALTER TABLE `detalle-pedidoaproveedor`
   ADD PRIMARY KEY (`idDetallePedidoAProveedor`),
   ADD KEY `idRepuestoVehiculo` (`idRepuestoVehiculo`),
   ADD KEY `idProductoVehiculo` (`idProductoVehiculo`),
-  ADD KEY `idAccesorioVehiculo` (`idAccesorioVehiculo`);
+  ADD KEY `idAccesorioVehiculo` (`idAccesorioVehiculo`),
+  ADD KEY `idPedido` (`idPedido`);
 
 --
 -- Indexes for table `devoluciones-vehiculos`
@@ -1325,7 +1326,6 @@ ALTER TABLE `modelos`
 --
 ALTER TABLE `pedido-a-proveedor`
   ADD PRIMARY KEY (`idPedido`),
-  ADD KEY `idDetallePedido` (`idDetallePedido`),
   ADD KEY `idProveedor` (`idProveedor`),
   ADD KEY `idEstadoPedido` (`idEstadoPedido`);
 
@@ -1649,7 +1649,8 @@ ALTER TABLE `detalle-contratos`
 ALTER TABLE `detalle-pedidoaproveedor`
   ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_1` FOREIGN KEY (`idRepuestoVehiculo`) REFERENCES `repuestos-vehiculos` (`idRepuesto`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_2` FOREIGN KEY (`idProductoVehiculo`) REFERENCES `productos-vehiculo` (`idProducto`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_3` FOREIGN KEY (`idAccesorioVehiculo`) REFERENCES `accesorios-vehiculos` (`idAccesorio`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_3` FOREIGN KEY (`idAccesorioVehiculo`) REFERENCES `accesorios-vehiculos` (`idAccesorio`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `detalle-pedidoaproveedor_ibfk_4` FOREIGN KEY (`idPedido`) REFERENCES `pedido-a-proveedor` (`idPedido`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `devoluciones-vehiculos`
@@ -1699,7 +1700,6 @@ ALTER TABLE `mantenimientos-vehiculos`
 -- Constraints for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  ADD CONSTRAINT `pedido-a-proveedor_ibfk_1` FOREIGN KEY (`idDetallePedido`) REFERENCES `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `pedido-a-proveedor_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `pedido-a-proveedor_ibfk_3` FOREIGN KEY (`idEstadoPedido`) REFERENCES `estados-pedidoaproveedor` (`idEstadoPedido`) ON DELETE SET NULL ON UPDATE SET NULL;
 
