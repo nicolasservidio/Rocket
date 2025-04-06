@@ -210,6 +210,10 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva Devolucion
                         </button>
 
+                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarDevolucion()" disabled>
+                            Modificar oficina de devolución
+                        </button>
+
                         <a href="ReporteDevoluciones.php"> <button class="btn btn-info">
                             Imprimir listado
                         </button></a>
@@ -407,13 +411,20 @@ include('head.php');
                 document.querySelectorAll('.devolucion').forEach(row => row.classList.remove('table-active'));
                 // Marcar la fila seleccionada
                 row.classList.add('table-active');
-                devolucioneleccionada = row.dataset.id;
+                devolucionSeleccionada = row.dataset.id;
 
                 // Habilitar los botones
-//                document.getElementById('btnModificar').disabled = false;
+                document.getElementById('btnModificar').disabled = false;
 //                document.getElementById('btnEliminar').disabled = false;
             });
         });
+
+        // Función para redirigir a modificarDevolucion.php con el ID de la devolucion seleccionada
+        function modificarDevolucion() {
+            if (devolucionSeleccionada) {
+                window.location.href = 'modificarDevolucion.php?id=' + devolucionSeleccionada;
+            }
+        }
 
     </script>
 

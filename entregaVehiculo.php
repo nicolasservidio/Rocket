@@ -483,7 +483,7 @@ include('head.php');
             });
         });
 
-        // Función para redirigir a ModificarCliente.php con el ID del cliente seleccionado
+        // Función para redirigir a modificarEntrega.php con el ID de la entrega seleccionado
         function modificarEntrega() {
             if (entregaSeleccionada) {
                 window.location.href = 'modificarEntrega.php?id=' + entregaSeleccionada;
