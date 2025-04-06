@@ -6,11 +6,11 @@ use HiFolks\Statistics\Exception\InvalidDataInputException;
 
 class Stat
 {
-    final public const MEDIAN_TYPE_LOW = 'LOW';
+    public const MEDIAN_TYPE_LOW = 'LOW';
 
-    final public const MEDIAN_TYPE_HIGH = 'HIGH';
+    public const MEDIAN_TYPE_HIGH = 'HIGH';
 
-    final public const MEDIAN_TYPE_MIDDLE = 'MIDDLE';
+    public const MEDIAN_TYPE_MIDDLE = 'MIDDLE';
 
     /**
      * Count the element in the array
