@@ -75,10 +75,27 @@
                     </a>
                 </li>
 
+                </br>
+
+                <li id="caricon" >
+                    <a aria-expanded="false" href="#" >
+                        <i class="fas fa-rocket" style="color: red; padding: 0 40% 0;"></i>
+                    </a>
+                </li>
+
+                </br>
+
                 <li class="nav-item" id="proveedores" onclick="activarItem(this, 'proveedores')" >
                     <a aria-expanded="false" href="proveedores.php" >
-                        <i class="fas fa-user" ></i>
+                        <i class="fas fa-address-book" ></i>
                         <p> Proveedores </p>
+                    </a>
+                </li>
+
+                <li class="nav-item" id="pedidosproveedores" onclick="activarItem(this, 'pedidosproveedores')" >
+                    <a aria-expanded="false" href="pedidosProveedores.php" >
+                        <i class="fas fa-truck"></i>
+                        <p>Pedidos a Proveedores</p>
                     </a>
                 </li>
 
