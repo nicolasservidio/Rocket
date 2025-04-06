@@ -47,28 +47,44 @@ include('head.php');
                                 <h3>#</h3>
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Nº Contrato.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Fecha Dev.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Hora Dev.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Cliente
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Vehículo
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Oficina Dev.
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                                Estado del Vehículo
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                                Aclaraciones sobre el estado
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                                Infracciones
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                                Costos por Infracciones
                             </th>
                         </tr>
                     </thead>
@@ -110,6 +126,25 @@ include('head.php');
 
                                 <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
                                     <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                    <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                    <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                    <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> </td>
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                    <?php echo "Costos por infracciones:</br> 
+                                    <b>{$ListadoDevolucion[$i]['CostosInfracciones']} US$</b>. </br></br> 
+                                    Cargo adicional:</br>
+                                    <b>{$ListadoDevolucion[$i]['MontoExtra']} US$</b>"; ?>
                                 </td>
 
                             </tr>

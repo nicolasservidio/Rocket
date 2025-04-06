@@ -59,11 +59,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $SQL_DevolucionVehiculo = "INSERT INTO `devoluciones-vehiculos` (fechaDevolucion,
                                                                     horaDevolucion, 
                                                                     idCliente,
-                                                                    idContrato) 
+                                                                    idContrato,
+                                                                    estadoDevolucion,
+                                                                    aclaracionesDevolucion,
+                                                                    infraccionesDevolucion,
+                                                                    costosInfracciones,
+                                                                    montoExtra) 
                             VALUES ('$fechadevolucionIngles', 
                                     '$horadevolucion', 
                                     $IdCliente,
-                                    $idContrato); ";
+                                    $idContrato,
+                                    'Sin cambios',
+                                    'Sin aclaraciones',
+                                    'Ninguna',
+                                    '0',
+                                    '0'); ";
 
     
     $rs = mysqli_query($MiConexion, $SQL_DevolucionVehiculo);

@@ -11,6 +11,11 @@ function Listar_Devolucion($conexion) {
                    e.horaDevolucion as eHoraDevolucion,
                    e.idCliente as eIdCliente,
                    e.idContrato as eIdContrato,
+                   e.estadoDevolucion as eEstadoDevolucion,
+                   e.aclaracionesDevolucion as eAclaracionesDevolucion,
+                   e.infraccionesDevolucion as eInfraccionesDevolucion,
+                   e.costosInfracciones as eCostosInfracciones,
+                   e.montoExtra as eMontoExtra,
 
                    c.idContrato as cIdContrato, 
                    c.fechaInicioContrato as cFechaInicioContrato, 
@@ -71,6 +76,11 @@ function Listar_Devolucion($conexion) {
             $Listado[$i]['IdDevolucion'] = $data['eIdDevolucion'];
             $Listado[$i]['FechaDevolucion'] = $data['eFechaDevolucion'];
             $Listado[$i]['HoraDevolucion'] = $data['eHoraDevolucion'];
+            $Listado[$i]['EstadoDevolucion'] = $data['eEstadoDevolucion'];
+            $Listado[$i]['AclaracionesDevolucion'] = $data['eAclaracionesDevolucion'];
+            $Listado[$i]['InfraccionesDevolucion'] = $data['eInfraccionesDevolucion'];
+            $Listado[$i]['CostosInfracciones'] = $data['eCostosInfracciones'];
+            $Listado[$i]['MontoExtra'] = $data['eMontoExtra'];
 
             $Listado[$i]['IdContrato'] = $data['eIdContrato'];
             $Listado[$i]['FechaInicioContrato'] = $data['cFechaInicioContrato'];

@@ -40,6 +40,10 @@ include('head.php');
                             <th>Cliente</th>
                             <th>Vehículo</th>
                             <th>Oficina Dev.</th>
+                            <th>Estado del Vehículo</th>
+                            <th>Aclaraciones sobre el estado</th>
+                            <th>Infracciones</th>
+                            <th>Costos por Infracciones</th>                            
                         </tr>
                     </thead>
 
@@ -59,6 +63,10 @@ include('head.php');
                                 <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?> </td>
                                 <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?> </td>
                                 <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?> </td>
+                                <td> <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?> </td>
+                                <td> <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?> </td>
+                                <td> <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> </td>
+                                <td> <?php echo "Costos por infracciones:</br> <b>{$ListadoDevolucion[$i]['CostosInfracciones']} US$</b>. </br></br> Cargo adicional:</br> <b>{$ListadoDevolucion[$i]['MontoExtra']} US$</b>"; ?> </td>
                             </tr>
                             <?php $contador++; ?>
                         <?php 
