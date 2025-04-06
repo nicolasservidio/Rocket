@@ -54,8 +54,8 @@ if (!empty($_GET['BotonLimpiarFiltros'])) {
 // SELECCIONES para combo boxes del modal para registrar "Nueva Devolucion"
 require_once 'funciones/Select_Tablas.php';
 
-$ListadoContratos = Listar_Contratos_Firmados($conexion);
-$CantidadContratos = count($ListadoContratos);
+$ListadoEntregados = Listar_VehiculosEntregados($conexion);
+$CantidadEntregados = count($ListadoEntregados);
 
 
 include('head.php');
@@ -210,7 +210,7 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva Devolucion
                         </button>
 
-                        <a href="ReporteDevolucion.php"> <button class="btn btn-info">
+                        <a href="ReporteDevoluciones.php"> <button class="btn btn-info">
                             Imprimir listado
                         </button></a>
                     </div>
@@ -307,26 +307,27 @@ include('head.php');
                                 <div class="modal-body">
 
                                     <div class="mb-3">
-                                        <label for="idContrato" class="form-label">Contrato</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadContratos ?> contratos firmados encontrados" required>
+                                        <label for="idContrato" class="form-label">Vehículo</label>
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadEntregados ?> vehículos entregados encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php 
-                                            // Asegurate de que $ListadoContratos contiene datos antes de procesarlo
-                                            if (!empty($ListadoContratos)) {
+                                            // Asegurate de que $ListadoEntregados contiene datos antes de procesarlo
+                                            if (!empty($ListadoEntregados)) {
                                                 $selected = '';
-                                                for ($i = 0; $i < $CantidadContratos; $i++) {
+                                                for ($i = 0; $i < $CantidadEntregados; $i++) {
                                                     // Lógica para verificar si el grupo debe estar seleccionado
-                                                    $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoContratos[$i]['IdContrato']) ? 'selected' : '';
-                                                    echo "<option value='{$ListadoContratos[$i]['IdContrato']}' $selected> 
-                                                        NºContrato: {$ListadoContratos[$i]['IdContrato']}. 
-                                                        Cliente: {$ListadoContratos[$i]['ApellidoCliente']} {$ListadoContratos[$i]['NombreCliente']} - DNI: {$ListadoContratos[$i]['DniCliente']}. 
-                                                        Vehículo: {$ListadoContratos[$i]['matricula']} - {$ListadoContratos[$i]['modelo']} {$ListadoContratos[$i]['grupo']}
+                                                    $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoEntregados[$i]['IdContrato']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoEntregados[$i]['IdContrato']}' $selected> 
+                                                        NºContrato: {$ListadoEntregados[$i]['IdContrato']}.
+                                                        Fecha Entrega: {$ListadoEntregados[$i]['FechaEntrega']}. 
+                                                        Cliente: {$ListadoEntregados[$i]['ApellidoCliente']} {$ListadoEntregados[$i]['NombreCliente']} - DNI: {$ListadoEntregados[$i]['DniCliente']}. 
+                                                        Vehículo: {$ListadoEntregados[$i]['matricula']} - {$ListadoEntregados[$i]['modelo']} {$ListadoEntregados[$i]['grupo']}
                                                     </option>";
                                                 }
                                             } 
                                             else {
-                                                echo "<option value=''>No se encontraron contratos con estado Firmado.</option>";
+                                                echo "<option value=''>No se encontraron vehículos entregados.</option>";
                                             }
                                             ?>
                                         </select>

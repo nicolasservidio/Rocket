@@ -14,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errores = [];
 
     if (empty($idContrato)) {
-        $errores[] = "La selección de un contrato es obligatoria.";
+        $errores[] = "La selección de un contrato es obligatoria. ";
     }
     if (empty($fechadevolucion)) {
-        $errores[] = "Registrá la fecha de devolucion al cliente.";
+        $errores[] .= "Registrá la fecha de devolucion al cliente. ";
     }
     if (empty($horadevolucion)) {
-        $errores[] = "Registrá la hora de devolucion al cliente.";
+        $errores[] .= "Registrá la hora de devolucion al cliente.";
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fechadevolucionIngles = "$year-$mo-$day";
     
     // Procesamiento de horas
-    //creo que no necesito porque el control html arrojaría un string
+    // no se requiere 
 
     // Conexión y consulta
     $MiConexion = ConexionBD();
@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ahora sí, registro la devolucion del vehículo
     $SQL_DevolucionVehiculo = "INSERT INTO `devoluciones-vehiculos` (fechaDevolucion,
-                                                            horaDevolucion, 
-                                                            idCliente,
-                                                            idContrato) 
+                                                                    horaDevolucion, 
+                                                                    idCliente,
+                                                                    idContrato) 
                             VALUES ('$fechadevolucionIngles', 
                                     '$horadevolucion', 
                                     $IdCliente,
@@ -69,22 +69,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rs = mysqli_query($MiConexion, $SQL_DevolucionVehiculo);
 
     if (!$rs) {
-        $mensaje = "Error al agregar la devolucion a cliente: ";
+        $mensaje = "Error al registrar la devolucion del cliente";
     }
 
     else {
-        $mensaje = "devolucion a cliente agregada exitosamente.";
+        $mensaje = "Devolucion del cliente registrada exitosamente";
 
-        // A continuación debemos cambiar el estado del contrato, de "Firmado" a "Activo"
+        // A continuación debemos cambiar el estado del contrato, de "Activo" o "Renovado" a "Finalizado"
         $SQL_Update = "UPDATE `contratos-alquiler` 
-        SET idEstadoContrato=4 
-        WHERE idContrato=$idContrato; ";
+                        SET idEstadoContrato=6 
+                        WHERE idContrato=$idContrato; ";
 
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);
 
         if (!$recordUpdate) {
             //si surge un error, finalizo la ejecucion del script con un mensaje
-            die('<h4>Error al intentar modificar el estado del contrato a Activo.</h4>');
+            die('<h4>Error al intentar cambiar el estado del contrato a Finalizado.</h4>');
         }
     }
 

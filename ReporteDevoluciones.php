@@ -26,7 +26,7 @@ include('head.php');
             <div class="table-responsive p-5 mb-4 bg-white shadow-sm" style="max-width: 97%; max-height: 700px; margin-top: 10%; border: 2px solid #a80a0a; border-radius: 14px;">
 
                 <h2 class="mb-4 " style="color: #a80a0a; padding: 0 0 20px 0;" >
-                    <strong>Reporte: Listado de Devolucion a clientes </strong>
+                    <strong>Reporte: Listado de Devoluciones de clientes </strong>
                 </h2>
                 
                 <!-- Tabla de Devolucion a clientes -->
@@ -49,13 +49,13 @@ include('head.php');
 
                         for ($i=0; $i < $CantidadDevolucion; $i++) { ?>     
 
-                            <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['Iddevolucion']; ?>' 
-                                onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['Iddevolucion'] ?>')">
+                            <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
+                                onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
 
                                 <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
                                 <td> <?php echo $ListadoDevolucion[$i]['IdContrato']; ?> </td>
-                                <td> <?php echo $ListadoDevolucion[$i]['Fechadevolucion']; ?> </td>
-                                <td> <?php echo $ListadoDevolucion[$i]['Horadevolucion']; ?> </td>
+                                <td> <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?> </td>
+                                <td> <?php echo $ListadoDevolucion[$i]['HoraDevolucion']; ?> </td>
                                 <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?> </td>
                                 <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?> </td>
                                 <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?> </td>
