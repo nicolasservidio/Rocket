@@ -75,6 +75,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item" id="proveedores" onclick="activarItem(this, 'proveedores')" >
+                    <a aria-expanded="false" href="proveedores.php" >
+                        <i class="fas fa-user" ></i>
+                        <p> Proveedores </p>
+                    </a>
+                </li>
+
 
                 <?php  
                 /* Dejo el registro de que utilizábamos este algoritmo, pero ya no lo necesitamos. No utilizar porque se rompe el script de JS */
