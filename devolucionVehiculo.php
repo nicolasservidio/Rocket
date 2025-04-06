@@ -20,7 +20,7 @@ $filtros = [
 ];
 
 
-// Generación del listado de devoluciones
+// Generación del listado de Devolucion
 require_once 'funciones/CRUD-Devolucion.php';
 $ListadoDevolucion = Listar_Devolucion($conexion);
 $CantidadDevolucion = count($ListadoDevolucion);
@@ -46,7 +46,7 @@ else {
 
 if (!empty($_GET['BotonLimpiarFiltros'])) {
 
-    header('Location: DevolucionVehiculo.php');
+    header('Location: devolucionVehiculo.php');
     die();
 }
 
@@ -54,8 +54,14 @@ if (!empty($_GET['BotonLimpiarFiltros'])) {
 // SELECCIONES para combo boxes del modal para registrar "Nueva Devolucion"
 require_once 'funciones/Select_Tablas.php';
 
-$ListadoEntregados = Listar_VehiculosEntregados($conexion);
-$CantidadEntregados = count($ListadoEntregados);
+$ListadoContratos = Listar_Contratos_Firmados($conexion);
+$CantidadContratos = count($ListadoContratos);
+
+// SELECCIONES para combo boxes del modal para generar reporte "Devolucion de vehículos según cliente"
+require_once 'funciones/Select_Tablas.php';
+
+$ListadoClientes = Listar_Clientes_AtoZ($conexion);
+$CantidadClientes = count($ListadoClientes);
 
 
 include('head.php');
@@ -128,7 +134,7 @@ include('head.php');
                     <div class="col-md-4">
                         <label for="retiro" class="form-label">Devolucion entre</label>
                         <div class="d-flex">
-                            <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
+                            <input type="date" id="devoluciondesde" class="form-control me-2" name="devolucionDesde" 
                                    value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
 
                             <input type="date" id="devolucionhasta" class="form-control" name="DevolucionHasta" 
@@ -172,10 +178,6 @@ include('head.php');
                                 <th>Cliente</th>
                                 <th>Vehículo</th>
                                 <th>Oficina Dev.</th>
-                                <th>Estado del Vehículo</th>
-                                <th>Aclaraciones sobre el estado</th>
-                                <th>Infracciones</th>
-                                <th>Costos por Infracciones</th>
                             </tr>
                         </thead>
 
@@ -185,7 +187,7 @@ include('head.php');
 
                             for ($i=0; $i < $CantidadDevolucion; $i++) { ?>     
 
-                                <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
+                                <tr class='Devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
                                     onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
 
                                     <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
@@ -195,10 +197,6 @@ include('head.php');
                                     <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?> </td>
                                     <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?> </td>
                                     <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?> </td>
-                                    <td> <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?> </td>
-                                    <td> <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?> </td>
-                                    <td> <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> </td>
-                                    <td> <?php echo "Costos por infracciones:</br> <b>{$ListadoDevolucion[$i]['CostosInfracciones']} US$</b>. </br></br> Cargo adicional:</br> <b>{$ListadoDevolucion[$i]['MontoExtra']} US$</b>"; ?> </td>
                                 </tr>
                                 <?php $contador++; ?>
                             <?php 
@@ -219,10 +217,10 @@ include('head.php');
                         </button>
 
                         <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarDevolucion()" disabled>
-                            Modificar 
+                            Modificar oficina de Devolucion
                         </button>
 
-                        <a href="ReporteDevoluciones.php"> <button class="btn btn-info">
+                        <a href="ReporteDevolucion.php"> <button class="btn btn-info">
                             Imprimir listado
                         </button></a>
                     </div>
@@ -258,13 +256,18 @@ include('head.php');
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;" >
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Devoluciones de vehículos </a>
+                            <strong style="color: #a80a0a;" data-bs-toggle="modal" data-bs-target="#reporteDevolucionPorClienteModal">
+                                Reporte:
+                            </strong> 
+                            <a href="#" style="color: black;" data-bs-toggle="modal" data-bs-target="#reporteDevolucionPorClienteModal">
+                                Devolucion de vehículos por cliente 
+                            </a>
                         </h4>
 
-                        <a href="ReporteContratos_FrecMensuales.php" style="color: black;"> 
+                        <a href="#" style="color: black;" data-bs-toggle="modal" data-bs-target="#reporteDevolucionPorClienteModal"> 
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
                                 <img class="hoverImage" src="assets/img/reports/reporte-Devolucionporcliente.png" 
-                                    alt="Número de devolucion por cliente seleccionado" 
+                                    alt="Devolucion de vehículos a cliente seleccionado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
@@ -293,7 +296,7 @@ include('head.php');
                         </style>
                         
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
-                            <a href="ReporteContratos_FrecMensuales.php"> 
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#reporteDevolucionPorClienteModal"> 
                                 <button class="btn btn-inversion">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16"> <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"/> </svg> 
                                     Reporte
@@ -319,27 +322,26 @@ include('head.php');
                                 <div class="modal-body">
 
                                     <div class="mb-3">
-                                        <label for="idContrato" class="form-label">Vehículo</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadEntregados ?> vehículos entregados encontrados" required>
+                                        <label for="idContrato" class="form-label">Contrato</label>
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadContratos ?> contratos firmados encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php 
-                                            // Asegurate de que $ListadoEntregados contiene datos antes de procesarlo
-                                            if (!empty($ListadoEntregados)) {
+                                            // Asegurate de que $ListadoContratos contiene datos antes de procesarlo
+                                            if (!empty($ListadoContratos)) {
                                                 $selected = '';
-                                                for ($i = 0; $i < $CantidadEntregados; $i++) {
+                                                for ($i = 0; $i < $CantidadContratos; $i++) {
                                                     // Lógica para verificar si el grupo debe estar seleccionado
-                                                    $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoEntregados[$i]['IdContrato']) ? 'selected' : '';
-                                                    echo "<option value='{$ListadoEntregados[$i]['IdContrato']}' $selected> 
-                                                        NºContrato: {$ListadoEntregados[$i]['IdContrato']}.
-                                                        Fecha Entrega: {$ListadoEntregados[$i]['FechaEntrega']}. 
-                                                        Cliente: {$ListadoEntregados[$i]['ApellidoCliente']} {$ListadoEntregados[$i]['NombreCliente']} - DNI: {$ListadoEntregados[$i]['DniCliente']}. 
-                                                        Vehículo: {$ListadoEntregados[$i]['matricula']} - {$ListadoEntregados[$i]['modelo']} {$ListadoEntregados[$i]['grupo']}
+                                                    $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoContratos[$i]['IdContrato']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoContratos[$i]['IdContrato']}' $selected> 
+                                                        NºContrato: {$ListadoContratos[$i]['IdContrato']}. 
+                                                        Cliente: {$ListadoContratos[$i]['ApellidoCliente']} {$ListadoContratos[$i]['NombreCliente']} - DNI: {$ListadoContratos[$i]['DniCliente']}. 
+                                                        Vehículo: {$ListadoContratos[$i]['matricula']} - {$ListadoContratos[$i]['modelo']} {$ListadoContratos[$i]['grupo']}
                                                     </option>";
                                                 }
                                             } 
                                             else {
-                                                echo "<option value=''>No se encontraron vehículos entregados.</option>";
+                                                echo "<option value=''>No se encontraron contratos con estado Firmado.</option>";
                                             }
                                             ?>
                                         </select>
@@ -365,6 +367,60 @@ include('head.php');
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal para Generar reporte de Devolucion de vehículos por Cliente -->
+                <div class="modal fade" id="reporteDevolucionPorClienteModal" tabindex="-1" aria-labelledby="reporteDevolucionPorClienteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reporteDevolucionPorClienteModalLabel">Generar reporte: Devolucion por cliente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Form -->
+                            <form action="ReporteDevolucionPorCliente.php" method="post">
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="idCliente" class="form-label">Seleccionar cliente</label>
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idCliente" title="<?php echo $CantidadClientes ?> clientes encontrados" required>
+                                            <option value="" selected>Selecciona una opción</option>
+
+                                            <?php 
+                                            // Asegurate de que $ListadoClientes contiene datos antes de procesarlo
+                                            if (!empty($ListadoClientes)) {
+                                                $selected = '';
+                                                for ($i = 0; $i < $CantidadClientes; $i++) {
+                                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                                    $selected = (!empty($_POST['idCliente']) && $_POST['idCliente'] == $ListadoClientes[$i]['idCliente']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoClientes[$i]['idCliente']}' $selected>  
+                                                        {$ListadoClientes[$i]['apellidoCliente']} {$ListadoClientes[$i]['nombreCliente']} (DNI: {$ListadoClientes[$i]['dniCliente']}) 
+                                                    </option>";
+                                                }
+                                            } 
+                                            else {
+                                                echo "<option value=''>No se encontraron clientes.</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                        <!-- 
+                                    <div class="mb-3">
+                                        <label for="numreserva" class="form-label">Número de reserva</label>
+                                        <input type="text" class="form-control" id="numreserva" name="numreserva" required>
+                                    </div>
+                                    -->
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-dark">Generar</button>
                                 </div>
                             </form>
                         </div>
@@ -410,16 +466,16 @@ include('head.php');
     </script>
 
     <script>
-        let devolucionSeleccionada = null;
+        let DevolucionSeleccionada = null;
 
         // Selección de fila en la Tabla de Devolucion al hacer clic en la misma
-        document.querySelectorAll('#tablaDevolucion .devolucion').forEach(row => {
+        document.querySelectorAll('#tablaDevolucion .Devolucion').forEach(row => {
             row.addEventListener('click', () => {
                 // Desmarcar cualquier fila previamente seleccionada
-                document.querySelectorAll('.devolucion').forEach(row => row.classList.remove('table-active'));
+                document.querySelectorAll('.Devolucion').forEach(row => row.classList.remove('table-active'));
                 // Marcar la fila seleccionada
                 row.classList.add('table-active');
-                devolucionSeleccionada = row.dataset.id;
+                DevolucionSeleccionada = row.dataset.id;
 
                 // Habilitar los botones
                 document.getElementById('btnModificar').disabled = false;
@@ -427,10 +483,10 @@ include('head.php');
             });
         });
 
-        // Función para redirigir a modificarDevolucion.php con el ID de la devolucion seleccionada
+        // Función para redirigir a modificarDevolucion.php con el ID de la Devolucion seleccionado
         function modificarDevolucion() {
-            if (devolucionSeleccionada) {
-                window.location.href = 'modificarDevolucion.php?id=' + devolucionSeleccionada;
+            if (DevolucionSeleccionada) {
+                window.location.href = 'modificarDevolucion.php?id=' + DevolucionSeleccionada;
             }
         }
 
