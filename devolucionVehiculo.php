@@ -220,7 +220,7 @@ include('head.php');
                             Modificar oficina de Devolucion
                         </button>
 
-                        <a href="ReporteDevolucion.php"> <button class="btn btn-info">
+                        <a href="ReporteDevoluciones.php"> <button class="btn btn-info">
                             Imprimir listado
                         </button></a>
                     </div>
