@@ -266,7 +266,7 @@ include('head.php');
 
                         <a href="#" style="color: black;" data-bs-toggle="modal" data-bs-target="#reporteDevolucionPorClienteModal"> 
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
-                                <img class="hoverImage" src="assets/img/reports/reporte-Devolucionporcliente.png" 
+                                <img class="hoverImage" src="assets/img/reports/reporte-devolucionesporcliente.png" 
                                     alt="Devolucion de vehículos a cliente seleccionado" 
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
