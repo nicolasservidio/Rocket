@@ -22,7 +22,7 @@ include('head.php');
 <body class="bg-light" style="margin-top: 2%; margin-bottom: 0;">
 
     <!-- Logo Header --> <!-- CUIDADO: Arroja error fatal si no tienen instalada la extensión "GD" de PHP en XAMPP. Para resolver el error, seguir instructivo: https://www.geeksforgeeks.org/how-to-install-php-gd-in-windows/ -->  
-    <div style="margin: 0 auto; padding: 0 0 20px 50%;">
+    <div style="margin: 0 auto; padding: 0 0 20px 90%;">
         <span style=""> 
             <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Proyectos/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" /> 
         </span>
@@ -36,7 +36,7 @@ include('head.php');
                  style="margin: 0; padding: 20px; ">
 
                 <h2 class="mb-4 text-secondary" style="padding-bottom: 10px;">
-                    <strong>Reporte: Listado de Devoluciones </strong>
+                    <strong>Reporte: Listado de Devoluciones de clientes </strong>
                 </h2>
                 
                 <!-- Tabla con reporte de contratos -->
@@ -47,27 +47,27 @@ include('head.php');
                                 <h3>#</h3>
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Nº Contrato.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Fecha Dev.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Hora Dev.
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Cliente
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Vehículo
                             </th>
 
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
                                 Oficina Dev.
                             </th>
                         </tr>
@@ -79,8 +79,8 @@ include('head.php');
 
                         for ($i=0; $i < $CantidadDevolucion; $i++) { ?>   
 
-                            <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['Iddevolucion']; ?>' 
-                                onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['Iddevolucion'] ?>')">
+                            <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
+                                onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
 
                                 <td>
                                     <span style='color: #c7240e; font-size: 17px; margin: 0 auto; padding: 0;'>
@@ -88,27 +88,27 @@ include('head.php');
                                     </span>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px; "> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px; "> 
                                     <?php echo $ListadoDevolucion[$i]['IdContrato']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoDevolucion[$i]['Fechadevolucion']; ?>
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
+                                    <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoDevolucion[$i]['Horadevolucion']; ?>
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
+                                    <?php echo $ListadoDevolucion[$i]['HoraDevolucion']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
                                     <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
                                     <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?> 
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 14px;"> 
                                     <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?>
                                 </td>
 
