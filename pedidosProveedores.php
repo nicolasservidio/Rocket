@@ -10,19 +10,23 @@ $conexion = ConexionBD();
 
 // Obtener filtros del formulario
 $filtros = [
-    'numero' => isset($_GET['NumeroContrato']) ? trim($_GET['NumeroContrato']) : '',
-    'matricula' => isset($_GET['MatriculaContrato']) ? trim($_GET['MatriculaContrato']) : '',
-    'apellido' => isset($_GET['ApellidoContrato']) ? trim($_GET['ApellidoContrato']) : '',
-    'nombre' => isset($_GET['NombreContrato']) ? trim($_GET['NombreContrato']) : '',
-    'documento' => isset($_GET['DocContrato']) ? trim($_GET['DocContrato']) : '',
-    'estado' => isset($_GET['EstadoContrato']) ? trim($_GET['EstadoContrato']) : '',
-    'preciodia' => isset($_GET['PrecioDiaContrato']) ? trim($_GET['PrecioDiaContrato']) : '',
-    'cantidaddias' => isset($_GET['CantidadDiasContrato']) ? trim($_GET['CantidadDiasContrato']) : '',
-    'montototal' => isset($_GET['MontoTotalContrato']) ? trim($_GET['MontoTotalContrato']) : '',
-    'retirodesde' => isset($_GET['RetiroDesde']) ? trim($_GET['RetiroDesde']) : '',
-    'retirohasta' => isset($_GET['RetiroHasta']) ? trim($_GET['RetiroHasta']) : '',
-    'devoluciondesde' => isset($_GET['DevolucionDesde']) ? trim($_GET['DevolucionDesde']) : '',
-    'devolucionhasta' => isset($_GET['DevolucionHasta']) ? trim($_GET['DevolucionHasta']) : '',
+    'Identificador-Pedido' => isset($_GET['Identificador-Pedido']) ? trim($_GET['Identificador-Pedido']) : '',
+    'Estado-Pedido' => isset($_GET['Estado-Pedido']) ? trim($_GET['Estado-Pedido']) : '',
+    'Nombre-Proveedor' => isset($_GET['Nombre-Proveedor']) ? trim($_GET['Nombre-Proveedor']) : '',
+    'CUIT-Proveedor' => isset($_GET['CUIT-Proveedor']) ? trim($_GET['CUIT-Proveedor']) : '',
+    'IVA-Proveedor' => isset($_GET['IVA-Proveedor']) ? trim($_GET['IVA-Proveedor']) : '',
+    'Localidad-Proveedor' => isset($_GET['Localidad-Proveedor']) ? trim($_GET['Localidad-Proveedor']) : '',
+    'Direccion-Proveedor' => isset($_GET['Direccion-Proveedor']) ? trim($_GET['Direccion-Proveedor']) : '', 
+    'Precio-Unitario' => isset($_GET['Precio-Unitario']) ? trim($_GET['Precio-Unitario']) : '',
+    'Cantidad-Producto' => isset($_GET['Cantidad-Producto']) ? trim($_GET['Cantidad-Producto']) : '',
+    'MontoTotal-Pedido' => isset($_GET['MontoTotal-Pedido']) ? trim($_GET['MontoTotal-Pedido']) : '',
+    'Tipo-Insumo' => isset($_GET['Tipo-Insumo']) ? trim($_GET['Tipo-Insumo']) : '',
+    'Nombre-Insumo' => isset($_GET['Nombre-Insumo']) ? trim($_GET['Nombre-Insumo']) : '',
+    'Descripcion-Insumo' => isset($_GET['Descripcion-Insumo']) ? trim($_GET['Descripcion-Insumo']) : '',
+    'FechaPedido-Desde' => isset($_GET['FechaPedido-Desde']) ? trim($_GET['FechaPedido-Desde']) : '',
+    'FechaPedido-Hasta' => isset($_GET['FechaPedido-Hasta']) ? trim($_GET['FechaPedido-Hasta']) : '',
+    'FechaEntrega-Desde' => isset($_GET['FechaEntrega-Desde']) ? trim($_GET['FechaEntrega-Desde']) : '',
+    'FechaEntrega-Hasta' => isset($_GET['FechaEntrega-Hasta']) ? trim($_GET['FechaEntrega-Hasta']) : '',
 ];
 
 
@@ -40,7 +44,7 @@ if (!empty($_GET['BotonFiltrar'])) {
 
     $ListadoPedidos = array();
     $CantidadPedidos = '';
-    $ListadoPedidos = Consulta_Contratos($_GET['NumeroContrato'], $_GET['MatriculaContrato'], $_GET['ApellidoContrato'], $_GET['NombreContrato'], $_GET['DocContrato'], $_GET['EstadoContrato'], $_GET['PrecioDiaContrato'], $_GET['CantidadDiasContrato'], $_GET['MontoTotalContrato'], $_GET['RetiroDesde'], $_GET['RetiroHasta'], $_GET['DevolucionDesde'], $_GET['DevolucionHasta'], $conexion);
+    $ListadoPedidos = Consulta_Contratos($_GET['Identificador-Pedido'], $_GET['Estado-Pedido'], $_GET['Nombre-Proveedor'], $_GET['CUIT-Proveedor'], $_GET['IVA-Proveedor'], $_GET['Localidad-Proveedor'], $_GET['Direccion-Proveedor'], $_GET['Precio-Unitario'], $_GET['Cantidad-Producto'], $_GET['MontoTotal-Pedido'], $_GET['Tipo-Insumo'], $_GET['Nombre-Insumo'], $_GET['Descripcion-Insumo'], $_GET['FechaPedido-Desde'], $_GET['FechaPedido-Hasta'], $_GET['FechaEntrega-Desde'], $_GET['FechaEntrega-Hasta'], $conexion);
     $CantidadPedidos = count($ListadoPedidos);
 }
 else {
@@ -52,7 +56,7 @@ else {
 
 if (!empty($_GET['BotonLimpiarFiltros'])) {
 
-    header('Location: contratosAlquiler.php');
+    header('Location: pedidosProveedores.php');
     die();
 }
 
@@ -101,90 +105,118 @@ include('head.php');
                 </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" action="contratosAlquiler.php" method="get">
+                <form class="row g-3" action="pedidosProveedores.php" method="get">
 
                     <div class="col-md-2">
-                        <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroContrato" 
-                               value="<?= htmlspecialchars($filtros['numero']) ?>" >
+                        <label for="identificadorpedido" class="form-label">Identificador de Pedido</label>
+                        <input type="text" class="form-control" id="identificadorpedido" name="Identificador-Pedido" 
+                               value="<?= htmlspecialchars($filtros['Identificador-Pedido']) ?>" >
                     </div>
 
                     <div class="col-md-2">
-                        <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" id="matricula" name="MatriculaContrato" 
-                               value="<?= htmlspecialchars($filtros['matricula']) ?>">
+                        <label for="estadopedido" class="form-label">Estado del Pedido</label>
+                        <input type="text" class="form-control" id="estadopedido" name="Estado-Pedido" 
+                               value="<?= htmlspecialchars($filtros['Estado-Pedido']) ?>">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoContrato" 
-                               value="<?= htmlspecialchars($filtros['apellido']) ?>">
+                        <label for="nombreproveedor" class="form-label">Razón Social</label>
+                        <input type="text" class="form-control" id="nombreproveedor" name="Nombre-Proveedor" 
+                               value="<?= htmlspecialchars($filtros['Nombre-Proveedor']) ?>">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreContrato" 
-                               value="<?= htmlspecialchars($filtros['nombre']) ?>">
+                        <label for="cuitproveedor" class="form-label">CUIT Proveedor</label>
+                        <input type="text" class="form-control" id="cuitproveedor" name="CUIT-Proveedor" 
+                               value="<?= htmlspecialchars($filtros['CUIT-Proveedor']) ?>">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="DocContrato" 
-                               value="<?= htmlspecialchars($filtros['documento']) ?>">
+                        <label for="ivaproveedor" class="form-label">IVA Proveedor</label>
+                        <input type="text" class="form-control" id="ivaproveedor" name="IVA-Proveedor" 
+                               value="<?= htmlspecialchars($filtros['IVA-Proveedor']) ?>">
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
+
                     <div class="col-md-2">
-                        <label for="estado" class="form-label">Estado del Contrato</label>
-                        <input type="text" class="form-control" id="estado" name="EstadoContrato" 
-                               value="<?= htmlspecialchars($filtros['estado']) ?>">
+                        <label for="localidadproveedor" class="form-label">Localidad Proveedor</label>
+                        <input type="text" class="form-control" id="localidadproveedor" name="Localidad-Proveedor" 
+                               value="<?= htmlspecialchars($filtros['Localidad-Proveedor']) ?>">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="preciodia" class="form-label">Precio por día</label>
-                        <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="preciodia" name="PrecioDiaContrato" 
-                               value="<?= htmlspecialchars($filtros['preciodia']) ?>" title="Filtrar por precio hasta los..." >
+                        <label for="direccionproveedor" class="form-label">Dirección Proveedor</label>
+                        <input type="text" class="form-control" id="direccionproveedor" name="Direccion-Proveedor" 
+                               value="<?= htmlspecialchars($filtros['Direccion-Proveedor']) ?>">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="preciounitario" class="form-label">Precio unitario</label>
+                        <input type="number" min="0" max="999999999" step="0.01" class="form-control" id="preciounitario" name="Precio-Unitario" 
+                               value="<?= htmlspecialchars($filtros['Precio-Unitario']) ?>" title="Filtrar por precio unitario (hasta los...)" >
                     </div>
 
                     <?php 
-                    $minCantDias = 1;
-                    $maxCantDias = 45;
+                    $minCantidad = 1;
+                    $maxCantidad = 9999999;
                     ?>
                     <div class="col-md-2">
-                        <label for="cantidaddias" class="form-label">Cantidad de días</label>
-                        <input type="number" min="<? echo $minCantDias; ?>" max="<?php echo $maxCantDias; ?>" class="form-control" id="cantidaddias" name="CantidadDiasContrato" 
-                               value="<?= htmlspecialchars($filtros['cantidaddias']) ?>" title="Cantidad exacta de días entre 1 y 45">
+                        <label for="cantidadproducto" class="form-label">Cantidad </label>
+                        <input type="number" min="<? echo $minCantidad; ?>" max="<?php echo $maxCantidad; ?>" class="form-control" id="cantidadproducto" name="Cantidad-Producto" 
+                               value="<?= htmlspecialchars($filtros['Cantidad-Producto']) ?>" title="Cantidad exacta de unidades del producto">
                     </div>
 
                     <div class="col-md-2">
                         <label for="montototal" class="form-label">Monto total</label>
-                        <input type="number" min="20" max="999999999" step="0.01" class="form-control" id="montototal" name="MontoTotalContrato" 
-                               value="<?= htmlspecialchars($filtros['montototal']) ?>" title="Filtrar por monto total hasta los...">
+                        <input type="number" min="1" max="999999999" step="0.01" class="form-control" id="montototal" name="MontoTotal-Pedido" 
+                               value="<?= htmlspecialchars($filtros['MontoTotal-Pedido']) ?>" title="Filtrar por monto total (hasta los...)">
+                    </div>
+
+                    <div class="w-100"></div> <!-- salto de linea -->
+
+                    <div class="col-md-2">
+                        <label for="tipodeinsumo" class="form-label">Tipo de Insumo</label>
+                        <input type="text" class="form-control" id="tipodeinsumo" name="Tipo-Insumo" 
+                               value="<?= htmlspecialchars($filtros['Tipo-Insumo']) ?>">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="nombredeinsumo" class="form-label">Nombre del Insumo</label>
+                        <input type="text" class="form-control" id="nombredeinsumo" name="Nombre-Insumo" 
+                               title="Nombre del repuesto, producto o accesorio" value="<?= htmlspecialchars($filtros['Nombre-Insumo']) ?>">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="descripciondeinsumo" class="form-label">Descripción del Insumo</label>
+                        <input type="text" class="form-control" id="descripciondeinsumo" name="Descripcion-Insumo" 
+                        title="Filtrar por palabra clave en la descripción" value="<?= htmlspecialchars($filtros['Descripcion-Insumo']) ?>">
                     </div>
 
                     <div class="col-md-2">
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
-                    <div class="col-md-4">
-                        <label for="retiro" class="form-label">Retiro entre</label>
-                        <div class="d-flex">
-                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
-                                   value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
 
-                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
-                                   value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
+                    <div class="col-md-4">
+                        <label for="fechadepedido" class="form-label">Fecha de Pedido</label>
+                        <div class="d-flex">
+                            <input type="date" id="fechadepedidodesde" class="form-control me-2" name="FechaPedido-Desde" 
+                                   title="desde..." value="<?= htmlspecialchars($filtros['FechaPedido-Desde']) ?>">
+
+                            <input type="date" id="fechadepedidohasta" class="form-control" name="FechaPedido-Hasta" 
+                                   title="hasta..." value="<?= htmlspecialchars($filtros['FechaPedido-Hasta']) ?>">
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <label for="devolucion" class="form-label">Devolución entre</label>
+                        <label for="fechadeentrega" class="form-label">Fecha de Entrega</label>
                         <div class="d-flex">
-                            <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
-                                   value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
+                            <input type="date" id="fechadeentregadesde" class="form-control me-2" name="FechaEntrega-Desde" 
+                                   title="desde..." value="<?= htmlspecialchars($filtros['FechaEntrega-Desde']) ?>">
 
-                            <input type="date" id="devolucionhasta" class="form-control" name="DevolucionHasta" 
-                                   value="<?= htmlspecialchars($filtros['devolucionhasta']) ?>">
+                            <input type="date" id="fechadeentregahasta" class="form-control" name="FechaEntrega-Hasta" 
+                                   title="hasta..." value="<?= htmlspecialchars($filtros['FechaEntrega-Hasta']) ?>">
                         </div>
                     </div>
 
@@ -193,7 +225,7 @@ include('head.php');
 
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoContratos">
+                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoPedidos">
                             <i class="fas fa-filter"></i> Filtrar
                         </button>
                     </div>
