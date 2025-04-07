@@ -539,4 +539,28 @@ function Listar_Usuarios($vConexion) {
     return $Listado;
 }
 
+
+// EMITIR LISTADO de Tipos de Insumos
+function Listar_TiposInsumos($vConexion) {
+
+    $Listado = array();
+
+    $SQL = "SELECT idTipoInsumo, 
+                   tipoInsumo 
+            FROM `tipo-insumo` ; ";
+
+    $rs = mysqli_query($vConexion, $SQL);
+
+    $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['idTipoInsumo'] = $data['idTipoInsumo'];
+            $Listado[$i]['tipoInsumo'] = $data['tipoInsumo'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
+
 ?>

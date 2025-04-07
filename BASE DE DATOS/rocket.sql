@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 12:32 AM
+-- Generation Time: Apr 07, 2025 at 11:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -485,9 +485,9 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 CREATE TABLE `detalle-pedidoaproveedor` (
   `idDetallePedidoAProveedor` int(11) NOT NULL,
   `idPedido` int(11) DEFAULT NULL COMMENT 'Llave foránea hacia el encabezado',
-  `precioPorUnidad` float NOT NULL,
+  `precioPorUnidad` double NOT NULL,
   `cantidadUnidades` int(11) NOT NULL,
-  `subtotal` float NOT NULL,
+  `subtotal` double NOT NULL,
   `idRepuestoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idProductoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idAccesorioVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.'
@@ -1064,9 +1064,17 @@ INSERT INTO `sucursales` (`idSucursal`, `numeroSucursal`, `direccionSucursal`, `
 
 CREATE TABLE `tipo-insumo` (
   `idTipoInsumo` int(11) NOT NULL,
-  `tipoInsumo` varchar(50) NOT NULL,
-  `nombreInsumo` varchar(50) NOT NULL
+  `tipoInsumo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `tipo-insumo`
+--
+
+INSERT INTO `tipo-insumo` (`idTipoInsumo`, `tipoInsumo`) VALUES
+(1, 'Repuesto'),
+(2, 'Producto'),
+(3, 'Accesorio');
 
 -- --------------------------------------------------------
 
@@ -1467,7 +1475,7 @@ ALTER TABLE `detalle-contratos`
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
@@ -1539,7 +1547,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1563,7 +1571,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
-  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `reservas-vehiculos`
@@ -1581,7 +1589,7 @@ ALTER TABLE `sucursales`
 -- AUTO_INCREMENT for table `tipo-insumo`
 --
 ALTER TABLE `tipo-insumo`
-  MODIFY `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `usuarios`

@@ -63,6 +63,9 @@ require_once 'funciones/Select_Tablas.php';
 $ListadoProveedores = Listar_Proveedores_OrderByLocalidadDireccionNombre($conexion);
 $CantidadProveedores = count($ListadoProveedores);
 
+$ListadoTiposInsumos = Listar_TiposInsumos($conexion);
+$CantidadTiposInsumos = count($ListadoTiposInsumos);
+
 
 include('head.php');
 
@@ -276,7 +279,7 @@ include('head.php');
                                     </td>
 
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['TotalPedido']; ?> 
+                                        <?php echo "$ListadoPedidos[$i]['TotalPedido'] USD"; ?> 
                                     </td>
 
                                     <td> 
@@ -352,7 +355,7 @@ include('head.php');
                 <div style="margin-top: 8%;">
                     <div class="container d-flex justify-content-center">
 
-                        <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
+                        <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
                             <i class="fas fa-plus-circle"></i> Nuevo
                         </button>
 
@@ -364,7 +367,7 @@ include('head.php');
                             Eliminar
                         </button>
 
-                        <a href="ReporteContratos.php"> <button class="btn btn-info">
+                        <a href="ReporteContratos.php"> <button class="btn btn-primary">
                             Imprimir
                         </button></a>
                     </div>
@@ -447,7 +450,7 @@ include('head.php');
                 </div>
 
 
-                <!-- Modal para Nuevo Contrato -->
+                <!-- Modal para Nuevo registro de pedido a proveedor -->
                 <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="nuevoRegistroModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg"> <!-- Aumentamos el tamaño para acomodar la tabla dinámica --> 
                         <div class="modal-content">
@@ -457,7 +460,7 @@ include('head.php');
                             </div>
 
                             <!-- Form -->
-                            <form action="Nuevo_Pedido_Proveedor.php" method="post"> <!-- Revisar "Nuevo_Contrato.php" para construir transacción --> 
+                            <form action="Nuevo_Pedido_Proveedor.php" method="post"> 
                                 <div class="modal-body">
 
                                     <!-- Información general del pedido (encabezado) -->
@@ -636,7 +639,7 @@ include('head.php');
         }
     </script>
 
-
+    
     <script> // Para la tabla del modal que permite registrar nuevos pedidos a proveedores
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -648,27 +651,27 @@ include('head.php');
                 const nuevaFila = document.createElement("tr");
                 nuevaFila.innerHTML = `
                     <td>
-                        <select name="tipoInsumo[]" class="form-select" style="min-width: 120px;" required>
+                        <select name="tipoInsumo[]" class="form-select" style="min-width: 120px;" title="Obligatorio" required>
                             <option value="" selected>Selecciona una opción...</option>
-                            <option value="Repuesto">Repuesto</option>
-                            <option value="Producto">Producto</option>
-                            <option value="Accesorio">Accesorio</option>
+                            <option value="1">Repuesto</option>
+                            <option value="2">Producto</option>
+                            <option value="3">Accesorio</option>
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="nombreInsumo[]" class="form-control" style="min-width: 150px;" required>
+                        <input type="text" name="nombreInsumo[]" class="form-control" style="min-width: 150px;" title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="text" name="descripcionInsumo[]" class="form-control" style="min-width: 170px;">
+                        <input type="text" name="descripcionInsumo[]" class="form-control" style="min-width: 170px;" title="Opcional" value="">
                     </td>
                     <td>
-                        <input type="number" name="precioUnidad[]" class="form-control" step="0.01" style="min-width: 100px;" required>
+                        <input type="number" name="precioUnidad[]" class="form-control" step="0.01" style="min-width: 100px;" title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="number" name="cantidad[]" class="form-control" style="min-width: 100px;" required>
+                        <input type="number" name="cantidad[]" class="form-control" style="min-width: 100px;" title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="number" name="subtotal[]" class="form-control" step="0.01" style="min-width: 100px;" readonly>
+                        <input type="number" name="subtotal[]" class="form-control" step="0.01" style="min-width: 100px;" value="" readonly>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btnEliminarFila">Eliminar</button>
