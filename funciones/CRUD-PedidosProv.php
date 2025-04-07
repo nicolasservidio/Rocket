@@ -1,27 +1,25 @@
 <?php
 
-// Abordar desde 0
+// EMITIR LISTADO con todos los pedidos a proveedores
 
-// EMITIR LISTADO con todos los Contratos
-function Listar_PedidosProv($conexion) {
+function Listar_PedidosProveedores($conexion) {
 
     $Listado = array();
 
-    //1) genero la consulta que deseo
-    $SQL = "SELECT pp.idPedido as IdPedido,
+    $SQL = "SELECT pp.idPedido as ppIdPedido,
                    pp.fechaPedido as FechaPedido,
                    pp.fechaEntregaPedido as FechaEntrega,
-                   pp.idDetallePedido as ppIdDetallePedido,
                    pp.idProveedor as ppIdProveedor,
                    pp.idEstadoPedido as ppIdEstadoPedido,
+                   pp.aclaracionesEstadoPedido as AclaracionesEstadoPedido,
+                   pp.condicionesDeEntrega as CondicionesDeEntrega,
+                   pp.totalPedido as TotalPedido,
 
                    dp.idDetallePedidoAProveedor as IdDetallePedido,
-                   dp.descripcionPedido as DescripcionPedido,
+                   dp.idPedido as dpIdPedido,
                    dp.precioPorUnidad as PrecioPorUnidad,
                    dp.cantidadUnidades as CantidadUnidades,
-                   dp.montoTotalPedido as MontoTotalPedido,
-                   dp.condicionesDeEntrega as CondicionesDeEntrega,
-                   dp.estadoDelPedido as EstadoDelPedido,
+                   dp.subtotal as Subtotal, 
                    dp.idRepuestoVehiculo as dpIdRepuesto,
                    dp.idProductoVehiculo as dpIdProducto,
                    dp.idAccesorioVehiculo as dpIdAccesorio,
@@ -29,91 +27,134 @@ function Listar_PedidosProv($conexion) {
                    r.idRepuesto as rIdRepuesto,
                    r.nombreRepuesto as NombreRepuesto,
                    r.descripcionRepuesto as DescripcionRepuesto,
+                   r.idTipoInsumo as rIdTipoInsumo,
+
+                   i.idTipoInsumo as iIdTipoInsumo,
+                   i.tipoInsumo as TipoInsumo,
 
                    p.idProducto as pIdProducto,
                    p.nombreProducto as NombreProducto,
                    p.descripcionProducto as DescripcionProducto,
+                   p.idTipoInsumo as pIdTipoInsumo, 
 
-                   a.
+                   a.idAccesorio as aIdAccesorio,
+                   a.nombreAccesorio as NombreAccesorio,
+                   a.descripcionAccesorio as DescripcionAccesorio,
+                   a.idTipoInsumo as aIdTipoInsumo,
 
+                   pv.idProveedor as IdProveedor,
+                   pv.nombreProveedor as NombreProveedor,
+                   pv.mailProveedor as MailProveedor,
+                   pv.direccionProveedor as DireccionProveedor,
+                   pv.telefonoProveedor as TelProveedor,
+                   pv.localidadProveedor as LocalidadProveedor,
+                   pv.cuitProveedor as CuitProveedor,
+                   pv.ivaProveedor as IvaProveedor,
 
-
-                   cl.idCliente as clIdCliente,
-                   cl.nombreCliente as clNombreCliente,
-                   cl.apellidoCliente as clApellidoCliente,
-                   cl.dniCliente as clDniCliente,
-
-                   v.idVehiculo as vIdVehiculo,
-                   v.matricula as vMatricula,
-                   v.idModelo as vIdModelo,
-                   v.idGrupoVehiculo as vIdGrupoVehiculo,
-                   v.idSucursal as vIdSucursal, 
-
-                   m.idModelo as  mIdModelo,
-                   m.nombreModelo as mNombreModelo,
-                   g.idGrupo as gIdGrupo,
-                   g.nombreGrupo as gNombreGrupo, 
-
-                   s.idSucursal as sIdSucursal, 
-                   s.direccionSucursal as sDireccionSucursal, 
-                   s.ciudadSucursal as sCiudadSucursal, 
-
-                   dc.idDetalleContrato as dcIdDetalleContrato, 
-                   dc.precioPorDiaContrato as dcPrecioPorDiaContrato, 
-                   dc.cantidadDiasContrato as dcCantidadDiasContrato, 
-                   dc.montoTotalContrato as dcMontoTotalContrato, 
-                   
-                   ec.idEstadoContrato as ecIdEstadoContrato, 
-                   ec.estadoContrato as ecEstadoContrato 
-            FROM `pedido-a-proveedor` pp, `detalle-pedidoaproveedor` dp, `repuestos-vehiculos` r, `productos-vehiculo` p, `accesorios-vehiculos` a 
-            WHERE dp.idDetallePedidoAProveedor = pp.idDetallePedido 
+                   e.idEstadoPedido as IdEstadoPedido, 
+                   e.estadoPedido as EstadoPedido 
+            FROM `pedido-a-proveedor` pp, 
+                 `detalle-pedidoaproveedor` dp, 
+                 `repuestos-vehiculos` r, 
+                 `tipo-insumo` i, 
+                 `productos-vehiculo` p, 
+                 `accesorios-vehiculos` a, 
+                 proveedores pv, 
+                 `estados-pedidoaproveedor` e 
+            WHERE dp.idPedido = pp.idPedido 
             AND r.idRepuesto = dp.idRepuestoVehiculo 
-            AND 
+            AND i.idTipoInsumo = r.idTipoInsumo 
+            AND i.idTipoInsumo = p.idTipoInsumo 
+            AND i.idTipoInsumo = a.idTipoInsumo 
+            AND pv.idProveedor = pp.idProveedor 
+            AND e.idEstadoPedido = pp.idEstadoPedido 
+            ORDER BY pp.fechaPedido, pp.idPedido, dp.idDetallePedidoAProveedor; ";
 
-            AND c.idVehiculo = v.idVehiculo 
-            AND v.idModelo = m.idModelo 
-            AND v.idGrupoVehiculo = g.idGrupo 
-            AND v.idSucursal = s.idSucursal 
-            AND c.idDetalleContrato = dc.idDetalleContrato
-            AND c.idEstadoContrato = ec.idEstadoContrato 
-            ORDER BY c.fechaInicioContrato, c.fechaFinContrato, cl.apellidoCliente, cl.nombreCliente, cl.dniCliente; ";
-
-    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
     $rs = mysqli_query($conexion, $SQL);
         
-    //3) el resultado deberá organizarse en una matriz, entonces lo recorro
     $i=0;
     while ($data = mysqli_fetch_array($rs)) {
-            $Listado[$i]['IdContrato'] = $data['cIdContrato'];
-            $Listado[$i]['FechaInicioContrato'] = $data['cFechaInicioContrato'];
-            $Listado[$i]['FechaFinContrato'] = $data['cFechaFinContrato'];
-            $Listado[$i]['IdDetalleContrato'] = $data['cIdDetalleContrato'];
-            $Listado[$i]['PrecioPorDiaContrato'] = $data['dcPrecioPorDiaContrato'];
-            $Listado[$i]['CantidadDiasContrato'] = $data['dcCantidadDiasContrato'];
-            $Listado[$i]['MontoTotalContrato'] = $data['dcMontoTotalContrato'];
-            $Listado[$i]['IdEstadoContrato'] = $data['cIdEstadoContrato'];
-            $Listado[$i]['EstadoContrato'] = $data['ecEstadoContrato'];
 
-            $Listado[$i]['IdCliente'] = $data['cIdCliente'];
-            $Listado[$i]['nombreCliente'] = $data['clNombreCliente'];
-            $Listado[$i]['apellidoCliente'] = $data['clApellidoCliente'];
-            $Listado[$i]['dniCliente'] = $data['clDniCliente'];
+        $ppIdPedido = $data['ppIdPedido'];
+        $dpIdDetalle = $data['IdDetallePedido'];
 
-            $Listado[$i]['IdVehiculo'] = $data['cIdVehiculo'];
-            $Listado[$i]['vehiculoMatricula'] = $data['vMatricula'];            
-            $Listado[$i]['IdModelo'] = $data['vIdModelo'];
-            $Listado[$i]['vehiculoModelo'] = $data['mNombreModelo'];
-            $Listado[$i]['IdGrupoVehiculo'] = $data['vIdGrupoVehiculo'];
-            $Listado[$i]['vehiculoGrupo'] = $data['gNombreGrupo'];
-            $Listado[$i]['IdSucursal'] = $data['vIdSucursal'];
-            $Listado[$i]['DireccionSucursal'] = $data['sDireccionSucursal'];
-            $Listado[$i]['CiudadSucursal'] = $data['sCiudadSucursal'];
-            
-            $i++;
+        // Verificar si ya existe el pedido
+        if (!isset($Listado[$ppIdPedido])) {
+
+            $Listado[$ppIdPedido] = array(
+                'ppIdPedido' => $data['ppIdPedido'],
+                'FechaPedido' => $data['FechaPedido'],
+                'FechaEntrega' => $data['FechaEntrega'],
+
+                'EstadoPedido' => $data['EstadoPedido'],
+                'AclaracionesEstadoPedido' => $data['AclaracionesEstadoPedido'],
+                'CondicionesDeEntrega' => $data['CondicionesDeEntrega'],
+
+                'NombreProveedor' => $data['NombreProveedor'],
+                'MailProveedor' => $data['MailProveedor'],
+                'DireccionProveedor' => $data['DireccionProveedor'],
+                'TelProveedor' => $data['TelProveedor'],
+                'LocalidadProveedor' => $data['LocalidadProveedor'],
+                'CuitProveedor' => $data['CuitProveedor'],
+                'IvaProveedor' => $data['IvaProveedor'],
+
+                'TotalPedido' => $data['TotalPedido'],
+                'Detalles' => array()
+            );
+        }
+
+        // Verificar si ya existe el detalle
+        if (!isset($Listado[$ppIdPedido]['Detalles'][$dpIdDetalle])) {
+
+            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                'IdDetallePedido' => $data['IdDetallePedido'],
+                'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                'CantidadUnidades' => $data['CantidadUnidades'],
+                'Subtotal' => $data['Subtotal'],
+                'Repuestos' => array(),
+                'Productos' => array(),
+                'Accesorios' => array()
+            );
+        }
+
+        // Agregar datos de repuestos, productos y accesorios al detalle correspondiente
+
+        if (!empty($data['IdRepuesto'])) {
+
+            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Repuestos'] = array(
+                'IdRepuesto' => $data['IdRepuesto'],
+                'NombreRepuesto' => $data['NombreRepuesto'],
+                'DescripcionRepuesto' => $data['DescripcionRepuesto'],
+                'TipoInsumo' => $data['TipoInsumo']
+            );
+        }
+
+        if (!empty($data['IdProducto'])) {
+
+            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Productos'] = array(
+                'IdProducto' => $data['IdProducto'],
+                'NombreProducto' => $data['NombreProducto'],
+                'DescripcionProducto' => $data['DescripcionProducto'],
+                'TipoInsumo' => $data['TipoInsumo']
+            );
+        }
+
+        if (!empty($data['IdAccesorio'])) {
+
+            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Accesorios'] = array(
+                'IdAccesorio' => $data['IdAccesorio'],
+                'NombreAccesorio' => $data['NombreAccesorio'],
+                'DescripcionAccesorio' => $data['DescripcionAccesorio'],
+                'TipoInsumo' => $data['TipoInsumo']
+            );
+        }
+
     }
 
     return $Listado;
 }
+
+
 
 
 function Procesar_ConsultaContratos() {

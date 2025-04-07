@@ -217,7 +217,7 @@ include('head.php');
                         </button>
 
                         <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarDevolucion()" disabled>
-                            Modificar oficina de Devolucion
+                            Modificar datos de Devolucion
                         </button>
 
                         <a href="ReporteDevoluciones.php"> <button class="btn btn-info">

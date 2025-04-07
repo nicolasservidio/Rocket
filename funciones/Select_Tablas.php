@@ -221,7 +221,8 @@ function Listar_Clientes($vConexion) {
 }
 
 
-// EMITIR LISTADO de Clientes
+
+// EMITIR LISTADO de Clientes ordenados por apellido, nombre y dni 
 function Listar_Clientes_AtoZ($vConexion) {
 
     $Listado = array();
@@ -246,6 +247,43 @@ function Listar_Clientes_AtoZ($vConexion) {
             $Listado[$i]['apellidoCliente'] = $data['apellidoCliente'];
             $Listado[$i]['dniCliente'] = $data['dniCliente'];
             $Listado[$i]['telefonoCliente'] = $data['telefonoCliente'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
+
+
+// EMITIR LISTADO de Proveedores ordenados por localidad, dirección, y nombre 
+function Listar_Proveedores_OrderByLocalidadDireccionNombre($vConexion) {
+
+    $Listado = array();
+
+    $SQL = "SELECT idProveedor,
+                   nombreProveedor,
+                   mailProveedor,
+                   telefonoProveedor,
+                   localidadProveedor,
+                   direccionProveedor,
+                   cuitProveedor, 
+                   ivaProveedor 
+            FROM proveedores 
+            ORDER BY localidadProveedor, direccionProveedor, nombreProveedor; ";
+
+    $rs = mysqli_query($vConexion, $SQL);
+        
+    $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['idProveedor'] = $data['idProveedor'];
+            $Listado[$i]['nombreProveedor'] = $data['nombreProveedor'];
+            $Listado[$i]['mailProveedor'] = $data['mailProveedor'];
+            $Listado[$i]['telefonoProveedor'] = $data['telefonoProveedor'];
+            $Listado[$i]['localidadProveedor'] = $data['localidadProveedor'];
+            $Listado[$i]['direccionProveedor'] = $data['direccionProveedor'];
+            $Listado[$i]['cuitProveedor'] = $data['cuitProveedor'];
+            $Listado[$i]['ivaProveedor'] = $data['ivaProveedor'];
             
             $i++;
     }
