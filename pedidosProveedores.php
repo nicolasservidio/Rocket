@@ -252,7 +252,6 @@ include('head.php');
                                 <th>Condiciones de Entrega</th>
                                 <th>Datos del Proveedor</th>
                                 <th>Monto Total</th>
-                                <th>Detalle</th>
                             </tr>
                         </thead>
 
@@ -261,12 +260,14 @@ include('head.php');
                             $contador = 1; 
 
                             // Iterar sobre los pedidos en el array $ListadoPedidos
-                            foreach ($ListadoPedidos as $ppIdPedido => $Pedido) { 
-                                ?>
+                            foreach ($ListadoPedidos as $ppIdPedido => $Pedido) { ?>
 
                                 <tr class='pedido' data-id='<?php echo $Pedido['ppIdPedido']; ?>' 
                                     onclick="selectRow(this, '<?php $Pedido['ppIdPedido']; ?>')">
 
+                                    <tr>
+                                        <th colspan="9"> <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; padding: 5px 0 0 0;">PEDIDO</h3> </th>
+                                    </tr>
                                     <td>
                                         <span style='color: #c7240e;'>
                                             <h4> <?php echo $contador; ?> </h4>
@@ -274,7 +275,7 @@ include('head.php');
                                     </td>
 
                                     <td> 
-                                        <?php echo $Pedido['ppIdPedido']; ?> 
+                                        <?php echo "<b> ID: {$Pedido['ppIdPedido']} </b>"; ?> 
                                     </td>
 
                                     <td> 
@@ -313,54 +314,54 @@ include('head.php');
                                         <?php echo "{$Pedido['TotalPedido']} USD"; ?> 
                                     </td>                                
 
-                                    <td>
-                                        <ul>
-                                            <?php 
-                                            // Iterar sobre los detalles del pedido actual
-                                            foreach ($Pedido['Detalles'] as $detalleId => $Detalle) {
-                                                
-                                                // Verificar y mostrar los datos de Repuestos, Productos o Accesorios
-                                                if ($Detalle['TipoInsumo'] == "Repuesto") { ?>
-                                                    <li>
-                                                        <?php 
-                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
-                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreRepuesto']} </br>";
-                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionRepuesto']} </br>";
-                                                        ?>
-                                                    </li>
-                                                <?php } 
+                                    <tr>
+                                        <th colspan="9"> <h5 style="color:rgb(175, 41, 4); font-family: Segoe UI;">ARTÍCULOS</h5> </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">Tipo de insumo</th>
+                                        <th colspan="2">Nombre</th>
+                                        <th colspan="3">Descripción</th>
+                                        <th colspan="1">Precio unitario</th>
+                                        <th colspan="1">Cantidad</th>
+                                        <th colspan="1">Subtotal</th>
+                                    </tr>
 
-                                                if ($Detalle['TipoInsumo'] == "Producto") { ?>
-                                                    <li>
-                                                        <?php 
-                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
-                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreProducto']} </br>";
-                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionProducto']} </br>";
-                                                        ?>
-                                                    </li>
-                                                <?php }
-
-                                                if ($Detalle['TipoInsumo'] == "Accesorio") { ?>
-                                                    <li>
-                                                        <?php 
-                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
-                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreAccesorio']} </br>";
-                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionAccesorio']} </br>";
-                                                        ?>
-                                                    </li>
-                                                <?php } 
+                                    <?php 
+                                    // Iterar sobre los detalles del pedido actual
+                                    foreach ($Pedido['Detalles'] as $detalleId => $Detalle) { ?>
+                                        <tr> 
+                                            <td>
+                                                <?php echo $Detalle['TipoInsumo']; ?>
+                                            </td>
+                                            <td colspan="2">
+                                                <?php
+                                                if ($Detalle['TipoInsumo'] == "Repuesto") {
+                                                    echo $Detalle['NombreRepuesto'];
+                                                } elseif ($Detalle['TipoInsumo'] == "Producto") {
+                                                    echo $Detalle['NombreProducto'];
+                                                } elseif ($Detalle['TipoInsumo'] == "Accesorio") {
+                                                    echo $Detalle['NombreAccesorio'];
+                                                }
                                                 ?>
+                                            </td>
+                                            <td colspan="3">
+                                                <?php
+                                                if ($Detalle['TipoInsumo'] == "Repuesto") {
+                                                    echo $Detalle['DescripcionRepuesto'];
+                                                } elseif ($Detalle['TipoInsumo'] == "Producto") {
+                                                    echo $Detalle['DescripcionProducto'];
+                                                } elseif ($Detalle['TipoInsumo'] == "Accesorio") {
+                                                    echo $Detalle['DescripcionAccesorio'];
+                                                }
+                                                ?>
+                                            </td>
+                                            <td colspan="1"><?php echo "{$Detalle['PrecioPorUnidad']} USD"; ?></td>
+                                            <td colspan="1"><?php echo $Detalle['CantidadUnidades']; ?></td>
+                                            <td colspan="1"><?php echo "{$Detalle['Subtotal']} USD"; ?></td>
+                                        </tr>
+                                    <?php 
+                                    } ?>
 
-                                                <li>
-                                                    <?php
-                                                    echo "<strong>Precio unitario:</strong> {$Detalle['PrecioPorUnidad']} </br>";
-                                                    echo "<strong>Cantidad:</strong> {$Detalle['CantidadUnidades']} </br>";
-                                                    echo "<strong>Subtotal:</strong> {$Detalle['Subtotal']} </br>";
-                                                    ?>
-                                                </li>
-                                            <?php } ?>
-                                        </ul>
-                                    </td>
                                 </tr>
                             <?php 
                             $contador++;

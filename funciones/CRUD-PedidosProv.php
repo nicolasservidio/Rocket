@@ -61,7 +61,7 @@ function Listar_PedidosProveedores($conexion) {
             LEFT JOIN `tipo-insumo` i ON (i.idTipoInsumo = r.idTipoInsumo OR i.idTipoInsumo = p.idTipoInsumo OR i.idTipoInsumo = a.idTipoInsumo)
             INNER JOIN `proveedores` pv ON pp.idProveedor = pv.idProveedor
             INNER JOIN `estados-pedidoaproveedor` e ON pp.idEstadoPedido = e.idEstadoPedido
-            ORDER BY pp.fechaPedido ASC, pp.idPedido ASC, dp.idDetallePedidoAProveedor ASC; ";
+            ORDER BY pp.fechaPedido DESC, pp.idPedido DESC, dp.idDetallePedidoAProveedor ASC; ";
 
     $rs = mysqli_query($conexion, $SQL);
         
