@@ -264,10 +264,17 @@ include('head.php');
 
                                 <tr class='pedido' data-id='<?php echo $Pedido['ppIdPedido']; ?>' 
                                     onclick="selectRow(this, '<?php $Pedido['ppIdPedido']; ?>')">
-
+                                    
+                                    <!-- Encabezado principal para cada pedido -->
                                     <tr>
-                                        <th colspan="9"> <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; padding: 20px 0 0 0;">PEDIDO</h3> </th>
+                                        <th colspan="9"> 
+                                            <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; text-align: left; padding: 20px 0 0 0;">
+                                                PEDIDO #<?php echo $Pedido['ppIdPedido']; ?> 
+                                            </h3> 
+                                        </th>
                                     </tr>
+
+                                    <!-- Datos del pedido -->
                                     <td>
                                         <span style='color: #c7240e;'>
                                             <h4> <?php echo $contador; ?> </h4>
@@ -314,9 +321,15 @@ include('head.php');
                                         <?php echo "{$Pedido['TotalPedido']} USD"; ?> 
                                     </td>                                
 
+                                    <!-- Encabezado para los artículos del pedido -->
                                     <tr>
-                                        <th colspan="9"> <h5 style="color:rgb(175, 41, 4); font-family: Segoe UI;">ARTÍCULOS</h5> </th>
+                                        <th colspan="9"> 
+                                            <h5 style="color:rgb(175, 41, 4); font-family: Segoe UI; text-align: left;">
+                                                ARTÍCULOS
+                                            </h5> 
+                                        </th>
                                     </tr>
+
                                     <tr>
                                         <th colspan="1">Tipo de insumo</th>
                                         <th colspan="2">Nombre</th>
@@ -326,6 +339,7 @@ include('head.php');
                                         <th colspan="1">Subtotal</th>
                                     </tr>
 
+                                    <!-- Detalles del pedido -->
                                     <?php 
                                     // Iterar sobre los detalles del pedido actual
                                     foreach ($Pedido['Detalles'] as $detalleId => $Detalle) { ?>
