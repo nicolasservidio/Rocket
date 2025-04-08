@@ -266,7 +266,7 @@ include('head.php');
                                     onclick="selectRow(this, '<?php $Pedido['ppIdPedido']; ?>')">
 
                                     <tr>
-                                        <th colspan="9"> <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; padding: 5px 0 0 0;">PEDIDO</h3> </th>
+                                        <th colspan="9"> <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; padding: 20px 0 0 0;">PEDIDO</h3> </th>
                                     </tr>
                                     <td>
                                         <span style='color: #c7240e;'>
@@ -274,33 +274,33 @@ include('head.php');
                                         </span>
                                     </td>
 
-                                    <td> 
+                                    <td title="ID del Pedido"> 
                                         <?php echo "<b> ID: {$Pedido['ppIdPedido']} </b>"; ?> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Fecha de pedido"> 
                                         <?php echo $Pedido['FechaPedido']; ?> 
                                     </td>
                                     
-                                    <td> 
+                                    <td title="Fecha de entrega"> 
                                         <?php echo $Pedido['FechaEntrega']; ?> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Estado del pedido"> 
                                         <span class="badge badge-success"> 
                                             <?php echo $Pedido['EstadoPedido']; ?> 
                                         </span> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Aclaraciones sobre el estado del pedido"> 
                                         <?php echo $Pedido['AclaracionesEstadoPedido']; ?> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Condiciones de entrega"> 
                                         <?php echo $Pedido['CondicionesDeEntrega']; ?> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Información sobre el proveedor"> 
                                         <?php 
                                         echo "{$Pedido['NombreProveedor']} </br> 
                                         <strong>CUIT:</strong> {$Pedido['CuitProveedor']} </br> 
@@ -310,7 +310,7 @@ include('head.php');
                                         ?> 
                                     </td>
 
-                                    <td> 
+                                    <td title="Monto total de la compra"> 
                                         <?php echo "{$Pedido['TotalPedido']} USD"; ?> 
                                     </td>                                
 
@@ -330,10 +330,10 @@ include('head.php');
                                     // Iterar sobre los detalles del pedido actual
                                     foreach ($Pedido['Detalles'] as $detalleId => $Detalle) { ?>
                                         <tr> 
-                                            <td>
+                                            <td title="Tipo de insumo">
                                                 <?php echo $Detalle['TipoInsumo']; ?>
                                             </td>
-                                            <td colspan="2">
+                                            <td colspan="2" title="Nombre del insumo">
                                                 <?php
                                                 if ($Detalle['TipoInsumo'] == "Repuesto") {
                                                     echo $Detalle['NombreRepuesto'];
@@ -344,7 +344,7 @@ include('head.php');
                                                 }
                                                 ?>
                                             </td>
-                                            <td colspan="3">
+                                            <td colspan="3" title="Descripción del insumo">
                                                 <?php
                                                 if ($Detalle['TipoInsumo'] == "Repuesto") {
                                                     echo $Detalle['DescripcionRepuesto'];
@@ -355,9 +355,15 @@ include('head.php');
                                                 }
                                                 ?>
                                             </td>
-                                            <td colspan="1"><?php echo "{$Detalle['PrecioPorUnidad']} USD"; ?></td>
-                                            <td colspan="1"><?php echo $Detalle['CantidadUnidades']; ?></td>
-                                            <td colspan="1"><?php echo "{$Detalle['Subtotal']} USD"; ?></td>
+                                            <td colspan="1" title="Precio por unidad">
+                                                <?php echo "{$Detalle['PrecioPorUnidad']} USD"; ?>
+                                            </td>
+                                            <td colspan="1" title="Cantidad de unidades compradas">
+                                                <?php echo $Detalle['CantidadUnidades']; ?>
+                                            </td>
+                                            <td colspan="1" title="Subtotal del artículo">
+                                                <?php echo "{$Detalle['Subtotal']} USD"; ?>
+                                            </td>
                                         </tr>
                                     <?php 
                                     } ?>
@@ -381,10 +387,6 @@ include('head.php');
 
                         <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarPedido()" disabled>
                             Modificar
-                        </button>
-
-                        <button class="btn btn-danger me-2" id="btnEliminar" onclick="eliminarPedido()" disabled>
-                            Eliminar
                         </button>
 
                         <a href="ReporteContratos.php"> <button class="btn btn-primary">
