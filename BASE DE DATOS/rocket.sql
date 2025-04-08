@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2025 at 08:56 AM
+-- Generation Time: Apr 08, 2025 at 03:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -45,10 +45,12 @@ CREATE TABLE `accesorios-vehiculos` (
 --
 
 INSERT INTO `accesorios-vehiculos` (`idAccesorio`, `nombreAccesorio`, `descripcionAccesorio`, `cantidadEnDeposito`, `precioAccesorio`, `estadoAccesorio`, `idTipoInsumo`, `idProveedor`, `disponibilidadAccesorio`, `vehiculosHospedantes`) VALUES
-(1, 'Alfombrillas de vehículo marca Ford', '', 5, 17, 'Aún no recibido', 3, 11, NULL, NULL),
-(2, 'Extintor marca Extincenter', '-', 5, 32.2, 'Aún no recibido', 3, 9, NULL, NULL),
-(3, 'Guardabarros universales marca Maxus', 'Adaptables a la mayoría de los vehículos', 6, 17.2, 'Aún no recibido', 3, 9, NULL, NULL),
-(4, 'Cargadores para automovil genéricos', '-', 10, 14.5, 'Aún no recibido', 3, 1, NULL, NULL);
+(1, 'Alfombrillas de vehículo marca FORD', '', 5, 17, 'Aún no recibido', 3, 11, NULL, NULL),
+(2, 'Extintor marca EXTINCENTER', '-', 5, 32.2, 'Aún no recibido', 3, 9, NULL, NULL),
+(3, 'Guardabarros universales marca MAXUS', 'Adaptables a la mayoría de los vehículos', 6, 17.2, 'Aún no recibido', 3, 9, NULL, NULL),
+(4, 'Cargadores para automovil genéricos', '-', 10, 14.5, 'Aún no recibido', 3, 1, NULL, NULL),
+(5, 'Deflectores de viento marca BELL', 'Gama media', 3, 20, 'Aún no recibido', 3, 8, NULL, NULL),
+(6, 'Barras de techo genéricas', 'Barras genéricas para transportar cargas en el techo', 2, 15, 'Aún no recibido', 3, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -521,7 +523,13 @@ INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`,
 (10, 4, 17.2, 6, 103.2, NULL, NULL, 3),
 (11, 6, 25, 1, 25, NULL, 3, NULL),
 (12, 6, 14.5, 10, 145, NULL, NULL, 4),
-(13, 6, 18.3, 6, 109.8, 6, NULL, NULL);
+(13, 6, 18.3, 6, 109.8, 6, NULL, NULL),
+(14, 7, 20, 3, 60, NULL, NULL, 5),
+(15, 7, 15, 2, 30, NULL, NULL, 6),
+(16, 8, 35, 2, 70, 7, NULL, NULL),
+(17, 8, 44, 6, 264, 8, NULL, NULL),
+(18, 8, 901, 3, 2703, 9, NULL, NULL),
+(19, 8, 99.9, 10, 999, 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -823,9 +831,11 @@ CREATE TABLE `pedido-a-proveedor` (
 INSERT INTO `pedido-a-proveedor` (`idPedido`, `fechaPedido`, `fechaEntregaPedido`, `idProveedor`, `idEstadoPedido`, `aclaracionesEstadoPedido`, `condicionesDeEntrega`, `totalPedido`) VALUES
 (1, '2024-11-01', '2024-11-05', 4, 1, 'Ninguna', '5 de noviembre a las 8 AM en puerta, previo aviso telefónico', 2400),
 (2, '2024-11-01', '2024-11-11', 4, 1, '', '', 7612.38),
-(3, '2025-11-03', '2025-11-08', 11, 1, '', '', 188),
+(3, '2024-11-03', '2024-11-08', 11, 1, '', '', 188),
 (4, '2024-11-12', '2024-11-26', 9, 1, 'Pedido se retrasó 2 días previo aviso', '', 331.1),
-(6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8);
+(6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8),
+(7, '2024-11-20', '2024-11-23', 8, 1, 'Cambio varias veces a pendiente', 'Buenas', 90),
+(8, '2024-12-04', '2024-12-07', 6, 1, 'Ninguna', 'Las mejores', 4036);
 
 -- --------------------------------------------------------
 
@@ -866,8 +876,8 @@ CREATE TABLE `productos-vehiculo` (
 --
 
 INSERT INTO `productos-vehiculo` (`idProducto`, `nombreProducto`, `descripcionProducto`, `cantidadEnDeposito`, `precioProducto`, `estadoProducto`, `idTipoInsumo`, `idProveedor`, `vehiculosDestinatarios`) VALUES
-(1, 'Limpiador de llantas Revigal', 'Bajo precio', 1, 11, 'Aún no recibido', 2, 11, NULL),
-(2, 'Cera marca Vonixx', 'Calidad elevada', 3, 22.3, 'Aún no recibido', 2, 9, NULL),
+(1, 'Limpiador de llantas REVIGAL', 'Bajo precio', 1, 11, 'Aún no recibido', 2, 11, NULL),
+(2, 'Cera marca VONIXX', 'Calidad elevada', 3, 22.3, 'Aún no recibido', 2, 9, NULL),
 (3, 'Guantes de microfibra genéricos', 'Paquete con 40 unidades', 1, 25, 'Aún no recibido', 2, 1, NULL);
 
 -- --------------------------------------------------------
@@ -929,11 +939,15 @@ CREATE TABLE `repuestos-vehiculos` (
 
 INSERT INTO `repuestos-vehiculos` (`idRepuesto`, `nombreRepuesto`, `descripcionRepuesto`, `cantidadEnDeposito`, `precioRepuesto`, `estadoRepuesto`, `idTipoInsumo`, `idProveedor`, `disponibilidadRepuesto`, `vehiculosHospedantes`) VALUES
 (1, 'Bomba de combustible', 'Bomba genérica de combustible, calidad mínima', 3, 800, 'Aún no recibido', 1, 4, NULL, NULL),
-(2, 'Bomba de combustible marca Aeromotive', 'Bomba de combustible de calidad elevada', 2, 1300.74, 'Aún no recibido', 1, 4, NULL, NULL),
+(2, 'Bomba de combustible marca AEROMOTIVE', 'Bomba de combustible de calidad elevada', 2, 1300.74, 'Aún no recibido', 1, 4, NULL, NULL),
 (3, 'Pastillas de freno marca genérica', 'Genéricas', 9, 170.1, 'Aún no recibido', 1, 4, NULL, NULL),
-(4, 'Alternadores marca Bosch', 'Calidad elevada', 4, 870, 'Aún no recibido', 1, 4, NULL, NULL),
-(5, 'Bujías NGK Iridium', 'Calidad media', 4, 23, 'Aún no recibido', 1, 11, NULL, NULL),
-(6, 'Correas de distribución marca Mann-Filter', '', 6, 18.3, 'Aún no recibido', 1, 1, NULL, NULL);
+(4, 'Alternadores marca BOSCH', 'Calidad elevada', 4, 870, 'Aún no recibido', 1, 4, NULL, NULL),
+(5, 'Bujías NGK IRIDIUM', 'Calidad media', 4, 23, 'Aún no recibido', 1, 11, NULL, NULL),
+(6, 'Correas de distribución marca MANN-FILTER', '', 6, 18.3, 'Aún no recibido', 1, 1, NULL, NULL),
+(7, 'Espejos retrovisores VAN WEZEL', '', 2, 35, 'Aún no recibido', 1, 6, NULL, NULL),
+(8, 'Neumáticos marca MICHELIN', 'Gama media', 6, 44, 'Aún no recibido', 1, 6, NULL, NULL),
+(9, 'Alternador marca BMW', 'Gama alta', 3, 901, 'Aún no recibido', 1, 6, NULL, NULL),
+(10, 'Rótulas de suspensión marca LEMFÖRDER', 'Gama media', 10, 99.9, 'Aún no recibido', 1, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1494,7 +1508,7 @@ ALTER TABLE `verificaciones-vehiculos`
 -- AUTO_INCREMENT for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
-  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cargo`
@@ -1536,7 +1550,7 @@ ALTER TABLE `detalle-contratos`
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
@@ -1608,7 +1622,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1632,7 +1646,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
-  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reservas-vehiculos`
