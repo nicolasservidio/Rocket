@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2025 at 03:49 PM
+-- Generation Time: Apr 08, 2025 at 06:43 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -529,7 +529,9 @@ INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`,
 (16, 8, 35, 2, 70, 7, NULL, NULL),
 (17, 8, 44, 6, 264, 8, NULL, NULL),
 (18, 8, 901, 3, 2703, 9, NULL, NULL),
-(19, 8, 99.9, 10, 999, 10, NULL, NULL);
+(19, 8, 99.9, 10, 999, 10, NULL, NULL),
+(20, 9, 45, 10, 450, 11, NULL, NULL),
+(21, 9, 23.2, 4, 92.8, 12, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -832,10 +834,11 @@ INSERT INTO `pedido-a-proveedor` (`idPedido`, `fechaPedido`, `fechaEntregaPedido
 (1, '2024-11-01', '2024-11-05', 4, 1, 'Ninguna', '5 de noviembre a las 8 AM en puerta, previo aviso telefónico', 2400),
 (2, '2024-11-01', '2024-11-11', 4, 1, '', '', 7612.38),
 (3, '2024-11-03', '2024-11-08', 11, 1, '', '', 188),
-(4, '2024-11-12', '2024-11-26', 9, 1, 'Pedido se retrasó 2 días previo aviso', '', 331.1),
+(4, '2024-11-12', '2024-11-26', 9, 6, 'Pedido se retrasó 2 días previo aviso', '', 331.1),
 (6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8),
 (7, '2024-11-20', '2024-11-23', 8, 1, 'Cambio varias veces a pendiente', 'Buenas', 90),
-(8, '2024-12-04', '2024-12-07', 6, 1, 'Ninguna', 'Las mejores', 4036);
+(8, '2024-12-04', '2024-12-07', 6, 1, 'Ninguna', 'Las mejores', 4036),
+(9, '2025-01-01', '2025-01-05', 8, 1, 'Ninguna de relevancia', 'Ir a buscar a negocio', 542.8);
 
 -- --------------------------------------------------------
 
@@ -903,16 +906,16 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `direccionProveedor`, `telefonoProveedor`, `localidadProveedor`, `idTipoInsumo`, `cuitProveedor`, `ivaProveedor`) VALUES
-(1, 'Bruno', 'brunocarossi@hotmail.com', 'Av Malvinas Argentin 829', 2477610676, '', NULL, 20381037364, 'Monotributo Cat. C'),
-(2, 'Litoral Gas S.A', 'litoralgas@gmail.com', 'Av Malvinas Argentin 829', 2477610676, '', NULL, 1111111111111111, 'Responsable Inscripto'),
-(3, 'LUCIA', 'lucia@hotmail.com', 'pergamino', 32456787866, '', NULL, 345346375378578, 'Monotributo Cat. A'),
-(4, 'Nicolas Servidio', 'nicoservidio@gmail.com', 'Alem 238, Bahia Blanca', 123546758, '', NULL, 132465758, 'Monotributo Cat. B'),
-(5, 'Seguros SA', 'segurossa@segurossa.com', 'Av Rivadavia 883, Córdoba Capital', 89893877, '', NULL, 6898302, 'Responsable Inscripto'),
-(6, 'Repuestos SA', 'repuestossa@repuestosa.com', 'Rodriguez 9182, Cordoba Capital', 8888222999, '', NULL, 828828888, 'Responsable Inscripto'),
-(7, 'Limpiezas SA', 'limpiezassa@limpiezassa.com', 'Tucuman 1626, CABA', 8282884611, '', NULL, 7227727272, 'Responsable Inscripto'),
-(8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', 'Guemes 88176, Cordoba Capital', 888299927166, '', NULL, 88165353511, 'Responsable Inscripto'),
-(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', 'Guemes 1020, Córdoba Capital', 9991828888, '', NULL, 99100938777, 'Responsable Inscripto'),
-(11, 'TuVehiculo SA', 'proveedores@tvsa.com', 'Cuyo 8389, CABA', 8822228889, '', NULL, 99922200002, 'Responsable Inscripto');
+(1, 'Bruno', 'brunocarossi@hotmail.com', '829, Av Malvinas Argentin', 2477610676, 'Pergamino, Argentina', NULL, 20381037364, 'Monotributo C'),
+(2, 'Litoral Gas S.A', 'litoralgas@gmail.com', '792 Tucuman', 2477610676, 'CABA, Argentina', NULL, 1111111111111111, 'Responsable Inscripto'),
+(3, 'LUCIA', 'lucia@hotmail.com', '829 Av Malvinas Argentin', 32456787866, 'Pergamino, Argentina', NULL, 345346375378578, 'Monotributo A'),
+(4, 'Nicolas Servidio', 'nicoservidio@gmail.com', '238 Alem', 123546758, 'Villa Carlos Paz, Argentina', NULL, 132465758, 'Monotributo B'),
+(5, 'Seguros SA', 'segurossa@segurossa.com', '883 Av Rivadavia', 89893877, 'Córdoba Capital', NULL, 6898302, 'Responsable Inscripto'),
+(6, 'Repuestos SA', 'repuestossa@repuestosa.com', '9182 Rodriguez', 8888222999, 'Córdoba Capital', NULL, 828828888, 'Responsable Inscripto'),
+(7, 'Limpiezas SA', 'limpiezassa@limpiezassa.com', '1626 Tucuman', 8282884611, 'CABA, Argentina', NULL, 7227727272, 'Responsable Inscripto'),
+(8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', '88176 Guemes', 888299927166, 'Cordoba Capital, Argentina', NULL, 88165353511, 'Responsable Inscripto'),
+(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', '1020 Guemes', 9991828888, 'Cordoba Capital, Argentina', NULL, 99100938777, 'Responsable Inscripto'),
+(11, 'TuVehiculo SA', 'proveedores@tvsa.com', '8389 Cuyo', 8822228889, 'CABA, Argentina', NULL, 99922200002, 'Responsable Inscripto');
 
 -- --------------------------------------------------------
 
@@ -947,7 +950,9 @@ INSERT INTO `repuestos-vehiculos` (`idRepuesto`, `nombreRepuesto`, `descripcionR
 (7, 'Espejos retrovisores VAN WEZEL', '', 2, 35, 'Aún no recibido', 1, 6, NULL, NULL),
 (8, 'Neumáticos marca MICHELIN', 'Gama media', 6, 44, 'Aún no recibido', 1, 6, NULL, NULL),
 (9, 'Alternador marca BMW', 'Gama alta', 3, 901, 'Aún no recibido', 1, 6, NULL, NULL),
-(10, 'Rótulas de suspensión marca LEMFÖRDER', 'Gama media', 10, 99.9, 'Aún no recibido', 1, 6, NULL, NULL);
+(10, 'Rótulas de suspensión marca LEMFÖRDER', 'Gama media', 10, 99.9, 'Aún no recibido', 1, 6, NULL, NULL),
+(11, 'Bujías marca NGK', 'Genéricas', 10, 45, 'Aún no recibido', 1, 8, NULL, NULL),
+(12, 'Filtros de aceite marca PURFLUX', 'alta calidad, tecnología de plegado Chevron para mayor área de filtración, diseño compacto y ligero, y compromiso con la protección ambiental', 4, 23.2, 'Aún no recibido', 1, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1550,7 +1555,7 @@ ALTER TABLE `detalle-contratos`
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
@@ -1622,7 +1627,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1646,7 +1651,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
-  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reservas-vehiculos`
