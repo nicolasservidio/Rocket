@@ -268,6 +268,6 @@ $dompdf->render();
 
 // Pero, para que podamos ver el documento en el navegador y para que podamos descargarlo desde el navegador, necesitamos trabajar con "dompdf" y "stream" señalando el nombre del archivo:
 
-$dompdf->stream("ReporteEntregas", array("Attachment" => false)); // false es para que se abra directamente en el navegador. True es para que se descargue
+$dompdf->stream("ReportePedidosAProveedores", array("Attachment" => false)); // false es para que se abra directamente en el navegador. True es para que se descargue
 
 ?>
