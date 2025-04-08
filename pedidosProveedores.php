@@ -39,12 +39,11 @@ $CantidadPedidos = count($ListadoPedidos);
 // Consulta por medio de formulario de Filtro
 if (!empty($_GET['BotonFiltrar'])) {
 
-    // require_once 'funciones/vehiculo consulta.php';
-    Procesar_ConsultaContratos();
+    Procesar_ConsultaPedidosProveedores();
 
     $ListadoPedidos = array();
     $CantidadPedidos = '';
-    $ListadoPedidos = Consulta_Contratos($_GET['Identificador-Pedido'], $_GET['Estado-Pedido'], $_GET['Nombre-Proveedor'], $_GET['CUIT-Proveedor'], $_GET['IVA-Proveedor'], $_GET['Localidad-Proveedor'], $_GET['Direccion-Proveedor'], $_GET['Precio-Unitario'], $_GET['Cantidad-Producto'], $_GET['MontoTotal-Pedido'], $_GET['Tipo-Insumo'], $_GET['Nombre-Insumo'], $_GET['Descripcion-Insumo'], $_GET['FechaPedido-Desde'], $_GET['FechaPedido-Hasta'], $_GET['FechaEntrega-Desde'], $_GET['FechaEntrega-Hasta'], $conexion);
+    $ListadoPedidos = Consulta_PedidosAProveedor($_GET['Identificador-Pedido'], $_GET['Estado-Pedido'], $_GET['Nombre-Proveedor'], $_GET['CUIT-Proveedor'], $_GET['IVA-Proveedor'], $_GET['Localidad-Proveedor'], $_GET['Direccion-Proveedor'], $_GET['Precio-Unitario'], $_GET['Cantidad-Producto'], $_GET['MontoTotal-Pedido'], $_GET['Tipo-Insumo'], $_GET['Nombre-Insumo'], $_GET['Descripcion-Insumo'], $_GET['FechaPedido-Desde'], $_GET['FechaPedido-Hasta'], $_GET['FechaEntrega-Desde'], $_GET['FechaEntrega-Hasta'], $conexion);
     $CantidadPedidos = count($ListadoPedidos);
 }
 else {
@@ -115,7 +114,7 @@ include('head.php');
 
                     <div class="col-md-2">
                         <label for="estadopedido" class="form-label">Estado del Pedido</label>
-                        <input type="text" class="form-control" id="estadopedido" name="Estado-Pedido" 
+                        <input type="text" class="form-control" id="estadopedido" name="Estado-Pedido" title="Pendiente, Confirmado, Cancelado, En Preparación, Enviado, Entregado o Devuelto" 
                                value="<?= htmlspecialchars($filtros['Estado-Pedido']) ?>">
                     </div>
 
