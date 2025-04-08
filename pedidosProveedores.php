@@ -403,7 +403,7 @@ include('head.php');
                             Modificar
                         </button>
 
-                        <a href="ReporteContratos.php"> <button class="btn btn-primary">
+                        <a href="ReportePedidosProveedores.php"> <button class="btn btn-primary">
                             Imprimir
                         </button></a>
                     </div>
