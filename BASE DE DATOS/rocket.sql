@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 11:20 AM
+-- Generation Time: Apr 08, 2025 at 08:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -31,13 +31,24 @@ CREATE TABLE `accesorios-vehiculos` (
   `idAccesorio` int(11) NOT NULL,
   `nombreAccesorio` varchar(50) NOT NULL,
   `descripcionAccesorio` varchar(200) DEFAULT NULL COMMENT 'Campo optativo con una descripción del accesorio, en caso de requerirse',
-  `precioAccesorio` float NOT NULL,
-  `estadoAccesorio` varchar(100) DEFAULT NULL COMMENT 'Campo optativo con referencias al estado del accesorio',
+  `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
+  `precioAccesorio` float NOT NULL COMMENT 'Precio unitario',
+  `estadoAccesorio` varchar(100) DEFAULT NULL COMMENT 'Campo optativo con referencias al estado del accesorio o el lote de accesorios',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
-  `disponibilidadAccesorio` varchar(1) DEFAULT NULL COMMENT 'Campo de un solo caracter, S (sí) para disponible, N (no) para no disponible',
-  `idVehiculoHospedante` int(11) DEFAULT NULL COMMENT 'Campo optativo para el caso de que un accesorio esté siendo utilizado en un vehículo'
+  `disponibilidadAccesorio` varchar(200) DEFAULT NULL COMMENT 'Campo en donde se puede especificar cuántos accesorios están en uso o libres para ser usados en vehículos',
+  `vehiculosHospedantes` varchar(200) DEFAULT NULL COMMENT 'Campo optativo para el caso de que uno esté siendo utilizado en un vehículo. Mencionar vehículos separando con comas'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `accesorios-vehiculos`
+--
+
+INSERT INTO `accesorios-vehiculos` (`idAccesorio`, `nombreAccesorio`, `descripcionAccesorio`, `cantidadEnDeposito`, `precioAccesorio`, `estadoAccesorio`, `idTipoInsumo`, `idProveedor`, `disponibilidadAccesorio`, `vehiculosHospedantes`) VALUES
+(1, 'Alfombrillas de vehículo marca Ford', '', 5, 17, 'Aún no recibido', 3, 11, NULL, NULL),
+(2, 'Extintor marca Extincenter', '-', 5, 32.2, 'Aún no recibido', 3, 9, NULL, NULL),
+(3, 'Guardabarros universales marca Maxus', 'Adaptables a la mayoría de los vehículos', 6, 17.2, 'Aún no recibido', 3, 9, NULL, NULL),
+(4, 'Cargadores para automovil genéricos', '-', 10, 14.5, 'Aún no recibido', 3, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -485,13 +496,32 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 CREATE TABLE `detalle-pedidoaproveedor` (
   `idDetallePedidoAProveedor` int(11) NOT NULL,
   `idPedido` int(11) DEFAULT NULL COMMENT 'Llave foránea hacia el encabezado',
-  `precioPorUnidad` double NOT NULL,
+  `precioPorUnidad` float NOT NULL,
   `cantidadUnidades` int(11) NOT NULL,
-  `subtotal` double NOT NULL,
+  `subtotal` float NOT NULL,
   `idRepuestoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idProductoVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.',
   `idAccesorioVehiculo` int(11) DEFAULT NULL COMMENT 'Cada registro de "Pedido a Proveedor" involucra solo un repuesto, un producto, o un accesorio, nunca puede involucrar a los tres campos.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `detalle-pedidoaproveedor`
+--
+
+INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`, `precioPorUnidad`, `cantidadUnidades`, `subtotal`, `idRepuestoVehiculo`, `idProductoVehiculo`, `idAccesorioVehiculo`) VALUES
+(1, 1, 800, 3, 2400, 1, NULL, NULL),
+(2, 2, 1300.74, 2, 2601.48, 2, NULL, NULL),
+(3, 2, 170.1, 9, 1530.9, 3, NULL, NULL),
+(4, 2, 870, 4, 3480, 4, NULL, NULL),
+(5, 3, 23, 4, 92, 5, NULL, NULL),
+(6, 3, 11, 1, 11, NULL, 1, NULL),
+(7, 3, 17, 5, 85, NULL, NULL, 1),
+(8, 4, 22.3, 3, 66.9, NULL, 2, NULL),
+(9, 4, 32.2, 5, 161, NULL, NULL, 2),
+(10, 4, 17.2, 6, 103.2, NULL, NULL, 3),
+(11, 6, 25, 1, 25, NULL, 3, NULL),
+(12, 6, 14.5, 10, 145, NULL, NULL, 4),
+(13, 6, 18.3, 6, 109.8, 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -786,6 +816,17 @@ CREATE TABLE `pedido-a-proveedor` (
   `totalPedido` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Dumping data for table `pedido-a-proveedor`
+--
+
+INSERT INTO `pedido-a-proveedor` (`idPedido`, `fechaPedido`, `fechaEntregaPedido`, `idProveedor`, `idEstadoPedido`, `aclaracionesEstadoPedido`, `condicionesDeEntrega`, `totalPedido`) VALUES
+(1, '2024-11-01', '2024-11-05', 4, 1, 'Ninguna', '5 de noviembre a las 8 AM en puerta, previo aviso telefónico', 2400),
+(2, '2024-11-01', '2024-11-11', 4, 1, '', '', 7612.38),
+(3, '2025-11-03', '2025-11-08', 11, 1, '', '', 188),
+(4, '2024-11-12', '2024-11-26', 9, 1, 'Pedido se retrasó 2 días previo aviso', '', 331.1),
+(6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8);
+
 -- --------------------------------------------------------
 
 --
@@ -812,12 +853,22 @@ CREATE TABLE `productos-vehiculo` (
   `idProducto` int(11) NOT NULL,
   `nombreProducto` varchar(50) NOT NULL,
   `descripcionProducto` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del producto',
-  `precioProducto` float NOT NULL,
-  `estadoProducto` varchar(100) DEFAULT NULL COMMENT 'Descripción optativa del estado del producto en caso de requerirse',
+  `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
+  `precioProducto` float NOT NULL COMMENT 'Precio unitario',
+  `estadoProducto` varchar(100) DEFAULT NULL COMMENT 'Descripción optativa del estado del producto o los productos en caso de requerirse',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
-  `idVehiculoDestinatario` int(11) DEFAULT NULL COMMENT 'Campo optativo que señala para cuál vehículo se adquirió el producto'
+  `vehiculosDestinatarios` varchar(200) DEFAULT NULL COMMENT 'Campo optativo que señala para cuál vehículo se adquirió el producto, en caso de que uno particular lo halla requerido. Separar con comas'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `productos-vehiculo`
+--
+
+INSERT INTO `productos-vehiculo` (`idProducto`, `nombreProducto`, `descripcionProducto`, `cantidadEnDeposito`, `precioProducto`, `estadoProducto`, `idTipoInsumo`, `idProveedor`, `vehiculosDestinatarios`) VALUES
+(1, 'Limpiador de llantas Revigal', 'Bajo precio', 1, 11, 'Aún no recibido', 2, 11, NULL),
+(2, 'Cera marca Vonixx', 'Calidad elevada', 3, 22.3, 'Aún no recibido', 2, 9, NULL),
+(3, 'Guantes de microfibra genéricos', 'Paquete con 40 unidades', 1, 25, 'Aún no recibido', 2, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -863,13 +914,26 @@ CREATE TABLE `repuestos-vehiculos` (
   `idRepuesto` int(11) NOT NULL,
   `nombreRepuesto` varchar(100) NOT NULL,
   `descripcionRepuesto` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del repuesto',
-  `precioRepuesto` float NOT NULL,
-  `estadoRepuesto` varchar(100) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre el estado del repuesto',
+  `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
+  `precioRepuesto` float NOT NULL COMMENT 'Precio unitario',
+  `estadoRepuesto` varchar(100) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre el estado del repuesto o lote de repuestos',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
-  `disponibilidadRepuesto` char(1) DEFAULT NULL COMMENT 'N (no) para no disponible, S (sí) para disponible',
-  `idVehiculoHospedante` int(11) DEFAULT NULL COMMENT 'El vehículo que lleva el repuesto en caso de encontrarse no disponible'
+  `disponibilidadRepuesto` char(200) DEFAULT NULL COMMENT 'Campo en donde se puede especificar cuántos están en uso o libres para ser usados en vehículos',
+  `vehiculosHospedantes` varchar(200) DEFAULT NULL COMMENT 'El vehículo que lleva el repuesto o los repuestos. Separar con comas en caso de que sean diferentes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `repuestos-vehiculos`
+--
+
+INSERT INTO `repuestos-vehiculos` (`idRepuesto`, `nombreRepuesto`, `descripcionRepuesto`, `cantidadEnDeposito`, `precioRepuesto`, `estadoRepuesto`, `idTipoInsumo`, `idProveedor`, `disponibilidadRepuesto`, `vehiculosHospedantes`) VALUES
+(1, 'Bomba de combustible', 'Bomba genérica de combustible, calidad mínima', 3, 800, 'Aún no recibido', 1, 4, NULL, NULL),
+(2, 'Bomba de combustible marca Aeromotive', 'Bomba de combustible de calidad elevada', 2, 1300.74, 'Aún no recibido', 1, 4, NULL, NULL),
+(3, 'Pastillas de freno marca genérica', 'Genéricas', 9, 170.1, 'Aún no recibido', 1, 4, NULL, NULL),
+(4, 'Alternadores marca Bosch', 'Calidad elevada', 4, 870, 'Aún no recibido', 1, 4, NULL, NULL),
+(5, 'Bujías NGK Iridium', 'Calidad media', 4, 23, 'Aún no recibido', 1, 11, NULL, NULL),
+(6, 'Correas de distribución marca Mann-Filter', '', 6, 18.3, 'Aún no recibido', 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1191,8 +1255,7 @@ CREATE TABLE `verificaciones-vehiculos` (
 ALTER TABLE `accesorios-vehiculos`
   ADD PRIMARY KEY (`idAccesorio`),
   ADD KEY `idTipoInsumo` (`idTipoInsumo`),
-  ADD KEY `idProveedor` (`idProveedor`),
-  ADD KEY `idVehiculoHospedante` (`idVehiculoHospedante`);
+  ADD KEY `idProveedor` (`idProveedor`);
 
 --
 -- Indexes for table `cargo`
@@ -1352,8 +1415,7 @@ ALTER TABLE `preparaciones-vehiculos`
 ALTER TABLE `productos-vehiculo`
   ADD PRIMARY KEY (`idProducto`),
   ADD KEY `idTipoInsumo` (`idTipoInsumo`),
-  ADD KEY `idProveedor` (`idProveedor`),
-  ADD KEY `idVehiculoDestinatario` (`idVehiculoDestinatario`);
+  ADD KEY `idProveedor` (`idProveedor`);
 
 --
 -- Indexes for table `proveedores`
@@ -1368,8 +1430,7 @@ ALTER TABLE `proveedores`
 ALTER TABLE `repuestos-vehiculos`
   ADD PRIMARY KEY (`idRepuesto`),
   ADD KEY `idTipoInsumo` (`idTipoInsumo`),
-  ADD KEY `idProveedor` (`idProveedor`),
-  ADD KEY `idVehiculoHospedante` (`idVehiculoHospedante`);
+  ADD KEY `idProveedor` (`idProveedor`);
 
 --
 -- Indexes for table `reservas-vehiculos`
@@ -1433,7 +1494,7 @@ ALTER TABLE `verificaciones-vehiculos`
 -- AUTO_INCREMENT for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
-  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cargo`
@@ -1475,7 +1536,7 @@ ALTER TABLE `detalle-contratos`
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
@@ -1547,7 +1608,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1559,7 +1620,7 @@ ALTER TABLE `preparaciones-vehiculos`
 -- AUTO_INCREMENT for table `productos-vehiculo`
 --
 ALTER TABLE `productos-vehiculo`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `proveedores`
@@ -1571,7 +1632,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
-  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reservas-vehiculos`
@@ -1624,8 +1685,7 @@ ALTER TABLE `verificaciones-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
   ADD CONSTRAINT `accesorios-vehiculos_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `accesorios-vehiculos_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `accesorios-vehiculos_ibfk_3` FOREIGN KEY (`idVehiculoHospedante`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `accesorios-vehiculos_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `contratos-alquiler`
@@ -1724,8 +1784,7 @@ ALTER TABLE `preparaciones-vehiculos`
 --
 ALTER TABLE `productos-vehiculo`
   ADD CONSTRAINT `productos-vehiculo_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `productos-vehiculo_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `productos-vehiculo_ibfk_3` FOREIGN KEY (`idVehiculoDestinatario`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `productos-vehiculo_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `proveedores`
@@ -1738,8 +1797,7 @@ ALTER TABLE `proveedores`
 --
 ALTER TABLE `repuestos-vehiculos`
   ADD CONSTRAINT `repuestos-vehiculos_ibfk_1` FOREIGN KEY (`idTipoInsumo`) REFERENCES `tipo-insumo` (`idTipoInsumo`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `repuestos-vehiculos_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `repuestos-vehiculos_ibfk_3` FOREIGN KEY (`idVehiculoHospedante`) REFERENCES `vehiculos` (`idVehiculo`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `repuestos-vehiculos_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `reservas-vehiculos`
