@@ -660,20 +660,13 @@ include('head.php');
         });
 
         // Función para redirigir a la página de modificaciones con el ID del pedido seleccionado (recordá que el elemento del array ya contiene en su interior toda la información que le corresponde)
+        // CUIDADO: antes de redirigir a la página de modificaciones es necesario que se abra un modal para que el usuario pueda introducir un "ID de Pedido", lo que captura dicho valor y luego se utiliza en la página de modificaciones para el query SQL... BASARSE EN EL MODAL DE REPORTE DE DEVOLUCIONES
         function modificarPedido() {
             if (pedidoSeleccionado) {
                 window.location.href = 'modificarPedidoProveedor.php?id=' + pedidoSeleccionado;
             }
         }
 
-        // Función para redirigir a la página de eliminaciones con el ID del pedido seleccionado (recordá que el elemento del array ya contiene en su interior toda la información que le corresponde)
-        function eliminarPedido() {
-            if (pedidoSeleccionado) {
-                if (confirm('¿Estás seguro de que quieres eliminar este pedido?')) {
-                    window.location.href = 'EliminarPedidoProveedor.php?id=' + pedidoSeleccionado;
-                }
-            }
-        }
     </script>
 
     
