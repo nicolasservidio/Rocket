@@ -53,21 +53,14 @@ function Listar_PedidosProveedores($conexion) {
 
                    e.idEstadoPedido as IdEstadoPedido, 
                    e.estadoPedido as EstadoPedido 
-            FROM `pedido-a-proveedor` pp, 
-                 `detalle-pedidoaproveedor` dp, 
-                 `repuestos-vehiculos` r, 
-                 `tipo-insumo` i, 
-                 `productos-vehiculo` p, 
-                 `accesorios-vehiculos` a, 
-                 proveedores pv, 
-                 `estados-pedidoaproveedor` e 
-            WHERE dp.idPedido = pp.idPedido 
-            AND r.idRepuesto = dp.idRepuestoVehiculo 
-            AND i.idTipoInsumo = r.idTipoInsumo 
-            AND i.idTipoInsumo = p.idTipoInsumo 
-            AND i.idTipoInsumo = a.idTipoInsumo 
-            AND pv.idProveedor = pp.idProveedor 
-            AND e.idEstadoPedido = pp.idEstadoPedido 
+            FROM `pedido-a-proveedor` pp
+            INNER JOIN `detalle-pedidoaproveedor` dp ON pp.idPedido = dp.idPedido
+            LEFT JOIN `repuestos-vehiculos` r ON dp.idRepuestoVehiculo = r.idRepuesto
+            LEFT JOIN `productos-vehiculo` p ON dp.idProductoVehiculo = p.idProducto
+            LEFT JOIN `accesorios-vehiculos` a ON dp.idAccesorioVehiculo = a.idAccesorio
+            LEFT JOIN `tipo-insumo` i ON (i.idTipoInsumo = r.idTipoInsumo OR i.idTipoInsumo = p.idTipoInsumo OR i.idTipoInsumo = a.idTipoInsumo)
+            INNER JOIN `proveedores` pv ON pp.idProveedor = pv.idProveedor
+            INNER JOIN `estados-pedidoaproveedor` e ON pp.idEstadoPedido = e.idEstadoPedido
             ORDER BY pp.fechaPedido, pp.idPedido, dp.idDetallePedidoAProveedor; ";
 
     $rs = mysqli_query($conexion, $SQL);

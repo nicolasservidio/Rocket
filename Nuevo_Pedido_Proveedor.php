@@ -77,14 +77,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Insertar el registro principal en la tabla "PEDIDO"
 
-        $sqlPedido = "INSERT INTO `pedido-a-proveedor` (fechaPedido, fechaEntregaPedido, idProveedor, idEstadoPedido, aclaracionesEstadoPedido, condicionesDeEntrega, totalPedido) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sqlPedido = "INSERT INTO `pedido-a-proveedor` (fechaPedido, 
+                                                        fechaEntregaPedido, 
+                                                        idProveedor, 
+                                                        idEstadoPedido, 
+                                                        aclaracionesEstadoPedido, 
+                                                        condicionesDeEntrega, 
+                                                        totalPedido) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?); ";
+        
         $stmtPedido = $conexion->prepare($sqlPedido);
+
+        // validacion para confirmar que prepare() sea exitoso antes de proceder. Si no se realiza y la consulta prepare() llegara a fallar, podría causar error silencioso 
+        if (!$stmtPedido) {
+            throw new Exception("Fallo al preparar la consulta para insertar el pedido: " . $conexion->error);
+        }
 
         // Calcular el monto total del pedido sumando los subtotales
         $montoTotal = array_sum($subtotales);
 
-        $stmtPedido->bind_param("ssssssd", $fechaPedidoIngles, $fechaEntregaIngles, $idProveedor, $idEstadoPedido, $aclaracionesEstadoPedido, $condicionesDeEntrega, $montoTotal);
+        $stmtPedido->bind_param("ssiissd", $fechaPedidoIngles, $fechaEntregaIngles, $idProveedor, $idEstadoPedido, $aclaracionesEstadoPedido, $condicionesDeEntrega, $montoTotal);
         $stmtPedido->execute();
 
         // Obtener el ID del pedido recién insertado para usarlo en la tabla "detalle"
@@ -94,9 +106,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Insertar los registros en la tabla "DETALLE" (y en las tablas de "insumos")
 
-        $sqlDetalle = "INSERT INTO `detalle-pedidoaproveedor` (idPedido, idRepuestoVehiculo, idProductoVehiculo, idAccesorioVehiculo, cantidadUnidades, precioPorUnidad, subtotal) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sqlDetalle = "INSERT INTO `detalle-pedidoaproveedor` (idPedido, 
+                                                                idRepuestoVehiculo, 
+                                                                idProductoVehiculo, 
+                                                                idAccesorioVehiculo, 
+                                                                cantidadUnidades, 
+                                                                precioPorUnidad, 
+                                                                subtotal) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?); ";
+        
         $stmtDetalle = $conexion->prepare($sqlDetalle);
+
+        // validacion para confirmar que prepare() sea exitoso antes de proceder. Si no se realiza y la consulta prepare() llegara a fallar, podría causar error silencioso 
+        if (!$stmtDetalle) {
+            throw new Exception("Fallo al preparar la consulta para insertar el detalle del pedido: " . $conexion->error);
+        }
 
         for ($i = 0; $i < count($idTiposInsumos); $i++) {
 
@@ -105,8 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idRepuesto = null;
             $idProducto = null;
             $idAccesorio = null;
+            $estadoInsumo = "Aún no recibido";
 
-            if ($idTiposInsumos[$i] === '1') {
+            if ($idTiposInsumos[$i] == '1') {
 
                 if (empty($nombresInsumos[$i]) || empty($cantidades[$i]) || empty($preciosUnidad[$i])) {
                     throw new Exception("Datos incompletos en la fila $i del detalle.");
@@ -114,13 +139,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $sqlInsert_Repuesto = "INSERT INTO `repuestos-vehiculos` (nombreRepuesto,
                                                                         descripcionRepuesto,
-                                                                        precioRepuesto, 
+                                                                        cantidadEnDeposito,
+                                                                        precioRepuesto,
+                                                                        estadoRepuesto, 
                                                                         idTipoInsumo,
                                                                         idProveedor) 
-                                        VALUES (?, ?, ?, ?, ?); ";
+                                        VALUES (?, ?, ?, ?, ?, ?, ?); ";
 
                 $stmtRepuesto = $conexion->prepare($sqlInsert_Repuesto);
-                $stmtRepuesto->bind_param("ssdii", $nombresInsumos[$i], $descripcionesInsumos[$i], $preciosUnidad[$i], $idTiposInsumos[$i], $idProveedor);
+
+                $stmtRepuesto->bind_param("ssidsii", $nombresInsumos[$i], $descripcionesInsumos[$i], $cantidades[$i], $preciosUnidad[$i], $estadoInsumo, $idTiposInsumos[$i], $idProveedor);
+
                 if (!$stmtRepuesto->execute()) {
                     die("Error al insertar el repuesto: " . $stmtRepuesto->error);
                 }
@@ -130,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtRepuesto->close();     
             } 
             
-            elseif ($idTiposInsumos[$i] === '2') {
+            elseif ($idTiposInsumos[$i] == '2') {
 
                 if (empty($nombresInsumos[$i]) || empty($cantidades[$i]) || empty($preciosUnidad[$i])) {
                     throw new Exception("Datos incompletos en la fila $i del detalle.");
@@ -138,13 +167,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $sqlInsert_Producto = "INSERT INTO `productos-vehiculo` (nombreProducto,
                                                                         descripcionProducto,
+                                                                        cantidadEnDeposito,
                                                                         precioProducto, 
+                                                                        estadoProducto,
                                                                         idTipoInsumo,
                                                                         idProveedor) 
-                                        VALUES (?, ?, ?, ?, ?); ";
+                                        VALUES (?, ?, ?, ?, ?, ?, ?); ";
 
                 $stmtProducto = $conexion->prepare($sqlInsert_Producto);
-                $stmtProducto->bind_param("ssdii", $nombresInsumos[$i], $descripcionesInsumos[$i], $preciosUnidad[$i], $idTiposInsumos[$i], $idProveedor);
+
+                $stmtProducto->bind_param("ssidsii", $nombresInsumos[$i], $descripcionesInsumos[$i], $cantidades[$i], $preciosUnidad[$i], $estadoInsumo, $idTiposInsumos[$i], $idProveedor);
+
                 if (!$stmtProducto->execute()) {
                     die("Error al insertar el producto: " . $stmtProducto->error);
                 }
@@ -154,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtProducto->close();
             } 
             
-            elseif ($idTiposInsumos[$i] === '3') {
+            elseif ($idTiposInsumos[$i] == '3') {
 
                 if (empty($nombresInsumos[$i]) || empty($cantidades[$i]) || empty($preciosUnidad[$i])) {
                     throw new Exception("Datos incompletos en la fila $i del detalle.");
@@ -162,13 +195,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $sqlInsert_Accesorio = "INSERT INTO `accesorios-vehiculos` (nombreAccesorio,
                                                                             descripcionAccesorio,
+                                                                            cantidadEnDeposito,
                                                                             precioAccesorio, 
+                                                                            estadoAccesorio,
                                                                             idTipoInsumo,
                                                                             idProveedor) 
-                                        VALUES (?, ?, ?, ?, ?); ";
+                                        VALUES (?, ?, ?, ?, ?, ?, ?); ";
 
                 $stmtAccesorio = $conexion->prepare($sqlInsert_Accesorio);
-                $stmtAccesorio->bind_param("ssdii", $nombresInsumos[$i], $descripcionesInsumos[$i], $preciosUnidad[$i], $idTiposInsumos[$i], $idProveedor);
+
+                $stmtAccesorio->bind_param("ssidsii", $nombresInsumos[$i], $descripcionesInsumos[$i], $cantidades[$i], $preciosUnidad[$i], $estadoInsumo, $idTiposInsumos[$i], $idProveedor);
+
                 if (!$stmtAccesorio->execute()) {
                     die("Error al insertar el accesorio: " . $stmtAccesorio->error);
                 }
@@ -178,13 +215,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtAccesorio->close();
             }
 
+
             // Ahora sí, podemos insertar el detalle en la base de datos
+
             $stmtDetalle->bind_param("iiiiidd", $idPedido, $idRepuesto, $idProducto, $idAccesorio, $cantidades[$i], $preciosUnidad[$i], $subtotales[$i]);
+
             if (!$stmtDetalle->execute()) {
                 die("Error al insertar el detalle: " . $stmtDetalle->error);
             }
         }
 
+        $conexion->commit(); // Confirmar todas las inserciones acumuladas durante la transacción. Es decir, se ejecuta la transacción inicializada con "begin_transaction()"
+        
         // Cerrar las conexiones
         $stmtPedido->close();
         $stmtDetalle->close();
@@ -196,8 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
     catch (Exception $e) {
-        $conexion->rollback();
-        die("Error en algún punto de la transacción: " . $e->getMessage());
+        $conexion->rollback(); // // Revertir en caso de fallo 
+        error_log("Error en algún punto de la transacción: " . $e->getMessage());
     }
     
 }

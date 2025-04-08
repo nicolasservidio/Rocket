@@ -532,6 +532,8 @@ include('head.php');
                                         </select>
                                     </div>
 
+                                    </br>
+
                                     <div class="mb-3">
                                         <label for="aclaracionesestadopedido" class="form-label">Aclaraciones sobre el estado del pedido </label>
                                         <textarea class="form-control" id="aclaracionesestadopedido" name="aclaracionesestadopedido" 
@@ -580,7 +582,7 @@ include('head.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Filas dinámicas se generarán aquí -->
+                                                <!-- Filas dinámicas se generarán aquí, con los correspondientes controles -->
                                             </tbody>
                                         </table>
 
@@ -691,19 +693,24 @@ include('head.php');
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="nombreInsumo[]" class="form-control" style="min-width: 150px;" title="Obligatorio" value="" required>
+                        <input type="text" name="nombreInsumo[]" class="form-control" style="min-width: 150px;" 
+                                title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="text" name="descripcionInsumo[]" class="form-control" style="min-width: 170px;" title="Opcional" value="">
+                        <input type="text" name="descripcionInsumo[]" class="form-control" style="min-width: 170px;" 
+                                title="Opcional" value="">
                     </td>
                     <td>
-                        <input type="number" name="precioUnidad[]" class="form-control" step="0.01" style="min-width: 100px;" title="Obligatorio" value="" required>
+                        <input type="number" name="precioUnidad[]" class="form-control" step="0.01" style="min-width: 100px;" 
+                                title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="number" name="cantidad[]" class="form-control" style="min-width: 100px;" title="Obligatorio" value="" required>
+                        <input type="number" name="cantidad[]" class="form-control" style="min-width: 100px;" 
+                                title="Obligatorio" value="" required>
                     </td>
                     <td>
-                        <input type="number" name="subtotal[]" class="form-control" step="0.01" style="min-width: 100px;" value="" readonly>
+                        <input type="number" name="subtotal[]" class="form-control" step="0.01" style="min-width: 100px;" 
+                                value="" readonly>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btnEliminarFila">Eliminar</button>
