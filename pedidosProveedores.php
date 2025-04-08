@@ -260,13 +260,12 @@ include('head.php');
                             <?php
                             $contador = 1; 
 
-                            for ($i=1; $i <= $CantidadPedidos; $i++) { 
-                                
-                                if (!isset($ListadoPedidos[$i])) continue; // Validación básica 
+                            // Iterar sobre los pedidos en el array $ListadoPedidos
+                            foreach ($ListadoPedidos as $ppIdPedido => $Pedido) { 
                                 ?>
 
-                                <tr class='pedido' data-id='<?php echo $ListadoPedidos[$i]['ppIdPedido']; ?>' 
-                                    onclick="selectRow(this, '<?php $ListadoPedidos[$i]['ppIdPedido']; ?>')">
+                                <tr class='pedido' data-id='<?php echo $Pedido['ppIdPedido']; ?>' 
+                                    onclick="selectRow(this, '<?php $Pedido['ppIdPedido']; ?>')">
 
                                     <td>
                                         <span style='color: #c7240e;'>
@@ -275,109 +274,97 @@ include('head.php');
                                     </td>
 
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['ppIdPedido']; ?> 
+                                        <?php echo $Pedido['ppIdPedido']; ?> 
                                     </td>
 
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['FechaPedido']; ?> 
+                                        <?php echo $Pedido['FechaPedido']; ?> 
                                     </td>
                                     
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['FechaEntrega']; ?> 
+                                        <?php echo $Pedido['FechaEntrega']; ?> 
                                     </td>
 
                                     <td> 
                                         <span class="badge badge-success"> 
-                                            <?php echo $ListadoPedidos[$i]['EstadoPedido']; ?> 
+                                            <?php echo $Pedido['EstadoPedido']; ?> 
                                         </span> 
                                     </td>
 
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['AclaracionesEstadoPedido']; ?> 
+                                        <?php echo $Pedido['AclaracionesEstadoPedido']; ?> 
                                     </td>
 
                                     <td> 
-                                        <?php echo $ListadoPedidos[$i]['CondicionesDeEntrega']; ?> 
+                                        <?php echo $Pedido['CondicionesDeEntrega']; ?> 
                                     </td>
 
                                     <td> 
                                         <?php 
-                                        echo "{$ListadoPedidos[$i]['NombreProveedor']} </br> 
-                                        <strong>CUIT:</strong> {$ListadoPedidos[$i]['CuitProveedor']} </br> 
-                                        <strong>IVA:</strong> {$ListadoPedidos[$i]['IvaProveedor']} </br></br> 
-                                        <strong>Correo:</strong> {$ListadoPedidos[$i]['MailProveedor']}
-                                        <strong>Dirección:</strong> {$ListadoPedidos[$i]['DireccionProveedor']}, {$ListadoPedidos[$i]['LocalidadProveedor']}"; 
+                                        echo "{$Pedido['NombreProveedor']} </br> 
+                                        <strong>CUIT:</strong> {$Pedido['CuitProveedor']} </br> 
+                                        <strong>IVA:</strong> {$Pedido['IvaProveedor']} </br></br> 
+                                        <strong>Correo:</strong> {$Pedido['MailProveedor']}
+                                        <strong>Dirección:</strong> {$Pedido['DireccionProveedor']}, {$Pedido['LocalidadProveedor']}"; 
                                         ?> 
                                     </td>
 
                                     <td> 
-                                        <?php echo "$ListadoPedidos[$i]['TotalPedido'] USD"; ?> 
-                                    </td>
+                                        <?php echo "{$Pedido['TotalPedido']} USD"; ?> 
+                                    </td>                                
 
-                                    <td> 
-                                        <?php
-
-                                        // A continuación genero una fila por cada registro asociado en la tabla "Detalle" 
-                                        $CantidadDetalles = count($ListadoPedidos[$i]['Detalles']);
-
-                                        for ($j=1; $j <= $CantidadDetalles; $j++) { ?> 
-
-                                            <ul>
-                                                <?php 
-                                                // Primero evalúo si se trata de un repuesto, producto genérico o accesorio
-
-                                                // REPUESTO?
-                                                if (!empty($ListadoPedidos[$i]['Detalles'][$j]['Repuestos'])) { ?>
-                                                    
-                                                    <li> 
-                                                        <?php echo "<strong>Tipo de insumo:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Repuestos']['TipoInsumo']"; ?> </br>
-                                                        <?php echo "<strong>Nombre:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Repuestos']['NombreRepuesto']"; ?> </br>
-                                                        <?php echo "<strong>Descripción:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Repuestos']['DescripcionRepuesto']"; ?> </br>
-                                                    </li>
-                                                <?php 
-                                                } 
+                                    <td>
+                                        <ul>
+                                            <?php 
+                                            // Iterar sobre los detalles del pedido actual
+                                            foreach ($Pedido['Detalles'] as $detalleId => $Detalle) {
                                                 
-                                                // PRODUCTO GENÉRICO?
-                                                if (!empty($ListadoPedidos[$i]['Detalles'][$j]['Productos'])) { ?>
-                                                    
-                                                    <li> 
-                                                        <?php echo "<strong>Tipo de insumo:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Productos']['TipoInsumo']"; ?> </br>
-                                                        <?php echo "<strong>Nombre:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Productos']['NombreProducto']"; ?> </br>
-                                                        <?php echo "<strong>Descripción:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Productos']['DescripcionProducto']"; ?> </br>
+                                                // Verificar y mostrar los datos de Repuestos, Productos o Accesorios
+                                                if ($Detalle['TipoInsumo'] == "Repuesto") { ?>
+                                                    <li>
+                                                        <?php 
+                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
+                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreRepuesto']} </br>";
+                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionRepuesto']} </br>";
+                                                        ?>
                                                     </li>
-                                                <?php 
-                                                } 
-                                                
-                                                // ACCESORIO?
-                                                if (!empty($ListadoPedidos[$i]['Detalles'][$j]['Accesorios'])) { ?>
-                                                    
-                                                    <li> 
-                                                        <?php echo "<strong>Tipo de insumo:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Accesorios']['TipoInsumo']"; ?> </br>
-                                                        <?php echo "<strong>Nombre:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Accesorios']['NombreAccesorio']"; ?> </br>
-                                                        <?php echo "<strong>Descripción:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Accesorios']['DescripcionAccesorio']"; ?> </br>
+                                                <?php } 
+
+                                                if ($Detalle['TipoInsumo'] == "Producto") { ?>
+                                                    <li>
+                                                        <?php 
+                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
+                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreProducto']} </br>";
+                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionProducto']} </br>";
+                                                        ?>
                                                     </li>
-                                                <?php 
-                                                } 
+                                                <?php }
+
+                                                if ($Detalle['TipoInsumo'] == "Accesorio") { ?>
+                                                    <li>
+                                                        <?php 
+                                                        echo "<strong>Tipo de insumo:</strong> {$Detalle['TipoInsumo']} </br>";
+                                                        echo "<strong>Nombre:</strong> {$Detalle['NombreAccesorio']} </br>";
+                                                        echo "<strong>Descripción:</strong> {$Detalle['DescripcionAccesorio']} </br>";
+                                                        ?>
+                                                    </li>
+                                                <?php } 
                                                 ?>
 
-                                                <li> 
-                                                    <?php echo "<strong>Precio unitario:</strong> $ListadoPedidos[$i]['Detalles'][$j]['PrecioPorUnidad']"; ?> </br>
-                                                    <?php echo "<strong>Cantidad:</strong> $ListadoPedidos[$i]['Detalles'][$j]['CantidadUnidades']"; ?> </br>
-                                                    <?php echo "<strong>Subtotal:</strong> $ListadoPedidos[$i]['Detalles'][$j]['Subtotal']"; ?> </br>
+                                                <li>
+                                                    <?php
+                                                    echo "<strong>Precio unitario:</strong> {$Detalle['PrecioPorUnidad']} </br>";
+                                                    echo "<strong>Cantidad:</strong> {$Detalle['CantidadUnidades']} </br>";
+                                                    echo "<strong>Subtotal:</strong> {$Detalle['Subtotal']} </br>";
+                                                    ?>
                                                 </li>
-                                            </ul>
-                                        
-                                        <?php 
-                                        }                                        
-                                        ?> 
+                                            <?php } ?>
+                                        </ul>
                                     </td>
-                                    
                                 </tr>
-                                <?php $contador++; ?>
                             <?php 
-                            } 
-                            ?>
-
+                            $contador++;
+                            } ?>
                         </tbody>
                     </table>
                 </div>

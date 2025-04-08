@@ -61,7 +61,7 @@ function Listar_PedidosProveedores($conexion) {
             LEFT JOIN `tipo-insumo` i ON (i.idTipoInsumo = r.idTipoInsumo OR i.idTipoInsumo = p.idTipoInsumo OR i.idTipoInsumo = a.idTipoInsumo)
             INNER JOIN `proveedores` pv ON pp.idProveedor = pv.idProveedor
             INNER JOIN `estados-pedidoaproveedor` e ON pp.idEstadoPedido = e.idEstadoPedido
-            ORDER BY pp.fechaPedido, pp.idPedido, dp.idDetallePedidoAProveedor; ";
+            ORDER BY pp.fechaPedido ASC, pp.idPedido ASC, dp.idDetallePedidoAProveedor ASC; ";
 
     $rs = mysqli_query($conexion, $SQL);
         
@@ -99,49 +99,72 @@ function Listar_PedidosProveedores($conexion) {
         // Verificar si ya existe el detalle
         if (!isset($Listado[$ppIdPedido]['Detalles'][$dpIdDetalle])) {
 
-            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
-                'IdDetallePedido' => $data['IdDetallePedido'],
-                'PrecioPorUnidad' => $data['PrecioPorUnidad'],
-                'CantidadUnidades' => $data['CantidadUnidades'],
-                'Subtotal' => $data['Subtotal'],
-                'Repuestos' => array(),
-                'Productos' => array(),
-                'Accesorios' => array()
-            );
+            // Si es repuesto
+            if ($data['iIdTipoInsumo'] == 1) {
+
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => $data['rIdRepuesto'],
+                    'NombreRepuesto' => $data['NombreRepuesto'],
+                    'DescripcionRepuesto' => $data['DescripcionRepuesto'],
+                    'IdProducto' => null,
+                    'NombreProducto' => null,
+                    'DescripcionProducto' => null,
+                    'IdAccesorio' => null,
+                    'NombreAccesorio' => null,
+                    'DescripcionAccesorio' => null,
+                    'TipoInsumo' => $data['TipoInsumo']
+                );
+            }
+
+            // Si es producto
+            elseif ($data['iIdTipoInsumo'] == 2) {
+                
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => null,
+                    'NombreRepuesto' => null,
+                    'DescripcionRepuesto' => null,
+                    'IdProducto' => $data['pIdProducto'],
+                    'NombreProducto' => $data['NombreProducto'],
+                    'DescripcionProducto' => $data['DescripcionProducto'],
+                    'IdAccesorio' => null,
+                    'NombreAccesorio' => null,
+                    'DescripcionAccesorio' => null,
+                    'TipoInsumo' => $data['TipoInsumo']
+                );
+            }
+
+            // Si es accesorio
+            elseif ($data['iIdTipoInsumo'] == 3) {
+                                 
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => null,
+                    'NombreRepuesto' => null,
+                    'DescripcionRepuesto' => null,
+                    'IdProducto' => null,
+                    'NombreProducto' => null,
+                    'DescripcionProducto' => null,
+                    'IdAccesorio' => $data['aIdAccesorio'],
+                    'NombreAccesorio' => $data['NombreAccesorio'],
+                    'DescripcionAccesorio' => $data['DescripcionAccesorio'],
+                    'TipoInsumo' => $data['TipoInsumo']
+                );   
+            } 
+
         }
 
-        // Agregar datos de repuestos, productos y accesorios al detalle correspondiente
-
-        if (!empty($data['IdRepuesto'])) {
-
-            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Repuestos'] = array(
-                'IdRepuesto' => $data['IdRepuesto'],
-                'NombreRepuesto' => $data['NombreRepuesto'],
-                'DescripcionRepuesto' => $data['DescripcionRepuesto'],
-                'TipoInsumo' => $data['TipoInsumo']
-            );
-        }
-
-        if (!empty($data['IdProducto'])) {
-
-            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Productos'] = array(
-                'IdProducto' => $data['IdProducto'],
-                'NombreProducto' => $data['NombreProducto'],
-                'DescripcionProducto' => $data['DescripcionProducto'],
-                'TipoInsumo' => $data['TipoInsumo']
-            );
-        }
-
-        if (!empty($data['IdAccesorio'])) {
-
-            $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle]['Accesorios'] = array(
-                'IdAccesorio' => $data['IdAccesorio'],
-                'NombreAccesorio' => $data['NombreAccesorio'],
-                'DescripcionAccesorio' => $data['DescripcionAccesorio'],
-                'TipoInsumo' => $data['TipoInsumo']
-            );
-        }
-
+        $i++;
     }
 
     return $Listado;
