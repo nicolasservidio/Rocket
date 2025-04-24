@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2025 at 06:43 PM
+-- Generation Time: Apr 24, 2025 at 05:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -32,7 +32,7 @@ CREATE TABLE `accesorios-vehiculos` (
   `nombreAccesorio` varchar(50) NOT NULL,
   `descripcionAccesorio` varchar(200) DEFAULT NULL COMMENT 'Campo optativo con una descripción del accesorio, en caso de requerirse',
   `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
-  `precioAccesorio` float NOT NULL COMMENT 'Precio unitario',
+  `precioAccesorio` float DEFAULT NULL COMMENT 'Precio unitario',
   `estadoAccesorio` varchar(100) DEFAULT NULL COMMENT 'Campo optativo con referencias al estado del accesorio o el lote de accesorios',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
@@ -50,7 +50,9 @@ INSERT INTO `accesorios-vehiculos` (`idAccesorio`, `nombreAccesorio`, `descripci
 (3, 'Guardabarros universales marca MAXUS', 'Adaptables a la mayoría de los vehículos', 6, 17.2, 'Aún no recibido', 3, 9, NULL, NULL),
 (4, 'Cargadores para automovil genéricos', '-', 10, 14.5, 'Aún no recibido', 3, 1, NULL, NULL),
 (5, 'Deflectores de viento marca BELL', 'Gama media', 3, 20, 'Aún no recibido', 3, 8, NULL, NULL),
-(6, 'Barras de techo genéricas', 'Barras genéricas para transportar cargas en el techo', 2, 15, 'Aún no recibido', 3, 8, NULL, NULL);
+(6, 'Barras de techo genéricas', 'Barras genéricas para transportar cargas en el techo', 2, 15, 'Aún no recibido', 3, 8, NULL, NULL),
+(7, 'Pantalla tactil', 'Pantalla tactil para dashboard', 1, 125, 'Aún no recibido', 3, 9, NULL, NULL),
+(8, 'Aromatizantes tecno', 'Aromatizantes para vehiculos', 10, 13.2, 'Aún no recibido', 3, 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,8 +96,8 @@ CREATE TABLE `clientes` (
   `nacionalidadCliente` varchar(50) DEFAULT NULL,
   `dniCliente` int(10) NOT NULL,
   `nroPasaporteCliente` int(11) DEFAULT NULL,
-  `mailCliente` varchar(50) NOT NULL,
-  `telefonoCliente` int(20) NOT NULL,
+  `mailCliente` varchar(50) DEFAULT NULL,
+  `telefonoCliente` int(20) DEFAULT NULL,
   `ciudadCliente` varchar(50) DEFAULT NULL,
   `direccionCliente` varchar(50) NOT NULL,
   `comprobanteDomicilio` int(1) DEFAULT NULL,
@@ -306,7 +308,7 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (125, '2024-10-16', '2024-10-19', NULL, NULL, 3, 18, NULL, 125, 6),
 (126, '2024-11-02', '2024-11-07', NULL, NULL, 12, 2, NULL, 126, 6),
 (127, '2024-11-07', '2024-11-10', NULL, NULL, 5, 23, NULL, 127, 6),
-(128, '2024-11-12', '2024-11-14', NULL, NULL, 6, 24, NULL, 128, 3),
+(128, '2024-11-12', '2024-11-14', NULL, NULL, 6, 24, NULL, 128, 4),
 (129, '2024-11-13', '2024-11-15', NULL, NULL, 11, 24, NULL, 129, 6),
 (130, '2025-01-02', '2025-01-04', NULL, NULL, 6, 23, NULL, 130, 6),
 (131, '2025-01-02', '2025-01-09', NULL, NULL, 12, 19, NULL, 131, 6),
@@ -531,7 +533,9 @@ INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`,
 (18, 8, 901, 3, 2703, 9, NULL, NULL),
 (19, 8, 99.9, 10, 999, 10, NULL, NULL),
 (20, 9, 45, 10, 450, 11, NULL, NULL),
-(21, 9, 23.2, 4, 92.8, 12, NULL, NULL);
+(21, 9, 23.2, 4, 92.8, 12, NULL, NULL),
+(22, 10, 125, 1, 125, NULL, NULL, 7),
+(23, 10, 13.2, 10, 132, NULL, NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -542,6 +546,7 @@ INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`,
 CREATE TABLE `devoluciones-vehiculos` (
   `idDevolucion` int(11) NOT NULL,
   `fechaDevolucion` date NOT NULL,
+  `horaDevolucion` varchar(8) DEFAULT NULL,
   `estadoDevolucion` varchar(200) DEFAULT NULL COMMENT 'Campo opcional señalando el estado del vehículo en caso de requerirse',
   `aclaracionesDevolucion` varchar(200) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre la devolución en caso de requerirse',
   `infraccionesDevolucion` varchar(200) DEFAULT NULL COMMENT 'Campo opcional señalando infracciones cometidas',
@@ -550,23 +555,22 @@ CREATE TABLE `devoluciones-vehiculos` (
   `idCliente` int(11) DEFAULT NULL,
   `idContrato` int(11) DEFAULT NULL,
   `idVerificacion` int(11) DEFAULT NULL COMMENT 'Rutina de verificación asociada a la devolución del vehículo',
-  `idVendedorReceptor` int(11) DEFAULT NULL COMMENT 'Vendedor que recibe el vehículo al ser devuelto',
-  `horaDevolucion` varchar(8) NOT NULL
+  `idVendedorReceptor` int(11) DEFAULT NULL COMMENT 'Vendedor que recibe el vehículo al ser devuelto'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `devoluciones-vehiculos`
 --
 
-INSERT INTO `devoluciones-vehiculos` (`idDevolucion`, `fechaDevolucion`, `estadoDevolucion`, `aclaracionesDevolucion`, `infraccionesDevolucion`, `costosInfracciones`, `montoExtra`, `idCliente`, `idContrato`, `idVerificacion`, `idVendedorReceptor`, `horaDevolucion`) VALUES
-(2, '2025-04-11', 'Capot dañado', 'Choque en autopista RNA001 ', 'Velocidad', 1000, 4000, 6, 14, NULL, NULL, '04:09'),
-(3, '2025-04-25', 'Sin cambios', 'Cliente reporta problemas con el limpiaparabrisas', 'Ninguna', 0, 0, 8, 13, NULL, NULL, '04:09'),
-(4, '2024-12-21', 'Requiere limpieza profunda', 'Accidente con aderesos y otros alimentos en el asiento trasero', 'Ninguna', 0, 45, 17, 8, NULL, NULL, '07:00'),
-(5, '2025-04-04', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 11, 7, NULL, NULL, '07:00'),
-(6, '2025-01-04', 'Sin cambios', 'Cliente reporta problemas de inflado de neumáticos', 'Ninguna', 0, 0, 6, 130, NULL, NULL, '21:20'),
-(7, '2025-01-09', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 12, 131, NULL, NULL, '07:00'),
-(8, '2025-02-08', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 3, 18, NULL, NULL, '16:30'),
-(9, '2024-12-18', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 7, 10, NULL, NULL, '20:00');
+INSERT INTO `devoluciones-vehiculos` (`idDevolucion`, `fechaDevolucion`, `horaDevolucion`, `estadoDevolucion`, `aclaracionesDevolucion`, `infraccionesDevolucion`, `costosInfracciones`, `montoExtra`, `idCliente`, `idContrato`, `idVerificacion`, `idVendedorReceptor`) VALUES
+(2, '2025-04-11', '04:09', 'Capot dañado', 'Choque en autopista RNA001 ', 'Velocidad', 1000, 4000, 6, 14, NULL, NULL),
+(3, '2025-04-25', '04:09', 'Sin cambios', 'Cliente reporta problemas con el limpiaparabrisas', 'Ninguna', 0, 0, 8, 13, NULL, NULL),
+(4, '2024-12-21', '07:00', 'Requiere limpieza profunda', 'Accidente con aderesos y otros alimentos en el asiento trasero', 'Ninguna', 0, 45, 17, 8, NULL, NULL),
+(5, '2025-04-04', '07:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 11, 7, NULL, NULL),
+(6, '2025-01-04', '21:20', 'Sin cambios', 'Cliente reporta problemas de inflado de neumáticos', 'Ninguna', 0, 0, 6, 130, NULL, NULL),
+(7, '2025-01-09', '07:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 12, 131, NULL, NULL),
+(8, '2025-02-08', '16:30', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 3, 18, NULL, NULL),
+(9, '2024-12-18', '20:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 7, 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -619,7 +623,8 @@ INSERT INTO `entregas-vehiculos` (`idEntrega`, `fechaEntrega`, `horaEntrega`, `i
 (10, '2025-01-01', '17:00', 1, 17),
 (11, '2025-01-02', '06:00', 12, 131),
 (12, '2025-01-02', '07:00', 15, 132),
-(13, '2024-12-09', '05:00', 11, 7);
+(13, '2024-12-09', '05:00', 11, 7),
+(14, '2024-11-12', '23:14', 6, 128);
 
 -- --------------------------------------------------------
 
@@ -775,10 +780,10 @@ CREATE TABLE `mantenimientos-vehiculos` (
   `descripcionMantenimiento` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del tipo de mantenimiento realizado',
   `fechaInicioMantenimiento` date NOT NULL,
   `fechaFinMantenimiento` date NOT NULL,
-  `costoMantenimiento` float NOT NULL,
+  `costoMantenimiento` float DEFAULT NULL COMMENT 'Optativo. En caso de que sea necesario registrar costos adicionales.',
   `idVehiculo` int(11) DEFAULT NULL,
   `idRepuestoUsado` int(11) DEFAULT NULL COMMENT 'En caso de que se haya utilizado un repuesto en las labores de mantenimiento. Cada registro de mantenimiento puede involucrar cero (0) a un (1) repuestos.',
-  `idProductoUsado` int(11) DEFAULT NULL COMMENT 'En caso de que se haya utilizado un producto en las labores de mantenimiento. Cada registro de mantenimiento puede involucrar cero (0) a un (1) producto.'
+  `idProductoUsado` int(11) DEFAULT NULL COMMENT 'En caso de que se haya agotado un producto en las labores de mantenimiento. Cada registro de mantenimiento puede involucrar cero (0) a un (1) producto.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -838,7 +843,8 @@ INSERT INTO `pedido-a-proveedor` (`idPedido`, `fechaPedido`, `fechaEntregaPedido
 (6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8),
 (7, '2024-11-20', '2024-11-23', 8, 1, 'Cambio varias veces a pendiente', 'Buenas', 90),
 (8, '2024-12-04', '2024-12-07', 6, 1, 'Ninguna', 'Las mejores', 4036),
-(9, '2025-01-01', '2025-01-05', 8, 1, 'Ninguna de relevancia', 'Ir a buscar a negocio', 542.8);
+(9, '2025-01-01', '2025-01-05', 8, 1, 'Ninguna de relevancia', 'Ir a buscar a negocio', 542.8),
+(10, '2025-12-04', '2025-12-04', 9, 1, 'Sin aclaraciones', 'Hacen llamado previo', 257);
 
 -- --------------------------------------------------------
 
@@ -867,7 +873,7 @@ CREATE TABLE `productos-vehiculo` (
   `nombreProducto` varchar(50) NOT NULL,
   `descripcionProducto` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del producto',
   `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
-  `precioProducto` float NOT NULL COMMENT 'Precio unitario',
+  `precioProducto` float DEFAULT NULL COMMENT 'Precio unitario',
   `estadoProducto` varchar(100) DEFAULT NULL COMMENT 'Descripción optativa del estado del producto o los productos en caso de requerirse',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
@@ -892,30 +898,30 @@ INSERT INTO `productos-vehiculo` (`idProducto`, `nombreProducto`, `descripcionPr
 CREATE TABLE `proveedores` (
   `idProveedor` int(11) NOT NULL,
   `nombreProveedor` varchar(50) NOT NULL,
-  `mailProveedor` varchar(50) NOT NULL,
-  `direccionProveedor` varchar(50) NOT NULL,
-  `telefonoProveedor` bigint(20) NOT NULL,
-  `localidadProveedor` varchar(50) NOT NULL,
-  `idTipoInsumo` int(11) DEFAULT NULL,
-  `cuitProveedor` bigint(20) NOT NULL,
-  `ivaProveedor` varchar(50) NOT NULL
+  `mailProveedor` varchar(50) DEFAULT NULL,
+  `direccionProveedor` varchar(50) DEFAULT NULL,
+  `localidadProveedor` varchar(50) DEFAULT NULL,
+  `telefonoProveedor` bigint(20) DEFAULT NULL,
+  `cuitProveedor` bigint(20) DEFAULT NULL,
+  `ivaProveedor` varchar(50) DEFAULT NULL,
+  `idTipoInsumo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `proveedores`
 --
 
-INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `direccionProveedor`, `telefonoProveedor`, `localidadProveedor`, `idTipoInsumo`, `cuitProveedor`, `ivaProveedor`) VALUES
-(1, 'Bruno', 'brunocarossi@hotmail.com', '829, Av Malvinas Argentin', 2477610676, 'Pergamino, Argentina', NULL, 20381037364, 'Monotributo C'),
-(2, 'Litoral Gas S.A', 'litoralgas@gmail.com', '792 Tucuman', 2477610676, 'CABA, Argentina', NULL, 1111111111111111, 'Responsable Inscripto'),
-(3, 'LUCIA', 'lucia@hotmail.com', '829 Av Malvinas Argentin', 32456787866, 'Pergamino, Argentina', NULL, 345346375378578, 'Monotributo A'),
-(4, 'Nicolas Servidio', 'nicoservidio@gmail.com', '238 Alem', 123546758, 'Villa Carlos Paz, Argentina', NULL, 132465758, 'Monotributo B'),
-(5, 'Seguros SA', 'segurossa@segurossa.com', '883 Av Rivadavia', 89893877, 'Córdoba Capital', NULL, 6898302, 'Responsable Inscripto'),
-(6, 'Repuestos SA', 'repuestossa@repuestosa.com', '9182 Rodriguez', 8888222999, 'Córdoba Capital', NULL, 828828888, 'Responsable Inscripto'),
-(7, 'Limpiezas SA', 'limpiezassa@limpiezassa.com', '1626 Tucuman', 8282884611, 'CABA, Argentina', NULL, 7227727272, 'Responsable Inscripto'),
-(8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', '88176 Guemes', 888299927166, 'Cordoba Capital, Argentina', NULL, 88165353511, 'Responsable Inscripto'),
-(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', '1020 Guemes', 9991828888, 'Cordoba Capital, Argentina', NULL, 99100938777, 'Responsable Inscripto'),
-(11, 'TuVehiculo SA', 'proveedores@tvsa.com', '8389 Cuyo', 8822228889, 'CABA, Argentina', NULL, 99922200002, 'Responsable Inscripto');
+INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `direccionProveedor`, `localidadProveedor`, `telefonoProveedor`, `cuitProveedor`, `ivaProveedor`, `idTipoInsumo`) VALUES
+(1, 'Bruno', 'brunocarossi@hotmail.com', '829, Av Malvinas Argentin', 'Pergamino, Argentina', 2477610676, 20381037364, 'Monotributo C', NULL),
+(2, 'Litoral Gas S.A', 'litoralgas@gmail.com', '792 Tucuman', 'CABA, Argentina', 2477610676, 1111111111111111, 'Responsable Inscripto', NULL),
+(3, 'LUCIA', 'lucia@hotmail.com', '829 Av Malvinas Argentin', 'Pergamino, Argentina', 32456787866, 345346375378578, 'Monotributo A', NULL),
+(4, 'Nicolas Servidio', 'nicoservidio@gmail.com', '238 Alem', 'Villa Carlos Paz, Argentina', 123546758, 132465758, 'Monotributo B', NULL),
+(5, 'Seguros SA', 'segurossa@segurossa.com', '883 Av Rivadavia', 'Córdoba Capital', 89893877, 6898302, 'Responsable Inscripto', NULL),
+(6, 'Repuestos SA', 'repuestossa@repuestosa.com', '9182 Rodriguez', 'Córdoba Capital', 8888222999, 828828888, 'Responsable Inscripto', NULL),
+(7, 'Limpiezas SA', 'limpiezassa@limpiezassa.com', '1626 Tucuman', 'CABA, Argentina', 8282884611, 7227727272, 'Responsable Inscripto', NULL),
+(8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', '88176 Guemes', 'Cordoba Capital, Argentina', 888299927166, 88165353511, 'Responsable Inscripto', NULL),
+(9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', '1020 Guemes', 'Cordoba Capital, Argentina', 9991828888, 99100938777, 'Responsable Inscripto', NULL),
+(11, 'TuVehiculo SA', 'proveedores@tvsa.com', '8389 Cuyo', 'CABA, Argentina', 8822228889, 99922200002, 'Responsable Inscripto', NULL);
 
 -- --------------------------------------------------------
 
@@ -928,7 +934,7 @@ CREATE TABLE `repuestos-vehiculos` (
   `nombreRepuesto` varchar(100) NOT NULL,
   `descripcionRepuesto` varchar(200) DEFAULT NULL COMMENT 'Descripción opcional del repuesto',
   `cantidadEnDeposito` int(11) DEFAULT NULL COMMENT 'Cantidad de unidades que conforman el lote comprado',
-  `precioRepuesto` float NOT NULL COMMENT 'Precio unitario',
+  `precioRepuesto` float DEFAULT NULL COMMENT 'Precio unitario',
   `estadoRepuesto` varchar(100) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre el estado del repuesto o lote de repuestos',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
@@ -962,7 +968,7 @@ INSERT INTO `repuestos-vehiculos` (`idRepuesto`, `nombreRepuesto`, `descripcionR
 
 CREATE TABLE `reservas-vehiculos` (
   `idReserva` int(11) NOT NULL,
-  `numeroReserva` int(11) DEFAULT NULL COMMENT 'Número de reserva del cliente',
+  `numeroReserva` int(11) DEFAULT NULL COMMENT 'Número de reserva del cliente. Habría que cambiar esto en el sistema para que fuera el ID, no pudiendose registrar manualmente',
   `fechaReserva` date NOT NULL,
   `fechaInicioReserva` date NOT NULL,
   `FechaFinReserva` date NOT NULL,
@@ -1147,17 +1153,19 @@ INSERT INTO `sucursales` (`idSucursal`, `numeroSucursal`, `direccionSucursal`, `
 
 CREATE TABLE `tipo-insumo` (
   `idTipoInsumo` int(11) NOT NULL,
-  `tipoInsumo` varchar(50) NOT NULL
+  `tipoInsumo` varchar(50) NOT NULL,
+  `descripcionTipoInsumo` varchar(200) DEFAULT NULL COMMENT 'Descripción del tipo de insumo en caso de requerirse'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Dumping data for table `tipo-insumo`
 --
 
-INSERT INTO `tipo-insumo` (`idTipoInsumo`, `tipoInsumo`) VALUES
-(1, 'Repuesto'),
-(2, 'Producto'),
-(3, 'Accesorio');
+INSERT INTO `tipo-insumo` (`idTipoInsumo`, `tipoInsumo`, `descripcionTipoInsumo`) VALUES
+(1, 'Repuesto', 'Piezas de repuestos para los vehiculos, neumáticos, etc'),
+(2, 'Producto', 'Productos para el mantenimiento de los vehiculos'),
+(3, 'Accesorio', 'Accesorios para colocar en vehículos'),
+(4, 'Otros', 'Otros tipos de artículos o insumos diferentes de los principales. Ej, combustible, herramientas, elementos de oficina, etc');
 
 -- --------------------------------------------------------
 
@@ -1194,10 +1202,11 @@ INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `contrasena`, `id_cargo`) VAL
 
 CREATE TABLE `vehiculos` (
   `idVehiculo` int(11) NOT NULL,
-  `matricula` varchar(7) DEFAULT NULL,
+  `matricula` varchar(12) DEFAULT NULL,
   `color` varchar(20) DEFAULT NULL,
+  `anio` int(4) DEFAULT NULL COMMENT 'Año de fabricación del vehículo',
   `fechaCompra` date DEFAULT NULL,
-  `anio` int(4) DEFAULT NULL,
+  `precioCompra` float DEFAULT NULL COMMENT 'Precio al que la empresa adquirió el vehículo',
   `numeroMotor` int(11) DEFAULT NULL,
   `numeroChasis` int(11) DEFAULT NULL,
   `puertas` int(11) DEFAULT NULL,
@@ -1205,9 +1214,9 @@ CREATE TABLE `vehiculos` (
   `esAutomatico` char(1) DEFAULT NULL,
   `aireAcondicionado` char(1) DEFAULT NULL,
   `dirHidraulica` char(1) DEFAULT NULL,
-  `estadoFisicoDelVehiculo` varchar(50) DEFAULT NULL,
-  `disponibilidad` varchar(5) DEFAULT NULL,
+  `estadoFisicoDelVehiculo` varchar(200) DEFAULT NULL,
   `kilometraje` int(11) DEFAULT NULL,
+  `disponibilidad` varchar(5) DEFAULT NULL,
   `idModelo` int(11) DEFAULT NULL,
   `idCombustible` int(11) DEFAULT NULL,
   `idGrupoVehiculo` int(11) DEFAULT NULL,
@@ -1218,24 +1227,26 @@ CREATE TABLE `vehiculos` (
 -- Dumping data for table `vehiculos`
 --
 
-INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `fechaCompra`, `anio`, `numeroMotor`, `numeroChasis`, `puertas`, `asientos`, `esAutomatico`, `aireAcondicionado`, `dirHidraulica`, `estadoFisicoDelVehiculo`, `disponibilidad`, `kilometraje`, `idModelo`, `idCombustible`, `idGrupoVehiculo`, `idSucursal`) VALUES
-(1, 'AB468FG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, 6, 8, 13, 1),
-(2, 'AA070DE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 1, 4, 12, 2),
-(3, 'AC340FY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 2, 7, 12, 1),
-(6, 'ADCS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 5, 3, 6, 5),
-(7, 'HWUW9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 3, 4, 7, 2),
-(18, 'HH667S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 7, 9, 4, 3),
-(19, 'FFFDAS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 3, 9, 7, 1),
-(20, 'ASASA3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 10, 9, 1, 3),
-(21, 'HABN32', NULL, '2024-10-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 8, 9, 2, 2),
-(23, 'JHGP77F', NULL, '2024-10-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 8, 4, 10, 1),
-(24, 'NE32SR', NULL, '2024-10-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 8, 9, 2, 2),
-(25, 'XY909BM', NULL, '2024-10-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 5, 2, 1, 2),
-(28, 'WYS88A', NULL, '2024-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, 6, 9, 1, 1),
-(30, 'XY33BM', NULL, '2024-11-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 4, 9, 3, 3),
-(32, 'BLABLA9', NULL, '2024-12-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 1, 6, 12, 4),
-(35, 'ROR99C', NULL, '2024-12-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 2, 3, 4, 4),
-(36, 'RBA11R', NULL, '2024-12-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', NULL, 9, 7, 8, 5);
+INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `anio`, `fechaCompra`, `precioCompra`, `numeroMotor`, `numeroChasis`, `puertas`, `asientos`, `esAutomatico`, `aireAcondicionado`, `dirHidraulica`, `estadoFisicoDelVehiculo`, `kilometraje`, `disponibilidad`, `idModelo`, `idCombustible`, `idGrupoVehiculo`, `idSucursal`) VALUES
+(1, 'AB468FG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 6, 8, 13, 1),
+(2, 'AA070DE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 1, 4, 12, 2),
+(3, 'AC340FY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2, 7, 12, 1),
+(6, 'ADCS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 5, 3, 6, 5),
+(7, 'HWUW9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 3, 4, 7, 2),
+(18, 'HH667S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 7, 9, 4, 3),
+(19, 'FFFDAS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 3, 9, 7, 1),
+(20, 'ASASA3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 10, 9, 1, 3),
+(21, 'HABN32', NULL, NULL, '2024-10-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 9, 2, 2),
+(23, 'JHGP77F', NULL, NULL, '2024-10-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 4, 10, 1),
+(24, 'NE32SR', NULL, NULL, '2024-10-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 9, 2, 2),
+(25, 'XY909BM', NULL, NULL, '2024-10-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 5, 2, 1, 2),
+(28, 'WYS88A', NULL, NULL, '2024-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 6, 9, 1, 1),
+(30, 'XY33BM', NULL, NULL, '2024-11-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 4, 9, 3, 3),
+(32, 'BLABLA9', NULL, NULL, '2024-12-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 1, 6, 12, 4),
+(35, 'ROR99C', NULL, NULL, '2024-12-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2, 3, 4, 4),
+(36, 'RBA11R', NULL, NULL, '2024-12-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 9, 7, 8, 5),
+(37, 'ZP19JD', NULL, NULL, '2025-04-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 6, 1, 2, 1),
+(38, '0000000', NULL, NULL, '2025-04-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 2, 9, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -1513,7 +1524,7 @@ ALTER TABLE `verificaciones-vehiculos`
 -- AUTO_INCREMENT for table `accesorios-vehiculos`
 --
 ALTER TABLE `accesorios-vehiculos`
-  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idAccesorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `cargo`
@@ -1525,7 +1536,7 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `combustibles`
@@ -1537,7 +1548,7 @@ ALTER TABLE `combustibles`
 -- AUTO_INCREMENT for table `contratos-alquiler`
 --
 ALTER TABLE `contratos-alquiler`
-  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `cuentas-clientes`
@@ -1549,13 +1560,13 @@ ALTER TABLE `cuentas-clientes`
 -- AUTO_INCREMENT for table `detalle-contratos`
 --
 ALTER TABLE `detalle-contratos`
-  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
@@ -1573,7 +1584,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
-  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `estados-contratos`
@@ -1627,7 +1638,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1645,7 +1656,7 @@ ALTER TABLE `productos-vehiculo`
 -- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
@@ -1657,7 +1668,7 @@ ALTER TABLE `repuestos-vehiculos`
 -- AUTO_INCREMENT for table `reservas-vehiculos`
 --
 ALTER TABLE `reservas-vehiculos`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `sucursales`
@@ -1669,7 +1680,7 @@ ALTER TABLE `sucursales`
 -- AUTO_INCREMENT for table `tipo-insumo`
 --
 ALTER TABLE `tipo-insumo`
-  MODIFY `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTipoInsumo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
@@ -1681,7 +1692,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `vehiculos`
 --
 ALTER TABLE `vehiculos`
-  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `vendedores`
