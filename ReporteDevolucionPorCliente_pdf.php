@@ -34,7 +34,7 @@ include('head.php');
             
             <div class="p-5 mb-4 bg-white shadow-sm" 
                 style="margin: 0; padding: 20px; ">
-                <h3 class="mb-4 text-secondary" style="padding-bottom: 10px; color:rgb(154, 26, 9);">
+                <h3 class="mb-4 text-secondary" style="padding-bottom: 10px; color:rgb(14, 94, 199);">
                     <strong>Reporte: Devolucion de vehículos según cliente </strong>
                 </h3>
 
@@ -50,22 +50,22 @@ include('head.php');
                             <th style="margin: 0 auto; padding: 0 5px 0 0; color: #d45313; font-size: 22px;">
                                 <h3>#</h3>
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Nº Contrato.
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Fecha Dev.
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Hora Dev.
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Cliente
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Vehículo
                             </th>
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 16px;">
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color:rgb(14, 94, 199); color: white; font-size: 16px;">
                                 Oficina Dev.
                             </th>
                         </tr>
@@ -77,7 +77,7 @@ include('head.php');
                             <tr class='devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>' 
                                 onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
                                 <td>
-                                    <span style='color: #c7240e; font-size: 17px; margin: 0 auto; padding: 0;'>
+                                    <span style='color:rgb(14, 94, 199); font-size: 17px; margin: 0 auto; padding: 0;'>
                                         <h4> <?php echo $contador; ?> </h4>
                                     </span>
                                 </td>
