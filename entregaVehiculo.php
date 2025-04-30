@@ -73,7 +73,7 @@ include('head.php');
 <style>
 
 .form-control:focus {
-    border-color: #c7240e;
+    border-color:rgb(223, 115, 14);
 }
 
 </style>
@@ -92,8 +92,8 @@ include('head.php');
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
-            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
-                <div style='color: #c7240e; margin-bottom: 30px;'> 
+            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid rgb(223, 115, 14); border-radius: 14px;">
+                <div style='color:rgb(223, 115, 14); margin-bottom: 30px;'> 
                     <h3 class="fw-bold"> Entregas de vehículos </h3> 
                 </div>
 
@@ -153,7 +153,7 @@ include('head.php');
 
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" style="background-color: #c7240e; color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoEntregas">
+                        <button type="submit" style="background-color:rgb(223, 115, 14); color: white;" class="btn w-100" name="BotonFiltrar" value="FiltrandoEntregas">
                             <i class="fas fa-filter"></i> Filtrar
                         </button>
                     </div>
@@ -171,7 +171,7 @@ include('head.php');
                     <table class="table table-striped table-hover" id="tablaEntregas">
                         <thead>
                             <tr>
-                                <th style='color: #c7240e;'><h3>#</h3></th>
+                                <th style='color:rgb(223, 115, 14);'><h3>#</h3></th>
                                 <th>Contrato</th>
                                 <th>Fecha Ret.</th>
                                 <th>Hora Ret.</th>
@@ -190,7 +190,7 @@ include('head.php');
                                 <tr class='entrega' data-id='<?php echo $ListadoEntregas[$i]['IdEntrega']; ?>' 
                                     onclick="selectRow(this, '<?= $ListadoEntregas[$i]['IdEntrega'] ?>')">
 
-                                    <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                    <td><span style='color:rgb(223, 115, 14);'><h4> <?php echo $contador; ?> </h4></span></td>
                                     <td> <?php echo $ListadoEntregas[$i]['IdContrato']; ?> </td>
                                     <td> <?php echo $ListadoEntregas[$i]['FechaEntrega']; ?> </td>
                                     <td> <?php echo $ListadoEntregas[$i]['HoraEntrega']; ?> </td>
