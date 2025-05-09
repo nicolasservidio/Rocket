@@ -15,6 +15,7 @@ $filtros = [
     'email' => isset($_GET['email']) ? trim($_GET['email']) : '',
     'telefono' => isset($_GET['telefono']) ? trim($_GET['telefono']) : '',
     'direccion' => isset($_GET['direccion']) ? trim($_GET['direccion']) : '',
+    'localidad' => isset($_GET['localidad']) ? trim($_GET['localidad']) : '',    
 ];
 
 // Generar consulta filtrada
@@ -64,6 +65,9 @@ include('head.php');
                         <input type="text" class="form-control" id="email" name="email" 
                             value="<?= htmlspecialchars($filtros['email']) ?>">
                     </div>
+                </div>
+                <br>
+                <div class="row">
                     <div class="col-md-2">
                         <label for="telefono" class="form-label">Teléfono</label>
                         <input type="text" class="form-control" id="telefono" name="telefono" 
@@ -74,7 +78,13 @@ include('head.php');
                         <input type="text" class="form-control" id="direccion" name="direccion" 
                             value="<?= htmlspecialchars($filtros['direccion']) ?>">
                     </div>
+                    <div class="col-md-2">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <input type="text" class="form-control" id="localidad" name="localidad" 
+                            value="<?= htmlspecialchars($filtros['localidad']) ?>">
+                    </div>                    
                 </div>
+                <br>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
                     <a href="Proveedores.php" class="btn btn-secondary">Limpiar Filtros</a>
@@ -97,6 +107,7 @@ include('head.php');
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
+                        <th>Localidad</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,6 +124,7 @@ include('head.php');
                             <td>" . $ListadoProveedores[$i]['EMAIL'] . "</td>
                             <td>" . $ListadoProveedores[$i]['TELEFONO'] . "</td>
                             <td>" . $ListadoProveedores[$i]['DIRECCION'] . "</td>
+                            <td>" . $ListadoProveedores[$i]['LOCALIDAD'] . "</td>
                         </tr>";
                         $contador++;
                     }
@@ -170,6 +182,10 @@ include('head.php');
                                 <label for="direccion" class="form-label">Dirección</label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" title="Campo obligatorio" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="localidad" class="form-label">Localidad</label>
+                                <input type="text" class="form-control" id="localidad" name="localidad" title="Campo obligatorio" required>
+                            </div>                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

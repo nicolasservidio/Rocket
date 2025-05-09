@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = trim($telefono);
     $direccion = strip_tags($_POST['direccion']);
     $direccion = trim($direccion);
+    $localidad = strip_tags($_POST['localidad']);
+    $localidad = trim($localidad);
 
     // Validaciones básicas
     $errores = [];
@@ -37,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($direccion)) {
         $errores[] = "La dirección es obligatoria.";
     }
+    if (empty($localidad)) {
+        $errores[] = "La localidad es obligatoria.";
+    }    
 
     // Si hay errores, redirigir con el mensaje de error
     if (!empty($errores)) {
@@ -48,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Conexión y consulta
     $MiConexion = ConexionBD();
 
-    $query = "INSERT INTO proveedores (cuitProveedor, nombreProveedor, ivaProveedor, mailProveedor, telefonoProveedor, direccionProveedor) 
-              VALUES (?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO proveedores (cuitProveedor, nombreProveedor, ivaProveedor, mailProveedor, telefonoProveedor, direccionProveedor, localidadProveedor) 
+              VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $MiConexion->prepare($query);
 
     // Vinculamos los valores en el orden correcto
-    $stmt->bind_param("isssis", $cuit, $nombre, $iva, $email, $telefono, $direccion);
+    $stmt->bind_param("isssiss", $cuit, $nombre, $iva, $email, $telefono, $direccion, $localidad);
 
     if ($stmt->execute()) {
         $mensaje = "Proveedor agregado exitosamente.";

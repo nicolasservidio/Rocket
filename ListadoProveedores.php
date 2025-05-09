@@ -2,7 +2,7 @@
 function Listar_Proveedores($MiConexion, $filtros = []) {
     $query = "SELECT idProveedor AS ID, cuitProveedor AS CUIT, nombreProveedor AS NOMBRE, 
             ivaProveedor AS IVA, mailProveedor AS EMAIL, telefonoProveedor AS TELEFONO, 
-              direccionProveedor AS DIRECCION FROM proveedores WHERE 1=1";
+              direccionProveedor AS DIRECCION, localidadProveedor AS LOCALIDAD FROM proveedores WHERE 1=1";
 
     $params = [];
     $types = '';
@@ -37,6 +37,11 @@ function Listar_Proveedores($MiConexion, $filtros = []) {
         $params[] = "%" . $filtros['direccion'] . "%";
         $types .= 's';
     }
+    if (!empty($filtros['localidad'])) {
+        $query .= " AND localidadProveedor LIKE ?";
+        $params[] = "%" . $filtros['localidad'] . "%";
+        $types .= 's';
+    }    
 
     $stmt = $MiConexion->prepare($query);
     if ($types) {
