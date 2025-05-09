@@ -54,7 +54,7 @@ if (!empty($_GET['BotonLimpiarFiltros'])) {
 // SELECCIONES para combo boxes del modal para registrar "Nueva Devolucion"
 require_once 'funciones/Select_Tablas.php';
 
-$ListadoContratos = Listar_Contratos_Firmados($conexion);
+$ListadoContratos = ListarContratos_ActivosRenovados($conexion);
 $CantidadContratos = count($ListadoContratos);
 
 // SELECCIONES para combo boxes del modal para generar reporte "Devolucion de vehículos según cliente"
@@ -357,7 +357,7 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idContrato" class="form-label">Contrato</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadContratos ?> contratos firmados encontrados" required>
+                                        <select class="form-select" aria-label="Selector" id="selector" name="idContrato" title="<?php echo $CantidadContratos ?> contratos activos/renovados encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php 
@@ -375,7 +375,7 @@ include('head.php');
                                                 }
                                             } 
                                             else {
-                                                echo "<option value=''>No se encontraron contratos con estado Firmado.</option>";
+                                                echo "<option value=''>No se encontraron contratos con estado 'Activo' o 'Renovado'.</option>";
                                             }
                                             ?>
                                         </select>

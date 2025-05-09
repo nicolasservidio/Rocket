@@ -389,6 +389,78 @@ function Listar_Contratos_Firmados($vConexion) {
 
 
 
+
+// EMITIR LISTADO de Contratos con estado "Activo" o "Renovado" para la devolución del vehículo
+function ListarContratos_ActivosRenovados($vConexion) {
+
+    $Listado = array();
+
+    //1) genero la consulta que deseo
+    $SQL = "SELECT ca.idContrato as caIdContrato, 
+                   ca.idCliente as caIdCliente,
+                   ca.idVehiculo as caIdVehiculo,
+                   ca.idEstadoContrato as caIdEstadoContrato,
+
+                   c.idCliente as cIdCliente,
+                   c.nombreCliente as cNombreCliente,
+                   c.apellidoCliente as cApellidoCliente,
+                   c.dniCliente as cDniCliente,
+
+                   ec.idEstadoContrato as ecIdEstadoContrato,
+                   ec.estadoContrato as ecEstadoContrato,
+                   ec.descripcionEstadoContrato as ecDescripcionEstadoContrato,
+
+                   v.idVehiculo as IdVehiculo,
+                   v.matricula as matricula,
+                   v.disponibilidad, 
+                   v.idModelo,
+                   v.idGrupoVehiculo,
+
+                   m.idModelo, 
+                   m.nombreModelo as modelo, 
+                   m.descripcionModelo, 
+
+                   g.idGrupo,
+                   g.nombreGrupo as grupo
+            FROM `contratos-alquiler` ca, clientes c, vehiculos v, modelos m, `grupos-vehiculos` g, `estados-contratos` ec 
+            WHERE ca.idCliente = c.idCliente 
+            AND ca.idVehiculo = v.idVehiculo 
+            AND v.idModelo = m.idModelo 
+            AND v.idGrupoVehiculo = g.idGrupo 
+            AND ca.IdEstadoContrato = ec.idEstadoContrato 
+            AND (ec.estadoContrato = 'Activo' OR ec.estadoContrato = 'Renovado'); ";
+
+    //2) a la conexion actual le brindo mi consulta, y el resultado lo entrego a variable $rs
+     $rs = mysqli_query($vConexion, $SQL);
+        
+     //3) el resultado deberá organizarse en una matriz, entonces lo recorro
+     $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $Listado[$i]['IdContrato'] = $data['caIdContrato'];
+
+            $Listado[$i]['NombreCliente'] = $data['cNombreCliente'];
+            $Listado[$i]['ApellidoCliente'] = $data['cApellidoCliente'];
+            $Listado[$i]['DniCliente'] = $data['cDniCliente'];
+
+            $Listado[$i]['EstadoContrato'] = $data['ecEstadoContrato'];
+            $Listado[$i]['DescripcionEstadoContrato'] = $data['ecDescripcionEstadoContrato'];
+
+            $Listado[$i]['IdVehiculo'] = $data['IdVehiculo'];
+            $Listado[$i]['matricula'] = $data['matricula'];
+            $Listado[$i]['modelo'] = $data['modelo'];
+            $Listado[$i]['grupo'] = $data['grupo'];
+            
+            $i++;
+    }
+
+    return $Listado;
+}
+
+
+
+
+
+
 // EMITIR LISTADO de vehículos "Entregados" para su devolución:
 
 function Listar_VehiculosEntregados($vConexion) {
