@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2025 at 05:27 AM
+-- Generation Time: May 09, 2025 at 11:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -301,16 +301,16 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (118, '2024-08-10', '2024-08-12', NULL, NULL, 6, 25, NULL, 118, 6),
 (119, '2024-08-13', '2024-08-16', NULL, NULL, 7, 18, NULL, 119, 3),
 (120, '2024-08-23', '2024-08-25', NULL, NULL, 10, 36, NULL, 120, 6),
-(121, '2024-08-29', '2024-08-31', NULL, NULL, 15, 23, NULL, 121, 6),
+(121, '2024-08-29', '2024-08-31', NULL, NULL, 15, 23, NULL, 121, 2),
 (122, '2024-09-05', '2024-09-09', NULL, NULL, 1, 1, NULL, 122, 6),
-(123, '2024-10-07', '2024-10-10', NULL, NULL, 15, 19, NULL, 123, 6),
+(123, '2024-10-07', '2024-10-10', NULL, NULL, 15, 19, NULL, 123, 2),
 (124, '2024-10-09', '2024-10-14', NULL, NULL, 1, 25, NULL, 124, 6),
 (125, '2024-10-16', '2024-10-19', NULL, NULL, 3, 18, NULL, 125, 6),
 (126, '2024-11-02', '2024-11-07', NULL, NULL, 12, 2, NULL, 126, 6),
-(127, '2024-11-07', '2024-11-10', NULL, NULL, 5, 23, NULL, 127, 6),
+(127, '2024-11-07', '2024-11-10', NULL, NULL, 5, 23, NULL, 127, 2),
 (128, '2024-11-12', '2024-11-14', NULL, NULL, 6, 24, NULL, 128, 4),
 (129, '2024-11-13', '2024-11-15', NULL, NULL, 11, 24, NULL, 129, 6),
-(130, '2025-01-02', '2025-01-04', NULL, NULL, 6, 23, NULL, 130, 6),
+(130, '2025-01-02', '2025-01-04', NULL, NULL, 6, 23, NULL, 130, 5),
 (131, '2025-01-02', '2025-01-09', NULL, NULL, 12, 19, NULL, 131, 6),
 (132, '2025-01-02', '2025-01-02', NULL, NULL, 15, 25, NULL, 132, 4);
 
@@ -564,13 +564,14 @@ CREATE TABLE `devoluciones-vehiculos` (
 
 INSERT INTO `devoluciones-vehiculos` (`idDevolucion`, `fechaDevolucion`, `horaDevolucion`, `estadoDevolucion`, `aclaracionesDevolucion`, `infraccionesDevolucion`, `costosInfracciones`, `montoExtra`, `idCliente`, `idContrato`, `idVerificacion`, `idVendedorReceptor`) VALUES
 (2, '2025-04-11', '04:09', 'Capot dañado', 'Choque en autopista RNA001 ', 'Velocidad', 1000, 4000, 6, 14, NULL, NULL),
-(3, '2025-04-25', '04:09', 'Sin cambios', 'Cliente reporta problemas con el limpiaparabrisas', 'Ninguna', 0, 0, 8, 13, NULL, NULL),
+(3, '2025-04-25', '04:09', 'Ruptura limpiaparabrisas', 'Cliente reporta problemas con el limpiaparabrisas', 'Ninguna', 0, 20, 8, 13, NULL, NULL),
 (4, '2024-12-21', '07:00', 'Requiere limpieza profunda', 'Accidente con aderesos y otros alimentos en el asiento trasero', 'Ninguna', 0, 45, 17, 8, NULL, NULL),
 (5, '2025-04-04', '07:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 11, 7, NULL, NULL),
 (6, '2025-01-04', '21:20', 'Sin cambios', 'Cliente reporta problemas de inflado de neumáticos', 'Ninguna', 0, 0, 6, 130, NULL, NULL),
 (7, '2025-01-09', '07:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 12, 131, NULL, NULL),
 (8, '2025-02-08', '16:30', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 3, 18, NULL, NULL),
-(9, '2024-12-18', '20:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 7, 10, NULL, NULL);
+(9, '2024-12-18', '20:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 7, 10, NULL, NULL),
+(10, '2025-02-05', '20:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 12, 131, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -624,7 +625,9 @@ INSERT INTO `entregas-vehiculos` (`idEntrega`, `fechaEntrega`, `horaEntrega`, `i
 (11, '2025-01-02', '06:00', 12, 131),
 (12, '2025-01-02', '07:00', 15, 132),
 (13, '2024-12-09', '05:00', 11, 7),
-(14, '2024-11-12', '23:14', 6, 128);
+(14, '2024-11-12', '23:14', 6, 128),
+(15, '2025-02-02', '06:00', 12, 131),
+(16, '2025-04-04', '19:00', 12, 131);
 
 -- --------------------------------------------------------
 
@@ -938,7 +941,7 @@ CREATE TABLE `repuestos-vehiculos` (
   `estadoRepuesto` varchar(100) DEFAULT NULL COMMENT 'Campo opcional con aclaraciones sobre el estado del repuesto o lote de repuestos',
   `idTipoInsumo` int(11) DEFAULT NULL,
   `idProveedor` int(11) DEFAULT NULL,
-  `disponibilidadRepuesto` char(200) DEFAULT NULL COMMENT 'Campo en donde se puede especificar cuántos están en uso o libres para ser usados en vehículos',
+  `disponibilidadRepuesto` varchar(200) DEFAULT NULL COMMENT 'Campo en donde se puede especificar cuántos están en uso o libres para ser usados en vehículos',
   `vehiculosHospedantes` varchar(200) DEFAULT NULL COMMENT 'El vehículo que lleva el repuesto o los repuestos. Separar con comas en caso de que sean diferentes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -1139,9 +1142,9 @@ CREATE TABLE `sucursales` (
 --
 
 INSERT INTO `sucursales` (`idSucursal`, `numeroSucursal`, `direccionSucursal`, `ciudadSucursal`, `telefonoSucursal`) VALUES
-(1, 3, 'Isabel la Católica 1632', 'Córdoba', NULL),
-(2, 7, 'Av. Callao 2720', 'CABA', NULL),
-(3, 0, 'A definir', 'Argentina', NULL),
+(1, 3, 'Isabel la Católica 1632', 'Córdoba', 389893343),
+(2, 7, 'Av. Callao 2720', 'CABA', 29293933),
+(3, 0, 'A definir', 'Argentina', 991919000),
 (4, 11, 'Alem 238', 'Bahía Blanca', 22311167),
 (5, 9, 'Rivadavia 320', 'Villa Carlos Paz', 99745211);
 
@@ -1208,14 +1211,14 @@ CREATE TABLE `vehiculos` (
   `fechaCompra` date DEFAULT NULL,
   `precioCompra` float DEFAULT NULL COMMENT 'Precio al que la empresa adquirió el vehículo',
   `numeroMotor` int(11) DEFAULT NULL,
-  `numeroChasis` int(11) DEFAULT NULL,
+  `numeroChasis` varchar(17) DEFAULT NULL,
   `puertas` int(11) DEFAULT NULL,
   `asientos` int(11) DEFAULT NULL,
-  `esAutomatico` char(1) DEFAULT NULL,
-  `aireAcondicionado` char(1) DEFAULT NULL,
-  `dirHidraulica` char(1) DEFAULT NULL,
+  `esAutomatico` char(1) DEFAULT NULL COMMENT 'S o N',
+  `aireAcondicionado` char(1) DEFAULT NULL COMMENT 'S o N',
+  `dirHidraulica` char(1) DEFAULT NULL COMMENT 'S o N',
   `estadoFisicoDelVehiculo` varchar(200) DEFAULT NULL,
-  `kilometraje` int(11) DEFAULT NULL,
+  `kilometraje` varchar(50) DEFAULT NULL,
   `disponibilidad` varchar(5) DEFAULT NULL,
   `idModelo` int(11) DEFAULT NULL,
   `idCombustible` int(11) DEFAULT NULL,
@@ -1228,25 +1231,25 @@ CREATE TABLE `vehiculos` (
 --
 
 INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `anio`, `fechaCompra`, `precioCompra`, `numeroMotor`, `numeroChasis`, `puertas`, `asientos`, `esAutomatico`, `aireAcondicionado`, `dirHidraulica`, `estadoFisicoDelVehiculo`, `kilometraje`, `disponibilidad`, `idModelo`, `idCombustible`, `idGrupoVehiculo`, `idSucursal`) VALUES
-(1, 'AB468FG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 6, 8, 13, 1),
-(2, 'AA070DE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 1, 4, 12, 2),
-(3, 'AC340FY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2, 7, 12, 1),
-(6, 'ADCS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 5, 3, 6, 5),
-(7, 'HWUW9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 3, 4, 7, 2),
-(18, 'HH667S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 7, 9, 4, 3),
-(19, 'FFFDAS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 3, 9, 7, 1),
-(20, 'ASASA3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 10, 9, 1, 3),
-(21, 'HABN32', NULL, NULL, '2024-10-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 9, 2, 2),
-(23, 'JHGP77F', NULL, NULL, '2024-10-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 4, 10, 1),
-(24, 'NE32SR', NULL, NULL, '2024-10-08', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 8, 9, 2, 2),
-(25, 'XY909BM', NULL, NULL, '2024-10-04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 5, 2, 1, 2),
-(28, 'WYS88A', NULL, NULL, '2024-11-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 6, 9, 1, 1),
-(30, 'XY33BM', NULL, NULL, '2024-11-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 4, 9, 3, 3),
-(32, 'BLABLA9', NULL, NULL, '2024-12-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 1, 6, 12, 4),
-(35, 'ROR99C', NULL, NULL, '2024-12-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 2, 3, 4, 4),
-(36, 'RBA11R', NULL, NULL, '2024-12-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 9, 7, 8, 5),
-(37, 'ZP19JD', NULL, NULL, '2025-04-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 6, 1, 2, 1),
-(38, '0000000', NULL, NULL, '2025-04-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 2, 9, 4, 3);
+(1, 'AB468FG', 'Rojo', 2010, NULL, NULL, 5453543, 'aaaaaa888888bbbbb', 4, 5, 'S', 'S', 'S', NULL, '20051 km al 2024-05-06', 'N', 6, 8, 13, 1),
+(2, 'AA070DE', 'Negro', 2013, NULL, NULL, 5545, 'aaaaaa888888ccccc', 4, 5, 'N', 'S', 'S', NULL, '251 km al 2024-05-06', 'S', 1, 4, 12, 2),
+(3, 'AC340FY', 'Negro', 2018, NULL, NULL, 54224, 'aaaaaa888888ddddd', 4, 4, 'N', 'S', 'S', NULL, 'No medido', 'S', 2, 7, 12, 1),
+(6, 'ADCS', 'Negro', 2015, NULL, NULL, 545, 'aaaaaa888888eeeee', 2, 5, 'N', 'S', 'S', NULL, '927 km al 2024-05-06', 'S', 5, 3, 6, 4),
+(7, 'HWUW9', 'Gris', 2012, NULL, NULL, 7575, 'aaaaaa888888fffff', 4, 4, 'N', 'S', 'S', NULL, 'No medido', 'S', 3, 4, 7, 2),
+(18, 'HH667S', 'Negro', 2020, NULL, NULL, 586, 'aaaaaa888888ggggg', 2, 2, 'S', 'S', 'N', NULL, '839 km al 2024-05-06', 'S', 7, 9, 4, 3),
+(19, 'FFFDAS', 'Negro', 2022, NULL, NULL, 475, 'aaaaaa888888hhhhh', 4, 5, 'S', 'S', 'S', NULL, '35728 km al 2024-05-06', 'S', 3, 9, 7, 5),
+(20, 'ASASA3', 'Rojo', 2021, NULL, NULL, 57775, 'aaaaaa888888iiiii', 2, 2, 'N', 'N', 'S', NULL, '3290 km al 2024-05-06', 'S', 10, 9, 1, 3),
+(21, 'HABN32', 'Blanco', 2015, '2024-10-01', 15393.8, 57475, 'bbbbbb888888bbbbb', 4, 4, 'N', 'N', 'S', NULL, '6051 km al 2024-05-06', 'S', 8, 9, 2, 2),
+(23, 'JHGP77F', 'Amarillo', NULL, '2024-10-02', NULL, 57474, 'bbbbbb888888ccccc', 4, 4, 'N', 'S', 'N', NULL, '3211 km al 2024-05-06', 'S', 8, 4, 10, 1),
+(24, 'NE32SR', 'Rojo', 2018, '2024-10-08', NULL, 362, 'bbbbbb888888ddddd', 2, 4, 'N', 'N', 'S', NULL, 'No medido', 'S', 8, 9, 2, 2),
+(25, 'XY909BM', 'Negro', 2020, '2024-10-04', NULL, 868, 'bbbbbb888888eeeee', 4, 5, 'S', 'S', 'N', NULL, '8392 km al 2024-05-06', 'S', 5, 2, 1, 2),
+(28, 'WYS88A', 'Negro', 2022, '2024-11-03', NULL, 2775, 'bbbbbb888888fffff', 4, 5, 'N', 'S', 'N', NULL, '6283 km al 2024-05-06', 'N', 6, 9, 1, 1),
+(30, 'XY33BM', 'Gris', 2017, '2024-11-02', NULL, 7557, 'cccccc888888bbbbb', 4, 5, 'N', 'S', 'S', NULL, 'No medido', 'S', 4, 9, 3, 3),
+(32, 'BLABLA9', 'Negro', 2021, '2024-12-01', NULL, 7525, 'bbbbbb999999bbbbb', 4, 5, 'S', 'S', 'S', NULL, '9838 km al 2024-07-21', 'S', 1, 6, 12, 4),
+(35, 'ROR99C', 'Verde', 2020, '2024-12-03', NULL, 2288, 'bbbbbb999999ccccc', 2, 4, 'N', 'S', 'S', NULL, 'No medido', 'S', 2, 3, 4, 4),
+(36, 'RBA11R', 'Blanco', 2016, '2024-12-07', NULL, 17557, 'bbbbbb999999ddddd', 4, 5, 'N', 'S', 'S', NULL, '3828 km al 2024-08-28', 'S', 9, 7, 8, 5),
+(37, 'ZP19JD', 'Negro', 2021, '2025-04-23', NULL, 157, 'bbbbbb999999eeeee', 4, 7, 'N', 'S', 'S', NULL, '7328 km al 2025-01-17', 'S', 6, 1, 2, 1),
+(38, '0000000', 'Gris', 2024, '2025-04-23', NULL, 1657, 'bbbbbb999999fffff', 4, 6, 'N', 'S', 'S', NULL, '6253 km al 2024-11-13', 'N', 2, 9, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -1572,7 +1575,7 @@ ALTER TABLE `detalle-pedidoaproveedor`
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
 --
 ALTER TABLE `devoluciones-vehiculos`
-  MODIFY `idDevolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idDevolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `empleados`
@@ -1584,7 +1587,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
-  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `estados-contratos`
