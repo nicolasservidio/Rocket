@@ -178,6 +178,10 @@ include('head.php');
                                 <th>Cliente</th>
                                 <th>Vehículo</th>
                                 <th>Oficina Dev.</th>
+                                <th>Estado del vehículo</th>
+                                <th>Aclaraciones</th>
+                                <th>Infracciones</th>
+                                <th>Monto extra</th>
                             </tr>
                         </thead>
 
@@ -197,6 +201,36 @@ include('head.php');
                                     <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?> </td>
                                     <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?> </td>
                                     <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?> </td>
+                                    <td title="Estado del vehículo al momento de la devolución"> <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?> </td>
+                                    <td title="Aclaraciones sobre el estado del vehículo al momento de la devolución"> <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?> </td> 
+                                    
+                                    <td title="Infracciones cometidas por el cliente"> 
+                                        <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> <br><br>
+                                        <b>Costos asociados:</b> <br>
+                                        <?php 
+                                        if (is_null($ListadoDevolucion[$i]['CostosInfracciones']) || $ListadoDevolucion[$i]['CostosInfracciones'] == 0) {
+                                            echo "Sin costos";
+                                        }
+                                        else {
+                                            echo "$ ";
+                                            echo $ListadoDevolucion[$i]['CostosInfracciones']; 
+                                            echo " USD";
+                                        }
+                                        ?>
+                                    </td> 
+                                    
+                                    <td title="Monto extra a cobrar por infracciones"> 
+                                        <?php 
+                                        if (is_null($ListadoDevolucion[$i]['MontoExtra']) || $ListadoDevolucion[$i]['MontoExtra'] == 0) {
+                                            echo "Sin costos";
+                                        }
+                                        else {
+                                            echo "$ ";
+                                            echo $ListadoDevolucion[$i]['MontoExtra']; 
+                                            echo " USD";
+                                        }
+                                        ?>
+                                    </td> 
                                 </tr>
                                 <?php $contador++; ?>
                             <?php 
