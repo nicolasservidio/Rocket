@@ -11,11 +11,21 @@ function Procesar_Consulta() {
 
     $_POST['Color'] = trim($_POST['Color']);
     $_POST['Color'] = strip_tags($_POST['Color']);
+
     $_POST['Combustible'] = trim($_POST['Combustible']);
     $_POST['Combustible'] = strip_tags($_POST['Combustible']);
+
+    $_POST['CiudadSucursal'] = trim($_POST['CiudadSucursal']);
+    $_POST['CiudadSucursal'] = strip_tags($_POST['CiudadSucursal']);
+
+    $_POST['DireccionSucursal'] = trim($_POST['DireccionSucursal']);
+    $_POST['DireccionSucursal'] = strip_tags($_POST['DireccionSucursal']);
+
+    $_POST['TelSucursal'] = trim($_POST['TelSucursal']);
+    $_POST['TelSucursal'] = strip_tags($_POST['TelSucursal']);
 }
 
-function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $conexion) {
+function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $conexion) {
 
     if ($matricula == 0000000) {
         $matricula = 0;
@@ -90,6 +100,9 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
                  AND v.color LIKE '$color%'
                  AND c.tipoCombustible LIKE '%$combustible%'
                  AND v.disponibilidad LIKE '%$disponibilidad%'
+                 AND s.ciudadSucursal LIKE '%$ciudadsucursal%'
+                 AND s.direccionSucursal LIKE '%$direccionsucursal%'
+                 AND s.telefonoSucursal LIKE '$telsucursal%'
                 )
             ORDER BY v.matricula, m.nombreModelo; ";
 

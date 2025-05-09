@@ -22,6 +22,9 @@ $grupo = isset($_POST['Grupo']) ? $_POST['Grupo'] : '';
 $color = isset($_POST['Color']) ? $_POST['Color'] : '';
 $combustible = isset($_POST['Combustible']) ? $_POST['Combustible'] : '';
 $disponibilidad = isset($_POST['Disponibilidad']) ? $_POST['Disponibilidad'] : '';
+$ciudadsucursal = isset($_POST['CiudadSucursal']) ? $_POST['CiudadSucursal'] : '';
+$direccionsucursal = isset($_POST['DireccionSucursal']) ? $_POST['DireccionSucursal'] : '';
+$telsucursal = isset($_POST['TelSucursal']) ? $_POST['TelSucursal'] : '';
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -31,7 +34,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -52,6 +55,9 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['Color'] = "";
         $_POST['Combustible'] = ""; 
         $_POST['Disponibilidad'] = "";
+        $_POST['CiudadSucursal'] = "";
+        $_POST['DireccionSucursal'] = "";
+        $_POST['TelSucursal'] = "";
 }
 
 
@@ -155,8 +161,8 @@ require_once "head.php";
                             <input type="text" class="form-control" id="modelo" name="Modelo" value="<?php echo !empty($_POST['Modelo']) ? $_POST['Modelo'] : ''; ?>">
                         </div>
                     </div>
-                    <div class="row">
 
+                    <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="color" class="form-label">Color</label>
                             <input type="text" class="form-control" id="color" name="Color" value="<?php echo !empty($_POST['Color']) ? $_POST['Color'] : ''; ?>">
@@ -173,7 +179,21 @@ require_once "head.php";
                                 <option value="N">No</option>
                             </select>
                         </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="ciudadsucursal" class="form-label">Ciudad de Sucursal</label>
+                            <input type="text" class="form-control" id="ciudadsucursal" name="CiudadSucursal" value="<?php echo !empty($_POST['CiudadSucursal']) ? $_POST['CiudadSucursal'] : ''; ?>">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="direccionsucursal" class="form-label">Dirección de Sucursal</label>
+                            <input type="text" class="form-control" id="direccionsucursal" name="DireccionSucursal" value="<?php echo !empty($_POST['DireccionSucursal']) ? $_POST['DireccionSucursal'] : ''; ?>">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="telsucursal" class="form-label">Teléfono de Sucursal</label>
+                            <input type="text" class="form-control" id="telsucursal" name="TelSucursal" value="<?php echo !empty($_POST['TelSucursal']) ? $_POST['TelSucursal'] : ''; ?>">
+                        </div>
                     </div>
 
                     <br>
@@ -234,8 +254,8 @@ require_once "head.php";
 
                                 <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
 
-                                <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalDireccion']}, 
-                                                {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> <br><br>
+                                <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalCiudad']}, 
+                                                {$ListadoVehiculos[$i]['vSucursalDireccion']}"; ?> <br><br>
                                      <b>Tel:</b> <?php echo $ListadoVehiculos[$i]['vSucursalTel']; ?> 
                                 </td>
 
