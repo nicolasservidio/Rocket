@@ -9,6 +9,7 @@ function Listar_Vehiculos($conexion) {
                    v.matricula as vMatricula, 
                    v.color as vColor,
                    v.fechaCompra as vFechaCompra,
+                   v.precioCompra as vPrecioCompra,
                    v.anio as vAnio,
                    v.numeroMotor as vNumeroMotor,
                    v.numeroChasis as vNumeroChasis,
@@ -38,10 +39,10 @@ function Listar_Vehiculos($conexion) {
                    s.ciudadSucursal as vSucursalCiudad,
                    s.telefonoSucursal as vSucursalTel
             FROM vehiculos v, modelos m, combustibles c, `grupos-vehiculos` g, sucursales s
-            WHERE v.idModelo = m.idModelo 
-            AND v.idCombustible = c.idCombustible 
-            AND v.idGrupoVehiculo = g.idGrupo
-            AND v.idSucursal = s.idSucursal 
+            WHERE m.idModelo = v.idModelo  
+            AND c.idCombustible = v.idCombustible 
+            AND g.idGrupo = v.idGrupoVehiculo
+            AND s.idSucursal = v.idSucursal 
             ORDER BY v.matricula, m.nombreModelo; ";
 
     $rs = mysqli_query($conexion, $SQL);
@@ -53,6 +54,7 @@ function Listar_Vehiculos($conexion) {
             $Listado[$i]['vMatricula'] = $data['vMatricula'];
             $Listado[$i]['vColor'] = $data['vColor'];
             $Listado[$i]['vFechaCompra'] = $data['vFechaCompra'];
+            $Listado[$i]['vPrecioCompra'] = $data['vPrecioCompra'];
             $Listado[$i]['vAnio'] = $data['vAnio'];
             $Listado[$i]['vNumeroMotor'] = $data['vNumeroMotor'];
             $Listado[$i]['vNumeroChasis'] = $data['vNumeroChasis'];

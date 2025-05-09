@@ -45,6 +45,9 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         // Listo la totalidad de los registros en la tabla "vehiculos" 
         $ListadoVehiculos = Listar_Vehiculos($conexion);
         $CantidadVehiculos = count($ListadoVehiculos);
+        $_POST['Matricula'] = "";
+        $_POST['Modelo'] = "";
+        $_POST['Grupo'] = "";
 }
 
 
