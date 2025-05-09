@@ -134,7 +134,7 @@ include('head.php');
                     <div class="col-md-4">
                         <label for="retiro" class="form-label">Devolucion entre</label>
                         <div class="d-flex">
-                            <input type="date" id="devoluciondesde" class="form-control me-2" name="devolucionDesde" 
+                            <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde" 
                                    value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
 
                             <input type="date" id="devolucionhasta" class="form-control" name="DevolucionHasta" 
