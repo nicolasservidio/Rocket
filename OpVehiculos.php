@@ -132,7 +132,7 @@ require_once "head.php";
 
         <main class="d-flex flex-column justify-content-center align-items-center h-100 bg-light bg-gradient p-4">
 
-            <div class="card col-8 bg-white p-4 rounded shadow mb-4">
+            <div class="card col-10 bg-white p-4 rounded shadow mb-4">
                 <h4 class="text-center mb-4">Filtrar Vehículos</h4>
 
                 <form method="post">
@@ -159,19 +159,24 @@ require_once "head.php";
             </div>
 
             <!-- Tabla de vehículos -->
-            <div class="card col-8 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
-                <h4 class="text-center mb-3">Listado de Vehículos</h4>
+            <div class="card col-10 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
+                <h4 class="text-center mb-3">Listado de Vehículos</h4> <br>
                 <div class="table-responsive">
 
                     <table class="table table-bordered table-hover" id="tablaVehiculos">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Matrícula</th>
-                                <th scope="col">Modelo</th>
-                                <th scope="col">Grupo</th>
-                                <th scope="col">Combustible</th>
-                                <th scope="col">Sucursal</th>
-                                <th scope="col">Disponibilidad</th>
+                                <th scope="col"> # </th>
+                                <th scope="col"> Matrícula </th>
+                                <th scope="col"> Vehículo </th>
+                                <th scope="col"> Combustible </th>
+                                <th scope="col"> Sucursal </th>
+                                <th scope="col"> Disp. </th>
+                                <th scope="col"> Puertas y asientos </th>
+                                <th scope="col"> Automático </th>
+                                <th scope="col"> Aire acondicionado </th>
+                                <th scope="col"> Dirección Hidráulica </th>
+                                <th scope="col"> Motor y chasis </th>
                             </tr>
                         </thead>
 
@@ -188,19 +193,40 @@ require_once "head.php";
                                 data-disponibilidad="<?= $ListadoVehiculos[$i]['vDisponibilidad'] ?>" 
                                 onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vMatricula'] ?>')" >
 
+                                <td> <?php echo $i+1; ?> </td>
+
                                 <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
 
-                                <td> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> </td>
-
-                                <td> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> </td>
+                                <td title="Modelo del vehículo y grupo al que pertenece" > 
+                                    <b>Modelo:</b> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> <br><br>
+                                    <b>Grupo:</b> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> <br><br>
+                                    <b>Color:</b> <?php echo $ListadoVehiculos[$i]['vColor']; ?>
+                                </td>
 
                                 <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
 
                                 <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalDireccion']}, 
-                                                {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> 
+                                                {$ListadoVehiculos[$i]['vSucursalCiudad']}"; ?> <br><br>
+                                     <b>Tel:</b> <?php echo $ListadoVehiculos[$i]['vSucursalTel']; ?> 
                                 </td>
 
-                                <td> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
+                                <td title="Disponibilidad"> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
+
+                                <td> 
+                                    <b>Puertas:</b> <?php echo $ListadoVehiculos[$i]['vNumeroPuertas']; ?> <br><br>
+                                    <b>Asientos:</b> <?php echo $ListadoVehiculos[$i]['vNumeroAsientos']; ?> pasajeros
+                                </td>
+
+                                <td title="Automático"> <?php echo $ListadoVehiculos[$i]['vAutomatico']; ?> </td>
+
+                                <td title="Aire acondicionado"> <?php echo $ListadoVehiculos[$i]['vAire']; ?> </td>
+
+                                <td title="Dirección hidráulica"> <?php echo $ListadoVehiculos[$i]['vHidraulica']; ?> </td>
+
+                                <td> 
+                                    <b>NºMotor:</b> <?php echo $ListadoVehiculos[$i]['vNumeroMotor']; ?> <br><br>
+                                    <b>NºChasis:</b> <?php echo $ListadoVehiculos[$i]['vNumeroChasis']; ?> 
+                                </td>
 
                             </tr>
                             <?php 

@@ -60,9 +60,31 @@ function Listar_Vehiculos($conexion) {
             $Listado[$i]['vNumeroChasis'] = $data['vNumeroChasis'];
             $Listado[$i]['vNumeroPuertas'] = $data['vNumeroPuertas'];
             $Listado[$i]['vNumeroAsientos'] = $data['vNumeroAsientos'];
+
             $Listado[$i]['vAutomatico'] = $data['vAutomatico'];
+            if ($Listado[$i]['vAutomatico'] == "S") {
+                $Listado[$i]['vAutomatico'] = "Es automático";
+            }
+            else {
+                $Listado[$i]['vAutomatico'] = "No automático";
+            }
+
             $Listado[$i]['vAire'] = $data['vAire'];
+            if ($Listado[$i]['vAire'] == "S") {
+                $Listado[$i]['vAire'] = "Con aire acondicionado";
+            }
+            else {
+                $Listado[$i]['vAire'] = "Sin aire acondicionado";
+            }
+
             $Listado[$i]['vHidraulica'] = $data['vHidraulica'];
+            if ($Listado[$i]['vHidraulica'] == "S") {
+                $Listado[$i]['vHidraulica'] = "Con dir. hidráulica";
+            }
+            else {
+                $Listado[$i]['vHidraulica'] = "Sin dir. hidráulica";
+            }            
+
             $Listado[$i]['vEstadoFisico'] = $data['vEstadoFisico'];
             $Listado[$i]['vDisponibilidad'] = $data['vDisponibilidad'];
 
