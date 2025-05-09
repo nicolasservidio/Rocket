@@ -52,10 +52,27 @@ function Listar_Vehiculos($conexion) {
     while ($data = mysqli_fetch_array($rs)) {
             $Listado[$i]['vID'] = $data['vID'];
             $Listado[$i]['vMatricula'] = $data['vMatricula'];
+            
             $Listado[$i]['vColor'] = $data['vColor'];
+            if ($Listado[$i]['vColor'] == "" || $Listado[$i]['vColor'] == " " ) {
+                $Listado[$i]['vColor'] = "Sin información";
+            }            
+
             $Listado[$i]['vFechaCompra'] = $data['vFechaCompra'];
+            if ($Listado[$i]['vFechaCompra'] == "" || $Listado[$i]['vFechaCompra'] == " " ) {
+                $Listado[$i]['vFechaCompra'] = "Sin información";
+            }              
+            
             $Listado[$i]['vPrecioCompra'] = $data['vPrecioCompra'];
+            if ($Listado[$i]['vPrecioCompra'] == "" || $Listado[$i]['vPrecioCompra'] == " " ) {
+                $Listado[$i]['vPrecioCompra'] = "Sin información";
+            } 
+
             $Listado[$i]['vAnio'] = $data['vAnio'];
+            if ($Listado[$i]['vAnio'] == "" || $Listado[$i]['vAnio'] == " " ) {
+                $Listado[$i]['vAnio'] = "Sin información";
+            }
+
             $Listado[$i]['vNumeroMotor'] = $data['vNumeroMotor'];
             $Listado[$i]['vNumeroChasis'] = $data['vNumeroChasis'];
             $Listado[$i]['vNumeroPuertas'] = $data['vNumeroPuertas'];
@@ -86,6 +103,10 @@ function Listar_Vehiculos($conexion) {
             }            
 
             $Listado[$i]['vEstadoFisico'] = $data['vEstadoFisico'];
+            if ($Listado[$i]['vEstadoFisico'] == "" || $Listado[$i]['vEstadoFisico'] == " " ) {
+                $Listado[$i]['vEstadoFisico'] = "Sin información";
+            }
+
             $Listado[$i]['vDisponibilidad'] = $data['vDisponibilidad'];
 
             if ($Listado[$i]['vDisponibilidad'] == "S") {

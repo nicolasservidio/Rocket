@@ -176,7 +176,11 @@ require_once "head.php";
                                 <th scope="col"> Automático </th>
                                 <th scope="col"> Aire acondicionado </th>
                                 <th scope="col"> Dirección Hidráulica </th>
+                                <th scope="col"> Kilometraje </th>
                                 <th scope="col"> Motor y chasis </th>
+                                <th scope="col"> Estado físico </th>
+                                <th scope="col"> Año de fabricación </th>
+                                <th scope="col"> Adquisición </th>
                             </tr>
                         </thead>
 
@@ -223,9 +227,30 @@ require_once "head.php";
 
                                 <td title="Dirección hidráulica"> <?php echo $ListadoVehiculos[$i]['vHidraulica']; ?> </td>
 
+                                <td title="Kilometraje"> <?php echo $ListadoVehiculos[$i]['vKilometraje']; ?> </td>
+
                                 <td> 
                                     <b>NºMotor:</b> <?php echo $ListadoVehiculos[$i]['vNumeroMotor']; ?> <br><br>
                                     <b>NºChasis:</b> <?php echo $ListadoVehiculos[$i]['vNumeroChasis']; ?> 
+                                </td>
+
+                                <td title="Estado físico del vehículo"> <?php echo $ListadoVehiculos[$i]['vEstadoFisico']; ?> </td>
+
+                                <td title="Año de fabricación del vehículo"> <?php echo $ListadoVehiculos[$i]['vAnio']; ?> </td>
+
+                                <td title="Fecha de compra y precio al que la empresa adquirió el vehículo"> 
+                                    <b>Fecha:</b><br> <?php echo $ListadoVehiculos[$i]['vFechaCompra']; ?> <br><br>
+                                    <b>Precio:</b><br> 
+                                    <?php 
+                                    if ($ListadoVehiculos[$i]['vPrecioCompra'] != "Sin información") {
+                                        echo "$ "; 
+                                        echo $ListadoVehiculos[$i]['vPrecioCompra']; 
+                                        echo " USD";
+                                    }
+                                    else {
+                                        echo $ListadoVehiculos[$i]['vPrecioCompra']; 
+                                    }
+                                    ?> 
                                 </td>
 
                             </tr>
