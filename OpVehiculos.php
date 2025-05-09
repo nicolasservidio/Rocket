@@ -8,19 +8,20 @@ Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se ha
 require_once "conn/conexion.php";
 $conexion = ConexionBD();
 
+// Incluyo el script con la funcion que genera mi listado
+require_once 'funciones/vehiculos listado.php';
+$ListadoVehiculos = Listar_Vehiculos($conexion);
+$CantidadVehiculos = count($ListadoVehiculos);
+
+
 // Filtrado de vehículos
 
 $matricula = isset($_POST['Matricula']) ? $_POST['Matricula'] : '';
 $modelo = isset($_POST['Modelo']) ? $_POST['Modelo'] : '';
 $grupo = isset($_POST['Grupo']) ? $_POST['Grupo'] : '';
-
-
-// Incluyo el script con la funcion que genera mi listado
-require_once 'funciones/vehiculos listado.php';
-
-$ListadoVehiculos = Listar_Vehiculos($conexion);
-$CantidadVehiculos = count($ListadoVehiculos);
-
+$color = isset($_POST['Color']) ? $_POST['Color'] : '';
+$combustible = isset($_POST['Combustible']) ? $_POST['Combustible'] : '';
+$disponibilidad = isset($_POST['Disponibilidad']) ? $_POST['Disponibilidad'] : '';
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -30,7 +31,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -48,6 +49,9 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['Matricula'] = "";
         $_POST['Modelo'] = "";
         $_POST['Grupo'] = "";
+        $_POST['Color'] = "";
+        $_POST['Combustible'] = ""; 
+        $_POST['Disponibilidad'] = "";
 }
 
 
@@ -140,7 +144,7 @@ require_once "head.php";
 
                         <div class="col-md-4 mb-3">
                             <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control" id="matricula" name="Matricula" value="<?php echo !empty($_POST['Matricula']) ? $_POST['Matricula'] : ''; ?> ">
+                            <input type="text" class="form-control" id="matricula" name="Matricula" value="<?php echo !empty($_POST['Matricula']) ? $_POST['Matricula'] : ''; ?>">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="grupo" class="form-label">Grupo</label>
@@ -151,6 +155,27 @@ require_once "head.php";
                             <input type="text" class="form-control" id="modelo" name="Modelo" value="<?php echo !empty($_POST['Modelo']) ? $_POST['Modelo'] : ''; ?>">
                         </div>
                     </div>
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label for="color" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="color" name="Color" value="<?php echo !empty($_POST['Color']) ? $_POST['Color'] : ''; ?>">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="combustible" class="form-label">Combustible</label>
+                            <input type="text" class="form-control" id="combustible" name="Combustible" value="<?php echo !empty($_POST['Combustible']) ? $_POST['Combustible'] : ''; ?>">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="disponibilidad" class="form-label">Disponibilidad</label>
+                            <select class="form-select" id="disponibilidad" name="Disponibilidad">
+                                <option selected>Disponibilidad para arrendar...</option>
+                                <option value="S">Sí</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+
+                    </div>
+
                     <br>
                     <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
                     <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
