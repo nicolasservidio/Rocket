@@ -139,14 +139,19 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
             AND v.asientos LIKE '$asientos%' 
             AND v.esAutomatico LIKE '%$automatico%'
             AND v.aireAcondicionado LIKE '%$aireacondicionado%'
-            AND v.dirHidraulica LIKE '%$direccionhidraulica%'
-            AND (v.anio BETWEEN '$fabricaciondesde' AND '$fabricacionhasta') ";
+            AND v.dirHidraulica LIKE '%$direccionhidraulica%' ";
 
     // Concateno el resto de la consulta para poder agregar condicionales
+    if (!empty($fabricaciondesde)) {
+        $SQL .= " AND v.anio >= '$fabricaciondesde'";
+    }
+    if (!empty($fabricacionhasta)) {
+        $SQL .= " AND v.anio <= '$fabricacionhasta'";
+    }    
+
     if (!empty($adquisiciondesde)) {
         $SQL .= " AND v.fechaCompra >= '$adquisiciondesde'";
     }
-
     if (!empty($adquisicionhasta)) {
         $SQL .= " AND v.fechaCompra <= '$adquisicionhasta'";
     }
