@@ -32,7 +32,8 @@ $aireacondicionado = isset($_POST['AireAcondicionado']) ? $_POST['AireAcondicion
 $direccionhidraulica = isset($_POST['DireccionHidraulica']) ? $_POST['DireccionHidraulica'] : '';
 $fabricaciondesde = isset($_POST['FabricacionDesde']) ? $_POST['FabricacionDesde'] : '';
 $fabricacionhasta = isset($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : '';
-
+$adquisiciondesde = isset($_POST['AdquisicionDesde']) ? $_POST['AdquisicionDesde'] : '';
+$adquisicionhasta = isset($_POST['AdquisicionHasta']) ? $_POST['AdquisicionHasta'] : '';
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -42,7 +43,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $_POST['AdquisicionDesde'], $_POST['AdquisicionHasta'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -73,6 +74,8 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['DireccionHidraulica'] = "";
         $_POST['FabricacionDesde'] = "";
         $_POST['FabricacionHasta'] = "";
+        $_POST['AdquisicionDesde'] = "";
+        $_POST['AdquisicionHasta'] = "";
 }
 
 
@@ -255,6 +258,16 @@ require_once "head.php";
 
                                 <input type="number" step="1" min="1900" max="2050" id="fabricacionhasta" title="Hasta..." class="form-control" name="FabricacionHasta" 
                                     value="<?php echo !empty($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : ''; ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="fechacompra" class="form-label">Fecha de adquisición</label>
+                            <div class="d-flex">
+                                <input type="date" id="adquisiciondesde" title="Desde..." class="form-control me-2" name="AdquisicionDesde" 
+                                    value="<?php echo !empty($_POST['AdquisicionDesde']) ? $_POST['AdquisicionDesde'] : ''; ?>">
+
+                                <input type="date" id="adquisicionhasta" title="Hasta..." class="form-control" name="AdquisicionHasta" 
+                                    value="<?php echo !empty($_POST['AdquisicionHasta']) ? $_POST['AdquisicionHasta'] : ''; ?>">
                             </div>
                         </div> 
                     </div>

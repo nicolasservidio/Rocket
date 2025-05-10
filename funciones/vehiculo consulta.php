@@ -30,9 +30,19 @@ function Procesar_Consulta() {
     $_POST['Asientos'] = trim($_POST['Asientos']);
     $_POST['Asientos'] = strip_tags($_POST['Asientos']);
 
+    // Proceso las fechas. Es mucho mejor hacerlo de este modo que de la forma especificada en los demás módulos:
+    if (!empty($_POST['AdquisicionDesde'])) {
+        $_POST['AdquisicionDesde'] = date("Y-m-d", strtotime($_POST['AdquisicionDesde']));
+    } 
+
+    if (!empty($_POST['AdquisicionHasta'])) {
+        $_POST['AdquisicionHasta'] = date("Y-m-d", strtotime($_POST['AdquisicionHasta']));
+    } 
+
 }
 
-function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $fabricaciondesde, $fabricacionhasta, $conexion) {
+
+function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $fabricaciondesde, $fabricacionhasta, $adquisiciondesde, $adquisicionhasta, $conexion) {
 
     if ($matricula == 0000000) {
         $matricula = 0;
@@ -117,22 +127,31 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
             AND g.idGrupo = v.idGrupoVehiculo
             AND s.idSucursal = v.idSucursal 
             AND (v.matricula LIKE '$matricula%' 
-                 AND m.nombreModelo LIKE '%$modelo%' 
-                 AND g.nombreGrupo LIKE '%$grupo%'
-                 AND v.color LIKE '$color%'
-                 AND c.tipoCombustible LIKE '%$combustible%'
-                 AND v.disponibilidad LIKE '%$disponibilidad%'
-                 AND s.ciudadSucursal LIKE '%$ciudadsucursal%'
-                 AND s.direccionSucursal LIKE '%$direccionsucursal%'
-                 AND s.telefonoSucursal LIKE '$telsucursal%'
-                 AND v.puertas LIKE '$puertas%' 
-                 AND v.asientos LIKE '$asientos%' 
-                 AND v.esAutomatico LIKE '%$automatico%'
-                 AND v.aireAcondicionado LIKE '%$aireacondicionado%'
-                 AND v.dirHidraulica LIKE '%$direccionhidraulica%'
-                 AND (v.anio BETWEEN '$fabricaciondesde' AND '$fabricacionhasta')
-                )
-            ORDER BY v.matricula, m.nombreModelo; ";
+            AND m.nombreModelo LIKE '%$modelo%' 
+            AND g.nombreGrupo LIKE '%$grupo%'
+            AND v.color LIKE '$color%'
+            AND c.tipoCombustible LIKE '%$combustible%'
+            AND v.disponibilidad LIKE '%$disponibilidad%'
+            AND s.ciudadSucursal LIKE '%$ciudadsucursal%'
+            AND s.direccionSucursal LIKE '%$direccionsucursal%'
+            AND s.telefonoSucursal LIKE '$telsucursal%'
+            AND v.puertas LIKE '$puertas%' 
+            AND v.asientos LIKE '$asientos%' 
+            AND v.esAutomatico LIKE '%$automatico%'
+            AND v.aireAcondicionado LIKE '%$aireacondicionado%'
+            AND v.dirHidraulica LIKE '%$direccionhidraulica%'
+            AND (v.anio BETWEEN '$fabricaciondesde' AND '$fabricacionhasta') ";
+
+    // Concateno el resto de la consulta para poder agregar condicionales
+    if (!empty($adquisiciondesde)) {
+        $SQL .= " AND v.fechaCompra >= '$adquisiciondesde'";
+    }
+
+    if (!empty($adquisicionhasta)) {
+        $SQL .= " AND v.fechaCompra <= '$adquisicionhasta'";
+    }
+
+    $SQL .= " ) ORDER BY v.matricula, m.nombreModelo; "; // Agrego el orden a la consulta sql
 
     $rs = mysqli_query($conexion, $SQL);
         
