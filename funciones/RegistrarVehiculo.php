@@ -7,8 +7,7 @@ function Registrar_Vehiculo($matricula, $modelo, $grupo, $disponible, $conn) {
     $matricula = strip_tags($matricula);
 
     // Validaciones
-    if (strlen($matricula) > 7 || empty($matricula)) {
-
+    if (empty($matricula)) {
         $matricula = "0000000";
     }
 
@@ -18,7 +17,6 @@ function Registrar_Vehiculo($matricula, $modelo, $grupo, $disponible, $conn) {
         $SQL = "INSERT INTO vehiculos (matricula, fechaCompra, idModelo, idGrupoVehiculo, disponibilidad, idCombustible, idSucursal) 
                 VALUES ('$matricula', NOW(), $modelo, $grupo, '$disponible', 9, 3); ";
         
-
         $rs = mysqli_query($conn, $SQL);
 
         if (!$rs) {

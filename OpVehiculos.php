@@ -423,7 +423,7 @@ require_once "head.php";
 
                         <div class="mb-3">
                             <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control" name="MatriculaREG" value="" required>
+                            <input type="text" maxlength="7" class="form-control" name="MatriculaREG" value="" required>
                         </div>
                         <div class="mb-3">
                             <label for="modelo" class="form-label">Modelo</label>
