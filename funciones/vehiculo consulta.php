@@ -47,35 +47,18 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
     if ($matricula == 0000000) {
         $matricula = 0;
     }
-    /*
-    if (empty($matricula) && $matricula != 0) {
-        $matricula = "notempty";
-    }
-    if (empty($modelo)) {
-        $modelo = "notempty";
-    }
-    if (empty($grupo)) {
-        $grupo = "notempty";
-    }
-    if (empty($color)) {
-        $color = "notempty";
-    }
-    if (empty($combustible)) {
-        $combustible = "notempty";
-    } 
-    */ 
 
     if ($disponibilidad != "S" && $disponibilidad != "N") {
-        $disponibilidad = "";
+        $disponibilidad = null;
     }
     if ($automatico != "S" && $automatico != "N") {
-        $automatico = "";
+        $automatico = null;
     }
     if ($aireacondicionado != "S" && $aireacondicionado != "N") {
-        $aireacondicionado = "";
+        $aireacondicionado = null;
     }
     if ($direccionhidraulica != "S" && $direccionhidraulica != "N") {
-        $direccionhidraulica = "";
+        $direccionhidraulica = null;
     }
 
     $Listado = array();
@@ -118,23 +101,65 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
             WHERE m.idModelo = v.idModelo 
             AND c.idCombustible = v.idCombustible 
             AND g.idGrupo = v.idGrupoVehiculo
-            AND s.idSucursal = v.idSucursal 
-            AND (v.matricula LIKE '$matricula%' 
-            AND m.nombreModelo LIKE '%$modelo%' 
-            AND g.nombreGrupo LIKE '%$grupo%'
-            AND v.color LIKE '$color%'
-            AND c.tipoCombustible LIKE '%$combustible%'
-            AND v.disponibilidad LIKE '%$disponibilidad%'
-            AND s.ciudadSucursal LIKE '%$ciudadsucursal%'
-            AND s.direccionSucursal LIKE '%$direccionsucursal%'
-            AND s.telefonoSucursal LIKE '$telsucursal%'
-            AND v.puertas LIKE '$puertas%' 
-            AND v.asientos LIKE '$asientos%' 
-            AND v.esAutomatico LIKE '%$automatico%'
-            AND v.aireAcondicionado LIKE '%$aireacondicionado%'
-            AND v.dirHidraulica LIKE '%$direccionhidraulica%' ";
+            AND s.idSucursal = v.idSucursal ";
 
     // Concateno el resto de la consulta para poder agregar condicionales
+    if (!empty($matricula)) {
+        $SQL .= " AND v.matricula LIKE '$matricula%' ";
+    }
+
+    if (!empty($modelo)) {
+        $SQL .= " AND m.nombreModelo LIKE '%$modelo%' ";
+    }
+
+    if (!empty($grupo)) {
+        $SQL .= " AND g.nombreGrupo LIKE '%$grupo%' ";
+    }
+
+    if (!empty($color)) {
+        $SQL .= " AND v.color LIKE '$color%' ";
+    }
+
+    if (!empty($combustible)) {
+        $SQL .= " AND c.tipoCombustible LIKE '%$combustible%' ";
+    }
+
+    if (!empty($disponibilidad)) {
+        $SQL .= " AND v.disponibilidad LIKE '%$disponibilidad%' ";
+    }
+
+    if (!empty($ciudadsucursal)) {
+        $SQL .= " AND s.ciudadSucursal LIKE '%$ciudadsucursal%' ";
+    }
+
+    if (!empty($direccionsucursal)) {
+        $SQL .= " AND s.direccionSucursal LIKE '%$direccionsucursal%' ";
+    }
+
+    if (!empty($telsucursal)) {
+        $SQL .= " AND s.telefonoSucursal LIKE '$telsucursal%' ";
+    }
+
+    if (!empty($puertas)) {
+        $SQL .= " AND v.puertas LIKE '$puertas%' ";
+    }
+
+    if (!empty($asientos)) {
+        $SQL .= " AND v.asientos LIKE '$asientos%' ";
+    }
+
+    if (!empty($automatico)) {
+        $SQL .= " AND v.esAutomatico LIKE '%$automatico%' ";
+    }
+
+    if (!empty($aireacondicionado)) {
+        $SQL .= " AND v.aireAcondicionado LIKE '%$aireacondicionado%' ";
+    }
+
+    if (!empty($direccionhidraulica)) {
+        $SQL .= " AND v.dirHidraulica LIKE '%$direccionhidraulica%' ";
+    }
+
     if (!empty($fabricaciondesde)) {
         $SQL .= " AND v.anio >= '$fabricaciondesde'";
     }
@@ -156,7 +181,7 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
         $SQL .= " AND v.precioCompra <= '$preciohasta'";
     }  
 
-    $SQL .= " ) ORDER BY v.matricula, m.nombreModelo; "; // Agrego el orden a la consulta sql
+    $SQL .= " ORDER BY v.matricula, m.nombreModelo; "; // Agrego el orden a la consulta sql
 
     $rs = mysqli_query($conexion, $SQL);
         
@@ -223,9 +248,11 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
             $Listado[$i]['vDisponibilidad'] = $data['vDisponibilidad'];
             if ($Listado[$i]['vDisponibilidad'] == "S") {
                 $Listado[$i]['vDisponibilidad'] = "Sí";
+                $Listado[$i]['ColorAdvertencia'] = "success";
             }
             else {
                 $Listado[$i]['vDisponibilidad'] = "No";
+                $Listado[$i]['ColorAdvertencia'] = "danger";
             }
 
             $Listado[$i]['vKilometraje'] = $data['vKilometraje'];
