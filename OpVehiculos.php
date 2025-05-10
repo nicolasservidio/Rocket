@@ -34,6 +34,8 @@ $fabricaciondesde = isset($_POST['FabricacionDesde']) ? $_POST['FabricacionDesde
 $fabricacionhasta = isset($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : '';
 $adquisiciondesde = isset($_POST['AdquisicionDesde']) ? $_POST['AdquisicionDesde'] : '';
 $adquisicionhasta = isset($_POST['AdquisicionHasta']) ? $_POST['AdquisicionHasta'] : '';
+$preciodesde = isset($_POST['PrecioDesde']) ? $_POST['PrecioDesde'] : '';
+$preciohasta = isset($_POST['PrecioHasta']) ? $_POST['PrecioHasta'] : '';
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -43,7 +45,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $_POST['AdquisicionDesde'], $_POST['AdquisicionHasta'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $_POST['AdquisicionDesde'], $_POST['AdquisicionHasta'], $_POST['PrecioDesde'], $_POST['PrecioHasta'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -76,6 +78,8 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['FabricacionHasta'] = "";
         $_POST['AdquisicionDesde'] = "";
         $_POST['AdquisicionHasta'] = "";
+        $_POST['PrecioDesde'] = "";
+        $_POST['PrecioHasta'] = "";        
 }
 
 
@@ -268,6 +272,16 @@ require_once "head.php";
 
                                 <input type="date" id="adquisicionhasta" title="Hasta..." class="form-control" name="AdquisicionHasta" 
                                     value="<?php echo !empty($_POST['AdquisicionHasta']) ? $_POST['AdquisicionHasta'] : ''; ?>">
+                            </div>
+                        </div> 
+                        <div class="col-md-4">
+                            <label for="precio" class="form-label">Precio vehículo</label>
+                            <div class="d-flex">
+                                <input type="number" min="0" max="1000000000" id="preciodesde" title="Desde..." class="form-control me-2" name="PrecioDesde" 
+                                    value="<?php echo !empty($_POST['PrecioDesde']) ? $_POST['PrecioDesde'] : ''; ?>">
+
+                                <input type="number" min="0" max="1000000000" id="preciohasta" title="Hasta..." class="form-control" name="PrecioHasta" 
+                                    value="<?php echo !empty($_POST['PrecioHasta']) ? $_POST['PrecioHasta'] : ''; ?>">
                             </div>
                         </div> 
                     </div>
