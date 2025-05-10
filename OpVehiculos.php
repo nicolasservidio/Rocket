@@ -25,6 +25,11 @@ $disponibilidad = isset($_POST['Disponibilidad']) ? $_POST['Disponibilidad'] : '
 $ciudadsucursal = isset($_POST['CiudadSucursal']) ? $_POST['CiudadSucursal'] : '';
 $direccionsucursal = isset($_POST['DireccionSucursal']) ? $_POST['DireccionSucursal'] : '';
 $telsucursal = isset($_POST['TelSucursal']) ? $_POST['TelSucursal'] : '';
+$puertas = isset($_POST['Puertas']) ? $_POST['Puertas'] : '';
+$asientos = isset($_POST['Asientos']) ? $_POST['Asientos'] : '';
+$automatico = isset($_POST['Automatico']) ? $_POST['Automatico'] : '';
+$aireacondicionado = isset($_POST['AireAcondicionado']) ? $_POST['AireAcondicionado'] : '';
+$direccionhidraulica = isset($_POST['DireccionHidraulica']) ? $_POST['DireccionHidraulica'] : '';
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -34,7 +39,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -58,6 +63,11 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['CiudadSucursal'] = "";
         $_POST['DireccionSucursal'] = "";
         $_POST['TelSucursal'] = "";
+        $_POST['Puertas'] = "";
+        $_POST['Asientos'] = "";
+        $_POST['Automatico'] = "";
+        $_POST['AireAcondicionado'] = "";
+        $_POST['DireccionHidraulica'] = "";
 }
 
 
@@ -194,6 +204,41 @@ require_once "head.php";
                             <label for="telsucursal" class="form-label">Teléfono de Sucursal</label>
                             <input type="text" class="form-control" id="telsucursal" name="TelSucursal" value="<?php echo !empty($_POST['TelSucursal']) ? $_POST['TelSucursal'] : ''; ?>">
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2 mb-2">
+                            <label for="puertas" class="form-label">Puertas</label>
+                            <input type="text" class="form-control" id="puertas" name="Puertas" value="<?php echo !empty($_POST['Puertas']) ? $_POST['Puertas'] : ''; ?>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="asientos" class="form-label">Asientos</label>
+                            <input type="text" class="form-control" id="asientos" name="Asientos" value="<?php echo !empty($_POST['Asientos']) ? $_POST['Asientos'] : ''; ?>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="automatico" class="form-label">Automático</label>
+                            <select class="form-select" id="automatico" name="Automatico">
+                                <option selected>Seleccionar...</option>
+                                <option value="S">Sí</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <label for="aireacondicionado" class="form-label">Aire acondicionado</label>
+                            <select class="form-select" id="aireacondicionado" name="AireAcondicionado">
+                                <option selected>Seleccionar...</option>
+                                <option value="S">Sí</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div> 
+                        <div class="col-md-2 mb-2">
+                            <label for="direccionhidraulica" class="form-label">Dirección hidráulica</label>
+                            <select class="form-select" id="direccionhidraulica" name="DireccionHidraulica">
+                                <option selected>Seleccionar...</option>
+                                <option value="S">Sí</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div> 
                     </div>
 
                     <br>

@@ -23,9 +23,15 @@ function Procesar_Consulta() {
 
     $_POST['TelSucursal'] = trim($_POST['TelSucursal']);
     $_POST['TelSucursal'] = strip_tags($_POST['TelSucursal']);
+
+    $_POST['Puertas'] = trim($_POST['Puertas']);
+    $_POST['Puertas'] = strip_tags($_POST['Puertas']);
+
+    $_POST['Asientos'] = trim($_POST['Asientos']);
+    $_POST['Asientos'] = strip_tags($_POST['Asientos']);
 }
 
-function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $conexion) {
+function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $conexion) {
 
     if ($matricula == 0000000) {
         $matricula = 0;
@@ -51,7 +57,15 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
     if ($disponibilidad != "S" && $disponibilidad != "N") {
         $disponibilidad = "";
     }
-        
+    if ($automatico != "S" && $automatico != "N") {
+        $automatico = "";
+    }
+    if ($aireacondicionado != "S" && $aireacondicionado != "N") {
+        $aireacondicionado = "";
+    }
+    if ($direccionhidraulica != "S" && $direccionhidraulica != "N") {
+        $direccionhidraulica = "";
+    }
 
     $Listado = array();
     
@@ -103,6 +117,11 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
                  AND s.ciudadSucursal LIKE '%$ciudadsucursal%'
                  AND s.direccionSucursal LIKE '%$direccionsucursal%'
                  AND s.telefonoSucursal LIKE '$telsucursal%'
+                 AND v.puertas LIKE '$puertas%' 
+                 AND v.asientos LIKE '$asientos%' 
+                 AND v.esAutomatico LIKE '%$automatico%'
+                 AND v.aireAcondicionado LIKE '%$aireacondicionado%'
+                 AND v.dirHidraulica LIKE '%$direccionhidraulica%'
                 )
             ORDER BY v.matricula, m.nombreModelo; ";
 
