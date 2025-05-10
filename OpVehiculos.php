@@ -206,9 +206,9 @@ require_once "head.php";
             <!-- Tabla de vehículos -->
             <div class="card col-10 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
                 <h4 class="text-center mb-3">Listado de Vehículos</h4> <br>
-                <div class="table-responsive">
+                <div class="table-responsive" style="max-height: 700px;">
 
-                    <table class="table table-bordered table-hover" id="tablaVehiculos">
+                    <table class="table table-bordered table-hover table-striped" id="tablaVehiculos">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col"> # </th>
@@ -308,7 +308,7 @@ require_once "head.php";
                     </table>
                 </div>
             </div>
-
+            <br><br>
             <div class="d-flex justify-content-between col-8">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
                 <button type="button" class="btn btn-primary" onclick="modificarVehiculo()">Modificar</button>
