@@ -29,9 +29,10 @@ function Procesar_Consulta() {
 
     $_POST['Asientos'] = trim($_POST['Asientos']);
     $_POST['Asientos'] = strip_tags($_POST['Asientos']);
+
 }
 
-function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $conexion) {
+function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $fabricaciondesde, $fabricacionhasta, $conexion) {
 
     if ($matricula == 0000000) {
         $matricula = 0;
@@ -66,6 +67,13 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
     if ($direccionhidraulica != "S" && $direccionhidraulica != "N") {
         $direccionhidraulica = "";
     }
+
+    if (empty($fabricaciondesde) || $fabricaciondesde == null ) {
+        $fabricaciondesde = 1900;
+    } 
+    if (empty($fabricacionhasta) || $fabricacionhasta == null ) {
+        $fabricacionhasta = 2100;
+    } 
 
     $Listado = array();
     
@@ -122,6 +130,7 @@ function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $d
                  AND v.esAutomatico LIKE '%$automatico%'
                  AND v.aireAcondicionado LIKE '%$aireacondicionado%'
                  AND v.dirHidraulica LIKE '%$direccionhidraulica%'
+                 AND (v.anio BETWEEN '$fabricaciondesde' AND '$fabricacionhasta')
                 )
             ORDER BY v.matricula, m.nombreModelo; ";
 

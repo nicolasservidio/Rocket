@@ -30,6 +30,9 @@ $asientos = isset($_POST['Asientos']) ? $_POST['Asientos'] : '';
 $automatico = isset($_POST['Automatico']) ? $_POST['Automatico'] : '';
 $aireacondicionado = isset($_POST['AireAcondicionado']) ? $_POST['AireAcondicionado'] : '';
 $direccionhidraulica = isset($_POST['DireccionHidraulica']) ? $_POST['DireccionHidraulica'] : '';
+$fabricaciondesde = isset($_POST['FabricacionDesde']) ? $_POST['FabricacionDesde'] : '';
+$fabricacionhasta = isset($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : '';
+
 
 // Consulta por medio de formulario de Filtro
 if (!empty($_POST['BotonFiltro'])) {
@@ -39,7 +42,7 @@ if (!empty($_POST['BotonFiltro'])) {
 
     $ListadoVehiculos = array();
     $CantidadVehiculos = '';
-    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $conexion);
+    $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
 }
 else {
@@ -68,6 +71,8 @@ if (!empty($_POST['BotonDesfiltrar'])) {
         $_POST['Automatico'] = "";
         $_POST['AireAcondicionado'] = "";
         $_POST['DireccionHidraulica'] = "";
+        $_POST['FabricacionDesde'] = "";
+        $_POST['FabricacionHasta'] = "";
 }
 
 
@@ -240,8 +245,21 @@ require_once "head.php";
                             </select>
                         </div> 
                     </div>
-
                     <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="aniofabricacion" class="form-label">Año de fabricación</label>
+                            <div class="d-flex">
+                                <input type="number" step="1" min="1900" max="2050" id="fabricaciondesde" title="Desde..." class="form-control me-2" name="FabricacionDesde" 
+                                    value="<?php echo !empty($_POST['FabricacionDesde']) ? $_POST['FabricacionDesde'] : ''; ?>">
+
+                                <input type="number" step="1" min="1900" max="2050" id="fabricacionhasta" title="Hasta..." class="form-control" name="FabricacionHasta" 
+                                    value="<?php echo !empty($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : ''; ?>">
+                            </div>
+                        </div> 
+                    </div>
+
+                    <br><br>
                     <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
                     <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
                 </form>
