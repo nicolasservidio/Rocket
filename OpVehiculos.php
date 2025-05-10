@@ -349,7 +349,11 @@ require_once "head.php";
                                      <b>Tel:</b> <?php echo $ListadoVehiculos[$i]['vSucursalTel']; ?> 
                                 </td>
 
-                                <td title="Disponibilidad"> <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> </td>
+                                <td title="Disponibilidad"> 
+                                    <span class="badge badge-<?php echo $ListadoVehiculos[$i]['ColorAdvertencia']; ?>"> 
+                                        <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> 
+                                    </span>
+                                </td>
 
                                 <td> 
                                     <b>Puertas:</b> <?php echo $ListadoVehiculos[$i]['vNumeroPuertas']; ?> <br><br>

@@ -110,9 +110,11 @@ function Listar_Vehiculos($conexion) {
             $Listado[$i]['vDisponibilidad'] = $data['vDisponibilidad'];
             if ($Listado[$i]['vDisponibilidad'] == "S") {
                 $Listado[$i]['vDisponibilidad'] = "Sí";
+                $Listado[$i]['ColorAdvertencia'] = "success";
             }
             else {
                 $Listado[$i]['vDisponibilidad'] = "No";
+                $Listado[$i]['ColorAdvertencia'] = "danger";
             }
 
             $Listado[$i]['vKilometraje'] = $data['vKilometraje'];
