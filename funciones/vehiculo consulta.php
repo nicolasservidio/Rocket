@@ -44,10 +44,6 @@ function Procesar_Consulta() {
 
 function Consulta_Vehiculo($matricula, $modelo, $grupo, $color, $combustible, $disponibilidad, $ciudadsucursal, $direccionsucursal, $telsucursal, $puertas, $asientos, $automatico, $aireacondicionado, $direccionhidraulica, $fabricaciondesde, $fabricacionhasta, $adquisiciondesde, $adquisicionhasta, $preciodesde, $preciohasta, $conexion) {
 
-    if ($matricula == 0000000) {
-        $matricula = 0;
-    }
-
     if ($disponibilidad != "S" && $disponibilidad != "N") {
         $disponibilidad = null;
     }
