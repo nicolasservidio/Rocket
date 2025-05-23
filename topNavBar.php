@@ -1,4 +1,3 @@
-
 <div class="main-panel ">
     <div class="main-header">
         <div class="main-header-logo">
@@ -27,6 +26,14 @@
         <!-- Navbar Header -->
         <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
+
+
+                <!-- Aparece titulo de pagina segun la pagina en la que este -->
+                <?php if (isset($tituloPagina)): ?>
+                <div class="navbar-center-title text-center w-100">
+                    <h3 style="margin: 0;"><?php echo $tituloPagina; ?></h3>
+                </div>
+                <?php endif; ?>
 
 
                 <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -133,13 +140,16 @@
                                     <div class="dropdown-divider"></div>
 
                                     <a class="dropdown-item" href="cerrarsesion.php">Cerrar Sesión</a>
+
                                 </li>
                             </div>
                         </ul>
                     </li>
                 </ul>
             </div>
+
         </nav>
         <!-- End Navbar -->
-         
-        </div>
+
+
+    </div>

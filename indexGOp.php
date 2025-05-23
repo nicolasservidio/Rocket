@@ -34,6 +34,7 @@ include('head.php');
 
             <?php 
             include('sidebarGOp.php');
+             $tituloPagina = "<b> Inicio </b>";
             include('topNavBar.php');  
             ?>
             

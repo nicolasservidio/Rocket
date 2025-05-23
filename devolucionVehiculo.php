@@ -65,8 +65,9 @@ $CantidadClientes = count($ListadoClientes);
 
 
 include('head.php');
-
 ?>
+
+
 
 <body style="margin: 0 auto;">
 
@@ -80,6 +81,7 @@ include('head.php');
 
         <?php 
         include('sidebarGOp.php');
+         $tituloPagina = "<b> Devoluciones de Vehiculos </b>";
         include('topNavBar.php');    
 
         if (isset($_GET['mensaje'])) {

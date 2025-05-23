@@ -126,6 +126,7 @@ require_once "head.php";
 <body>
 
     <?php
+    $tituloPagina = "<b> Vehiculos </b>";
     require_once "topNavBar.php";
     require_once "sidebarGop.php";
     ?>
