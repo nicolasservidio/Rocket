@@ -48,6 +48,10 @@ include('head.php');
                             </th>
 
                             <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
+                                Estado Contrato
+                            </th>
+
+                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Núm.
                             </th>
 
@@ -88,10 +92,6 @@ include('head.php');
                             </th>
 
                             <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
-                                Estado Contrato
-                            </th>
-
-                            <th style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; border-radius: 7px; background-color: #a80a0a; color: white; font-size: 14px;">
                                 Precio día
                             </th>
 
@@ -118,6 +118,11 @@ include('head.php');
                                     <span style='color: #c7240e; font-size: 17px; margin: 0 auto; padding: 0;'>
                                         <h4> <?php echo $contador; ?> </h4>
                                     </span>
+                                    
+                                </td>
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
+                                    <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> 
                                 </td>
 
                                 <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px; "> 
@@ -160,9 +165,6 @@ include('head.php');
                                     <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> 
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> 
-                                </td>
 
                                 <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
                                     <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> 

@@ -35,6 +35,7 @@ include('head.php');
                     <thead>
                         <tr>
                             <th style='color: #c7240e;'><h3>#</h3></th>
+                            <th>Estado Contrato</th>
                             <th>Contrato</th>
                             <th>Fecha Ret.</th>
                             <th>Fecha Dev.</th>
@@ -45,7 +46,6 @@ include('head.php');
                             <th>Vehículo</th>
                             <th>Oficina Ret.</th>
                             <th>Oficina Dev.</th>
-                            <th>Estado Contrato</th>
                             <th>Precio día</th>
                             <th>Cantidad días</th>
                             <th>Monto total</th>
@@ -62,6 +62,31 @@ include('head.php');
                                 onclick="selectRow(this, '<?= $ListadoContratos[$i]['IdContrato'] ?>')">
 
                                 <td><span style='color: #c7240e;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                <td><?php
+                                        $estado = strtolower($ListadoContratos[$i]['EstadoContrato']);
+                                        $clase = '';
+                                        
+                                        switch ($estado) {
+                                            case 'firmado':
+                                                $clase = 'primary'; // azul
+                                                break;
+                                            case 'activo':
+                                                $clase = 'success'; // verde
+                                                break;
+                                            case 'cancelado':
+                                                $clase = 'danger'; // rojo
+                                                break;
+                                            case 'finalizado':
+                                                $clase = 'warning'; // naranja
+                                                break;
+                                            case 'renovado':
+                                                $clase = 'secondary'; // púrpura
+                                                break;
+                                            default:
+                                                $clase = 'info'; // celeste
+                                                break;}
+                                            echo "<span class='badge badge-$clase'>".$ListadoContratos[$i]['EstadoContrato']."</span>";?>
+                                </td>
                                 <td> <?php echo $ListadoContratos[$i]['IdContrato']; ?> </td>
                                 <td> <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?> </td>
                                 <td> <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?> </td>
@@ -72,7 +97,6 @@ include('head.php');
                                 <td> <?php echo "{$ListadoContratos[$i]['vehiculoModelo']}, {$ListadoContratos[$i]['vehiculoGrupo']}"; ?> </td>
                                 <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
                                 <td> <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> </td>
-                                <td> <span class="badge badge-success"> <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> </span> </td>
                                 <td> <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> </td>
                                 <td> <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?> </td>
                                 <td> <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?> </td>
