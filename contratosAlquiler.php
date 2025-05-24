@@ -492,8 +492,8 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="preciopordia" class="form-label">Precio por día</label>
-                                        <input type="number" min="20" max="999999999" step="0.01"
-                                            title="Superior a 20 USD obligatoriamente." class="form-control"
+                                        <input type="number" min="20" max="1000" step="0.01"
+                                            title="Mínimo 20 USD y máximo 1000 USD" class="form-control"
                                             id="preciopordia" name="precioporDia" required>
                                     </div>
 

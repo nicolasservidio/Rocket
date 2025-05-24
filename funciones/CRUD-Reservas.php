@@ -223,6 +223,9 @@ function Consulta_Reservas($numReserva, $matricula, $apellido, $nombre, $dni, $r
 }
 
 
+
+
+// No estamos usándolo en ningún lado mepa, al final seguimos otra estrategia
 function Corroborar_FechasReserva($fecharetiro, $fechadevolucion) {
  
     $Fecha_actual = date("y-m-d");

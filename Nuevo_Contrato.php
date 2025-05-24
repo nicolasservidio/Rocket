@@ -32,10 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "La fecha de devolución es obligatoria.";
     }
 
+    // Validación de fechas
+    if (!empty($fecharetiro) && !empty($fechadevolucion)) {
+        $fechaRetiroValidacion = new DateTime($fecharetiro);
+        $fechaDevolucionValidacion = new DateTime($fechadevolucion);
+
+        if ($fechaRetiroValidacion > $fechaDevolucionValidacion) {
+            $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
+        }
+    }
+
     // Si hay errores, redirigir con el mensaje de error
     if (!empty($errores)) {
         $mensaje = implode(' ', $errores);
-        header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensaje));
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'contratosAlquiler.php';
+        </script>";
         exit();
     }
 
@@ -130,14 +143,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             else {
-                $mensaje = "Transacción completada exitosamente.";
+
+                // Seleccionamos y bloqueamos el ID del contrato que acabamos de agregar, para mostrar al usuario
+                $numeroContrato = array();
+
+                $SQL_SeleccionIdContrato = "SELECT idContrato 
+                                            FROM `contratos-alquiler` 
+                                            ORDER BY idContrato DESC 
+                                            LIMIT 1;";
+
+                $recordId = mysqli_query($MiConexion, $SQL_SeleccionIdContrato);
+                $data = mysqli_fetch_array($recordId);
+                $numeroContrato['idContrato'] = $data['idContrato'];
+                $numeroContratoMensaje = $numeroContrato['idContrato'];
+
+                $mensaje = "Transacción completada exitosamente. Contrato número {$numeroContratoMensaje}. Retiro: {$fecharetiroIngles}. Devolución: {$fechadevolucionIngles}. Precio por día: {$preciopordia} USD (a {$diferenciaDias} días). Monto total: {$montoTotal} USD.";
             }
         } 
     }
 
     // Redirigir con un mensaje
-    header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensaje));
-    exit();
+    if (!empty($mensaje)) {
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'contratosAlquiler.php';
+        </script>";
+        exit();
+    }
+
 }
 
 ?>
