@@ -21,8 +21,10 @@ if (isset($_GET['id'])) {
                         r.numeroReserva as NumeroReserva,
                         r.fechaInicioReserva as FechaRetiro,
                         r.FechaFinReserva as FechaDevolucion,
+                        r.precioPorDiaReserva as PrecioDiario,
                         r.idCliente as IDCliente,
                         r.idVehiculo as IDVehiculo,
+                        r.idContrato as IDContrato,
                         c.idCliente,
                         c.nombreCliente as NombreCliente,
                         c.apellidoCliente as ApellidoCliente,
@@ -51,14 +53,45 @@ if (isset($_GET['id'])) {
 
     $reserva = mysqli_fetch_array($rs);
 
-    // Se traen todos los vehículos disponibles:
+    // Además se trae el contrato asociado a la reserva, en caso de existir, para corroborar si el estado es "En Preparación"
+    $estadoContrato = "";
 
+    if(!empty($reserva['IDContrato'])) {
+
+        $idContrato = $reserva['IDContrato'];
+
+        $contrato = array();
+
+        // Obtener los datos del contrato
+        $ConsultaContrato = "SELECT co.idContrato,
+                                    co.idEstadoContrato as IdEstadoContrato,
+                                    e.idEstadoContrato,
+                                    e.estadoContrato as EstadoContrato,
+                                    e.descripcionEstadoContrato as DescripcionEstado 
+                    FROM `contratos-alquiler` co, `estados-contratos` e 
+                    WHERE co.idContrato = $idContrato 
+                    AND e.idEstadoContrato = co.idEstadoContrato; ";
+
+        $rs = mysqli_query($conexion, $ConsultaContrato);
+
+        $contrato = mysqli_fetch_array($rs);
+        
+        if ($contrato['EstadoContrato'] == "En Preparación") {
+            $estadoContrato = "En Preparación";
+        }
+    }
+    else {
+        $estadoContrato = "No existe";
+    }
+
+    // Se traen todos los vehículos disponibles para dropdown list:
     $vehiculosDisponibles = array();
     
     require_once 'funciones/Select_Tablas.php';
     $vehiculosDisponibles = Listar_Vehiculos_Disponibles($conexion);
     $cantidadVehiculos = count($vehiculosDisponibles);
 } 
+
 else {
     // Si no se pasa un ID, se redirige al listado de reservas
     header('Location: reservas.php');
@@ -74,8 +107,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
     $idCliente = $reserva['IDCliente'];
     $numreserva = $reserva['NumeroReserva'];
     $idVehiculo = $_POST['VehiculosDisponibles'];
-//    $fecharetiro = $_POST['FechaRetiro'];
-//    $fechadevolucion = $_POST['FechaDevolucion'];
+    $precioDiarioReserva = $reserva['PrecioDiario'];
+
+    
+    // Validaciones de fechas
+    $errores = [];
+
+    if (empty($_POST['FechaRetiro'])) {
+        $errores[] = "La fecha de retiro es obligatoria.";
+    }
+    if (empty($_POST['FechaDevolucion'])) {
+        $errores[] = "La fecha de devolución es obligatoria.";
+    }
+    if (!empty($_POST['FechaRetiro']) && !empty($_POST['FechaDevolucion'])) {
+        $fechaRetiro = new DateTime($_POST['FechaRetiro']);
+        $fechaDevolucion = new DateTime($_POST['FechaDevolucion']);
+
+        if ($fechaRetiro > $fechaDevolucion) {
+            $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
+        }
+    }
+
+    // Si hay errores, redirigir con el mensaje de error
+    if (!empty($errores)) {
+        $mensajeDeError = implode(' ', $errores);
+        echo "<script> 
+            alert('$mensajeDeError');
+            window.location.href = 'reservas.php';
+        </script>";
+        exit();
+    }
+
+    // Se calcula cantidad de días de reserva
+    $fechaInicial = new DateTime($_POST['FechaRetiro']);
+    $fechaFinal = new DateTime($_POST['FechaDevolucion']);
+    // Calcular la diferencia de días
+    $intervalo = $fechaInicial->diff($fechaFinal);
+    $diferenciaDias = $intervalo->days; // Obtiene la cantidad de días exacta
+    // Se calcula monto total
+    $montoTotal = $precioDiarioReserva * $diferenciaDias;
 
     // Se cambia formato de las fechas y se almacenan para el update:
     $fechaEspanol = $_POST['FechaRetiro'];
@@ -96,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
 
     require_once 'funciones/CRUD-Reservas.php';
     
-    if ($idVehiculo) {  // Aquí se corroboraba fecha. Registro para implementar más adelante: "Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true" 
+    if ($idVehiculo) {   
 
         // Actualizar los datos del cliente
         $ModificacionReserva = "UPDATE `reservas-vehiculos` 
@@ -104,6 +174,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                                     fechaReserva = NOW(), 
                                     fechaInicioReserva = '$fecharetiro', 
                                     FechaFinReserva = '$fechadevolucion', 
+                                    cantidadDiasReserva = '$diferenciaDias',
+                                    totalReserva = '$montoTotal',
                                     idCliente = $idCliente, 
                                     idVehiculo = $idVehiculo 
                                 WHERE idReserva = $idReserva"; 
@@ -156,7 +228,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                 ?>
 
                 <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
-                
+
+                <?php 
+                    // Si aún no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                    // obligatorio llenar el campo
+                    if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                        echo "<h6 class='mb-4 text-secondary' >Todos los campos son obligatorios </h6><br> ";
+                    }
+                    // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                    else {
+                        echo "<h6 class='mb-4' style='color: #d62606;' >El contrato ya fue firmado o cancelado </h6> <br>";
+                    }
+                ?>
+
                 <!-- Formulario para modificar la reserva -->
                 <form method="POST">
 
@@ -186,7 +270,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
 
                     <div class="mb-3">
                         <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
-                        <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" name="VehiculosDisponibles" >
+                        <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" 
+                                name="VehiculosDisponibles" 
+                                <?php 
+                                    // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                                    // obligatorio llenar el campo
+                                    if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                        echo "required";
+                                    }
+                                    // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                    else {
+                                        echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                    }
+                                ?>
+                        >
                             <option value="" selected>Selecciona una opción</option>
 
                             <?php 
@@ -197,8 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                                     // Lógica para verificar si el grupo debe estar seleccionado
                                     $selected = (!empty($reserva['IDVehiculo']) && $reserva['IDVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
                                     echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
-                                        MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
-                                    </option>";
+                                            MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
+                                         </option>";
                                 }
                             } 
                             else {
@@ -211,16 +308,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                     <div class="mb-3">
                         <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
                         <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                            value="<?php echo htmlspecialchars($reserva['FechaRetiro']); ?>" required>
+                            value="<?php echo htmlspecialchars($reserva['FechaRetiro']); ?>"  
+                            <?php 
+                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                                // obligatorio llenar el campo
+                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                    echo "required";
+                                }
+                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                }
+                            ?>
+                        >
                     </div>
 
                     <div class="mb-3">
                         <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
                         <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value="<?php echo htmlspecialchars($reserva['FechaDevolucion']); ?>" required>
+                            value="<?php echo htmlspecialchars($reserva['FechaDevolucion']); ?>" 
+                            <?php 
+                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                                // obligatorio llenar el campo
+                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                    echo "required";
+                                }
+                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                }
+                            ?>
+                        >
                     </div>
 
-                    <button type="submit" class="btn btn-primary" name="BotonModificarReserva" value="modificandoReserva"; >Guardar Cambios</button>
+                    <button type="submit" class="btn btn-primary" name="BotonModificarReserva" 
+                            value="modificandoReserva"; 
+                            <?php 
+                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                                // obligatorio llenar el campo
+                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                    echo " ";
+                                }
+                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "disabled";
+                                }
+                            ?>
+                            >
+                        Guardar Cambios
+                    </button>
                 </form>
 
             </div>

@@ -32,10 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "La fecha de devolución es obligatoria.";
     }
 
+    // Verificación de fechas
+    if (!empty($fecharetiro) && !empty($fechadevolucion)) {
+        $fechaRetiro = new DateTime($fecharetiro);
+        $fechaDevolucion = new DateTime($fechadevolucion);
+
+        if ($fechaRetiro > $fechaDevolucion) {
+            $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
+        }
+    }
+
     // Si hay errores, redirigir con el mensaje de error
     if (!empty($errores)) {
         $mensaje = implode(' ', $errores);
-        header("Location: reservas.php?mensaje=" . urlencode($mensaje));
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'reservas.php';
+        </script>";
         exit();
     }
 
@@ -246,3 +259,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+

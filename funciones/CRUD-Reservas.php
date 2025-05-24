@@ -172,10 +172,10 @@ function Consulta_Reservas($numReserva, $matricula, $apellido, $nombre, $dni, $r
                 AND r.idVehiculo = v.idVehiculo 
                 AND v.idModelo = m.idModelo 
                 AND v.idGrupoVehiculo = g.idGrupo 
-                AND (r.numeroReserva LIKE '$numReserva%' 
+                AND (r.numeroReserva LIKE '$numReserva' 
                     OR v.matricula LIKE '$matricula%' 
-                    OR c.apellidoCliente LIKE '$apellido%' 
-                    OR c.nombreCliente LIKE '$nombre%' 
+                    OR c.apellidoCliente LIKE '%$apellido%' 
+                    OR c.nombreCliente LIKE '%$nombre%' 
                     OR c.dniCliente LIKE '$dni%' 
                     OR r.fechaInicioReserva BETWEEN '$retiroDesde%' AND '$retiroHasta%') 
                 ORDER BY r.numeroReserva, c.apellidoCliente, c.nombreCliente; ";
