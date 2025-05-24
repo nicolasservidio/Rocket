@@ -91,7 +91,7 @@ include('head.php');
                 <form class="row g-3" action="reservas.php" method="get">
 
                     <div class="col-md-2">
-                        <label for="numero" class="form-label">Número de Cliente</label>
+                        <label for="numero" class="form-label">Número de Reserva</label>
                         <input type="text" class="form-control" id="numero" name="NumeroReserva" 
                                value="<?= htmlspecialchars($filtros['numero']) ?>" >
                     </div>

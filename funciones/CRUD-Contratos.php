@@ -122,88 +122,27 @@ function Procesar_ConsultaContratos() {
     $_GET['MontoTotalContrato'] = strip_tags($_GET['MontoTotalContrato']);
 
     // Se cambia formato de las fechas:
-    $fechaEspanol = $_GET['RetiroDesde'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['RetiroDesde'] = $fechaIngles;
-
-    $fechaEspanol = $_GET['RetiroHasta'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['RetiroHasta'] = $fechaIngles;
-
-    $fechaEspanol = $_GET['DevolucionDesde'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['DevolucionDesde'] = $fechaIngles;
-
-    $fechaEspanol = $_GET['DevolucionHasta'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['DevolucionHasta'] = $fechaIngles;
+    // Es mejor hacerlo de este modo que de la forma especificada en los demás módulos:
+    if (!empty($_GET['RetiroDesde'])) {
+        $_GET['RetiroDesde'] = date("Y-m-d", strtotime($_GET['RetiroDesde']));
+    } 
+    if (!empty($_GET['RetiroHasta'])) {
+        $_GET['RetiroHasta'] = date("Y-m-d", strtotime($_GET['RetiroHasta']));
+    } 
+    if (!empty($_GET['DevolucionDesde'])) {
+        $_GET['DevolucionDesde'] = date("Y-m-d", strtotime($_GET['DevolucionDesde']));
+    } 
+    if (!empty($_GET['DevolucionHasta'])) {
+        $_GET['DevolucionHasta'] = date("Y-m-d", strtotime($_GET['DevolucionHasta']));
+    } 
 
 }
 
 
 function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, $estadoContrato, $precioDia, $cantidadDias, $montoTotal, $retiroDesde, $retiroHasta, $devolucionDesde, $devolucionHasta, $conexion) {
 
-    if (empty($numContrato)) {
-        $numContrato = "ZZZZZZ";
-    }
-    if (empty($matricula)) {
-        $matricula = "&&&&&&";
-    }
-    if (empty($apellido)) {
-        $apellido = "9999999";
-    }
-    if (empty($nombre)) {
-        $nombre = "9999999";
-    }
-    if (empty($dni)) {
-        $dni = "ZZZZZZ";
-    }
-    if (empty($estadoContrato)) {
-        $estadoContrato = "9999999";
-    }
-
-    if (empty($precioDia)) {
-        $precioDia = "0";
-    }
-    if (empty($cantidadDias)) {
-        $cantidadDias = "0";
-    }
-    if (empty($montoTotal)) {
-        $montoTotal = "0";
-    }
-
-    if (empty($retiroDesde)) {
-        $retiroDesde = "ZZZZZZ";
-    }
-    if (empty($retiroHasta)) {
-        $retiroHasta = "ZZZZZZ";
-    }
-    if (empty($devolucionDesde)) {
-        $devolucionDesde = "ZZZZZZ";
-    }
-    if (empty($devolucionHasta)) {
-        $devolucionHasta = "ZZZZZZ";
-    }
-
     $Listado = array();
 
-    //1) genero la consulta que deseo
     $SQL = "SELECT ca.idContrato as caIdContrato, 
                     ca.fechaInicioContrato as caFechaInicioContrato, 
                     ca.fechaFinContrato as caFechaFinContrato, 
@@ -247,19 +186,52 @@ function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, 
             AND v.idGrupoVehiculo = g.idGrupo 
             AND v.idSucursal = s.idSucursal 
             AND ca.idDetalleContrato = dc.idDetalleContrato 
-            AND ca.idEstadoContrato = ec.idEstadoContrato 
-            AND (ca.idContrato = '$numContrato%' 
-                OR v.matricula LIKE '$matricula%' 
-                OR c.apellidoCliente LIKE '$apellido%' 
-                OR c.nombreCliente LIKE '$nombre%' 
-                OR c.dniCliente LIKE '$dni%' 
-                OR ec.estadoContrato LIKE '$estadoContrato%' 
-                OR dc.precioPorDiaContrato <= '$precioDia' 
-                OR dc.cantidadDiasContrato = '$cantidadDias' 
-                OR dc.montoTotalContrato <= '$montoTotal' 
-                OR (ca.fechaInicioContrato BETWEEN '$retiroDesde%' AND '$retiroHasta%') 
-                OR (ca.fechaFinContrato BETWEEN '$devolucionDesde%' AND '$devolucionHasta%')) 
-            ORDER BY ca.fechaInicioContrato, ca.fechaFinContrato, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
+            AND ca.idEstadoContrato = ec.idEstadoContrato ";
+
+            // Concateno el resto de la consulta para poder agregar condicionales
+            if (!empty($numContrato)) {
+                $SQL .= " AND ca.idContrato = '$numContrato' ";
+            }
+            if (!empty($matricula)) {
+                $SQL .= " AND v.matricula LIKE '$matricula%' ";
+            }
+            if (!empty($apellido)) {
+                $SQL .= " AND c.apellidoCliente LIKE '$apellido%' ";
+            }
+            if (!empty($nombre)) {
+                $SQL .= " AND c.nombreCliente LIKE '%$nombre%' ";
+            }
+            if (!empty($dni)) {
+                $SQL .= " AND c.dniCliente LIKE '$dni%' ";
+            }
+            if (!empty($estadoContrato)) {
+                $SQL .= " AND ec.estadoContrato LIKE '%$estadoContrato%' ";
+            }
+            if (!empty($precioDia)) {
+                $SQL .= " AND dc.precioPorDiaContrato <= '$precioDia' ";
+            }
+            if (!empty($cantidadDias)) {
+                $SQL .= " AND dc.cantidadDiasContrato = '$cantidadDias' ";
+            }
+            if (!empty($montoTotal)) {
+                $SQL .= " AND dc.montoTotalContrato <= '$montoTotal' ";
+            } 
+
+            if (!empty($retiroDesde)) {
+                $SQL .= " AND ca.fechaInicioContrato >= '$retiroDesde'";
+            }
+            if (!empty($retiroHasta)) {
+                $SQL .= " AND ca.fechaInicioContrato <= '$retiroHasta'";
+            }
+            if (!empty($devolucionDesde)) {
+                $SQL .= " AND ca.fechaFinContrato >= '$devolucionDesde'";
+            }
+            if (!empty($devolucionHasta)) {
+                $SQL .= " AND ca.fechaFinContrato <= '$devolucionHasta'";
+            }
+
+            // Agrego el orden a la consulta sql
+            $SQL .= " ORDER BY ca.fechaInicioContrato, ca.fechaFinContrato, c.apellidoCliente, c.nombreCliente, c.dniCliente; "; 
 
 
     $rs = mysqli_query($conexion, $SQL);
