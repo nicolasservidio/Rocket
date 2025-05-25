@@ -171,7 +171,7 @@ include('head.php');
 
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-4">
-                        <label for="retiro" class="form-label">Retiro entre</label>
+                        <label for="retiro" class="form-label">Fecha de Inicio del contrato entre</label>
                         <div class="d-flex">
                             <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde"
                                 value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
@@ -182,7 +182,7 @@ include('head.php');
                     </div>
 
                     <div class="col-md-4">
-                        <label for="devolucion" class="form-label">Devolución entre</label>
+                        <label for="devolucion" class="form-label">Fecha de Finalización del contrato entre</label>
                         <div class="d-flex">
                             <input type="date" id="devoluciondesde" class="form-control me-2" name="DevolucionDesde"
                                 value="<?= htmlspecialchars($filtros['devoluciondesde']) ?>">
@@ -223,8 +223,12 @@ include('head.php');
                                 </th>
                                 <th>Estado Contrato</th>
                                 <th>Contrato</th>
-                                <th>Fecha Ret.</th>
-                                <th>Fecha Dev.</th>
+                                <th title="Fecha de inicio del contrato. No corresponde necesariamente con la fecha de entrega del vehículo.">
+                                    Inicio Contrato
+                                </th>
+                                <th title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo.">
+                                    Finalización Contrato
+                                </th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
                                 <th>DNI</th>
@@ -275,8 +279,12 @@ include('head.php');
                                             echo "<span class='badge badge-$clase'>".$ListadoContratos[$i]['EstadoContrato']."</span>";?>
                                 </td>
                                 <td> <?php echo $ListadoContratos[$i]['IdContrato']; ?> </td>
-                                <td> <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?> </td>
-                                <td> <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?> </td>
+                                <td title="Fecha de inicio del contrato. No corresponde necesariamente con la fecha de entrega del vehículo."> 
+                                    <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?> 
+                                </td>
+                                <td title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo."> 
+                                    <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?> 
+                                </td>
                                 <td> <?php echo $ListadoContratos[$i]['apellidoCliente']; ?> </td>
                                 <td> <?php echo $ListadoContratos[$i]['nombreCliente']; ?> </td>
                                 <td> <?php echo $ListadoContratos[$i]['dniCliente']; ?> </td>

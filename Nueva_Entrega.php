@@ -77,9 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         $mensaje = "Entrega a cliente registrada exitosamente. ";
 
-        // A continuación debemos cambiar el estado del contrato, de "Firmado" a "Activo"
+        // A continuación debemos cambiar el estado del contrato, de "Firmado" a "Activo", e incluir la 
+        // fecha de entrega en la tabla "contratos-alquiler"
         $SQL_Update = "UPDATE `contratos-alquiler` 
-                        SET idEstadoContrato=4 
+                        SET idEstadoContrato=4, 
+                            fechaEntrega = '$fechaentregaIngles' 
                         WHERE idContrato=$idContrato; ";
 
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);

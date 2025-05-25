@@ -87,9 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         $mensaje = "Devolucion del cliente registrada exitosamente. ";
 
-        // A continuación debemos cambiar el estado del contrato, de "Activo" o "Renovado" a "Finalizado"
+        // A continuación debemos cambiar el estado del contrato, de "Activo" o "Renovado" a "Finalizado", e incluir la 
+        // fecha de devolución en la tabla "contratos-alquiler"
         $SQL_Update = "UPDATE `contratos-alquiler` 
-                        SET idEstadoContrato=6 
+                        SET idEstadoContrato=6, 
+                            fechaDevolucion = '$fechadevolucionIngles' 
                         WHERE idContrato=$idContrato; ";
 
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);
