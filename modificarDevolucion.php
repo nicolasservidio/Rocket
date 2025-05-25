@@ -157,144 +157,148 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
 ?>
 
 <body class="bg-light" style="margin: 0 auto;">
-    <div style="min-height: 100%; margin-bottom: 100px;">
-        <div class="wrapper">
+    <div class="wrapper" style="min-height: 100%; margin-bottom: 100px;">
+
+        <?php 
+        
+        include('sidebarGOp.php'); 
+        include('topNavBar.php'); 
+        
+        ?>
+        
+        <div class="p-5 mb-4 bg-white shadow-sm" 
+             style="margin-top: 150px; margin-bottom: 100px; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            
             <?php 
-            
-            include('sidebarGOp.php'); 
-            include('topNavBar.php'); 
-            
+
+            if ($mensajeError) { ?>
+                <div class="alert alert-danger mt-3"> 
+                    <?php 
+                        echo "Error al intentar modificar la devolución. <br><br>"; 
+                        echo $mensajeError; 
+                    ?>        
+                </div>
+            <?php 
+            } 
             ?>
+
+            <h5 class="mb-4 text-secondary">
+                <strong>Modificar Devolución</strong>
+            </h5>
             
-            <div class="p-5 mb-4 bg-white shadow-sm" 
-                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
-                
-                <?php 
+            <!-- Formulario para modificar la devolución -->
+            <form method="POST">
 
-                if ($mensajeError) { ?>
-                    <div class="alert alert-danger mt-3"> 
+                <div class="mb-3">
+                    <label for="idcontrato" class="form-label">Nº Contrato</label>
+                    <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
+                        value="Identificador del contrato: <?php echo htmlspecialchars($devolucion['dvIdContrato']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                    <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
+                        value="<?php echo htmlspecialchars($devolucion['dvFechaDevolucion']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="horadevolucion" class="form-label">Hora de Devolución</label>
+                    <input type="text" class="form-control" id="horadevolucion" name="HoraDevolucion" 
+                        value="<?php echo htmlspecialchars($devolucion['dvHoraDevolucion']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cliente" class="form-label">Cliente</label>
+                    <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
+                        value="<?php echo htmlspecialchars($devolucion['cApellidoCliente']); echo ", "; 
+                                      echo htmlspecialchars($devolucion['cNombreCliente']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="documento" class="form-label">Documento del Cliente</label>
+                    <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
+                        value=" <?php echo htmlspecialchars($devolucion['cDniCliente']); ?> " disabled>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="vehiculo" class="form-label">Vehículo</label>
+                    <input type="text" class="form-control" id="vehiculo" name="VehiculoDevuelto" 
+                        value="<?php  echo "Patente: "; echo htmlspecialchars($devolucion['matricula']); echo ". Vehículo: "; 
+                                      echo htmlspecialchars($devolucion['modelo']); echo ", ";
+                                      echo htmlspecialchars($devolucion['grupo']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sucursalesdisponibles" class="form-label"> Oficina de Devolución </label>
+                    <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" name="SucursalesDisponibles">
+                        <option value="" selected>Selecciona una opción</option>
+
                         <?php 
-                            echo "Error al intentar modificar la devolución. <br><br>"; 
-                            echo $mensajeError; 
-                        ?>        
-                    </div>
-                <?php 
-                } 
-                ?>
+                        if (!empty($sucursalesDisponibles)) {
+                            $selected = '';
 
-                <h5 class="mb-4 text-secondary">
-                    <strong>Modificar Devolución</strong>
-                </h5>
-                
-                <!-- Formulario para modificar la devolución -->
-                <form method="POST">
-
-                    <div class="mb-3">
-                        <label for="idcontrato" class="form-label">Nº Contrato</label>
-                        <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
-                            value="Identificador del contrato: <?php echo htmlspecialchars($devolucion['dvIdContrato']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
-                        <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value="<?php echo htmlspecialchars($devolucion['dvFechaDevolucion']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="horadevolucion" class="form-label">Hora de Devolución</label>
-                        <input type="text" class="form-control" id="horadevolucion" name="HoraDevolucion" 
-                            value="<?php echo htmlspecialchars($devolucion['dvHoraDevolucion']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="cliente" class="form-label">Cliente</label>
-                        <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
-                            value="<?php echo htmlspecialchars($devolucion['cApellidoCliente']); echo ", "; 
-                                          echo htmlspecialchars($devolucion['cNombreCliente']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="documento" class="form-label">Documento del Cliente</label>
-                        <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                            value=" <?php echo htmlspecialchars($devolucion['cDniCliente']); ?> " disabled>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="vehiculo" class="form-label">Vehículo</label>
-                        <input type="text" class="form-control" id="vehiculo" name="VehiculoDevuelto" 
-                            value="<?php  echo "Patente: "; echo htmlspecialchars($devolucion['matricula']); echo ". Vehículo: "; 
-                                          echo htmlspecialchars($devolucion['modelo']); echo ", ";
-                                          echo htmlspecialchars($devolucion['grupo']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="sucursalesdisponibles" class="form-label"> Oficina de Devolución </label>
-                        <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" name="SucursalesDisponibles">
-                            <option value="" selected>Selecciona una opción</option>
-
-                            <?php 
-                            if (!empty($sucursalesDisponibles)) {
-                                $selected = '';
-
-                                for ($i = 0; $i < $cantidadSucursales; $i++) {  
-                                    // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($devolucion['sIdSucursal']) && $devolucion['sIdSucursal'] == $sucursalesDisponibles[$i]['IdSucursal']) ? 'selected' : '';
-                                    echo "<option value='{$sucursalesDisponibles[$i]['IdSucursal']}' $selected > 
-                                            {$sucursalesDisponibles[$i]['CiudadSucursal']} - {$sucursalesDisponibles[$i]['DireccionSucursal']} 
-                                          </option>";
-                                }
-                            } 
-                            else {
-                                echo "<option value=''> No se encuentran sucursales disponibles. </option>";
+                            for ($i = 0; $i < $cantidadSucursales; $i++) {  
+                                // Lógica para verificar si el grupo debe estar seleccionado
+                                $selected = (!empty($devolucion['sIdSucursal']) && $devolucion['sIdSucursal'] == $sucursalesDisponibles[$i]['IdSucursal']) ? 'selected' : '';
+                                echo "<option value='{$sucursalesDisponibles[$i]['IdSucursal']}' $selected > 
+                                        {$sucursalesDisponibles[$i]['CiudadSucursal']} - {$sucursalesDisponibles[$i]['DireccionSucursal']} 
+                                      </option>";
                             }
-                            ?>
-                        </select>
-                    </div>
+                        } 
+                        else {
+                            echo "<option value=''> No se encuentran sucursales disponibles. </option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="iddevolucion" class="form-label">  </label>
-                        <input type="hidden" class="form-control" id="iddevolucion" name="IdDevolucion" 
-                            value=" <?php echo htmlspecialchars($devolucion['dvIdDevolucion']); ?> ">
-                    </div>
+                <div class="mb-3">
+                    <label for="iddevolucion" class="form-label">  </label>
+                    <input type="hidden" class="form-control" id="iddevolucion" name="IdDevolucion" 
+                        value=" <?php echo htmlspecialchars($devolucion['dvIdDevolucion']); ?> ">
+                </div>
 
-                    <div class="mb-3">
-                        <label for="estadodevolucion" class="form-label">Estado del vehículo durante la Devolución </label>
-                        <input type="text" class="form-control" id="estadodevolucion" name="EstadoDevolucion" 
-                            value="<?php echo htmlspecialchars($devolucion['dvEstadoDevolucion']); ?>">
-                    </div>
+                <div class="mb-3">
+                    <label for="estadodevolucion" class="form-label">Estado del vehículo durante la Devolución </label>
+                    <input type="text" class="form-control" id="estadodevolucion" name="EstadoDevolucion" 
+                        value="<?php echo htmlspecialchars($devolucion['dvEstadoDevolucion']); ?>">
+                </div>
 
-                    <div class="mb-3">
-                        <label for="aclaracionesdevolucion" class="form-label">Aclaraciones sobre el estado del vehículo </label>
-                        <textarea class="form-control" id="aclaracionesdevolucion" name="AclaracionesDevolucion" 
-                            rows="5" cols="33" value="<?php echo htmlspecialchars($devolucion['dvAclaracionesDevolucion']); ?>"><?php echo htmlspecialchars($devolucion['dvAclaracionesDevolucion']); ?></textarea>
-                    </div>
+                <div class="mb-3">
+                    <label for="aclaracionesdevolucion" class="form-label">Aclaraciones sobre el estado del vehículo </label>
+                    <textarea class="form-control" id="aclaracionesdevolucion" name="AclaracionesDevolucion" 
+                        rows="5" cols="33" value="<?php echo htmlspecialchars($devolucion['dvAclaracionesDevolucion']); ?>"><?php echo htmlspecialchars($devolucion['dvAclaracionesDevolucion']); ?></textarea>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="infraccionesdevolucion" class="form-label">Infracciones asociadas a la Devolución </label>
-                        <input type="text" class="form-control" id="infraccionesdevolucion" name="InfraccionesDevolucion" title="Una o múltiples" 
-                            value="<?php echo htmlspecialchars($devolucion['dvInfraccionesDevolucion']); ?>">
-                    </div>
+                <div class="mb-3">
+                    <label for="infraccionesdevolucion" class="form-label">Infracciones asociadas a la Devolución </label>
+                    <input type="text" class="form-control" id="infraccionesdevolucion" name="InfraccionesDevolucion" title="Una o múltiples" 
+                        value="<?php echo htmlspecialchars($devolucion['dvInfraccionesDevolucion']); ?>">
+                </div>
 
-                    <div class="mb-3">
-                        <label for="costosinfracciones" class="form-label">Costos asociados a infracciones</label>
-                        <input type="number" step=".01" class="form-control" id="costosinfracciones" name="CostosInfracciones" title="Cantidad exacta que se debe cubrir con terceros como consecuencia de las infracciones"
-                            value="<?php echo htmlspecialchars($devolucion['dvCostosInfracciones']); ?>">
-                    </div>
+                <div class="mb-3">
+                    <label for="costosinfracciones" class="form-label">Costos asociados a infracciones</label>
+                    <input type="number" step=".01" class="form-control" id="costosinfracciones" name="CostosInfracciones" title="Cantidad exacta que se debe cubrir con terceros como consecuencia de las infracciones"
+                        value="<?php echo htmlspecialchars($devolucion['dvCostosInfracciones']); ?>">
+                </div>
 
-                    <div class="mb-3">
-                        <label for="montoextra" class="form-label">Monto adicional</label>
-                        <input type="number" step=".01" class="form-control" id="montoextra" name="MontoExtra" title="Sin considerar costos asociados a infracciones"
-                            value="<?php echo htmlspecialchars($devolucion['dvMontoExtra']); ?>">
-                    </div>
+                <div class="mb-3">
+                    <label for="montoextra" class="form-label">Monto adicional</label>
+                    <input type="number" step=".01" class="form-control" id="montoextra" name="MontoExtra" title="Sin considerar costos asociados a infracciones"
+                        value="<?php echo htmlspecialchars($devolucion['dvMontoExtra']); ?>">
+                </div>
 
-                    <button type="submit" class="btn btn-dark" name="BotonModificarEntrega" value="modificandoEntrega"; >
-                        Guardar Cambios
-                    </button>
-                </form>
+                <button type="submit" class="btn btn-dark" name="BotonModificarEntrega" value="modificandoEntrega"; >
+                    Guardar Cambios
+                </button>
+            </form>
 
-            </div>
         </div>
+
+        <div style="margin-top: 100px;">
+            <?php require_once "foot.php"; ?>
+        </div>
+        
     </div>
 
 </body>

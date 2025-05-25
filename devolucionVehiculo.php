@@ -376,12 +376,17 @@ include('head.php');
                                     aria-label="Close"></button>
                             </div>
 
+                            <!-- Form -->
                             <form action="Nueva_Devolucion.php" method="post">
                                 <div class="modal-body">
+
                                     <div class="mb-3">
-                                        <label for="selector" class="form-label">Contrato</label>
+                                        <label for="selector" class="form-label" title="<?php echo $CantidadContratos ?> contratos activos encontrados">
+                                            Contrato
+                                        </label>
                                         <select class="form-select" id="selector" name="idContrato" required>
                                             <option value="" selected>Selecciona una opción</option>
+                                            
                                             <?php
                                                 if (!empty($ListadoContratos)) {
                                                    for ($i = 0; $i < $CantidadContratos; $i++) {
@@ -392,10 +397,10 @@ include('head.php');
                                                             DNI: {$ListadoContratos[$i]['DniCliente']} - 
                                                             Vehículo: {$ListadoContratos[$i]['matricula']} {$ListadoContratos[$i]['modelo']} {$ListadoContratos[$i]['grupo']}
                                                             </option>";
-                                                     }
-                                                        } else {
-                                                                echo "<option value=''>No se encontraron contratos</option>";
-                                                                 }
+                                                    }
+                                                } else {
+                                                    echo "<option value=''>No se encontraron contratos</option>";
+                                                }
                                             ?>
                                         </select>
                                     </div>

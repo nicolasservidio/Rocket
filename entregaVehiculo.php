@@ -343,7 +343,9 @@ include('head.php');
                                 <div class="modal-body">
 
                                     <div class="mb-3">
-                                        <label for="idContrato" class="form-label">Contrato</label>
+                                        <label for="idContrato" class="form-label" title="<?php echo $CantidadContratos ?> contratos firmados encontrados">
+                                            Contrato
+                                        </label>
                                         <select class="form-select" aria-label="Selector" id="selector"
                                             name="idContrato"
                                             title="<?php echo $CantidadContratos ?> contratos firmados encontrados"

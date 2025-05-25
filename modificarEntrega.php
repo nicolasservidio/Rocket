@@ -124,108 +124,112 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
 ?>
 
 <body class="bg-light" style="margin: 0 auto;">
-    <div style="min-height: 100%; margin-bottom: 100px;">
-        <div class="wrapper">
+    <div class="wrapper" style="min-height: 100%; margin-bottom: 100px;">
+
+        <?php 
+        
+        include('sidebarGOp.php'); 
+        include('topNavBar.php'); 
+        
+        ?>
+        
+        <div class="p-5 mb-4 bg-white shadow-sm" 
+             style="margin-top: 150px; margin-bottom: 100px; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            
             <?php 
-            
-            include('sidebarGOp.php'); 
-            include('topNavBar.php'); 
-            
+
+            if ($mensajeError) { ?>
+                <div class="alert alert-danger mt-3"> 
+                    <?php 
+                        echo "Error al intentar modificar la entrega. <br><br>"; 
+                        echo $mensajeError; 
+                    ?>        
+                </div>
+            <?php 
+            } 
             ?>
+
+            <h5 class="mb-4 text-secondary">
+                <strong>Modificar oficina de retiro asociada a la la Entrega</strong>
+            </h5>
             
-            <div class="p-5 mb-4 bg-white shadow-sm" 
-                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
-                
-                <?php 
+            <!-- Formulario para modificar el contrato -->
+            <form method="POST">
 
-                if ($mensajeError) { ?>
-                    <div class="alert alert-danger mt-3"> 
+                <div class="mb-3">
+                    <label for="idcontrato" class="form-label">Nº Contrato</label>
+                    <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
+                        value="Identificador del contrato: <?php echo htmlspecialchars($entrega['evIdContrato']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fechaentrega" class="form-label">Fecha de Entrega</label>
+                    <input type="date" class="form-control" id="fechaentrega" name="FechaEntrega" 
+                        value="<?php echo htmlspecialchars($entrega['evFechaEntrega']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="horaentrega" class="form-label">Hora de Entrega</label>
+                    <input type="text" class="form-control" id="horaentrega" name="HoraEntrega" 
+                        value="<?php echo htmlspecialchars($entrega['evHoraEntrega']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cliente" class="form-label">Cliente</label>
+                    <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
+                        value="<?php echo htmlspecialchars($entrega['cApellidoCliente']); echo ", "; 
+                                      echo htmlspecialchars($entrega['cNombreCliente']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="documento" class="form-label">Documento del Cliente</label>
+                    <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
+                        value=" <?php echo htmlspecialchars($entrega['cDniCliente']); ?> " disabled>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="vehiculo" class="form-label">Vehículo</label>
+                    <input type="text" class="form-control" id="vehiculo" name="VehiculoEntregado" 
+                        value="<?php  echo "Patente: "; echo htmlspecialchars($entrega['matricula']); echo ". Vehículo: "; 
+                                      echo htmlspecialchars($entrega['modelo']); echo ", ";
+                                      echo htmlspecialchars($entrega['grupo']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sucursalesdisponibles" class="form-label"> Oficina de Retiro </label>
+                    <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" name="SucursalesDisponibles">
+                        <option value="" selected>Selecciona una opción</option>
+
                         <?php 
-                            echo "Error al intentar modificar la entrega. <br><br>"; 
-                            echo $mensajeError; 
-                        ?>        
-                    </div>
-                <?php 
-                } 
-                ?>
+                        if (!empty($sucursalesDisponibles)) {
+                            $selected = '';
 
-                <h5 class="mb-4 text-secondary">
-                    <strong>Modificar oficina de retiro asociada a la la Entrega</strong>
-                </h5>
-                
-                <!-- Formulario para modificar el contrato -->
-                <form method="POST">
-
-                    <div class="mb-3">
-                        <label for="idcontrato" class="form-label">Nº Contrato</label>
-                        <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
-                            value="Identificador del contrato: <?php echo htmlspecialchars($entrega['evIdContrato']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fechaentrega" class="form-label">Fecha de Entrega</label>
-                        <input type="date" class="form-control" id="fechaentrega" name="FechaEntrega" 
-                            value="<?php echo htmlspecialchars($entrega['evFechaEntrega']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="horaentrega" class="form-label">Hora de Entrega</label>
-                        <input type="text" class="form-control" id="horaentrega" name="HoraEntrega" 
-                            value="<?php echo htmlspecialchars($entrega['evHoraEntrega']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="cliente" class="form-label">Cliente</label>
-                        <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
-                            value="<?php echo htmlspecialchars($entrega['cApellidoCliente']); echo ", "; 
-                                          echo htmlspecialchars($entrega['cNombreCliente']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="documento" class="form-label">Documento del Cliente</label>
-                        <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                            value=" <?php echo htmlspecialchars($entrega['cDniCliente']); ?> " disabled>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="vehiculo" class="form-label">Vehículo</label>
-                        <input type="text" class="form-control" id="vehiculo" name="VehiculoEntregado" 
-                            value="<?php  echo "Patente: "; echo htmlspecialchars($entrega['matricula']); echo ". Vehículo: "; 
-                                          echo htmlspecialchars($entrega['modelo']); echo ", ";
-                                          echo htmlspecialchars($entrega['grupo']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="sucursalesdisponibles" class="form-label"> Oficina de Retiro </label>
-                        <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" name="SucursalesDisponibles">
-                            <option value="" selected>Selecciona una opción</option>
-
-                            <?php 
-                            if (!empty($sucursalesDisponibles)) {
-                                $selected = '';
-
-                                for ($i = 0; $i < $cantidadSucursales; $i++) {  
-                                    // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($entrega['sIdSucursal']) && $entrega['sIdSucursal'] == $sucursalesDisponibles[$i]['IdSucursal']) ? 'selected' : '';
-                                    echo "<option value='{$sucursalesDisponibles[$i]['IdSucursal']}' $selected > 
-                                            {$sucursalesDisponibles[$i]['CiudadSucursal']} - {$sucursalesDisponibles[$i]['DireccionSucursal']} 
-                                          </option>";
-                                }
-                            } 
-                            else {
-                                echo "<option value=''> No se encuentran sucursales disponibles. </option>";
+                            for ($i = 0; $i < $cantidadSucursales; $i++) {  
+                                // Lógica para verificar si el grupo debe estar seleccionado
+                                $selected = (!empty($entrega['sIdSucursal']) && $entrega['sIdSucursal'] == $sucursalesDisponibles[$i]['IdSucursal']) ? 'selected' : '';
+                                echo "<option value='{$sucursalesDisponibles[$i]['IdSucursal']}' $selected > 
+                                        {$sucursalesDisponibles[$i]['CiudadSucursal']} - {$sucursalesDisponibles[$i]['DireccionSucursal']} 
+                                      </option>";
                             }
-                            ?>
-                        </select>
-                    </div>
+                        } 
+                        else {
+                            echo "<option value=''> No se encuentran sucursales disponibles. </option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
-                    <button type="submit" class="btn btn-dark" name="BotonModificarEntrega" value="modificandoEntrega"; >
-                        Guardar Cambios
-                    </button>
-                </form>
+                <button type="submit" class="btn btn-dark" name="BotonModificarEntrega" value="modificandoEntrega"; >
+                    Guardar Cambios
+                </button>
+            </form>
 
-            </div>
         </div>
+
+        <div style="margin-top: 100px;">
+            <?php require_once "foot.php"; ?>
+        </div>
+
     </div>
 
 </body>
