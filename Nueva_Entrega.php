@@ -69,18 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rs = mysqli_query($MiConexion, $SQL_EntregaVehiculo);
 
     if (!$rs) {
-        $mensaje = "Error al agregar la entrega a cliente: ";
+        $mensaje = "Error al registrar la entrega a cliente";
         header("Location: entregaVehiculo.php?mensaje=" . urlencode($mensaje));
         exit();
     }
 
     else {
-        $mensaje = "Entrega a cliente agregada exitosamente. ";
+        $mensaje = "Entrega a cliente registrada exitosamente. ";
 
         // A continuación debemos cambiar el estado del contrato, de "Firmado" a "Activo"
         $SQL_Update = "UPDATE `contratos-alquiler` 
-        SET idEstadoContrato=4 
-        WHERE idContrato=$idContrato; ";
+                        SET idEstadoContrato=4 
+                        WHERE idContrato=$idContrato; ";
 
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);
 
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 alert('$mensaje');
                 window.location.href = 'entregaVehiculo.php?NumeroContrato={$idContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&EntregaDesde=&EntregaHasta=&BotonFiltrar=FiltrandoEntregas';
             </script>";
-            exit();            
+            exit(); 
         }
     }
 

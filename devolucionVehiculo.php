@@ -381,12 +381,12 @@ include('head.php');
                                 <div class="modal-body">
 
                                     <div class="mb-3">
-                                        <label for="selector" class="form-label" title="<?php echo $CantidadContratos ?> contratos activos encontrados">
+                                        <label for="selector" class="form-label" title="<?php echo $CantidadContratos ?> contratos encontrados (activos y renovados)">
                                             Contrato
                                         </label>
                                         <select class="form-select" id="selector" name="idContrato" required>
                                             <option value="" selected>Selecciona una opción</option>
-                                            
+
                                             <?php
                                                 if (!empty($ListadoContratos)) {
                                                    for ($i = 0; $i < $CantidadContratos; $i++) {

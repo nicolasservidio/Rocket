@@ -80,10 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$rs) {
         $mensaje = "Error al registrar la devolucion del cliente";
+        header("Location: devolucionVehiculo.php?mensaje=" . urlencode($mensaje));
+        exit();
     }
 
     else {
-        $mensaje = "Devolucion del cliente registrada exitosamente";
+        $mensaje = "Devolucion del cliente registrada exitosamente. ";
 
         // A continuación debemos cambiar el estado del contrato, de "Activo" o "Renovado" a "Finalizado"
         $SQL_Update = "UPDATE `contratos-alquiler` 
@@ -93,14 +95,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);
 
         if (!$recordUpdate) {
+
             //si surge un error, finalizo la ejecucion del script con un mensaje
-            die('<h4>Error al intentar cambiar el estado del contrato a Finalizado.</h4>');
+            $mensaje = "Error al intentar cambiar el estado del contrato a Finalizado.";
+            header("Location: devolucionVehiculo.php?mensaje=" . urlencode($mensaje));
+            exit();
+        }
+        else {
+
+            // Redirigir con un mensaje
+            $mensaje.="El estado del contrato pasó a Finalizado. Número identificador del contrato: {$idContrato}. ";
+            echo "<script> 
+                alert('$mensaje');
+                window.location.href = 'devolucionVehiculo.php?NumeroContrato={$idContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&DevolucionDesde=&DevolucionHasta=&BotonFiltrar=FiltrandoDevolucion';
+            </script>";
+            exit(); 
         }
     }
 
-    // Redirigir con un mensaje
-    header("Location: devolucionVehiculo.php?mensaje=" . urlencode($mensaje));
-    exit();
 }
 
 ?>
