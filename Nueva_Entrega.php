@@ -70,10 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$rs) {
         $mensaje = "Error al agregar la entrega a cliente: ";
+        header("Location: entregaVehiculo.php?mensaje=" . urlencode($mensaje));
+        exit();
     }
 
     else {
-        $mensaje = "Entrega a cliente agregada exitosamente.";
+        $mensaje = "Entrega a cliente agregada exitosamente. ";
 
         // A continuación debemos cambiar el estado del contrato, de "Firmado" a "Activo"
         $SQL_Update = "UPDATE `contratos-alquiler` 
@@ -83,14 +85,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $recordUpdate = mysqli_query($MiConexion, $SQL_Update);
 
         if (!$recordUpdate) {
+
             //si surge un error, finalizo la ejecucion del script con un mensaje
-            die('<h4>Error al intentar modificar el estado del contrato a Activo.</h4>');
+            $mensaje = "Error al intentar modificar el estado del contrato a Activo.";
+            header("Location: entregaVehiculo.php?mensaje=" . urlencode($mensaje));
+            exit();
+        }
+        else {
+
+            // Redirigir con un mensaje
+            $mensaje.="El estado del contrato pasó a Activo. Número identificador del contrato: {$idContrato}. ";
+            echo "<script> 
+                alert('$mensaje');
+                window.location.href = 'entregaVehiculo.php?NumeroContrato={$idContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&EntregaDesde=&EntregaHasta=&BotonFiltrar=FiltrandoEntregas';
+            </script>";
+            exit();            
         }
     }
 
-    // Redirigir con un mensaje
-    header("Location: entregaVehiculo.php?mensaje=" . urlencode($mensaje));
-    exit();
 }
 
 ?>

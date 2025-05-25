@@ -259,12 +259,14 @@ include('head.php');
                         </button>
 
                         <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarEntrega()" disabled>
-                            Modificar oficina de retiro
+                            Modificar 
                         </button>
 
-                        <a href="ReporteEntregas.php"> <button class="btn btn-info">
+                        <a href="ReporteEntregas.php"> 
+                            <button class="btn btn-info">
                                 Imprimir listado
-                            </button></a>
+                            </button>
+                        </a>
                     </div>
 
                 </div>

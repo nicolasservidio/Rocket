@@ -98,6 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
     $idSucursal = $_POST['SucursalesDisponibles']; // La nueva sucursal seleccionada del combo box
     $identificadorContrato = $entrega['evIdContrato'];
 
+    $nuevoEstadoContrato = $_POST['nuevoEstadoContrato'];
+
+    if ($nuevoEstadoContrato == "R") {
+        $nuevoEstadoContrato = "5"; // "Renovado"
+    }
+    else {
+        $nuevoEstadoContrato = "4";  // "Activo"
+    }
 
     $ModificacionSucursal = "UPDATE vehiculos 
                                 SET idSucursal = $idSucursal 
@@ -113,13 +121,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
     }
     else {
 
-        // Redirigir después de la actualización
-        $mensajeError = "Se modificó exitosamente la oficina de retiro (sucursal) en la que se entregará el vehículo al cliente. Número de contrato asociado: {$identificadorContrato}. ";
-        echo "<script> 
-            alert('$mensajeError');
-            window.location.href = 'entregaVehiculo.php?NumeroContrato={$identificadorContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&EntregaDesde=&EntregaHasta=&BotonFiltrar=FiltrandoEntregas';
-        </script>";
-        exit();
+        // Actualización del estado del contrato
+        $ModificacionEstadoContrato = "UPDATE `contratos-alquiler` 
+                                SET idEstadoContrato = $nuevoEstadoContrato 
+                                WHERE idContrato = $identificadorContrato; "; 
+
+        $rs = mysqli_query($conexion, $ModificacionEstadoContrato);
+
+        if (!$rs) {
+
+            $mensajeError = "No se pudo modificar el estado del contrato";
+            header("Location: entregaVehiculo.php?mensaje=" . urlencode($mensajeError));
+            exit();
+        }
+        else {
+
+            // Redirigir después de la actualización
+            $mensajeError = "Número identificador del contrato modificado: {$identificadorContrato}. ";
+            echo "<script> 
+                alert('$mensajeError');
+                window.location.href = 'entregaVehiculo.php?NumeroContrato={$identificadorContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&EntregaDesde=&EntregaHasta=&BotonFiltrar=FiltrandoEntregas';
+            </script>";
+            exit();
+        }
     }
 
 }
@@ -154,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
             ?>
 
             <h5 class="mb-4 text-secondary">
-                <strong>Modificar oficina de retiro asociada a la la Entrega</strong>
+                <strong>Modificar Entrega</strong>
             </h5>
             
             <!-- ALERTA -->
@@ -172,17 +196,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
                 <?php 
                     // Si el estado del contrato es "Renovado" o "Finalizado", alerta señala que no se pueden realizar modificaciones 
                     if ($entrega['ecEstadoContrato'] == "Renovado" || $entrega['ecEstadoContrato'] == "Finalizado") {
-                        echo "<br><h6 class='mb-4' style='color: #d62606;' >El vehículo ya fue entregado o el contrato finalizó </h6>";
+                        echo "<br><h6 class='mb-4' style='color: #d62606;' >No se pueden realizar cambios porque el contrato ya fue renovado o el contrato finalizó </h6>";
                     }
                     // Caso contrario, campo habilitado y alerta señala que debe llenarse obligatoriamente:
                     else { 
-                        echo "<br><h6 class='mb-4 text-secondary' >Es obligatorio especificar la oficina de retiro </h6>"; 
+                        echo "<br><h6 class='mb-4 text-secondary' >Es obligatorio especificar la oficina de retiro y el estado del contrato </h6>"; 
                     }
                 ?>     
             </div><br><br>
 
 
-            <!-- Formulario para modificar la oficina de retiro -->
+            <!-- Formulario para modificar la entrega -->
             <form method="POST">
 
                 <div class="mb-3">
@@ -257,6 +281,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
                             echo "<option value=''> No se encuentran sucursales disponibles. </option>";
                         }
                         ?>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nuevoestadocontrato" class="form-label"> Estado del Contrato </label>
+                    <select class="form-select" aria-label="Selector" id="nuevoestadocontrato" name="nuevoEstadoContrato" 
+                        <?php 
+                            // Si el estado del contrato es "Renovado" o "Finalizado", entonces 
+                            // no se puede cambiar el estado del contrato. Campo deshabilitado:
+                            if ($entrega['ecEstadoContrato'] == "Renovado" || $entrega['ecEstadoContrato'] == "Finalizado") {
+                                echo "title='El vehículo ya fue renovado o el contrato finalizó' disabled";
+                            }
+                            // caso contrario obligatorio llenar el campo 
+                            else {                                    
+                                echo "required";
+                            }
+                        ?> 
+                    >
+                        <option value="">Selecciona una opción</option>
+                        <option value="<?php echo $entrega['ecEstadoContrato']; ?>" selected><?php echo $entrega['ecEstadoContrato']; ?></option>
+                        <option value="R">Renovado</option>
+
                     </select>
                 </div>
 
