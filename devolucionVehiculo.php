@@ -570,7 +570,7 @@ include('head.php');
         });
     </script>
 
-    <!-- Capturar fecha de finalización del contrato para el modal de registro de un nuevo contrato, con AJAX -->
+    <!-- Capturar fecha de finalización del contrato para el modal de registro de una nueva devolución (con AJAX) -->
     <script>
         $(document).ready(function() {
             $('#selectorDevolucion').on('change', function() {
@@ -578,7 +578,7 @@ include('head.php');
                 if (idContrato) {
                     $.ajax({
                         type: 'POST',
-                        url: 'obtenerFechaContrato.php',
+                        url: 'obtenerFechaFinContrato.php',
                         data: { idContrato: idContrato },
                         success: function(response) {
                             if (response) {

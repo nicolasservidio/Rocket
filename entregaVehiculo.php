@@ -380,7 +380,7 @@ include('head.php');
                                         <label for="idContrato" class="form-label" title="<?php echo $CantidadContratos ?> contratos firmados encontrados">
                                             Contrato
                                         </label>
-                                        <select class="form-select" aria-label="Selector" id="selector"
+                                        <select class="form-select" aria-label="Selector" id="selectorEntrega"
                                             name="idContrato"
                                             title="<?php echo $CantidadContratos ?> contratos firmados encontrados"
                                             required>
@@ -414,7 +414,14 @@ include('head.php');
                                     -->
 
                                     <div class="mb-3">
-                                        <label for="fechaentrega" class="form-label">Fecha de Entrega</label>
+                                        <label for="fechainiciocontrato" class="form-label">Fecha de Inicio del contrato</label>
+                                        <input type="text" class="form-control" id="fechainiciocontrato"
+                                            name="fechaInicioContrato" value="La fecha registrada en el contrato aparecerá aquí" 
+                                            title="La fecha registrada en el contrato no tiene por qué coincidir con fecha real de entrega" readonly>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="fechaentrega" class="form-label">Fecha de Entrega efectiva</label>
                                         <input type="date" class="form-control" id="fechaentrega" name="fechaentrega"
                                             value="" required>
                                     </div>
@@ -455,7 +462,7 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idCliente" class="form-label">Seleccionar cliente</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" name="idCliente"
+                                        <select class="form-select" aria-label="Selector" id="selectorCliente" name="idCliente"
                                             title="<?php echo $CantidadClientes ?> clientes encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
@@ -563,12 +570,38 @@ include('head.php');
     <script>
     $(document).ready(function() {
         // Inicializar Select2 en el select del modal de entrega
-        $('#selector').select2({
+        $('#selectorEntrega').select2({
             dropdownParent: $('#nuevoRegistroModal'),
             width: '100%',
             minimumResultsForSearch: 0 // Forzar que siempre aparezca el buscador
         });
     });
+    </script>
+
+    <!-- Capturar fecha de inicio del contrato para el modal de registro de una nueva entrega (con AJAX) -->
+    <script>
+        $(document).ready(function() {
+            $('#selectorEntrega').on('change', function() {
+                var idContrato = $(this).val();
+                if (idContrato) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'obtenerFechaInicioContrato.php',
+                        data: { idContrato: idContrato },
+                        success: function(response) {
+                            if (response) {
+                                $('#fechainiciocontrato').val(response);
+                            } 
+                            else {
+                                $('#fechainiciocontrato').val('');
+                            }
+                        }
+                    });
+                } else {
+                    $('#fechainiciocontrato').val('');
+                }
+            });
+        });
     </script>
 
     <!-- Bootstrap JS -->
