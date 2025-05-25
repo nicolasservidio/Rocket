@@ -381,10 +381,10 @@ include('head.php');
                                 <div class="modal-body">
 
                                     <div class="mb-3">
-                                        <label for="selector" class="form-label" title="<?php echo $CantidadContratos ?> contratos encontrados (activos y renovados)">
+                                        <label for="selectorDevolucion" class="form-label" title="<?php echo $CantidadContratos ?> contratos encontrados (activos y renovados)">
                                             Contrato
                                         </label>
-                                        <select class="form-select" id="selector" name="idContrato" required>
+                                        <select class="form-select" id="selectorDevolucion" name="idContrato" required>
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php
@@ -406,7 +406,14 @@ include('head.php');
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                                        <label for="fechafincontrato" class="form-label">Fecha de Finalización del contrato</label>
+                                        <input type="text" class="form-control" id="fechafincontrato"
+                                            name="fechaFinContrato" value="La fecha registrada en el contrato aparecerá aquí" 
+                                            title="La fecha registrada en el contrato no tiene por qué coincidir con fecha real de devolución" readonly>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="fechadevolucion" class="form-label">Fecha de Devolución efectiva</label>
                                         <input type="date" class="form-control" id="fechadevolucion"
                                             name="fechadevolucion" required>
                                     </div>
@@ -428,18 +435,6 @@ include('head.php');
                     </div>
                 </div>
 
-                <!-- Inicialización de Select2 -->
-                <script>
-                $(document).ready(function() {
-                    $('#selector').select2({
-                        dropdownParent: $('#nuevoRegistroModal'),
-                        width: '100%',
-                        minimumResultsForSearch: 0 // ⚠️ Forzar siempre el buscador aunque haya pocos elementos
-                    });
-                });
-                </script>
-
-
                 <!-- Modal para Generar reporte de Devolucion de vehículos por Cliente -->
                 <div class="modal fade" id="reporteDevolucionPorClienteModal" tabindex="-1"
                     aria-labelledby="reporteDevolucionPorClienteModalLabel" aria-hidden="true">
@@ -458,7 +453,7 @@ include('head.php');
 
                                     <div class="mb-3">
                                         <label for="idCliente" class="form-label">Seleccionar cliente</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" name="idCliente"
+                                        <select class="form-select" aria-label="Selector" id="selectorCliente" name="idCliente"
                                             title="<?php echo $CantidadClientes ?> clientes encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
@@ -565,14 +560,40 @@ include('head.php');
 
     <!-- Funcion para buscador en dropdown -->
     <script>
-    $(document).ready(function() {
-        // Inicializar Select2 dentro del modal
-        $('#selector').select2({
-            dropdownParent: $('#nuevoRegistroModal'),
-            width: '100%',
-            minimumResultsForSearch: 0 // Forzar que siempre aparezca el buscador
+        $(document).ready(function() {
+            // Inicializar Select2 dentro del modal
+            $('#selectorDevolucion').select2({
+                dropdownParent: $('#nuevoRegistroModal'),
+                width: '100%',
+                minimumResultsForSearch: 0 // ⚠️ Forzar siempre el buscador aunque haya pocos elementos (forzar que siempre aparezca el buscador)
+            });
         });
-    });
+    </script>
+
+    <!-- Capturar fecha de finalización del contrato para el modal de registro de un nuevo contrato, con AJAX -->
+    <script>
+        $(document).ready(function() {
+            $('#selectorDevolucion').on('change', function() {
+                var idContrato = $(this).val();
+                if (idContrato) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'obtenerFechaContrato.php',
+                        data: { idContrato: idContrato },
+                        success: function(response) {
+                            if (response) {
+                                $('#fechafincontrato').val(response);
+                            } 
+                            else {
+                                $('#fechafincontrato').val('');
+                            }
+                        }
+                    });
+                } else {
+                    $('#fechafincontrato').val('');
+                }
+            });
+        });
     </script>
 
     <!-- Bootstrap JS -->
