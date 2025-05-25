@@ -374,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
                                 echo "disabled";
                             }
                         ?>
-                        >
+                >
                     Guardar Cambios
                 </button>
             </form>
@@ -386,8 +386,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
         </div>
 
     </div>
-
-
 
 </body>
 </html>
