@@ -132,53 +132,21 @@ function Procesar_ConsultaDevolucion() {
     $_GET['DocContrato'] = strip_tags($_GET['DocContrato']);
 
     // Se cambia formato de las fechas:
-    $fechaEspanol = $_GET['DevolucionDesde'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['DevolucionDesde'] = $fechaIngles;
-
-    $fechaEspanol = $_GET['DevolucionHasta'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['DevolucionHasta'] = $fechaIngles;
+    // Es mejor hacerlo de este modo que de la forma especificada inicialmente:
+    if (!empty($_GET['DevolucionDesde'])) {
+        $_GET['DevolucionDesde'] = date("Y-m-d", strtotime($_GET['DevolucionDesde']));
+    } 
+    if (!empty($_GET['DevolucionHasta'])) {
+        $_GET['DevolucionHasta'] = date("Y-m-d", strtotime($_GET['DevolucionHasta']));
+    } 
 
 }
 
 
 function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni, $devolucionDesde, $devolucionHasta, $conexion) {
 
-    if (empty($numContrato)) {
-        $numContrato = "ZZZZZZ";
-    }
-    if (empty($matricula)) {
-        $matricula = "&&&&&&";
-    }
-    if (empty($apellido)) {
-        $apellido = "9999999";
-    }
-    if (empty($nombre)) {
-        $nombre = "9999999";
-    }
-    if (empty($dni)) {
-        $dni = "ZZZZZZ";
-    }
-
-    if (empty($devolucionDesde)) {
-        $devolucionDesde = "ZZZZZZ";
-    }
-    if (empty($devolucionHasta)) {
-        $devolucionHasta = "ZZZZZZ";
-    }
-
     $Listado = array();
 
-    //1) genero la consulta que deseo
     $SQL = "SELECT e.idDevolucion as eIdDevolucion,
                    e.fechaDevolucion as eFechaDevolucion,
                    e.horaDevolucion as eHoraDevolucion,
@@ -230,14 +198,34 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
             AND v.idGrupoVehiculo = g.idGrupo 
             AND v.idSucursal = s.idSucursal 
             AND ca.idDetalleContrato = dc.idDetalleContrato 
-            AND ca.idEstadoContrato = ec.idEstadoContrato 
-            AND (ca.idContrato = '$numContrato%' 
-                OR v.matricula LIKE '$matricula%' 
-                OR c.apellidoCliente LIKE '$apellido%' 
-                OR c.nombreCliente LIKE '$nombre%' 
-                OR c.dniCliente LIKE '$dni%' 
-                OR (e.fechaDevolucion BETWEEN '$devolucionDesde%' AND '$devolucionHasta%')) 
-            ORDER BY e.fechaDevolucion, e.horaDevolucion, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
+            AND ca.idEstadoContrato = ec.idEstadoContrato ";
+
+            // Concateno el resto de la consulta para poder agregar condicionales
+            if (!empty($numContrato)) {
+                $SQL .= " AND ca.idContrato = '$numContrato' ";
+            }
+            if (!empty($matricula)) {
+                $SQL .= " AND v.matricula LIKE '$matricula%' ";
+            }
+            if (!empty($apellido)) {
+                $SQL .= " AND c.apellidoCliente LIKE '%$apellido%' ";
+            }
+            if (!empty($nombre)) {
+                $SQL .= " AND c.nombreCliente LIKE '%$nombre%' ";
+            }
+            if (!empty($dni)) {
+                $SQL .= " AND c.dniCliente LIKE '$dni%' ";
+            }
+
+            if (!empty($devolucionDesde)) {
+                $SQL .= " AND e.fechaDevolucion >= '$devolucionDesde' ";
+            }
+            if (!empty($devolucionHasta)) {
+                $SQL .= " AND e.fechaDevolucion <= '$devolucionHasta' ";
+            }
+
+            // Agrego el orden a la consulta sql
+            $SQL .= " ORDER BY e.fechaDevolucion, e.horaDevolucion, c.apellidoCliente, c.nombreCliente, c.dniCliente; "; 
 
 
     $rs = mysqli_query($conexion, $SQL);
