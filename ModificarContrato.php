@@ -99,8 +99,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
     $idVehiculo = $_POST['VehiculosDisponibles'];
     $estadoContrato = $_POST['EstadoDelContrato']; 
     $precioPorDia = $_POST['PrecioPorDia'];  
-//    $fecharetiro = $_POST['FechaRetiro'];
-//    $fechadevolucion = $_POST['FechaDevolucion'];
+
+    // Validaciones de fechas
+    $errores = [];
+
+    if (empty($_POST['FechaRetiro'])) {
+        $errores[] = "La fecha de retiro es obligatoria.";
+    }
+    if (empty($_POST['FechaDevolucion'])) {
+        $errores[] = "La fecha de devolución es obligatoria.";
+    }
+    if (!empty($_POST['FechaRetiro']) && !empty($_POST['FechaDevolucion'])) {
+        $fechaRetiro = new DateTime($_POST['FechaRetiro']);
+        $fechaDevolucion = new DateTime($_POST['FechaDevolucion']);
+
+        if ($fechaRetiro > $fechaDevolucion) {
+            $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
+        }
+    }
+
+    // Si hay errores, redirigir con el mensaje de error
+    if (!empty($errores)) {
+        $mensajeDeError = implode(' ', $errores);
+        echo "<script> 
+            alert('$mensajeDeError');
+            window.location.href = 'contratosAlquiler.php';
+        </script>";
+        exit();
+    }
 
     // Se cambia formato de las fechas y se almacenan para el update:
     $fechaEspanol = $_POST['FechaRetiro'];
@@ -133,14 +159,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
     $diferenciaDias = intval($diferenciaDias);
 /*    $horas_totales = $intervalo->format('%d:%H:%i'); */
 
-
     // Monto total:
     $montoTotal = $diferenciaDias * $precioPorDia;
 
 
     require_once 'funciones/CRUD-Reservas.php';
     
-    if ($idVehiculo) {  // Aquí se corroboraba fecha. Registro para implementar más adelante: "Corroborar_FechasReserva($fecharetiro, $fechadevolucion) == true" 
+    if ($idVehiculo) {   
 
         // Actualizar los datos del detalle del contrato
         $ModificacionDetalleContrato = "UPDATE `detalle-contratos` 
@@ -154,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
 
         if (!$rs) {
 
-            $mensajeError = "No se pudo acceder al detalle del contrato en la base de datos.";
+            $mensajeError = "No se pudo acceder al detalle del contrato en la base de datos";
             header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensajeError));
             exit();
         }
@@ -173,14 +198,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
 
             if (!$rs) {
 
-                $mensajeError = "No se pudo acceder al contrato en la base de datos.";
+                $mensajeError = "No se pudo acceder al encabezado del contrato en la base de datos";
                 header("Location: contratosAlquiler.php?mensaje=" . urlencode($mensajeError));
                 exit();
             }
             else {
 
                 // Redirigir después de la actualización
-                header("Location: contratosAlquiler.php?mensaje=Contrato modificado exitosamente! ");
+                $mensajeError = "Contrato {$idContrato} modificado exitosamente.";
+                echo "<script> 
+                    alert('$mensajeError');
+                    window.location.href = 'contratosAlquiler.php?NumeroContrato={$idContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&PrecioDiaContrato=&CantidadDiasContrato=&MontoTotalContrato=&RetiroDesde=&RetiroHasta=&DevolucionDesde=&DevolucionHasta=&BotonFiltrar=FiltrandoContratos';
+                </script>";
                 exit();
             }
         }
@@ -196,137 +225,236 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
 ?>
 
 <body class="bg-light" style="margin: 0 auto;">
-    <div style="min-height: 100%; margin-bottom: 100px;">
-        <div class="wrapper">
+    <div class="wrapper" style="min-height: 100%; margin-bottom: 100px;">
+
+        <?php 
+        
+        include('sidebarGOp.php'); 
+        include('topNavBar.php'); 
+        
+        ?>
+        
+        <div class="p-5 mb-4 bg-white shadow-sm" 
+             style="margin-top: 150px; margin-bottom: 100px; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            
             <?php 
-            
-            include('sidebarGOp.php'); 
-            include('topNavBar.php'); 
-            
+
+            if ($mensajeError) { ?>
+                <div class="alert alert-danger mt-3"> 
+                    <?php 
+                        echo "Error al intentar modificar el contrato. <br><br>"; 
+                        echo $mensajeError; 
+                    ?>        
+                </div>
+            <?php } 
             ?>
-            
-            <div class="p-5 mb-4 bg-white shadow-sm" 
-                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
-                
+
+            <h5 class="mb-4 text-secondary"><strong>Modificar Contrato</strong></h5>
+
+            <!-- ALERTA -->
+            <?php 
+                $alerta = "";
+
+                if($contrato['ecEstadoContrato'] == "En Preparación") {
+                    $alerta = "success";
+                }
+                else {
+                    $alerta = "danger";
+                }
+            ?> 
+            <div class="alert alert-<?php echo $alerta; ?> mt-5"> 
                 <?php 
+                    // Si el estado es "En Preparación", entonces bligatorio llenar todos los campos
+                    if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                        echo "<br><h6 class='mb-4 text-secondary' >Todos los campos son obligatorios </h6>";
+                    }
+                    // Caso contrario (contrato firmado, cancelado, activo, etc), campos deshabilitados:
+                    else {
+                        echo "<br><h6 class='mb-4' style='color: #d62606;' >El contrato ya fue firmado o cancelado </h6>";
+                    }
+                ?>     
+            </div><br><br>
 
-                if ($mensajeError) { ?>
-                    <div class="alert alert-danger mt-3"> 
+            <!-- Formulario para modificar el contrato -->
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label for="idcontrato" class="form-label">Contrato</label>
+                    <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
+                        value="Identificador del contrato: <?php echo htmlspecialchars($contrato['cIdContrato']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cliente" class="form-label">Cliente</label>
+                    <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
+                        value="<?php echo htmlspecialchars($contrato['clApellidoCliente']); echo ", "; 
+                                      echo htmlspecialchars($contrato['clNombreCliente']); ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="documento" class="form-label">Documento del Cliente</label>
+                    <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
+                        value=" <?php echo htmlspecialchars($contrato['clDniCliente']); ?> " disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
+                    <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" 
+                            name="VehiculosDisponibles" 
+                            <?php 
+                                // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                                if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                    echo "required";
+                                }
+                                // Caso contrario (contrato firmado, cancelado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                }
+                            ?>
+                    >
+                        <option value="" selected>Selecciona una opción</option>
+
                         <?php 
-                            echo "Error al intentar modificar el contrato. <br><br>"; 
-                            echo $mensajeError; 
-                        ?>        
-                    </div>
-                <?php } 
-                ?>
+                        if (!empty($vehiculosDisponibles)) {
+                            $selected = '';
 
-                <h5 class="mb-4 text-secondary"><strong>Modificar Contrato</strong></h5>
-                
-                <!-- Formulario para modificar el contrato -->
-                <form method="POST">
-
-                    <div class="mb-3">
-                        <label for="idcontrato" class="form-label">Contrato</label>
-                        <input type="text" class="form-control" id="idcontrato" name="IdContrato" 
-                            value="Identificador del contrato: <?php echo htmlspecialchars($contrato['cIdContrato']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="cliente" class="form-label">Cliente</label>
-                        <input type="text" class="form-control" id="cliente" name="NombreCompletoCliente" 
-                            value="<?php echo htmlspecialchars($contrato['clApellidoCliente']); echo ", "; 
-                                          echo htmlspecialchars($contrato['clNombreCliente']); ?>" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="documento" class="form-label">Documento del Cliente</label>
-                        <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                            value=" <?php echo htmlspecialchars($contrato['clDniCliente']); ?> " disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
-                        <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" name="VehiculosDisponibles" >
-                            <option value="" selected>Selecciona una opción</option>
-
-                            <?php 
-                            if (!empty($vehiculosDisponibles)) {
-                                $selected = '';
-
-                                for ($i = 0; $i < $cantidadVehiculos; $i++) {  
-                                    // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($contrato['vIdVehiculo']) && $contrato['vIdVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
-                                    echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
-                                            MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
-                                          </option>";
-                                }
-                            } 
-                            else {
-                                echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
+                            for ($i = 0; $i < $cantidadVehiculos; $i++) {  
+                                // Lógica para verificar si el grupo debe estar seleccionado
+                                $selected = (!empty($contrato['vIdVehiculo']) && $contrato['vIdVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
+                                echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
+                                        MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
+                                      </option>";
                             }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
-                        <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                            value="<?php echo htmlspecialchars($contrato['cFechaInicioContrato']); ?>" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
-                        <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value="<?php echo htmlspecialchars($contrato['cFechaFinContrato']); ?>" required>
-                    </div>
-
-                    <style>
-                        .input-container {
-
-                        display: flex;
-                        align-items: center;
+                        } 
+                        else {
+                            echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
                         }
-                    </style>
+                        ?>
+                    </select>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="preciopordia" class="form-label">Precio por día</label>
-                        <div class="input-container"> 
-                            <input type="number" min="20" max="999999999" step="0.01" class="form-control" style="max-width: 120px;"
-                                   id="preciopordia" name="PrecioPorDia" title="Mayor a $ 20 USD"
-                                   value="<?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?>" required> 
-                            <span style="padding: 0 0 0 10px;"> $ USD por día </span>
-                        </div> 
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="estadocontrato" class="form-label"> Estado del Contrato </label>
-                        <select class="form-select" aria-label="Selector" id="estadocontrato" name="EstadoDelContrato" >
-                            <option value="" selected>Selecciona una opción</option>
-
-                            <?php 
-                            if (!empty($estadosContrato)) {
-                                $selected = '';
-
-                                for ($i = 0; $i < $cantidadEstados; $i++) {
-                                    // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($contrato['ecIdEstadoContrato']) && $contrato['ecIdEstadoContrato'] == $estadosContrato[$i]['IdEstadoContrato']) ? 'selected' : '';
-                                    echo "<option value='{$estadosContrato[$i]['IdEstadoContrato']}' $selected > 
-                                            {$estadosContrato[$i]['EstadoContrato']}  
-                                          </option>";
-                                }
-                            } 
-                            else {
-                                echo "<option value=''> No se pueden recuperar los diferentes estados de un contrato. </option>";
+                <div class="mb-3">
+                    <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
+                    <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
+                        value="<?php echo htmlspecialchars($contrato['cFechaInicioContrato']); ?>" 
+                        <?php 
+                            // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                            if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                echo "required";
                             }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "title='El contrato ya fue firmado o cancelado' disabled";
+                            }
+                        ?>
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                    <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
+                        value="<?php echo htmlspecialchars($contrato['cFechaFinContrato']); ?>" 
+                        <?php 
+                            // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                            if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                echo "required";
+                            }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "title='El contrato ya fue firmado o cancelado' disabled";
+                            }
+                        ?>
+                    >
+                </div>
+
+                <style>
+                    .input-container {
+
+                    display: flex;
+                    align-items: center;
+                    }
+                </style>
+
+                <div class="mb-3">
+                    <label for="preciopordia" class="form-label">Precio por día</label>
+                    <div class="input-container"> 
+
+                        <input type="number" min="20" max="1000" step="0.01" class="form-control" style="max-width: 120px;"
+                               id="preciopordia" name="PrecioPorDia" title="Superior a $ 20 USD e inferior a $ 1000 USD"
+                               value="<?php echo htmlspecialchars($contrato['dcPrecioPorDiaContrato']); ?>" 
+                                <?php 
+                                    // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                                    if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                        echo "required";
+                                    }
+                                    // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                    else {
+                                        echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                    }
+                                ?>
+                        > 
+                        <span style="padding: 0 0 0 10px;"> $ USD por día </span>
+
+                    </div> 
+                </div>
+
+                <div class="mb-3">
+                    <label for="estadocontrato" class="form-label"> Estado del Contrato </label>
+                    <select class="form-select" aria-label="Selector" id="estadocontrato" name="EstadoDelContrato" 
+                        <?php 
+                            // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                            if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                echo "required";
+                            }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "title='El contrato ya fue firmado o cancelado' disabled";
+                            }
+                        ?>
+                    >
+                        <option value="" selected>Selecciona una opción</option>
+
+                        <?php 
+                        if (!empty($estadosContrato)) {
+                            $selected = '';
+
+                            for ($i = 0; $i < $cantidadEstados; $i++) {
+                                // Lógica para verificar si el grupo debe estar seleccionado
+                                $selected = (!empty($contrato['ecIdEstadoContrato']) && $contrato['ecIdEstadoContrato'] == $estadosContrato[$i]['IdEstadoContrato']) ? 'selected' : '';
+                                echo "<option value='{$estadosContrato[$i]['IdEstadoContrato']}' $selected > 
+                                        {$estadosContrato[$i]['EstadoContrato']}  
+                                      </option>";
+                            }
+                        } 
+                        else {
+                            echo "<option value=''> No se pueden recuperar los diferentes estados de un contrato. </option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" name="BotonModificarContrato" 
+                        value="modificandoContrato"; 
+                            <?php 
+                                // Si el estado es "En Preparación", entonces obligatorio llenar el campo
+                                if ($contrato['ecEstadoContrato'] == "En Preparación") {
+                                    echo " ";
+                                }
+                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "disabled";
+                                }
                             ?>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" name="BotonModificarContrato" value="modificandoContrato"; >Guardar Cambios</button>
-                </form>
-
-            </div>
+                        >
+                    Guardar Cambios
+                </button>
+            </form>
         </div>
+
+        <div style="margin-top: 100px;">
+            <?php require_once "foot.php"; ?>
+        </div>
+
     </div>
 
 </body>

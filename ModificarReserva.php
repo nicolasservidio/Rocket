@@ -184,14 +184,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
 
         if (!$rs) {
 
-            $mensajeError = "No se pudo acceder a la base de datos.";
-            //si surge un error, finalizo la ejecucion del script con un mensaje            
-            die('<h4>Error al intentar modificar el vehículo.</h4>');
+            $mensajeError = "No se pudo acceder a la base de datos. Error al intentar modificar la reserva";
+            //si surge un error, finalizo la ejecucion del script con un mensaje 
+            header("Location: reservas.php?mensaje=" . urlencode($mensajeError));
+            exit();
         }
+        else {
 
-        // Redirigir después de la actualización
-        header('Location: reservas.php');
-        exit();
+            // Redirigir después de la actualización
+            $mensajeError = "Reserva número {$numreserva} modificada exitosamente.";
+            echo "<script> 
+                alert('$mensajeError');
+                window.location.href = 'reservas.php?NumeroReserva={$numreserva}&MatriculaReserva=&ApellidoReserva=&NombreReserva=&DocReserva=&RetiroDesde=&RetiroHasta=&BotonFiltrar=FiltrandoReservas';
+            </script>";
+            exit();
+        }
     }
 
     else {
@@ -202,166 +209,185 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
 
 ?>
 
-<body class="bg-light">
-    <div style="min-height: 100%">
-        <div class="wrapper">
+<body class="bg-light" style="margin: 0 auto;">
+    <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
+
+        <?php 
+        
+        include('sidebarGOp.php'); 
+        include('topNavBar.php'); 
+        
+        ?>
+        
+        <div class="p-5 mb-4 bg-white shadow-sm" 
+             style="margin-top: 150px; margin-bottom: 100px; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
+            
             <?php 
-            
-            include('sidebarGOp.php'); 
-            include('topNavBar.php'); 
-            
+
+            if ($mensajeError) { ?>
+                <div class="alert alert-danger mt-3"> 
+                    <?php 
+                        echo "Error al intentar modificar el vehículo. <br><br>"; 
+                        echo $mensajeError; 
+                    ?>        
+                </div>
+            <?php } 
             ?>
-            
-            <div class="p-5 mb-4 bg-white shadow-sm" 
-                 style="margin-top: 10%; margin-left: 1%; max-width: 98%; border: 1px solid #444444; border-radius: 14px;">
-                
-                <?php 
 
-                if ($mensajeError) { ?>
-                    <div class="alert alert-danger mt-3"> 
-                        <?php 
-                            echo "Error al intentar modificar el vehículo. <br><br>"; 
-                            echo $mensajeError; 
-                        ?>        
-                    </div>
-                <?php } 
-                ?>
+            <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
 
-                <h5 class="mb-4 text-secondary"><strong>Modificar Reserva</strong></h5>
+            <!-- ALERTA -->
+            <?php 
+                $alerta = "";
 
+                if($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                    $alerta = "success";
+                }
+                else {
+                    $alerta = "danger";
+                }
+            ?> 
+            <div class="alert alert-<?php echo $alerta; ?> mt-5"> 
                 <?php 
                     // Si aún no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
                     // obligatorio llenar el campo
                     if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
-                        echo "<h6 class='mb-4 text-secondary' >Todos los campos son obligatorios </h6><br> ";
+                        echo "<br><h6 class='mb-4 text-secondary' >Todos los campos son obligatorios </h6>";
                     }
                     // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
                     else {
-                        echo "<h6 class='mb-4' style='color: #d62606;' >El contrato ya fue firmado o cancelado </h6> <br>";
+                        echo "<br><h6 class='mb-4' style='color: #d62606;' >El contrato ya fue firmado o cancelado </h6>";
                     }
-                ?>
+                ?>     
+            </div><br><br>
 
-                <!-- Formulario para modificar la reserva -->
-                <form method="POST">
+            <!-- Formulario para modificar la reserva -->
+            <form method="POST">
 
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['NombreCliente']); ?> " disabled>
-                    </div>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="NombreCliente" 
+                        value=" <?php echo htmlspecialchars($reserva['NombreCliente']); ?> " disabled>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['ApellidoCliente']); ?>" disabled>
-                    </div>
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="ApellidoCliente" 
+                        value=" <?php echo htmlspecialchars($reserva['ApellidoCliente']); ?>" disabled>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
-                            value=" <?php echo htmlspecialchars($reserva['DocumentoCliente']); ?> " disabled>
-                    </div>
+                <div class="mb-3">
+                    <label for="documento" class="form-label">Documento</label>
+                    <input type="text" class="form-control" id="documento" name="DocumentoCliente" 
+                        value=" <?php echo htmlspecialchars($reserva['DocumentoCliente']); ?> " disabled>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="numero" class="form-label">Número de Reserva</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
-                            value=" <?php echo htmlspecialchars($reserva['NumeroReserva']); ?> " disabled>
-                    </div>
+                <div class="mb-3">
+                    <label for="numero" class="form-label">Número de Reserva</label>
+                    <input type="text" class="form-control" id="numero" name="NumeroReserva" 
+                        value=" <?php echo htmlspecialchars($reserva['NumeroReserva']); ?> " disabled>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
-                        <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" 
-                                name="VehiculosDisponibles" 
-                                <?php 
-                                    // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
-                                    // obligatorio llenar el campo
-                                    if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
-                                        echo "required";
-                                    }
-                                    // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
-                                    else {
-                                        echo "title='El contrato ya fue firmado o cancelado' disabled";
-                                    }
-                                ?>
-                        >
-                            <option value="" selected>Selecciona una opción</option>
-
+                <div class="mb-3">
+                    <label for="vehiculosdisponibles" class="form-label"> Vehículos disponibles </label>
+                    <select class="form-select" aria-label="Selector" id="vehiculosdisponibles" 
+                            name="VehiculosDisponibles" 
                             <?php 
-                            if (!empty($vehiculosDisponibles)) {
-                                $selected = '';
-
-                                for ($i = 0; $i < $cantidadVehiculos; $i++) {
-                                    // Lógica para verificar si el grupo debe estar seleccionado
-                                    $selected = (!empty($reserva['IDVehiculo']) && $reserva['IDVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
-                                    echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
-                                            MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
-                                         </option>";
+                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                                // obligatorio llenar el campo
+                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                    echo "required";
                                 }
-                            } 
-                            else {
-                                echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
+                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                                else {
+                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
+                                }
+                            ?>
+                    >
+                        <option value="" selected>Selecciona una opción</option>
+
+                        <?php 
+                        if (!empty($vehiculosDisponibles)) {
+                            $selected = '';
+
+                            for ($i = 0; $i < $cantidadVehiculos; $i++) {
+                                // Lógica para verificar si el grupo debe estar seleccionado
+                                $selected = (!empty($reserva['IDVehiculo']) && $reserva['IDVehiculo'] == $vehiculosDisponibles[$i]['IdVehiculo']) ? 'selected' : '';
+                                echo "<option value='{$vehiculosDisponibles[$i]['IdVehiculo']}' $selected > 
+                                        MATRÍCULA: {$vehiculosDisponibles[$i]['matricula']} - {$vehiculosDisponibles[$i]['modelo']}, {$vehiculosDisponibles[$i]['grupo']}  
+                                     </option>";
                             }
-                            ?>
-                        </select>
-                    </div>
+                        } 
+                        else {
+                            echo "<option value=''> En este momento no existen vehículos disponibles. </option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
-                        <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
-                            value="<?php echo htmlspecialchars($reserva['FechaRetiro']); ?>"  
-                            <?php 
-                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
-                                // obligatorio llenar el campo
-                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
-                                    echo "required";
-                                }
-                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
-                                else {
-                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
-                                }
-                            ?>
+                <div class="mb-3">
+                    <label for="fecharetiro" class="form-label">Fecha de Retiro</label>
+                    <input type="date" class="form-control" id="fecharetiro" name="FechaRetiro" 
+                        value="<?php echo htmlspecialchars($reserva['FechaRetiro']); ?>"  
+                        <?php 
+                            // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                            // obligatorio llenar el campo
+                            if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                echo "required";
+                            }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "title='El contrato ya fue firmado o cancelado' disabled";
+                            }
+                        ?>
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
+                    <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
+                        value="<?php echo htmlspecialchars($reserva['FechaDevolucion']); ?>" 
+                        <?php 
+                            // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                            // obligatorio llenar el campo
+                            if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                echo "required";
+                            }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "title='El contrato ya fue firmado o cancelado' disabled";
+                            }
+                        ?>
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary" name="BotonModificarReserva" 
+                        value="modificandoReserva"; 
+                        <?php 
+                            // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
+                            // obligatorio llenar el campo
+                            if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
+                                echo " ";
+                            }
+                            // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
+                            else {
+                                echo "disabled";
+                            }
+                        ?>
                         >
-                    </div>
+                    Guardar Cambios
+                </button>
+            </form>
 
-                    <div class="mb-3">
-                        <label for="fechadevolucion" class="form-label">Fecha de Devolución</label>
-                        <input type="date" class="form-control" id="fechadevolucion" name="FechaDevolucion" 
-                            value="<?php echo htmlspecialchars($reserva['FechaDevolucion']); ?>" 
-                            <?php 
-                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
-                                // obligatorio llenar el campo
-                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
-                                    echo "required";
-                                }
-                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
-                                else {
-                                    echo "title='El contrato ya fue firmado o cancelado' disabled";
-                                }
-                            ?>
-                        >
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" name="BotonModificarReserva" 
-                            value="modificandoReserva"; 
-                            <?php 
-                                // Si no hay contrato asociado a la reserva o el estado es "En Preparación", entonces 
-                                // obligatorio llenar el campo
-                                if ($estadoContrato == "En Preparación" || $estadoContrato == "No existe") {
-                                    echo " ";
-                                }
-                                // Caso contrario (contrato firmado, activo, etc), campo deshabilitado:
-                                else {
-                                    echo "disabled";
-                                }
-                            ?>
-                            >
-                        Guardar Cambios
-                    </button>
-                </form>
-
-            </div>
         </div>
+
+        <div style="margin-top: 100px;">
+            <?php require_once "foot.php"; ?>
+        </div>
+
     </div>
+
+
 
 </body>
 </html>
