@@ -179,8 +179,13 @@ include('head.php');
                                     <h3>#</h3>
                                 </th>
                                 <th>Contrato</th>
-                                <th>Fecha Dev.</th>
-                                <th>Hora Dev.</th>
+                                <th title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo.">
+                                    Finalización Contrato
+                                </th>
+                                <th title="Fecha efectiva de devolución del vehículo por parte del cliente">
+                                    Fecha Devolución
+                                </th>
+                                <th>Hora Devolución</th>
                                 <th>Cliente</th>
                                 <th>Vehículo</th>
                                 <th>Oficina Dev.</th>
@@ -204,7 +209,14 @@ include('head.php');
                                         <h4> <?php echo $contador; ?> </h4>
                                     </span></td>
                                 <td> <?php echo $ListadoDevolucion[$i]['IdContrato']; ?> </td>
-                                <td> <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?> </td>
+
+                                <td title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo."> 
+                                    <?php echo $ListadoDevolucion[$i]['FechaFinContrato']; ?> 
+                                </td>
+                                <td title="Fecha efectiva de devolución del vehículo por parte del cliente"> 
+                                    <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?> 
+                                </td>
+                                
                                 <td> <?php echo $ListadoDevolucion[$i]['HoraDevolucion']; ?> </td>
                                 <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?>
                                 </td>

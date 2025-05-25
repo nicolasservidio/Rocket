@@ -182,7 +182,12 @@ include('head.php');
                                 </th>
                                 <th>Contrato</th>
                                 <th>Estado Contrato</th>
-                                <th>Fecha de Entrega</th>
+                                <th title="Fecha de inicio del contrato. No corresponde necesariamente con la fecha de entrega del vehículo.">
+                                    Inicio Contrato
+                                </th>
+                                <th title="Fecha efectiva de entrega del vehículo al cliente">
+                                    Fecha de Entrega
+                                </th>
                                 <th>Hora de Entrega</th>
                                 <th>Cliente</th>
                                 <th>Vehículo</th>
@@ -231,7 +236,12 @@ include('head.php');
                                         echo "<span class='badge badge-$clase'>".$ListadoEntregas[$i]['EstadoContrato']."</span>";?>
                                 </td>
 
-                                <td> <?php echo $ListadoEntregas[$i]['FechaEntrega']; ?> </td>
+                                <td title="Fecha de inicio del contrato. No corresponde necesariamente con la fecha de entrega del vehículo."> 
+                                    <?php echo $ListadoEntregas[$i]['FechaInicioContrato']; ?> 
+                                </td>
+                                <td title="Fecha efectiva de entrega del vehículo al cliente"> 
+                                    <?php echo $ListadoEntregas[$i]['FechaEntrega']; ?> 
+                                </td>
                                 <td> <?php echo $ListadoEntregas[$i]['HoraEntrega']; ?> </td>
                                 <td> <?php echo "{$ListadoEntregas[$i]['apellidoCliente']}, {$ListadoEntregas[$i]['nombreCliente']} </br> DNI: {$ListadoEntregas[$i]['dniCliente']}"; ?>
                                 </td>
