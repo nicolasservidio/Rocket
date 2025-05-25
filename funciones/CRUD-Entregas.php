@@ -121,6 +121,8 @@ function Procesar_ConsultaEntregas() {
     $_GET['DocContrato'] = trim($_GET['DocContrato']);
     $_GET['DocContrato'] = strip_tags($_GET['DocContrato']);
 
+    $_GET['EstadoContrato'] = trim($_GET['EstadoContrato']);
+    $_GET['EstadoContrato'] = strip_tags($_GET['EstadoContrato']);
 
     // Se cambia formato de las fechas:
     // Es mejor hacerlo de este modo que de la forma especificada en los demás módulos:
@@ -133,7 +135,7 @@ function Procesar_ConsultaEntregas() {
 }
 
 
-function Consulta_Entregas($numContrato, $matricula, $apellido, $nombre, $dni, $entregaDesde, $entregaHasta, $conexion) {
+function Consulta_Entregas($numContrato, $matricula, $apellido, $nombre, $dni, $estadoContrato, $entregaDesde, $entregaHasta, $conexion) {
 
     $Listado = array();
 
@@ -206,6 +208,9 @@ function Consulta_Entregas($numContrato, $matricula, $apellido, $nombre, $dni, $
             } 
             if (!empty($dni)) {
                 $SQL .= " AND c.dniCliente LIKE '$dni%' ";
+            }
+            if (!empty($estadoContrato)) {
+                $SQL .= " AND ec.estadoContrato LIKE '%$estadoContrato%' ";
             }
 
             if (!empty($entregaDesde)) {

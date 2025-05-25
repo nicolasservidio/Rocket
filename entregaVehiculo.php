@@ -15,6 +15,7 @@ $filtros = [
     'apellido' => isset($_GET['ApellidoContrato']) ? trim($_GET['ApellidoContrato']) : '',
     'nombre' => isset($_GET['NombreContrato']) ? trim($_GET['NombreContrato']) : '',
     'documento' => isset($_GET['DocContrato']) ? trim($_GET['DocContrato']) : '',
+    'estadocontrato' => isset($_GET['EstadoContrato']) ? trim($_GET['EstadoContrato']) : '',
     'entregadesde' => isset($_GET['EntregaDesde']) ? trim($_GET['EntregaDesde']) : '',
     'entregahasta' => isset($_GET['EntregaHasta']) ? trim($_GET['EntregaHasta']) : '',
 ];
@@ -34,7 +35,7 @@ if (!empty($_GET['BotonFiltrar'])) {
 
     $ListadoEntregas = array();
     $CantidadEntregas = '';
-    $ListadoEntregas = Consulta_Entregas($_GET['NumeroContrato'], $_GET['MatriculaContrato'], $_GET['ApellidoContrato'], $_GET['NombreContrato'], $_GET['DocContrato'], $_GET['EntregaDesde'], $_GET['EntregaHasta'], $conexion);
+    $ListadoEntregas = Consulta_Entregas($_GET['NumeroContrato'], $_GET['MatriculaContrato'], $_GET['ApellidoContrato'], $_GET['NombreContrato'], $_GET['DocContrato'], $_GET['EstadoContrato'], $_GET['EntregaDesde'], $_GET['EntregaHasta'], $conexion);
     $CantidadEntregas = count($ListadoEntregas);
 }
 else {
@@ -131,6 +132,11 @@ include('head.php');
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
+                    <div class="col-md-2">
+                        <label for="estadocontrato" class="form-label">Estado del Contrato</label>
+                        <input type="text" class="form-control" id="estadocontrato" name="EstadoContrato"
+                            value="<?= htmlspecialchars($filtros['estadocontrato']) ?>">
+                    </div>
                     <div class="col-md-4">
                         <label for="retiro" class="form-label">Entrega entre</label>
                         <div class="d-flex">
@@ -140,9 +146,6 @@ include('head.php');
                             <input type="date" id="entregahasta" class="form-control" name="EntregaHasta"
                                 value="<?= htmlspecialchars($filtros['entregahasta']) ?>">
                         </div>
-                    </div>
-
-                    <div class="col-md-2">
                     </div>
 
                     <div class="col-md-2">
