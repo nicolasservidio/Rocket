@@ -121,50 +121,19 @@ function Procesar_ConsultaEntregas() {
     $_GET['DocContrato'] = trim($_GET['DocContrato']);
     $_GET['DocContrato'] = strip_tags($_GET['DocContrato']);
 
+
     // Se cambia formato de las fechas:
-    $fechaEspanol = $_GET['EntregaDesde'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['EntregaDesde'] = $fechaIngles;
-
-    $fechaEspanol = $_GET['EntregaHasta'];
-    $fechaEspanol = date_parse($fechaEspanol);
-    $year = $fechaEspanol['year'];
-    $mo = $fechaEspanol['month'];
-    $day = $fechaEspanol['day'];
-    $fechaIngles = "$year/$mo/$day";
-    $_GET['EntregaHasta'] = $fechaIngles;
-
+    // Es mejor hacerlo de este modo que de la forma especificada en los demás módulos:
+    if (!empty($_GET['EntregaDesde'])) {
+        $_GET['EntregaDesde'] = date("Y-m-d", strtotime($_GET['EntregaDesde']));
+    } 
+    if (!empty($_GET['EntregaHasta'])) {
+        $_GET['EntregaHasta'] = date("Y-m-d", strtotime($_GET['EntregaHasta']));
+    } 
 }
 
 
 function Consulta_Entregas($numContrato, $matricula, $apellido, $nombre, $dni, $entregaDesde, $entregaHasta, $conexion) {
-
-    if (empty($numContrato)) {
-        $numContrato = "ZZZZZZ";
-    }
-    if (empty($matricula)) {
-        $matricula = "&&&&&&";
-    }
-    if (empty($apellido)) {
-        $apellido = "9999999";
-    }
-    if (empty($nombre)) {
-        $nombre = "9999999";
-    }
-    if (empty($dni)) {
-        $dni = "ZZZZZZ";
-    }
-
-    if (empty($entregaDesde)) {
-        $entregaDesde = "ZZZZZZ";
-    }
-    if (empty($entregaHasta)) {
-        $entregaHasta = "ZZZZZZ";
-    }
 
     $Listado = array();
 
@@ -220,16 +189,36 @@ function Consulta_Entregas($numContrato, $matricula, $apellido, $nombre, $dni, $
             AND v.idGrupoVehiculo = g.idGrupo 
             AND v.idSucursal = s.idSucursal 
             AND ca.idDetalleContrato = dc.idDetalleContrato 
-            AND ca.idEstadoContrato = ec.idEstadoContrato 
-            AND (ca.idContrato = '$numContrato%' 
-                OR v.matricula LIKE '$matricula%' 
-                OR c.apellidoCliente LIKE '$apellido%' 
-                OR c.nombreCliente LIKE '$nombre%' 
-                OR c.dniCliente LIKE '$dni%' 
-                OR (e.fechaEntrega BETWEEN '$entregaDesde%' AND '$entregaHasta%')) 
-            ORDER BY e.fechaEntrega, e.horaEntrega, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
+            AND ca.idEstadoContrato = ec.idEstadoContrato ";
 
+            // Concateno el resto de la consulta para poder agregar condicionales
+            if (!empty($numContrato)) {
+                $SQL .= " AND ca.idContrato = '$numContrato' ";
+            }
+            if (!empty($matricula)) {
+                $SQL .= " AND v.matricula LIKE '$matricula%' ";
+            }
+            if (!empty($apellido)) {
+                $SQL .= " AND c.apellidoCliente LIKE '%$apellido%' ";
+            }
+            if (!empty($nombre)) {
+                $SQL .= " AND c.nombreCliente LIKE '%$nombre%' ";
+            } 
+            if (!empty($dni)) {
+                $SQL .= " AND c.dniCliente LIKE '$dni%' ";
+            }
 
+            if (!empty($entregaDesde)) {
+                $SQL .= " AND e.fechaEntrega >= '$entregaDesde'";
+            }
+            if (!empty($entregaHasta)) {
+                $SQL .= " AND e.fechaEntrega <= '$entregaHasta'";
+            }
+
+            // Agrego el orden a la consulta sql
+            $SQL .= " ORDER BY e.fechaEntrega, e.horaEntrega, c.apellidoCliente, c.nombreCliente, c.dniCliente; ";
+
+    
     $rs = mysqli_query($conexion, $SQL);
         
     // El resultado debe organizarse en una matriz, entonces lo recorro:

@@ -178,8 +178,9 @@ include('head.php');
                                     <h3>#</h3>
                                 </th>
                                 <th>Contrato</th>
-                                <th>Fecha Ret.</th>
-                                <th>Hora Ret.</th>
+                                <th>Estado Contrato</th>
+                                <th>Fecha de Entrega</th>
+                                <th>Hora de Entrega</th>
                                 <th>Cliente</th>
                                 <th>Vehículo</th>
                                 <th>Oficina Ret.</th>
@@ -199,6 +200,34 @@ include('head.php');
                                         <h4> <?php echo $contador; ?> </h4>
                                     </span></td>
                                 <td> <?php echo $ListadoEntregas[$i]['IdContrato']; ?> </td>
+
+                                <td><?php
+                                        $estado = strtolower($ListadoEntregas[$i]['EstadoContrato']);
+                                        $clase = '';
+                                        
+                                        switch ($estado) {
+                                            case 'firmado':
+                                                $clase = 'primary'; // azul
+                                                break;
+                                            case 'activo':
+                                                $clase = 'success'; // verde
+                                                break;
+                                            case 'cancelado':
+                                                $clase = 'danger'; // rojo
+                                                break;
+                                            case 'finalizado':
+                                                $clase = 'warning'; // naranja
+                                                break;
+                                            case 'renovado':
+                                                $clase = 'secondary'; // púrpura
+                                                break;
+                                            default:
+                                                $clase = 'info'; // celeste
+                                                break;
+                                        }
+                                        echo "<span class='badge badge-$clase'>".$ListadoEntregas[$i]['EstadoContrato']."</span>";?>
+                                </td>
+
                                 <td> <?php echo $ListadoEntregas[$i]['FechaEntrega']; ?> </td>
                                 <td> <?php echo $ListadoEntregas[$i]['HoraEntrega']; ?> </td>
                                 <td> <?php echo "{$ListadoEntregas[$i]['apellidoCliente']}, {$ListadoEntregas[$i]['nombreCliente']} </br> DNI: {$ListadoEntregas[$i]['dniCliente']}"; ?>

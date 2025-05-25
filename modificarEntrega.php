@@ -73,7 +73,6 @@ if (isset($_GET['id'])) {
     $entrega = mysqli_fetch_array($rs);
 
     // Se traen todas las sucursales disponibles:
-
     $sucursalesDisponibles = array();
     
     require_once 'funciones/Select_Tablas.php';
@@ -197,9 +196,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarEntrega
 
                 <div class="mb-3">
                     <label for="sucursalesdisponibles" class="form-label"> Oficina de Retiro </label>
-                    <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" name="SucursalesDisponibles">
+                    <select class="form-select" aria-label="Selector" id="sucursalesdisponibles" 
+                            name="SucursalesDisponibles"
+                            <?php 
+                                // Si el estado del contrato es "Renovado" o "Finalizado", entonces 
+                                // no se puede cambiar la oficina de retiro. Campo deshabilitado:
+                                if ($entrega['ecEstadoContrato'] == "Renovado" || $entrega['ecEstadoContrato'] == "Finalizado") {
+                                    echo "title='El vehículo ya fue entregado o el contrato finalizó' disabled";
+                                }
+                                // caso contrario obligatorio llenar el campo 
+                                else {                                    
+                                    echo "required";
+                                }
+                            ?>
+                    >
                         <option value="" selected>Selecciona una opción</option>
-
                         <?php 
                         if (!empty($sucursalesDisponibles)) {
                             $selected = '';
