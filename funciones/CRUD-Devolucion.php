@@ -20,7 +20,7 @@ function Listar_Devolucion($conexion) {
                    c.idContrato as cIdContrato, 
                    c.fechaInicioContrato as cFechaInicioContrato, 
                    c.fechaFinContrato as cFechaFinContrato, 
-                   c.fechaDevolucion as cFechaDevolucion, 
+                   c.fechaEntrega as cFechaEntrega, 
                    c.fechaDevolucion as cFechaDevolucion, 
                    c.idCliente as cIdCliente, 
                    c.idVehiculo as cIdVehiculo, 
@@ -41,6 +41,7 @@ function Listar_Devolucion($conexion) {
 
                    m.idModelo as  mIdModelo,
                    m.nombreModelo as mNombreModelo,
+                   
                    g.idGrupo as gIdGrupo,
                    g.nombreGrupo as gNombreGrupo, 
 
@@ -85,6 +86,9 @@ function Listar_Devolucion($conexion) {
             $Listado[$i]['IdContrato'] = $data['eIdContrato'];
             $Listado[$i]['FechaInicioContrato'] = $data['cFechaInicioContrato'];
             $Listado[$i]['FechaFinContrato'] = $data['cFechaFinContrato'];
+            $Listado[$i]['FechaEntregaEnContrato'] = $data['cFechaEntrega'];
+            $Listado[$i]['FechaDevolucionEnContrato'] = $data['cFechaDevolucion'];
+
             $Listado[$i]['IdDetalleContrato'] = $data['cIdDetalleContrato'];
             $Listado[$i]['PrecioPorDiaContrato'] = $data['dcPrecioPorDiaContrato'];
             $Listado[$i]['CantidadDiasContrato'] = $data['dcCantidadDiasContrato'];
@@ -152,12 +156,20 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
                    e.horaDevolucion as eHoraDevolucion,
                    e.idCliente as eIdCliente,
                    e.idContrato as eIdContrato,
+                   e.estadoDevolucion as eEstadoDevolucion,
+                   e.aclaracionesDevolucion as eAclaracionesDevolucion,
+                   e.infraccionesDevolucion as eInfraccionesDevolucion,
+                   e.costosInfracciones as eCostosInfracciones,
+                   e.montoExtra as eMontoExtra,
 
                     ca.idContrato as caIdContrato, 
                     ca.fechaInicioContrato as caFechaInicioContrato, 
                     ca.fechaFinContrato as caFechaFinContrato, 
+                    ca.fechaEntrega as caFechaEntrega, 
+                    ca.fechaDevolucion as caFechaDevolucion, 
                     ca.idCliente as caIdCliente, 
                     ca.idVehiculo as caIdVehiculo, 
+                    ca.idVendedor as caIdVendedor,
                     ca.idDetalleContrato as caIdDetalleContrato, 
                     ca.idEstadoContrato as caIdEstadoContrato, 
 
@@ -174,6 +186,7 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
 
                     m.idModelo as  mIdModelo,
                     m.nombreModelo as mNombreModelo,
+
                     g.idGrupo as gIdGrupo,
                     g.nombreGrupo as gNombreGrupo, 
 
@@ -236,12 +249,19 @@ function Consulta_Devolucion($numContrato, $matricula, $apellido, $nombre, $dni,
         $Listado[$i]['IdDevolucion'] = $data['eIdDevolucion'];
         $Listado[$i]['FechaDevolucion'] = $data['eFechaDevolucion'];
         $Listado[$i]['HoraDevolucion'] = $data['eHoraDevolucion'];
+        $Listado[$i]['EstadoDevolucion'] = $data['eEstadoDevolucion'];
+        $Listado[$i]['AclaracionesDevolucion'] = $data['eAclaracionesDevolucion'];
+        $Listado[$i]['InfraccionesDevolucion'] = $data['eInfraccionesDevolucion'];
+        $Listado[$i]['CostosInfracciones'] = $data['eCostosInfracciones'];
+        $Listado[$i]['MontoExtra'] = $data['eMontoExtra'];
 
         $Listado[$i]['IdContrato'] = $data['eIdContrato'];
         $Listado[$i]['FechaInicioContrato'] = $data['caFechaInicioContrato'];
         $Listado[$i]['FechaFinContrato'] = $data['caFechaFinContrato'];
-
+        $Listado[$i]['FechaEntregaEnContrato'] = $data['caFechaEntrega'];
+        $Listado[$i]['FechaDevolucionEnContrato'] = $data['caFechaDevolucion'];
         $Listado[$i]['IdDetalleContrato'] = $data['caIdDetalleContrato'];
+
         $Listado[$i]['PrecioPorDiaContrato'] = $data['dcPrecioPorDiaContrato'];
         $Listado[$i]['CantidadDiasContrato'] = $data['dcCantidadDiasContrato'];
         $Listado[$i]['MontoTotalContrato'] = $data['dcMontoTotalContrato'];
