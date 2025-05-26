@@ -64,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     aclaracionesDevolucion,
                                                                     infraccionesDevolucion,
                                                                     costosInfracciones,
-                                                                    montoExtra) 
+                                                                    montoExtra, 
+                                                                    actualizacion) 
                             VALUES ('$fechadevolucionIngles', 
                                     '$horadevolucion', 
                                     $IdCliente,
@@ -73,7 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     'Sin aclaraciones',
                                     'Ninguna',
                                     '0',
-                                    '0'); ";
+                                    '0', 
+                                    'N'); ";
 
     
     $rs = mysqli_query($MiConexion, $SQL_DevolucionVehiculo);
