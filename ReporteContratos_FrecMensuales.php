@@ -16,11 +16,14 @@ $ListadoContratos = Listar_Contratos($conexion);
 $CantidadContratos = count($ListadoContratos);
 
 
+$anio = isset($_GET['anio']) ? $_GET['anio'] : '2024';
+
+
 // PROCEDIMIENTO PARA EL CONTEO DE NÚMERO DE CONTRATOS POR MES Y AÑO
 // arrays
 $contratos = array();
 
-// 2024
+
 $acumulado2024_Total = 0; $acumulado_ENE2024_Total = 0; $acumulado_FEB2024_Total = 0; $acumulado_MAR2024_Total = 0; $acumulado_ABR2024_Total = 0; 
 $acumulado_MAY2024_Total = 0; $acumulado_JUN2024_Total = 0; $acumulado_JUL2024_Total = 0; $acumulado_AGO2024_Total = 0; $acumulado_SEP2024_Total = 0; 
 $acumulado_OCT2024_Total = 0; $acumulado_NOV2024_Total = 0; $acumulado_DIC2024_Total = 0;
@@ -37,23 +40,6 @@ $acumulado2024_Finalizados = 0; $acumulado_ENE2024_Finalizados = 0; $acumulado_F
 $acumulado_MAY2024_Finalizados = 0; $acumulado_JUN2024_Finalizados = 0; $acumulado_JUL2024_Finalizados = 0; $acumulado_AGO2024_Finalizados = 0; $acumulado_SEP2024_Finalizados = 0; 
 $acumulado_OCT2024_Finalizados = 0; $acumulado_NOV2024_Finalizados = 0; $acumulado_DIC2024_Finalizados = 0;
 
-// 2025
-$acumulado2025_Total = 0; $acumulado_ENE2025_Total = 0; $acumulado_FEB2025_Total = 0; $acumulado_MAR2025_Total = 0; $acumulado_ABR2025_Total = 0; 
-$acumulado_MAY2025_Total = 0; $acumulado_JUN2025_Total = 0; $acumulado_JUL2025_Total = 0; $acumulado_AGO2025_Total = 0; $acumulado_SEP2025_Total = 0; 
-$acumulado_OCT2025_Total = 0; $acumulado_NOV2025_Total = 0; $acumulado_DIC2025_Total = 0;
-
-$acumulado2025_Firmados = 0; $acumulado_ENE2025_Firmados = 0; $acumulado_FEB2025_Firmados = 0; $acumulado_MAR2025_Firmados = 0; 
-$acumulado_ABR2025_Firmados = 0; $acumulado_MAY2025_Firmados = 0; $acumulado_JUN2025_Firmados = 0; $acumulado_JUL2025_Firmados = 0; 
-$acumulado_AGO2025_Firmados = 0; $acumulado_SEP2025_Firmados = 0; $acumulado_OCT2025_Firmados = 0; $acumulado_NOV2025_Firmados = 0; $acumulado_DIC2025_Firmados = 0;
-
-$acumulado2025_Cancelados = 0; $acumulado_ENE2025_Cancelados = 0; $acumulado_FEB2025_Cancelados = 0; $acumulado_MAR2025_Cancelados = 0; 
-$acumulado_ABR2025_Cancelados = 0; $acumulado_MAY2025_Cancelados = 0; $acumulado_JUN2025_Cancelados = 0; $acumulado_JUL2025_Cancelados = 0; 
-$acumulado_AGO2025_Cancelados = 0; $acumulado_SEP2025_Cancelados = 0; $acumulado_OCT2025_Cancelados = 0; $acumulado_NOV2025_Cancelados = 0; $acumulado_DIC2025_Cancelados = 0;
-
-$acumulado2025_Finalizados = 0; $acumulado_ENE2025_Finalizados = 0; $acumulado_FEB2025_Finalizados = 0; $acumulado_MAR2025_Finalizados = 0; 
-$acumulado_ABR2025_Finalizados = 0; $acumulado_MAY2025_Finalizados = 0; $acumulado_JUN2025_Finalizados = 0; $acumulado_JUL2025_Finalizados = 0; 
-$acumulado_AGO2025_Finalizados = 0; $acumulado_SEP2025_Finalizados = 0; $acumulado_OCT2025_Finalizados = 0; $acumulado_NOV2025_Finalizados = 0; $acumulado_DIC2025_Finalizados = 0;
-
 for ($i = 0; $i < $CantidadContratos; $i++) {
 
     $fechaContrato = $ListadoContratos[$i]['FechaInicioContrato'];
@@ -65,9 +51,7 @@ for ($i = 0; $i < $CantidadContratos; $i++) {
     $contratos[$i]['diaContrato'] = $fecha['day'];
     $contratos[$i]["Estado"] = $ListadoContratos[$i]['EstadoContrato'];
 
-    // 2024
-
-    if ($contratos[$i]['anioContrato'] == "2024") {
+    if ($contratos[$i]['anioContrato'] == $anio) {
 
         $acumulado2024_Total ++;
 
@@ -376,7 +360,7 @@ include('head.php');
                 text: 'Source: Rocket'
             },
             xAxis: {
-                categories: ['Ene 2024', 'Feb ', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+                categories: ['Ene <?php echo $anio?>', 'Feb ', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
             },
             yAxis: {
                 title: {
@@ -716,7 +700,7 @@ include('head.php');
                     <tbody>
 
                         <tr>
-                            <td><span style='color: black;'><h4> 2024 </h4></span></td>
+                            <td><span style='color: black;'><h4> <?php echo $anio; ?> </h4></span></td>
                             <td style="text-align: center;"> <?php echo $acumulado2024_Total; ?> </td>
                             <td style="text-align: center;"> <?php echo $acumulado2024_Firmados; ?> </td>
                             <td style="text-align: center;"> <?php echo $acumulado2024_Cancelados; ?> </td>
@@ -813,7 +797,7 @@ include('head.php');
                 <!-- Botón de acción -->
                 <div style="margin-top: 5%; margin-bottom: 3%;">
                     <div class="container d-flex justify-content-center">
-                        <span style=""> <!-- margin-right: 10%; -->
+                        <span> <!-- margin-right: 10%; -->
                             <a href="contratosAlquiler.php"> 
                                 <button class="btn" style="color: white; background-color: #a80a0a;" >
                                     Volver
@@ -835,7 +819,7 @@ include('head.php');
         </div>
     </div>
 
-    <div style="">
+    <div>
         <?php require_once "foot.php"; ?>
     </div>
 

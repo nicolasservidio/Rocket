@@ -364,17 +364,16 @@ include('head.php');
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;">
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a
-                                href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes
-                                segmentados por estado </a>
+                            <strong style="color: #a80a0a;">Reporte:</strong> Contratos por mes
+                            segmentados por estado </a>
                         </h4>
 
-                        <a href="ReporteContratos_FrecMensuales.php" style="color: black;">
-                            <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
-                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.jpeg"
-                                    alt="Contratos por mes segmentados por estado"
-                                    style="max-width: 99%; border-radius: 25px;">
-                            </div>
+
+                        <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
+                            <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.jpeg"
+                                alt="Contratos por mes segmentados por estado"
+                                style="max-width: 99%; border-radius: 25px;">
+                        </div>
                         </a>
 
                         <style>
@@ -402,7 +401,15 @@ include('head.php');
                         </style>
 
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
-                            <a href="ReporteContratos_FrecMensuales.php">
+                            <!-- Dropdown de selección de año -->
+                            <select id="anioSeleccionado" class="form-select me-3" style="width: auto;">
+                                <option value="2023">2023</option>
+                                <option value="2024" selected>2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+
+                            <!-- Botón con link dinámico -->
+                            <a id="reporteLink" href="ReporteContratos_FrecMensuales.php?anio=2024">
                                 <button class="btn btn-inversion">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-bar-chart" viewBox="0 0 16 16">
@@ -413,6 +420,9 @@ include('head.php');
                                 </button>
                             </a>
                         </div>
+
+
+
 
                     </div>
                 </div>
@@ -524,6 +534,17 @@ include('head.php');
             <?php require_once "foot.php"; ?>
         </div>
     </div>
+
+    <!-- Script que actualiza el href según el año seleccionado -->
+    <script>
+        const select = document.getElementById("anioSeleccionado");
+        const link = document.getElementById("reporteLink");
+
+        select.addEventListener("change", function() {
+            const anio = this.value;
+            link.href = `ReporteContratos_FrecMensuales.php?anio=${anio}`;
+        });
+    </script>
 
     <script>
         // Efecto sobre la imagen del reporte

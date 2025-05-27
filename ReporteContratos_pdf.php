@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
-Corroborar_Usuario(); 
+require_once 'funciones/corroborar_usuario.php';
+Corroborar_Usuario();
 
 ob_start();
 
@@ -21,24 +21,24 @@ include('head.php');
 
 <body class="bg-light" style="margin-top: 2%; margin-bottom: 0;">
 
-    <!-- Logo Header --> <!-- CUIDADO: Arroja error fatal si no tienen instalada la extensión "GD" de PHP en XAMPP. Para resolver el error, seguir instructivo: https://www.geeksforgeeks.org/how-to-install-php-gd-in-windows/ -->  
+    <!-- Logo Header --> <!-- CUIDADO: Arroja error fatal si no tienen instalada la extensión "GD" de PHP en XAMPP. Para resolver el error, seguir instructivo: https://www.geeksforgeeks.org/how-to-install-php-gd-in-windows/ -->
     <div style="margin: 0 auto; padding: 0 0 20px 50%;">
-        <span style=""> 
-            <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Proyectos/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" /> 
+        <span>
+            <img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/Proyectos/Rocket/assets/img/logo-red.png" height="20" width="" alt="navbar brand" srcset="" />
         </span>
     </div>
     <!-- End Logo Header -->
 
     <div style="margin: 0 auto; max-width: 100%;">
-        <div class="" style="">
-            
-            <div class="p-5 mb-4 bg-white shadow-sm" 
-                 style="margin: 0; padding: 20px; border: 2px solid #a80a0a; border-radius: 14px;">
+        <div>
+
+            <div class="p-5 mb-4 bg-white shadow-sm"
+                style="margin: 0; padding: 20px; border: 2px solid #a80a0a; border-radius: 14px;">
 
                 <h2 class="mb-4 text-secondary" style="padding-bottom: 10px;">
                     <strong>Reporte: Contratos de alquiler de vehículos </strong>
                 </h2>
-                
+
                 <!-- Tabla con reporte de contratos -->
                 <table class="table table-striped table-hover" id="tablaReservas">
                     <thead>
@@ -107,103 +107,104 @@ include('head.php');
 
                     <tbody>
                         <?php
-                        $contador = 1; 
+                        $contador = 1;
 
-                        for ($i=0; $i < $CantidadContratos; $i++) { ?>     
+                        for ($i = 0; $i < $CantidadContratos; $i++) { ?>
 
-                            <tr class='contrato' data-id='<?php echo $ListadoContratos[$i]['IdContrato']; ?>' 
+                            <tr class='contrato' data-id='<?php echo $ListadoContratos[$i]['IdContrato']; ?>'
                                 onclick="selectRow(this, '<?= $ListadoContratos[$i]['IdContrato'] ?>')">
 
                                 <td>
                                     <span style='color: #c7240e; font-size: 17px; margin: 0 auto; padding: 0;'>
                                         <h4> <?php echo $contador; ?> </h4>
                                     </span>
-                                    
+
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['EstadoContrato']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['EstadoContrato']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px; "> 
-                                    <?php echo $ListadoContratos[$i]['IdContrato']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px; ">
+                                    <?php echo $ListadoContratos[$i]['IdContrato']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['FechaInicioContrato']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['FechaFinContrato']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['apellidoCliente']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['apellidoCliente']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['nombreCliente']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['nombreCliente']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['dniCliente']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['dniCliente']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo $ListadoContratos[$i]['vehiculoMatricula']; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo $ListadoContratos[$i]['vehiculoMatricula']; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['vehiculoModelo']}, {$ListadoContratos[$i]['vehiculoGrupo']}"; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['vehiculoModelo']}, {$ListadoContratos[$i]['vehiculoGrupo']}"; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['CiudadSucursal']}, {$ListadoContratos[$i]['DireccionSucursal']}"; ?>
                                 </td>
 
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?>
                                 </td>
 
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?> 
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?>
                                 </td>
-                                
-                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;"> 
-                                    <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?> 
+
+                                <td style="margin: 0 auto; padding: 0 5px 0 5px; border: 1px solid #000000; font-size: 12px;">
+                                    <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?>
                                 </td>
 
                             </tr>
                             <?php $contador++; ?>
-                        <?php 
-                        } 
+                        <?php
+                        }
                         ?>
                     </tbody>
-                </table>                    
+                </table>
 
             </div>
         </div>
     </div>
 
 
-<footer id="footer" class="footer" style="margin-top: 80px; background: #b54d0d; margin: #333333; border: #333333; ">
-    
-    <div style="color: white; background: #b54d0d; margin: #333333; border: #333333; text-align: center; padding-top: 2%; padding-bottom: 2%; ">
-        <div class="copyright">
-        &copy; Copyright <strong><span>Rocket</span></strong>. All Rights Reserved
+    <footer id="footer" class="footer" style="margin-top: 80px; background: #b54d0d; margin: #333333; border: #333333; ">
+
+        <div style="color: white; background: #b54d0d; margin: #333333; border: #333333; text-align: center; padding-top: 2%; padding-bottom: 2%; ">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Rocket</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                Developed by <span style="color: white;">Rocket Team</span>: <a href="https://www.linkedin.com/in/nicolas-servidio-del-monte/" style="color: black;">NS</a> - <a href="https://www.linkedin.com/in/bruno-carossi-1b43b8178/" style="color: black;">BC</a> - <a href="https://www.linkedin.com/in/facundo-mota-123380257/" style="color: black;">FM</a>
+            </div>
         </div>
-        <div class="credits">
-        Developed by <span style="color: white;">Rocket Team</span>: <a href="https://www.linkedin.com/in/nicolas-servidio-del-monte/" style="color: black;" >NS</a> - <a href="https://www.linkedin.com/in/bruno-carossi-1b43b8178/" style="color: black;" >BC</a> - <a href="https://www.linkedin.com/in/facundo-mota-123380257/" style="color: black;" >FM</a>
-        </div>
-    </div>
-</footer><!-- End Footer -->
+    </footer><!-- End Footer -->
 
 </body>
+
 </html>
 
 <?php
@@ -212,7 +213,9 @@ $html = ob_get_clean();
 
 // Creando un objeto de tipo Dompdf para trabajar con todas las funcionalidades de conversión del documento HTML a PDF
 require_once 'administrador/dompdf/autoload.inc.php';
+
 use Dompdf\Dompdf;
+
 $dompdf = new Dompdf();  // Este objeto me permitirá trabajar con todas las funcionalidades de conversión de HTML a PDF
 
 // Activamos la opción que nos permite mostrar imágenes, por si la tabla llegara a contenerlas
