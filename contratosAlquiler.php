@@ -520,7 +520,7 @@ include('head.php');
             </div>
         </div>
 
-        <div style="">
+        <div>
             <?php require_once "foot.php"; ?>
         </div>
     </div>
