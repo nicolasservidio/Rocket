@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
-Corroborar_Usuario(); 
+require_once 'funciones/corroborar_usuario.php';
+Corroborar_Usuario();
 
 require_once "conn/conexion.php";
 $conexion = ConexionBD();
@@ -36,8 +36,7 @@ if (!empty($_GET['BotonFiltrar'])) {
     $CantidadReservas = '';
     $ListadoReservas = Consulta_Reservas($_GET['NumeroReserva'], $_GET['MatriculaReserva'], $_GET['ApellidoReserva'], $_GET['NombreReserva'], $_GET['DocReserva'], $_GET['RetiroDesde'], $_GET['RetiroHasta'], $conexion);
     $CantidadReservas = count($ListadoReservas);
-}
-else {
+} else {
 
     // Listo la totalidad de los registros en la tabla "vehiculos". 
     $ListadoReservas = Listar_Reservas($conexion);
@@ -66,13 +65,13 @@ include('head.php');
 
 ?>
 
-<body >
+<body>
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
 
-        <?php 
+        <?php
         include('sidebarGOp.php');
-         $tituloPagina = "<b> Reservas </b>";
-        include('topNavBar.php');    
+        $tituloPagina = "<b> Reservas </b>";
+        include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {
             echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
@@ -83,8 +82,8 @@ include('head.php');
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
             <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #16719e; border-radius: 14px;">
-                <div style='color: #0a8acf; margin-bottom: 30px;'> 
-                    <h3 class="fw-bold"> Reservas </h3> 
+                <div style='color: #0a8acf; margin-bottom: 30px;'>
+                    <h3 class="fw-bold"> Reservas </h3>
                 </div>
 
                 <!-- Formulario de filtros -->
@@ -92,57 +91,57 @@ include('head.php');
 
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número de Reserva</label>
-                        <input type="text" class="form-control" id="numero" name="NumeroReserva" 
-                               value="<?= htmlspecialchars($filtros['numero']) ?>" >
+                        <input type="text" class="form-control" id="numero" name="NumeroReserva"
+                            value="<?= htmlspecialchars($filtros['numero']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="matricula" class="form-label">Matrícula</label>
-                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva" 
-                               value="<?= htmlspecialchars($filtros['matricula']) ?>">
+                        <input type="text" class="form-control" id="matricula" name="MatriculaReserva"
+                            value="<?= htmlspecialchars($filtros['matricula']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva" 
-                               value="<?= htmlspecialchars($filtros['apellido']) ?>">
+                        <input type="text" class="form-control" id="apellido" name="ApellidoReserva"
+                            value="<?= htmlspecialchars($filtros['apellido']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="NombreReserva" 
-                               value="<?= htmlspecialchars($filtros['nombre']) ?>">
+                        <input type="text" class="form-control" id="nombre" name="NombreReserva"
+                            value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="DocReserva" 
-                               value="<?= htmlspecialchars($filtros['documento']) ?>">
+                        <input type="text" class="form-control" id="documento" name="DocReserva"
+                            value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="col-md-4">
                         <label for="retiro" class="form-label">Retiro entre</label>
                         <div class="d-flex">
-                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde" 
-                                   value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
+                            <input type="date" id="retirodesde" class="form-control me-2" name="RetiroDesde"
+                                value="<?= htmlspecialchars($filtros['retirodesde']) ?>">
 
-                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta" 
-                                   value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
+                            <input type="date" id="retirohasta" class="form-control" name="RetiroHasta"
+                                value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
                         </div>
                     </div>
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-info" name="BotonFiltrar" value="FiltrandoReservas">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
+                                <i class="fas fa-ban"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                        <span class="fw-bold mt-2 mt-md-0">Cant. reservas listadas: <?php echo $CantidadReservas; ?></span>
+                    </div>
 
-                    <div class="w-100"></div>
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-info w-100" name="BotonFiltrar" value="FiltrandoReservas">
-                            <i class="fas fa-filter"></i> Filtrar
-                        </button>
-                    </div>
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-warning w-100" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
-                            <i class="fas fa-ban"></i> LimpiarFiltros
-                        </button>
-                    </div>
                 </form>
             </div>
 
@@ -152,7 +151,9 @@ include('head.php');
                     <table class="table table-striped table-hover" id="tablaReservas">
                         <thead>
                             <tr>
-                                <th style='color: #d19513;'><h3>#</h3></th>
+                                <th style='color: #d19513;'>
+                                    <h3>#</h3>
+                                </th>
                                 <th>Nro</th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
@@ -169,14 +170,16 @@ include('head.php');
 
                         <tbody>
                             <?php
-                            $contador = 1; 
+                            $contador = 1;
 
-                            for ($i=0; $i < $CantidadReservas; $i++) { ?>     
+                            for ($i = 0; $i < $CantidadReservas; $i++) { ?>
 
-                                <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>' 
+                                <tr class='reserva' data-id='<?php echo $ListadoReservas[$i]['idReserva']; ?>'
                                     onclick="selectRow(this, '<?= $ListadoReservas[$i]['idReserva'] ?>')">
 
-                                    <td><span style='color: #d19513;'><h4> <?php echo $contador; ?> </h4></span></td>
+                                    <td><span style='color: #d19513;'>
+                                            <h4> <?php echo $contador; ?> </h4>
+                                        </span></td>
 
                                     <td> <?php echo $ListadoReservas[$i]['numeroReserva']; ?> </td>
 
@@ -196,30 +199,30 @@ include('head.php');
 
                                     <td> <?php echo $ListadoReservas[$i]['fechaFinReserva']; ?> </td>
 
-                                    <td> 
-                                        <span style="font-size: 12px;"> 
+                                    <td>
+                                        <span style="font-size: 12px;">
                                             <?php echo "$ {$ListadoReservas[$i]['precioPorDiaReserva']} USD/día <br>
                                                         {$ListadoReservas[$i]['cantidadDiasReserva']} días <br> 
-                                                        Total: $ {$ListadoReservas[$i]['totalReserva']} USD"; 
-                                            ?> 
-                                        </span> 
+                                                        Total: $ {$ListadoReservas[$i]['totalReserva']} USD";
+                                            ?>
+                                        </span>
                                     </td>
 
-                                    <td> 
-                                        <span class="badge badge-<?php echo $ListadoReservas[$i]['ContratoColorAdvertencia']; ?>" > 
-                                            <?php echo $ListadoReservas[$i]['ContratoAsociado']; ?> 
-                                        </span> 
+                                    <td>
+                                        <span class="badge badge-<?php echo $ListadoReservas[$i]['ContratoColorAdvertencia']; ?>">
+                                            <?php echo $ListadoReservas[$i]['ContratoAsociado']; ?>
+                                        </span>
                                     </td>
                                 </tr>
                                 <?php $contador++; ?>
-                            <?php 
-                            } 
+                            <?php
+                            }
                             ?>
 
                         </tbody>
                     </table>
                 </div>
-            
+
 
                 <!-- Botones de acción -->
                 <div style="margin-top: 8%;">
@@ -238,8 +241,8 @@ include('head.php');
                         </button>
 
                         <a href="ReporteReservas.php"> <button class="btn btn-info">
-                            Imprimir
-                        </button></a>
+                                Imprimir
+                            </button></a>
                     </div>
                 </div>
 
@@ -262,7 +265,7 @@ include('head.php');
                                         <select class="form-select" aria-label="Selector" id="selector" name="idCliente" required>
                                             <option value="" selected>Selecciona una opción</option>
 
-                                            <?php 
+                                            <?php
                                             // Asegúrate de que $ListadoClientes contiene datos antes de procesarlo
                                             if (!empty($ListadoClientes)) {
                                                 $selected = '';
@@ -274,8 +277,7 @@ include('head.php');
                                                         TEL: {$ListadoClientes[$i]['telefonoCliente']} 
                                                     </option>";
                                                 }
-                                            } 
-                                            else {
+                                            } else {
                                                 echo "<option value=''>No se encontraron clientes</option>";
                                             }
                                             ?>
@@ -292,7 +294,7 @@ include('head.php');
                                         <select class="form-select" aria-label="Selector" id="selector" name="idVehiculo" required>
                                             <option value="" selected>Selecciona una opción</option>
 
-                                            <?php 
+                                            <?php
                                             // Asegúrate de que $ListadoVehiculos contiene datos antes de procesarlo
                                             if (!empty($ListadoVehiculos)) {
                                                 $selected = '';
@@ -301,8 +303,7 @@ include('head.php');
                                                     $selected = (!empty($_POST['idVehiculo']) && $_POST['idVehiculo'] == $ListadoVehiculos[$i]['IdVehiculo']) ? 'selected' : '';
                                                     echo "<option value='{$ListadoVehiculos[$i]['IdVehiculo']}' $selected> {$ListadoVehiculos[$i]['matricula']} - {$ListadoVehiculos[$i]['modelo']} - {$ListadoVehiculos[$i]['grupo']}  </option>";
                                                 }
-                                            } 
-                                            else {
+                                            } else {
                                                 echo "<option value=''>No se encontraron vehículos</option>";
                                             }
                                             ?>
@@ -312,19 +313,19 @@ include('head.php');
                                     <style>
                                         .input-container {
 
-                                        display: flex;
-                                        align-items: center;
+                                            display: flex;
+                                            align-items: center;
                                         }
                                     </style>
 
                                     <div class="mb-3">
                                         <label for="preciopordia" class="form-label">Precio por día</label>
-                                        <div class="input-container"> 
+                                        <div class="input-container">
                                             <input type="number" min="20" max="1000" step="0.01" class="form-control" style="max-width: 120px;"
                                                 id="preciopordia" name="PrecioPorDia" title="Mínimo $ 20 USD y máximo 1000 USD"
-                                                value="" required> 
+                                                value="" required>
                                             <span style="padding: 0 0 0 10px;"> $ USD por día </span>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -395,7 +396,7 @@ include('head.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>

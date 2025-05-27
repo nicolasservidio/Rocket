@@ -1,7 +1,7 @@
-<?php 
+<?php
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
+require_once 'funciones/corroborar_usuario.php';
 Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
 
 include('conn/conexion.php');
@@ -15,7 +15,7 @@ $filtros = [
     'email' => isset($_GET['email']) ? trim($_GET['email']) : '',
     'telefono' => isset($_GET['telefono']) ? trim($_GET['telefono']) : '',
     'direccion' => isset($_GET['direccion']) ? trim($_GET['direccion']) : '',
-    'localidad' => isset($_GET['localidad']) ? trim($_GET['localidad']) : '',    
+    'localidad' => isset($_GET['localidad']) ? trim($_GET['localidad']) : '',
 ];
 
 // Generar consulta filtrada
@@ -28,10 +28,10 @@ include('head.php');
 
 <body class="bg-light">
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
-        
-        <?php 
+
+        <?php
         include('sidebarGOp.php');
-         $tituloPagina = "<b> Proveedores </b>";
+        $tituloPagina = "<b> Proveedores </b>";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {
@@ -39,8 +39,8 @@ include('head.php');
         }
         ?>
 
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
-            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;"> 
+        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Filtrar Proveedores</strong></h5>
 
             <!-- Formulario de filtro -->
@@ -48,22 +48,22 @@ include('head.php');
                 <div class="row">
                     <div class="col-md-2">
                         <label for="cuit" class="form-label">Cuit</label>
-                        <input type="text" class="form-control" id="cuit" name="cuit" 
+                        <input type="text" class="form-control" id="cuit" name="cuit"
                             value="<?= htmlspecialchars($filtros['cuit']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre (Razon Social)</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" 
+                        <input type="text" class="form-control" id="nombre" name="nombre"
                             value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="iva" class="form-label">Condicion IVA</label>
-                        <input type="text" class="form-control" id="iva" name="iva" 
+                        <input type="text" class="form-control" id="iva" name="iva"
                             value="<?= htmlspecialchars($filtros['iva']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" 
+                        <input type="text" class="form-control" id="email" name="email"
                             value="<?= htmlspecialchars($filtros['email']) ?>">
                     </div>
                 </div>
@@ -71,36 +71,42 @@ include('head.php');
                 <div class="row">
                     <div class="col-md-2">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono" 
+                        <input type="text" class="form-control" id="telefono" name="telefono"
                             value="<?= htmlspecialchars($filtros['telefono']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" 
+                        <input type="text" class="form-control" id="direccion" name="direccion"
                             value="<?= htmlspecialchars($filtros['direccion']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="localidad" class="form-label">Localidad</label>
-                        <input type="text" class="form-control" id="localidad" name="localidad" 
+                        <input type="text" class="form-control" id="localidad" name="localidad"
                             value="<?= htmlspecialchars($filtros['localidad']) ?>">
-                    </div>                    
+                    </div>
                 </div>
                 <br>
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                    <a href="Proveedores.php" class="btn btn-secondary">Limpiar Filtros</a>
+                <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                        <a href="Proveedores.php" class="btn btn-secondary">Limpiar Filtros</a>
+                    </div>
+                    <span class="fw-bold mt-2 mt-md-0">Cant. proveedores listados: <?php echo $CantidadProveedores; ?></span>
                 </div>
+
             </form>
         </div>
 
         <!-- Sección de Listado Proveedores -->
-        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
-             style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Proveedores</strong></h5>
-            <table class="table table-hover" id="tablaProveedores" >
+            <table class="table table-hover" id="tablaProveedores">
                 <thead>
                     <tr>
-                        <th style='color: #bd399e;'><h3>#</h3></th>
+                        <th style='color: #bd399e;'>
+                            <h3>#</h3>
+                        </th>
                         <th>ID Proveedor</th>
                         <th>Cuit</th>
                         <th>Nombre/ <br> Razon Social<br> </th>
@@ -186,7 +192,7 @@ include('head.php');
                             <div class="mb-3">
                                 <label for="localidad" class="form-label">Localidad</label>
                                 <input type="text" class="form-control" id="localidad" name="localidad" title="Campo obligatorio" required>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -240,4 +246,5 @@ include('head.php');
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

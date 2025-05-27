@@ -1,7 +1,7 @@
-<?php 
+<?php
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
+require_once 'funciones/corroborar_usuario.php';
 Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
 
 include('conn/conexion.php');
@@ -27,8 +27,8 @@ include('head.php');
 
 <body class="bg-light">
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
-        
-        <?php 
+
+        <?php
         include('sidebarGOp.php');
         $tituloPagina = "<b> Clientes </b>";
         include('topNavBar.php');
@@ -38,8 +38,8 @@ include('head.php');
         }
         ?>
 
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
-            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;"> 
+        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Filtrar Clientes</strong></h5>
 
             <!-- Formulario de filtro -->
@@ -47,50 +47,55 @@ include('head.php');
                 <div class="row">
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
-                        <input type="text" class="form-control" id="documento" name="documento" 
+                        <input type="text" class="form-control" id="documento" name="documento"
                             value="<?= htmlspecialchars($filtros['documento']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" 
+                        <input type="text" class="form-control" id="nombre" name="nombre"
                             value="<?= htmlspecialchars($filtros['nombre']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" 
+                        <input type="text" class="form-control" id="apellido" name="apellido"
                             value="<?= htmlspecialchars($filtros['apellido']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" 
+                        <input type="text" class="form-control" id="email" name="email"
                             value="<?= htmlspecialchars($filtros['email']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono" 
+                        <input type="text" class="form-control" id="telefono" name="telefono"
                             value="<?= htmlspecialchars($filtros['telefono']) ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" 
+                        <input type="text" class="form-control" id="direccion" name="direccion"
                             value="<?= htmlspecialchars($filtros['direccion']) ?>">
                     </div>
                 </div>
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                    <a href="clientes.php" class="btn btn-secondary">Limpiar Filtros</a>
+                <div class="d-flex flex-wrap justify-content-between align-items-center mt-3">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                        <a href="clientes.php" class="btn btn-secondary">Limpiar Filtros</a>
+                    </div>
+                    <span class="fw-bold mt-2 mt-md-0">Cant. clientes listados: <?php echo $CantidadClientes; ?></span>
                 </div>
             </form>
         </div>
 
         <!-- Sección de Listado Clientes -->
-        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm" 
-             style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Clientes</strong></h5>
-            <table class="table table-hover" id="tablaClientes" >
+            <table class="table table-hover" id="tablaClientes">
                 <thead>
                     <tr>
-                        <th style='color: #bd399e;'><h3>#</h3></th>
+                        <th style='color: #bd399e;'>
+                            <h3>#</h3>
+                        </th>
                         <th>ID Cliente</th>
                         <th>Documento</th>
                         <th>Nombre</th>
@@ -224,4 +229,5 @@ include('head.php');
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
-Corroborar_Usuario(); 
+require_once 'funciones/corroborar_usuario.php';
+Corroborar_Usuario();
 
 require_once "conn/conexion.php";
 $conexion = ConexionBD();
@@ -36,8 +36,7 @@ if (!empty($_GET['BotonFiltrar'])) {
     $CantidadDevolucion = '';
     $ListadoDevolucion = Consulta_Devolucion($_GET['NumeroContrato'], $_GET['MatriculaContrato'], $_GET['ApellidoContrato'], $_GET['NombreContrato'], $_GET['DocContrato'], $_GET['DevolucionDesde'], $_GET['DevolucionHasta'], $conexion);
     $CantidadDevolucion = count($ListadoDevolucion);
-}
-else {
+} else {
 
     // Listo la totalidad de los registros en la tabla "Devolucion". 
     $ListadoDevolucion = Listar_Devolucion($conexion);
@@ -72,17 +71,17 @@ include('head.php');
 <body style="margin: 0 auto;">
 
     <style>
-    .form-control:focus {
-        border-color: rgb(14, 94, 199);
-    }
+        .form-control:focus {
+            border-color: rgb(14, 94, 199);
+        }
     </style>
 
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
 
-        <?php 
+        <?php
         include('sidebarGOp.php');
-         $tituloPagina = "<b> Devoluciones de Vehiculos </b>";
-        include('topNavBar.php');    
+        $tituloPagina = "<b> Devoluciones de Vehiculos </b>";
+        include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {
             echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
@@ -153,18 +152,18 @@ include('head.php');
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" style="background-color:rgb(14, 94, 199); color: white;" class="btn w-100"
-                            name="BotonFiltrar" value="FiltrandoDevolucion">
-                            <i class="fas fa-filter"></i> Filtrar
-                        </button>
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" style="background-color: rgb(14, 94, 199); color: white;" class="btn" name="BotonFiltrar" value="FiltrandoDevolucion">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
+                                <i class="fas fa-ban"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                        <span class="fw-bold mt-2 mt-md-0">Cant. devoluciones listadas: <?php echo $CantidadDevolucion; ?></span>
                     </div>
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-warning w-100" name="BotonLimpiarFiltros"
-                            value="LimpiandoFiltros">
-                            <i class="fas fa-ban"></i> Limpiar Filtros
-                        </button>
-                    </div>
+
                 </form>
             </div>
 
@@ -198,68 +197,66 @@ include('head.php');
 
                         <tbody>
                             <?php
-                            $contador = 1; 
+                            $contador = 1;
 
-                            for ($i=0; $i < $CantidadDevolucion; $i++) { ?>
+                            for ($i = 0; $i < $CantidadDevolucion; $i++) { ?>
 
-                            <tr class='Devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>'
-                                onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
+                                <tr class='Devolucion' data-id='<?php echo $ListadoDevolucion[$i]['IdDevolucion']; ?>'
+                                    onclick="selectRow(this, '<?= $ListadoDevolucion[$i]['IdDevolucion'] ?>')">
 
-                                <td><span style='color: rgb(14, 94, 199);'>
-                                        <h4> <?php echo $contador; ?> </h4>
-                                    </span></td>
-                                <td> <?php echo $ListadoDevolucion[$i]['IdContrato']; ?> </td>
+                                    <td><span style='color: rgb(14, 94, 199);'>
+                                            <h4> <?php echo $contador; ?> </h4>
+                                        </span></td>
+                                    <td> <?php echo $ListadoDevolucion[$i]['IdContrato']; ?> </td>
 
-                                <td title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo."> 
-                                    <?php echo $ListadoDevolucion[$i]['FechaFinContrato']; ?> 
-                                </td>
-                                <td title="Fecha efectiva de devolución del vehículo por parte del cliente"> 
-                                    <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?> 
-                                </td>
-                                
-                                <td> <?php echo $ListadoDevolucion[$i]['HoraDevolucion']; ?> </td>
-                                <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?>
-                                </td>
-                                <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?>
-                                </td>
-                                <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?>
-                                </td>
-                                <td title="Estado del vehículo al momento de la devolución">
-                                    <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?> </td>
-                                <td title="Aclaraciones sobre el estado del vehículo al momento de la devolución">
-                                    <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?> </td>
+                                    <td title="Fecha de finalización del contrato. No corresponde necesariamente con la fecha de devolución del vehículo.">
+                                        <?php echo $ListadoDevolucion[$i]['FechaFinContrato']; ?>
+                                    </td>
+                                    <td title="Fecha efectiva de devolución del vehículo por parte del cliente">
+                                        <?php echo $ListadoDevolucion[$i]['FechaDevolucion']; ?>
+                                    </td>
 
-                                <td title="Infracciones cometidas por el cliente">
-                                    <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> <br><br>
-                                    <b>Costos asociados:</b> <br>
-                                    <?php 
+                                    <td> <?php echo $ListadoDevolucion[$i]['HoraDevolucion']; ?> </td>
+                                    <td> <?php echo "{$ListadoDevolucion[$i]['apellidoCliente']}, {$ListadoDevolucion[$i]['nombreCliente']} </br> DNI: {$ListadoDevolucion[$i]['dniCliente']}"; ?>
+                                    </td>
+                                    <td> <?php echo "Patente {$ListadoDevolucion[$i]['vehiculoMatricula']} </br> {$ListadoDevolucion[$i]['vehiculoModelo']}, {$ListadoDevolucion[$i]['vehiculoGrupo']}"; ?>
+                                    </td>
+                                    <td> <?php echo "{$ListadoDevolucion[$i]['CiudadSucursal']}, {$ListadoDevolucion[$i]['DireccionSucursal']}"; ?>
+                                    </td>
+                                    <td title="Estado del vehículo al momento de la devolución">
+                                        <?php echo $ListadoDevolucion[$i]['EstadoDevolucion']; ?> </td>
+                                    <td title="Aclaraciones sobre el estado del vehículo al momento de la devolución">
+                                        <?php echo $ListadoDevolucion[$i]['AclaracionesDevolucion']; ?> </td>
+
+                                    <td title="Infracciones cometidas por el cliente">
+                                        <?php echo $ListadoDevolucion[$i]['InfraccionesDevolucion']; ?> <br><br>
+                                        <b>Costos asociados:</b> <br>
+                                        <?php
                                         if (is_null($ListadoDevolucion[$i]['CostosInfracciones']) || $ListadoDevolucion[$i]['CostosInfracciones'] == 0) {
                                             echo "Sin costos";
-                                        }
-                                        else {
+                                        } else {
                                             echo "$ ";
-                                            echo $ListadoDevolucion[$i]['CostosInfracciones']; 
+                                            echo $ListadoDevolucion[$i]['CostosInfracciones'];
                                             echo " USD";
                                         }
                                         ?>
-                                </td>
+                                    </td>
 
-                                <td title="Monto extra a cobrar por infracciones">
-                                    <?php 
+                                    <td title="Monto extra a cobrar por infracciones">
+                                        <?php
                                         if (is_null($ListadoDevolucion[$i]['MontoExtra']) || $ListadoDevolucion[$i]['MontoExtra'] == 0) {
                                             echo "Sin costos";
-                                        }
-                                        else {
+                                        } else {
                                             echo "$ ";
-                                            echo $ListadoDevolucion[$i]['MontoExtra']; 
+                                            echo $ListadoDevolucion[$i]['MontoExtra'];
                                             echo " USD";
                                         }
                                         ?>
-                                </td>
-                            </tr>
-                            <?php $contador++; ?>
-                            <?php 
-                            } 
+                                    </td>
+                                </tr>
+                                <?php $contador++; ?>
+                            <?php
+                            }
                             ?>
 
                         </tbody>
@@ -296,21 +293,21 @@ include('head.php');
                 </div>
 
                 <style>
-                .hoverImage {
-                    position: relative;
-                    align-self: stretch;
-                    height: 650px;
-                    flex-shrink: 0;
-                    object-fit: cover;
-                    border-radius: 10px;
-                    max-width: 100%;
-                }
+                    .hoverImage {
+                        position: relative;
+                        align-self: stretch;
+                        height: 650px;
+                        flex-shrink: 0;
+                        object-fit: cover;
+                        border-radius: 10px;
+                        max-width: 100%;
+                    }
 
-                .centrar {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
+                    .centrar {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 </style>
 
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
@@ -336,27 +333,27 @@ include('head.php');
                         </a>
 
                         <style>
-                        .btn-inversion {
-                            padding-left: 30px;
-                            padding-right: 30px;
-                            background-color: #262626;
-                            color: #e04709;
-                            font-weight: 500;
-                            border: 1px solid #d64004;
-                            border-radius: 20px;
+                            .btn-inversion {
+                                padding-left: 30px;
+                                padding-right: 30px;
+                                background-color: #262626;
+                                color: #e04709;
+                                font-weight: 500;
+                                border: 1px solid #d64004;
+                                border-radius: 20px;
 
-                            transition: all 0.5s ease-in-out;
-                            -webkit-transition: all 0.5s ease-in-out;
-                            -moz-transition: all 0.5s ease-in-out;
-                            -o-transition: all 0.5s ease-in-out;
-                        }
+                                transition: all 0.5s ease-in-out;
+                                -webkit-transition: all 0.5s ease-in-out;
+                                -moz-transition: all 0.5s ease-in-out;
+                                -o-transition: all 0.5s ease-in-out;
+                            }
 
-                        .btn-inversion:hover {
-                            background-color: #a80a0a;
-                            color: white;
-                            font-weight: 100;
-                            border: 1px solid #a80a0a;
-                        }
+                            .btn-inversion:hover {
+                                background-color: #a80a0a;
+                                color: white;
+                                font-weight: 100;
+                                border: 1px solid #a80a0a;
+                            }
                         </style>
 
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
@@ -400,19 +397,19 @@ include('head.php');
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php
-                                                if (!empty($ListadoContratos)) {
-                                                   for ($i = 0; $i < $CantidadContratos; $i++) {
-                                                            $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoContratos[$i]['IdContrato']) ? 'selected' : '';
-                                                             echo "<option value='{$ListadoContratos[$i]['IdContrato']}' $selected>
+                                            if (!empty($ListadoContratos)) {
+                                                for ($i = 0; $i < $CantidadContratos; $i++) {
+                                                    $selected = (!empty($_POST['idContrato']) && $_POST['idContrato'] == $ListadoContratos[$i]['IdContrato']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoContratos[$i]['IdContrato']}' $selected>
                                                              NºContrato: {$ListadoContratos[$i]['IdContrato']} - 
                                                             {$ListadoContratos[$i]['ApellidoCliente']} {$ListadoContratos[$i]['NombreCliente']} - 
                                                             DNI: {$ListadoContratos[$i]['DniCliente']} - 
                                                             Vehículo: {$ListadoContratos[$i]['matricula']} {$ListadoContratos[$i]['modelo']} {$ListadoContratos[$i]['grupo']}
                                                             </option>";
-                                                    }
-                                                } else {
-                                                    echo "<option value=''>No se encontraron contratos</option>";
                                                 }
+                                            } else {
+                                                echo "<option value=''>No se encontraron contratos</option>";
+                                            }
                                             ?>
                                         </select>
                                     </div>
@@ -420,7 +417,7 @@ include('head.php');
                                     <div class="mb-3">
                                         <label for="fechafincontrato" class="form-label">Fecha de Finalización del contrato</label>
                                         <input type="text" class="form-control" id="fechafincontrato"
-                                            name="fechaFinContrato" value="La fecha registrada en el contrato aparecerá aquí" 
+                                            name="fechaFinContrato" value="La fecha registrada en el contrato aparecerá aquí"
                                             title="La fecha registrada en el contrato no tiene por qué coincidir con fecha real de devolución" readonly>
                                     </div>
 
@@ -469,7 +466,7 @@ include('head.php');
                                             title="<?php echo $CantidadClientes ?> clientes encontrados" required>
                                             <option value="" selected>Selecciona una opción</option>
 
-                                            <?php 
+                                            <?php
                                             // Asegurate de que $ListadoClientes contiene datos antes de procesarlo
                                             if (!empty($ListadoClientes)) {
                                                 $selected = '';
@@ -480,8 +477,7 @@ include('head.php');
                                                         {$ListadoClientes[$i]['apellidoCliente']} {$ListadoClientes[$i]['nombreCliente']} (DNI: {$ListadoClientes[$i]['dniCliente']}) 
                                                     </option>";
                                                 }
-                                            } 
-                                            else {
+                                            } else {
                                                 echo "<option value=''>No se encontraron clientes.</option>";
                                             }
                                             ?>
@@ -515,59 +511,59 @@ include('head.php');
     </div>
 
     <script>
-    // Efecto sobre la imagen del reporte
-    window.onload = function() {
+        // Efecto sobre la imagen del reporte
+        window.onload = function() {
 
-        const imageElement = document.querySelector('.hoverImage');
+            const imageElement = document.querySelector('.hoverImage');
 
-        if (imageElement) {
-            const handleMouseMove = (e) => {
-                let rect = imageElement.getBoundingClientRect();
-                let x = e.clientX - rect.left;
-                let y = e.clientY - rect.top;
+            if (imageElement) {
+                const handleMouseMove = (e) => {
+                    let rect = imageElement.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
 
-                let dx = (x - rect.width / 2) / (rect.width / 2);
-                let dy = (y - rect.height / 2) / (rect.height / 2);
+                    let dx = (x - rect.width / 2) / (rect.width / 2);
+                    let dy = (y - rect.height / 2) / (rect.height / 2);
 
-                imageElement.style.transform =
-                    `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
-            };
+                    imageElement.style.transform =
+                        `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
+                };
 
-            const handleMouseLeave = () => {
-                imageElement.style.transform = "";
-            };
+                const handleMouseLeave = () => {
+                    imageElement.style.transform = "";
+                };
 
-            imageElement.addEventListener('mousemove', handleMouseMove);
-            imageElement.addEventListener('mouseleave', handleMouseLeave);
+                imageElement.addEventListener('mousemove', handleMouseMove);
+                imageElement.addEventListener('mouseleave', handleMouseLeave);
+            }
         }
-    }
     </script>
 
     <script>
-    let DevolucionSeleccionada = null;
+        let DevolucionSeleccionada = null;
 
-    // Selección de fila en la Tabla de Devolucion al hacer clic en la misma
-    document.querySelectorAll('#tablaDevolucion .Devolucion').forEach(row => {
-        row.addEventListener('click', () => {
-            // Desmarcar cualquier fila previamente seleccionada
-            document.querySelectorAll('.Devolucion').forEach(row => row.classList.remove(
-                'table-active'));
-            // Marcar la fila seleccionada
-            row.classList.add('table-active');
-            DevolucionSeleccionada = row.dataset.id;
+        // Selección de fila en la Tabla de Devolucion al hacer clic en la misma
+        document.querySelectorAll('#tablaDevolucion .Devolucion').forEach(row => {
+            row.addEventListener('click', () => {
+                // Desmarcar cualquier fila previamente seleccionada
+                document.querySelectorAll('.Devolucion').forEach(row => row.classList.remove(
+                    'table-active'));
+                // Marcar la fila seleccionada
+                row.classList.add('table-active');
+                DevolucionSeleccionada = row.dataset.id;
 
-            // Habilitar los botones
-            document.getElementById('btnModificar').disabled = false;
-            //                document.getElementById('btnEliminar').disabled = false;
+                // Habilitar los botones
+                document.getElementById('btnModificar').disabled = false;
+                //                document.getElementById('btnEliminar').disabled = false;
+            });
         });
-    });
 
-    // Función para redirigir a modificarDevolucion.php con el ID de la Devolucion seleccionado
-    function modificarDevolucion() {
-        if (DevolucionSeleccionada) {
-            window.location.href = 'modificarDevolucion.php?id=' + DevolucionSeleccionada;
+        // Función para redirigir a modificarDevolucion.php con el ID de la Devolucion seleccionado
+        function modificarDevolucion() {
+            if (DevolucionSeleccionada) {
+                window.location.href = 'modificarDevolucion.php?id=' + DevolucionSeleccionada;
+            }
         }
-    }
     </script>
 
     <!-- Funcion para buscador en dropdown -->
@@ -591,12 +587,13 @@ include('head.php');
                     $.ajax({
                         type: 'POST',
                         url: 'obtenerFechaFinContrato.php',
-                        data: { idContrato: idContrato },
+                        data: {
+                            idContrato: idContrato
+                        },
                         success: function(response) {
                             if (response) {
                                 $('#fechafincontrato').val(response);
-                            } 
-                            else {
+                            } else {
                                 $('#fechafincontrato').val('');
                             }
                         }

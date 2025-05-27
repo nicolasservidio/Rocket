@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once 'funciones/corroborar_usuario.php'; 
+require_once 'funciones/corroborar_usuario.php';
 Corroborar_Usuario(); // No se puede ingresar a la página php a menos que se haya iniciado sesión
 
 require_once "conn/conexion.php";
@@ -47,8 +47,7 @@ if (!empty($_POST['BotonFiltro'])) {
     $CantidadVehiculos = '';
     $ListadoVehiculos = Consulta_Vehiculo($_POST['Matricula'], $_POST['Modelo'], $_POST['Grupo'], $_POST['Color'], $_POST['Combustible'], $_POST['Disponibilidad'], $_POST['CiudadSucursal'], $_POST['DireccionSucursal'], $_POST['TelSucursal'], $_POST['Puertas'], $_POST['Asientos'], $_POST['Automatico'], $_POST['AireAcondicionado'], $_POST['DireccionHidraulica'], $_POST['FabricacionDesde'], $_POST['FabricacionHasta'], $_POST['AdquisicionDesde'], $_POST['AdquisicionHasta'], $_POST['PrecioDesde'], $_POST['PrecioHasta'], $conexion);
     $CantidadVehiculos = count($ListadoVehiculos);
-}
-else {
+} else {
 
     // Listo la totalidad de los registros en la tabla "vehiculos". 
     $ListadoVehiculos = Listar_Vehiculos($conexion);
@@ -57,29 +56,29 @@ else {
 
 if (!empty($_POST['BotonDesfiltrar'])) {
 
-        // Listo la totalidad de los registros en la tabla "vehiculos" 
-        $ListadoVehiculos = Listar_Vehiculos($conexion);
-        $CantidadVehiculos = count($ListadoVehiculos);
-        $_POST['Matricula'] = "";
-        $_POST['Modelo'] = "";
-        $_POST['Grupo'] = "";
-        $_POST['Color'] = "";
-        $_POST['Combustible'] = ""; 
-        $_POST['Disponibilidad'] = "";
-        $_POST['CiudadSucursal'] = "";
-        $_POST['DireccionSucursal'] = "";
-        $_POST['TelSucursal'] = "";
-        $_POST['Puertas'] = "";
-        $_POST['Asientos'] = "";
-        $_POST['Automatico'] = "";
-        $_POST['AireAcondicionado'] = "";
-        $_POST['DireccionHidraulica'] = "";
-        $_POST['FabricacionDesde'] = "";
-        $_POST['FabricacionHasta'] = "";
-        $_POST['AdquisicionDesde'] = "";
-        $_POST['AdquisicionHasta'] = "";
-        $_POST['PrecioDesde'] = "";
-        $_POST['PrecioHasta'] = "";        
+    // Listo la totalidad de los registros en la tabla "vehiculos" 
+    $ListadoVehiculos = Listar_Vehiculos($conexion);
+    $CantidadVehiculos = count($ListadoVehiculos);
+    $_POST['Matricula'] = "";
+    $_POST['Modelo'] = "";
+    $_POST['Grupo'] = "";
+    $_POST['Color'] = "";
+    $_POST['Combustible'] = "";
+    $_POST['Disponibilidad'] = "";
+    $_POST['CiudadSucursal'] = "";
+    $_POST['DireccionSucursal'] = "";
+    $_POST['TelSucursal'] = "";
+    $_POST['Puertas'] = "";
+    $_POST['Asientos'] = "";
+    $_POST['Automatico'] = "";
+    $_POST['AireAcondicionado'] = "";
+    $_POST['DireccionHidraulica'] = "";
+    $_POST['FabricacionDesde'] = "";
+    $_POST['FabricacionHasta'] = "";
+    $_POST['AdquisicionDesde'] = "";
+    $_POST['AdquisicionHasta'] = "";
+    $_POST['PrecioDesde'] = "";
+    $_POST['PrecioHasta'] = "";
 }
 
 
@@ -213,7 +212,7 @@ require_once "head.php";
                                 <option value="S">Sí</option>
                                 <option value="N">No</option>
                             </select>
-                        </div> 
+                        </div>
                         <div class="col-md-2 mb-2">
                             <label for="direccionhidraulica" class="form-label">Dirección hidráulica</label>
                             <select class="form-select" id="direccionhidraulica" name="DireccionHidraulica">
@@ -221,45 +220,50 @@ require_once "head.php";
                                 <option value="S">Sí</option>
                                 <option value="N">No</option>
                             </select>
-                        </div> 
+                        </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="aniofabricacion" class="form-label">Año de fabricación</label>
                             <div class="d-flex">
-                                <input type="number" step="1" min="1900" max="2050" id="fabricaciondesde" title="Desde..." class="form-control me-2" name="FabricacionDesde" 
+                                <input type="number" step="1" min="1900" max="2050" id="fabricaciondesde" title="Desde..." class="form-control me-2" name="FabricacionDesde"
                                     value="<?php echo !empty($_POST['FabricacionDesde']) ? $_POST['FabricacionDesde'] : ''; ?>">
 
-                                <input type="number" step="1" min="1900" max="2050" id="fabricacionhasta" title="Hasta..." class="form-control" name="FabricacionHasta" 
+                                <input type="number" step="1" min="1900" max="2050" id="fabricacionhasta" title="Hasta..." class="form-control" name="FabricacionHasta"
                                     value="<?php echo !empty($_POST['FabricacionHasta']) ? $_POST['FabricacionHasta'] : ''; ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label for="fechacompra" class="form-label">Fecha de adquisición</label>
                             <div class="d-flex">
-                                <input type="date" id="adquisiciondesde" title="Desde..." class="form-control me-2" name="AdquisicionDesde" 
+                                <input type="date" id="adquisiciondesde" title="Desde..." class="form-control me-2" name="AdquisicionDesde"
                                     value="<?php echo !empty($_POST['AdquisicionDesde']) ? $_POST['AdquisicionDesde'] : ''; ?>">
 
-                                <input type="date" id="adquisicionhasta" title="Hasta..." class="form-control" name="AdquisicionHasta" 
+                                <input type="date" id="adquisicionhasta" title="Hasta..." class="form-control" name="AdquisicionHasta"
                                     value="<?php echo !empty($_POST['AdquisicionHasta']) ? $_POST['AdquisicionHasta'] : ''; ?>">
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-md-4">
                             <label for="precio" class="form-label">Precio vehículo</label>
                             <div class="d-flex">
-                                <input type="number" min="0" max="1000000000" id="preciodesde" title="Desde..." class="form-control me-2" name="PrecioDesde" 
+                                <input type="number" min="0" max="1000000000" id="preciodesde" title="Desde..." class="form-control me-2" name="PrecioDesde"
                                     value="<?php echo !empty($_POST['PrecioDesde']) ? $_POST['PrecioDesde'] : ''; ?>">
 
-                                <input type="number" min="0" max="1000000000" id="preciohasta" title="Hasta..." class="form-control" name="PrecioHasta" 
+                                <input type="number" min="0" max="1000000000" id="preciohasta" title="Hasta..." class="form-control" name="PrecioHasta"
                                     value="<?php echo !empty($_POST['PrecioHasta']) ? $_POST['PrecioHasta'] : ''; ?>">
                             </div>
-                        </div> 
+                        </div>
                     </div>
 
                     <br><br>
-                    <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
-                    <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando" style="margin-left: 4%;">Limpiar Filtros</button>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
+                            <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando">Limpiar Filtros</button>
+                        </div>
+                        <span class="fw-bold mt-2 mt-md-0">Cant. vehículos listados: <?php echo $CantidadVehiculos; ?></span>
+                    </div>
                 </form>
 
             </div>
@@ -291,86 +295,85 @@ require_once "head.php";
                         </thead>
 
                         <tbody>
-                            <?php 
-                            for ($i=0; $i < $CantidadVehiculos; $i++) { ?>
-                            
-                            <tr class='vehiculo'                                 
-                                data-id="<?= $ListadoVehiculos[$i]['vID'] ?>" 
-                                data-matricula="<?= $ListadoVehiculos[$i]['vMatricula'] ?>" 
-                                data-modelo="<?= $ListadoVehiculos[$i]['vModelo'] ?>" 
-                                data-grupo="<?= $ListadoVehiculos[$i]['vGrupo'] ?>" 
-                                data-combustible="<?= $ListadoVehiculos[$i]['vCombustible'] ?>" 
-                                data-sucursal="<?= "{$ListadoVehiculos[$i]['vSucursalDireccion']}, {$ListadoVehiculos[$i]['vSucursalCiudad']}" ?>" 
-                                data-disponibilidad="<?= $ListadoVehiculos[$i]['vDisponibilidad'] ?>" 
-                                onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vID'] ?>')" >
+                            <?php
+                            for ($i = 0; $i < $CantidadVehiculos; $i++) { ?>
 
-                                <td> <?php echo $i+1; ?> </td>
+                                <tr class='vehiculo'
+                                    data-id="<?= $ListadoVehiculos[$i]['vID'] ?>"
+                                    data-matricula="<?= $ListadoVehiculos[$i]['vMatricula'] ?>"
+                                    data-modelo="<?= $ListadoVehiculos[$i]['vModelo'] ?>"
+                                    data-grupo="<?= $ListadoVehiculos[$i]['vGrupo'] ?>"
+                                    data-combustible="<?= $ListadoVehiculos[$i]['vCombustible'] ?>"
+                                    data-sucursal="<?= "{$ListadoVehiculos[$i]['vSucursalDireccion']}, {$ListadoVehiculos[$i]['vSucursalCiudad']}" ?>"
+                                    data-disponibilidad="<?= $ListadoVehiculos[$i]['vDisponibilidad'] ?>"
+                                    onclick="selectRow(this, '<?= $ListadoVehiculos[$i]['vID'] ?>')">
 
-                                <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
+                                    <td> <?php echo $i + 1; ?> </td>
 
-                                <td title="Modelo del vehículo y grupo al que pertenece" > 
-                                    <b>Modelo:</b> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> <br><br>
-                                    <b>Grupo:</b> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> <br><br>
-                                    <b>Color:</b> <?php echo $ListadoVehiculos[$i]['vColor']; ?>
-                                </td>
+                                    <td> <?php echo $ListadoVehiculos[$i]['vMatricula']; ?> </td>
 
-                                <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
+                                    <td title="Modelo del vehículo y grupo al que pertenece">
+                                        <b>Modelo:</b> <?php echo $ListadoVehiculos[$i]['vModelo']; ?> <br><br>
+                                        <b>Grupo:</b> <?php echo $ListadoVehiculos[$i]['vGrupo']; ?> <br><br>
+                                        <b>Color:</b> <?php echo $ListadoVehiculos[$i]['vColor']; ?>
+                                    </td>
 
-                                <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalCiudad']}, 
+                                    <td> <?php echo $ListadoVehiculos[$i]['vCombustible']; ?> </td>
+
+                                    <td> <?php echo "{$ListadoVehiculos[$i]['vSucursalCiudad']}, 
                                                 {$ListadoVehiculos[$i]['vSucursalDireccion']}"; ?> <br><br>
-                                     <b>Tel:</b> <?php echo $ListadoVehiculos[$i]['vSucursalTel']; ?> 
-                                </td>
+                                        <b>Tel:</b> <?php echo $ListadoVehiculos[$i]['vSucursalTel']; ?>
+                                    </td>
 
-                                <td title="Disponibilidad"> 
-                                    <span class="badge badge-<?php echo $ListadoVehiculos[$i]['ColorAdvertencia']; ?>"> 
-                                        <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?> 
-                                    </span>
-                                </td>
+                                    <td title="Disponibilidad">
+                                        <span class="badge badge-<?php echo $ListadoVehiculos[$i]['ColorAdvertencia']; ?>">
+                                            <?php echo $ListadoVehiculos[$i]['vDisponibilidad']; ?>
+                                        </span>
+                                    </td>
 
-                                <td> 
-                                    <b>Puertas:</b> <?php echo $ListadoVehiculos[$i]['vNumeroPuertas']; ?> <br><br>
-                                    <b>Asientos:</b> <?php echo $ListadoVehiculos[$i]['vNumeroAsientos']; ?> pasajeros
-                                </td>
+                                    <td>
+                                        <b>Puertas:</b> <?php echo $ListadoVehiculos[$i]['vNumeroPuertas']; ?> <br><br>
+                                        <b>Asientos:</b> <?php echo $ListadoVehiculos[$i]['vNumeroAsientos']; ?> pasajeros
+                                    </td>
 
-                                <td title="Automático"> <?php echo $ListadoVehiculos[$i]['vAutomatico']; ?> </td>
+                                    <td title="Automático"> <?php echo $ListadoVehiculos[$i]['vAutomatico']; ?> </td>
 
-                                <td title="Aire acondicionado"> <?php echo $ListadoVehiculos[$i]['vAire']; ?> </td>
+                                    <td title="Aire acondicionado"> <?php echo $ListadoVehiculos[$i]['vAire']; ?> </td>
 
-                                <td title="Dirección hidráulica"> <?php echo $ListadoVehiculos[$i]['vHidraulica']; ?> </td>
+                                    <td title="Dirección hidráulica"> <?php echo $ListadoVehiculos[$i]['vHidraulica']; ?> </td>
 
-                                <td title="Kilometraje"> <?php echo $ListadoVehiculos[$i]['vKilometraje']; ?> </td>
+                                    <td title="Kilometraje"> <?php echo $ListadoVehiculos[$i]['vKilometraje']; ?> </td>
 
-                                <td> 
-                                    <b>NºMotor:</b> <?php echo $ListadoVehiculos[$i]['vNumeroMotor']; ?> <br><br>
-                                    <b>NºChasis:</b> <?php echo $ListadoVehiculos[$i]['vNumeroChasis']; ?> 
-                                </td>
+                                    <td>
+                                        <b>NºMotor:</b> <?php echo $ListadoVehiculos[$i]['vNumeroMotor']; ?> <br><br>
+                                        <b>NºChasis:</b> <?php echo $ListadoVehiculos[$i]['vNumeroChasis']; ?>
+                                    </td>
 
-                                <td title="Estado físico del vehículo"> <?php echo $ListadoVehiculos[$i]['vEstadoFisico']; ?> </td>
+                                    <td title="Estado físico del vehículo"> <?php echo $ListadoVehiculos[$i]['vEstadoFisico']; ?> </td>
 
-                                <td title="Año de fabricación del vehículo"> <?php echo $ListadoVehiculos[$i]['vAnio']; ?> </td>
+                                    <td title="Año de fabricación del vehículo"> <?php echo $ListadoVehiculos[$i]['vAnio']; ?> </td>
 
-                                <td title="Fecha de compra y precio al que la empresa adquirió el vehículo"> 
-                                    <b>Fecha:</b><br> <?php echo $ListadoVehiculos[$i]['vFechaCompra']; ?> <br><br>
-                                    <b>Precio:</b><br> 
-                                    <?php 
-                                    if ($ListadoVehiculos[$i]['vPrecioCompra'] != "Sin información") {
-                                        echo "$ "; 
-                                        echo $ListadoVehiculos[$i]['vPrecioCompra']; 
-                                        echo " USD";
-                                    }
-                                    else {
-                                        echo $ListadoVehiculos[$i]['vPrecioCompra']; 
-                                    }
-                                    ?> 
-                                </td>
+                                    <td title="Fecha de compra y precio al que la empresa adquirió el vehículo">
+                                        <b>Fecha:</b><br> <?php echo $ListadoVehiculos[$i]['vFechaCompra']; ?> <br><br>
+                                        <b>Precio:</b><br>
+                                        <?php
+                                        if ($ListadoVehiculos[$i]['vPrecioCompra'] != "Sin información") {
+                                            echo "$ ";
+                                            echo $ListadoVehiculos[$i]['vPrecioCompra'];
+                                            echo " USD";
+                                        } else {
+                                            echo $ListadoVehiculos[$i]['vPrecioCompra'];
+                                        }
+                                        ?>
+                                    </td>
 
-                            </tr>
-                            <?php 
-                            } 
+                                </tr>
+                            <?php
+                            }
                             ?>
 
                         </tbody>
-                        
+
                     </table>
                 </div>
             </div>
@@ -406,7 +409,7 @@ require_once "head.php";
                             <select class="form-select" aria-label="Selector" id="selector" name="ModeloREG" required>
                                 <option value="" selected>Selecciona una opción</option>
 
-                                <?php 
+                                <?php
                                 // Asegúrate de que $ListadoModelo contiene datos antes de procesarlo
                                 if (!empty($ListadoModelo)) {
                                     $selected = '';
@@ -415,8 +418,7 @@ require_once "head.php";
                                         $selected = (!empty($_POST['ModeloREG']) && $_POST['ModeloREG'] == $ListadoModelo[$i]['IdModelo']) ? 'selected' : '';
                                         echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected>{$ListadoModelo[$i]['NombreModelo']}</option>";
                                     }
-                                } 
-                                else {
+                                } else {
                                     echo "<option value=''>No se encontraron grupos</option>";
                                 }
                                 ?>
@@ -429,7 +431,7 @@ require_once "head.php";
                             <select class="form-select" aria-label="Selector" id="selector" name="GrupoREG" required>
                                 <option value="" selected>Selecciona una opción</option>
 
-                                <?php 
+                                <?php
                                 // Asegúrate de que $ListadoGrupo contiene datos antes de procesarlo
                                 if (!empty($ListadoGrupo)) {
                                     $selected = '';
@@ -438,8 +440,7 @@ require_once "head.php";
                                         $selected = (!empty($_POST['GrupoREG']) && $_POST['GrupoREG'] == $ListadoGrupo[$i]['IdGrupo']) ? 'selected' : '';
                                         echo "<option value='{$ListadoGrupo[$i]['IdGrupo']}' $selected>{$ListadoGrupo[$i]['NombreGrupo']}</option>";
                                     }
-                                } 
-                                else {
+                                } else {
                                     echo "<option value=''>No se encontraron grupos</option>";
                                 }
                                 ?>
@@ -454,16 +455,15 @@ require_once "head.php";
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" name="BotonRegistrarVehiculo" value="RegistrandoVehiculo" >Agregar</button>
+                        <button type="submit" class="btn btn-primary" name="BotonRegistrarVehiculo" value="RegistrandoVehiculo">Agregar</button>
                     </form>
 
                 </div>
             </div>
         </div>
     </div>
-    
-    <script>
 
+    <script>
         let vehiculoSeleccionado = null;
 
         // Sombreado de fila en la Tabla de Vehiculos al hacer clic en la misma
@@ -495,7 +495,6 @@ require_once "head.php";
                 }
             }
         }
-
     </script>
 
 
@@ -506,6 +505,5 @@ require_once "head.php";
     </div>
 
 </body>
+
 </html>
-
-
