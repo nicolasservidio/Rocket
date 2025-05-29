@@ -76,9 +76,9 @@ include('head.php');
 <body style="margin: 0 auto;">
 
     <style>
-        .form-control:focus {
-            border-color: #c7240e;
-        }
+    .form-control:focus {
+        border-color: #c7240e;
+    }
     </style>
 
     <div class="wrapper" style="margin-bottom: 100px; min-height: 100%;">
@@ -96,7 +96,8 @@ include('head.php');
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
-            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
+            <div
+                style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
                 <div style='color: #c7240e; margin-bottom: 30px;'>
                     <h3 class="fw-bold"> Pedidos a Proveedores </h3>
                 </div>
@@ -112,7 +113,8 @@ include('head.php');
 
                     <div class="col-md-2">
                         <label for="estadopedido" class="form-label">Estado del Pedido</label>
-                        <input type="text" class="form-control" id="estadopedido" name="Estado-Pedido" title="Pendiente, Confirmado, Cancelado, En Preparación, Enviado, Entregado o Devuelto"
+                        <input type="text" class="form-control" id="estadopedido" name="Estado-Pedido"
+                            title="Pendiente, Confirmado, Cancelado, En Preparación, Enviado, Entregado o Devuelto"
                             value="<?= htmlspecialchars($filtros['Estado-Pedido']) ?>">
                     </div>
 
@@ -150,8 +152,10 @@ include('head.php');
 
                     <div class="col-md-2">
                         <label for="preciounitario" class="form-label">Precio unitario</label>
-                        <input type="number" min="0" max="999999999" step="0.01" class="form-control" id="preciounitario" name="Precio-Unitario"
-                            value="<?= htmlspecialchars($filtros['Precio-Unitario']) ?>" title="Filtrar por precio unitario (hasta los...)">
+                        <input type="number" min="0" max="999999999" step="0.01" class="form-control"
+                            id="preciounitario" name="Precio-Unitario"
+                            value="<?= htmlspecialchars($filtros['Precio-Unitario']) ?>"
+                            title="Filtrar por precio unitario (hasta los...)">
                     </div>
 
                     <?php
@@ -160,14 +164,17 @@ include('head.php');
                     ?>
                     <div class="col-md-2">
                         <label for="cantidadproducto" class="form-label">Cantidad </label>
-                        <input type="number" min="<? echo $minCantidad; ?>" max="<?php echo $maxCantidad; ?>" class="form-control" id="cantidadproducto" name="Cantidad-Producto"
-                            value="<?= htmlspecialchars($filtros['Cantidad-Producto']) ?>" title="Cantidad exacta de unidades del producto">
+                        <input type="number" min="<? echo $minCantidad; ?>" max="<?php echo $maxCantidad; ?>"
+                            class="form-control" id="cantidadproducto" name="Cantidad-Producto"
+                            value="<?= htmlspecialchars($filtros['Cantidad-Producto']) ?>"
+                            title="Cantidad exacta de unidades del producto">
                     </div>
 
                     <div class="col-md-2">
                         <label for="montototal" class="form-label">Monto total</label>
-                        <input type="number" min="1" max="999999999" step="0.01" class="form-control" id="montototal" name="MontoTotal-Pedido"
-                            value="<?= htmlspecialchars($filtros['MontoTotal-Pedido']) ?>" title="Filtrar por monto total (hasta los...)">
+                        <input type="number" min="1" max="999999999" step="0.01" class="form-control" id="montototal"
+                            name="MontoTotal-Pedido" value="<?= htmlspecialchars($filtros['MontoTotal-Pedido']) ?>"
+                            title="Filtrar por monto total (hasta los...)">
                     </div>
 
                     <div class="w-100"></div> <!-- salto de linea -->
@@ -181,13 +188,15 @@ include('head.php');
                     <div class="col-md-4">
                         <label for="nombredeinsumo" class="form-label">Nombre del Insumo</label>
                         <input type="text" class="form-control" id="nombredeinsumo" name="Nombre-Insumo"
-                            title="Nombre del repuesto, producto o accesorio" value="<?= htmlspecialchars($filtros['Nombre-Insumo']) ?>">
+                            title="Nombre del repuesto, producto o accesorio"
+                            value="<?= htmlspecialchars($filtros['Nombre-Insumo']) ?>">
                     </div>
 
                     <div class="col-md-2">
                         <label for="descripciondeinsumo" class="form-label">Descripción del Insumo</label>
                         <input type="text" class="form-control" id="descripciondeinsumo" name="Descripcion-Insumo"
-                            title="Filtrar por palabra clave en la descripción" value="<?= htmlspecialchars($filtros['Descripcion-Insumo']) ?>">
+                            title="Filtrar por palabra clave en la descripción"
+                            value="<?= htmlspecialchars($filtros['Descripcion-Insumo']) ?>">
                     </div>
 
                     <div class="col-md-2">
@@ -198,8 +207,9 @@ include('head.php');
                     <div class="col-md-4">
                         <label for="fechadepedido" class="form-label">Fecha de Pedido</label>
                         <div class="d-flex">
-                            <input type="date" id="fechadepedidodesde" class="form-control me-2" name="FechaPedido-Desde"
-                                title="desde..." value="<?= htmlspecialchars($filtros['FechaPedido-Desde']) ?>">
+                            <input type="date" id="fechadepedidodesde" class="form-control me-2"
+                                name="FechaPedido-Desde" title="desde..."
+                                value="<?= htmlspecialchars($filtros['FechaPedido-Desde']) ?>">
 
                             <input type="date" id="fechadepedidohasta" class="form-control" name="FechaPedido-Hasta"
                                 title="hasta..." value="<?= htmlspecialchars($filtros['FechaPedido-Hasta']) ?>">
@@ -209,8 +219,9 @@ include('head.php');
                     <div class="col-md-4">
                         <label for="fechadeentrega" class="form-label">Fecha de Entrega</label>
                         <div class="d-flex">
-                            <input type="date" id="fechadeentregadesde" class="form-control me-2" name="FechaEntrega-Desde"
-                                title="desde..." value="<?= htmlspecialchars($filtros['FechaEntrega-Desde']) ?>">
+                            <input type="date" id="fechadeentregadesde" class="form-control me-2"
+                                name="FechaEntrega-Desde" title="desde..."
+                                value="<?= htmlspecialchars($filtros['FechaEntrega-Desde']) ?>">
 
                             <input type="date" id="fechadeentregahasta" class="form-control" name="FechaEntrega-Hasta"
                                 title="hasta..." value="<?= htmlspecialchars($filtros['FechaEntrega-Hasta']) ?>">
@@ -223,22 +234,34 @@ include('head.php');
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="submit" style="background-color: #c7240e; color: white;" class="btn" name="BotonFiltrar" value="FiltrandoPedidos">
+                            <button type="submit" style="background-color: #c7240e; color: white;" class="btn"
+                                name="BotonFiltrar" value="FiltrandoPedidos">
                                 <i class="fas fa-filter"></i> Filtrar
                             </button>
-                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
+                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros"
+                                value="LimpiandoFiltros">
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
                         </div>
-                        <span class="fw-bold mt-2 mt-md-0">Cant. pedidos listados: <?php echo $CantidadPedidos; ?></span>
+                        <span class="fw-bold mt-2 mt-md-0">Cant. pedidos listados:
+                            <?php echo $CantidadPedidos; ?></span>
                     </div>
 
                 </form>
             </div>
 
+            <?php
+                if (isset($_GET['msg']) && $_GET['msg'] == 'modificado') {
+                    echo "<div class='alert alert-success' role='alert' style='max-width: 97%; margin: 20px auto;'>
+                     Pedido modificado correctamente.
+                        </div>";
+                }
+?>
+
             <!-- Tabla de pedidos a proveedores -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
-                <div class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
+                <div class="table-responsive mt-4"
+                    style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
                     <table class="table table-striped table-hover" id="tablaPedidos">
                         <thead>
                             <tr>
@@ -262,128 +285,69 @@ include('head.php');
 
                             // Iterar sobre los pedidos en el array $ListadoPedidos
                             foreach ($ListadoPedidos as $ppIdPedido => $Pedido) { ?>
+                            <tr style='border-bottom: 3px solid #b50000;'>
+                                <td colspan='9'></td>
+                            </tr>
 
-                                <tr class='pedido' data-id='<?php echo $Pedido['ppIdPedido']; ?>'
-                                    onclick="selectRow(this, '<?php $Pedido['ppIdPedido']; ?>')">
-
-                                    <!-- Encabezado principal para cada pedido -->
-                                <tr>
-                                    <th colspan="9">
-                                        <h3 style="color:rgb(175, 41, 4); font-family: Segoe UI; text-align: left; padding: 20px 0 0 0;">
-                                            PEDIDO #<?php echo $Pedido['ppIdPedido']; ?>
-                                        </h3>
-                                    </th>
-                                </tr>
-
-                                <!-- Datos del pedido -->
+                            <tr class="pedido" data-id="<?= $Pedido['ppIdPedido'] ?>">
                                 <td>
-                                    <span style='color: #c7240e;'>
-                                        <h4> <?php echo $contador; ?> </h4>
-                                    </span>
+                                    <h4 style='color: #c7240e;'><?= $contador ?></h4>
                                 </td>
-
-                                <td title="ID del Pedido">
-                                    <?php echo "<b> ID: {$Pedido['ppIdPedido']} </b>"; ?>
+                                <td><b>ID: <?= $Pedido['ppIdPedido'] ?></b></td>
+                                <td><?= $Pedido['FechaPedido'] ?></td>
+                                <td><?= $Pedido['FechaEntrega'] ?></td>
+                                <td><span class="badge badge-success"><?= $Pedido['EstadoPedido'] ?></span></td>
+                                <td><?= $Pedido['AclaracionesEstadoPedido'] ?></td>
+                                <td><?= $Pedido['CondicionesDeEntrega'] ?></td>
+                                <td>
+                                    <?= $Pedido['NombreProveedor'] ?><br>
+                                    <strong>CUIT:</strong> <?= $Pedido['CuitProveedor'] ?><br>
+                                    <strong>IVA:</strong> <?= $Pedido['IvaProveedor'] ?><br><br>
+                                    <strong>Correo:</strong> <?= $Pedido['MailProveedor'] ?><br>
+                                    <strong>Dirección:</strong> <?= $Pedido['DireccionProveedor'] ?>,
+                                    <?= $Pedido['LocalidadProveedor'] ?>
                                 </td>
+                                <td><?= $Pedido['TotalPedido'] ?> USD</td>
+                            </tr>
 
-                                <td title="Fecha de pedido">
-                                    <?php echo $Pedido['FechaPedido']; ?>
-                                </td>
+                            <tr>
+                                <th colspan="9" style="padding-top: 10px;">ARTÍCULOS DEL PEDIDO
+                                    #<?= $Pedido['ppIdPedido'] ?></th>
+                            </tr>
+                            <tr>
+                                <th>Tipo</th>
+                                <th colspan="2">Nombre</th>
+                                <th colspan="3">Descripción</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
 
-                                <td title="Fecha de entrega">
-                                    <?php echo $Pedido['FechaEntrega']; ?>
-                                </td>
-
-                                <td title="Estado del pedido">
-                                    <span class="badge badge-success">
-                                        <?php echo $Pedido['EstadoPedido']; ?>
-                                    </span>
-                                </td>
-
-                                <td title="Aclaraciones sobre el estado del pedido">
-                                    <?php echo $Pedido['AclaracionesEstadoPedido']; ?>
-                                </td>
-
-                                <td title="Condiciones de entrega">
-                                    <?php echo $Pedido['CondicionesDeEntrega']; ?>
-                                </td>
-
-                                <td title="Información sobre el proveedor">
+                            <?php foreach ($Pedido['Detalles'] as $Detalle): ?>
+                            <tr>
+                                <td><?= $Detalle['TipoInsumo'] ?></td>
+                                <td colspan="2">
                                     <?php
-                                    echo "{$Pedido['NombreProveedor']} </br> 
-                                        <strong>CUIT:</strong> {$Pedido['CuitProveedor']} </br> 
-                                        <strong>IVA:</strong> {$Pedido['IvaProveedor']} </br></br> 
-                                        <strong>Correo:</strong> {$Pedido['MailProveedor']}
-                                        <strong>Dirección:</strong> {$Pedido['DireccionProveedor']}, {$Pedido['LocalidadProveedor']}";
-                                    ?>
+                                         if ($Detalle['TipoInsumo'] == "Repuesto") echo $Detalle['NombreRepuesto'];
+                                            elseif ($Detalle['TipoInsumo'] == "Producto") echo $Detalle['NombreProducto'];
+                                                else echo $Detalle['NombreAccesorio'];
+                                     ?>
                                 </td>
-
-                                <td title="Monto total de la compra">
-                                    <?php echo "{$Pedido['TotalPedido']} USD"; ?>
+                                <td colspan="3">
+                                    <?php
+                                        if ($Detalle['TipoInsumo'] == "Repuesto") echo $Detalle['DescripcionRepuesto'];
+                                         elseif ($Detalle['TipoInsumo'] == "Producto") echo $Detalle['DescripcionProducto'];
+                                            else echo $Detalle['DescripcionAccesorio'];
+                                        ?>
                                 </td>
+                                <td><?= $Detalle['PrecioPorUnidad'] ?> USD</td>
+                                <td><?= $Detalle['CantidadUnidades'] ?></td>
+                                <td><?= $Detalle['Subtotal'] ?> USD</td>
+                            </tr>
 
-                                <!-- Encabezado para los artículos del pedido -->
-                                <tr>
-                                    <th colspan="9">
-                                        <h5 style="color:rgb(175, 41, 4); font-family: Segoe UI; text-align: left;">
-                                            ARTÍCULOS
-                                        </h5>
-                                    </th>
-                                </tr>
+                            <?php endforeach; ?>
 
-                                <tr>
-                                    <th colspan="1">Tipo de insumo</th>
-                                    <th colspan="2">Nombre</th>
-                                    <th colspan="3">Descripción</th>
-                                    <th colspan="1">Precio unitario</th>
-                                    <th colspan="1">Cantidad</th>
-                                    <th colspan="1">Subtotal</th>
-                                </tr>
-
-                                <!-- Detalles del pedido -->
-                                <?php
-                                // Iterar sobre los detalles del pedido actual
-                                foreach ($Pedido['Detalles'] as $detalleId => $Detalle) { ?>
-                                    <tr>
-                                        <td title="Tipo de insumo">
-                                            <?php echo $Detalle['TipoInsumo']; ?>
-                                        </td>
-                                        <td colspan="2" title="Nombre del insumo">
-                                            <?php
-                                            if ($Detalle['TipoInsumo'] == "Repuesto") {
-                                                echo $Detalle['NombreRepuesto'];
-                                            } elseif ($Detalle['TipoInsumo'] == "Producto") {
-                                                echo $Detalle['NombreProducto'];
-                                            } elseif ($Detalle['TipoInsumo'] == "Accesorio") {
-                                                echo $Detalle['NombreAccesorio'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <td colspan="3" title="Descripción del insumo">
-                                            <?php
-                                            if ($Detalle['TipoInsumo'] == "Repuesto") {
-                                                echo $Detalle['DescripcionRepuesto'];
-                                            } elseif ($Detalle['TipoInsumo'] == "Producto") {
-                                                echo $Detalle['DescripcionProducto'];
-                                            } elseif ($Detalle['TipoInsumo'] == "Accesorio") {
-                                                echo $Detalle['DescripcionAccesorio'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <td colspan="1" title="Precio por unidad">
-                                            <?php echo "{$Detalle['PrecioPorUnidad']} USD"; ?>
-                                        </td>
-                                        <td colspan="1" title="Cantidad de unidades compradas">
-                                            <?php echo $Detalle['CantidadUnidades']; ?>
-                                        </td>
-                                        <td colspan="1" title="Subtotal del artículo">
-                                            <?php echo "{$Detalle['Subtotal']} USD"; ?>
-                                        </td>
-                                    </tr>
-                                <?php
-                                } ?>
-
-                                </tr>
+                            </tr>
                             <?php
                                 $contador++;
                             } ?>
@@ -421,27 +385,29 @@ include('head.php');
                 </div>
 
                 <style>
-                    .hoverImage {
-                        position: relative;
-                        align-self: stretch;
-                        height: 650px;
-                        flex-shrink: 0;
-                        object-fit: cover;
-                        border-radius: 10px;
-                        max-width: 100%;
-                    }
+                .hoverImage {
+                    position: relative;
+                    align-self: stretch;
+                    height: 650px;
+                    flex-shrink: 0;
+                    object-fit: cover;
+                    border-radius: 10px;
+                    max-width: 100%;
+                }
 
-                    .centrar {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
+                .centrar {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
                 </style>
 
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;">
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes segmentados por estado </a>
+                            <strong style="color: #a80a0a;">Reporte:</strong> <a
+                                href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes
+                                segmentados por estado </a>
                         </h4>
 
                         <a href="ReporteContratos_FrecMensuales.php" style="color: black;">
@@ -453,34 +419,36 @@ include('head.php');
                         </a>
 
                         <style>
-                            .btn-inversion {
-                                padding-left: 30px;
-                                padding-right: 30px;
-                                background-color: #262626;
-                                color: #e04709;
-                                font-weight: 500;
-                                border: 1px solid #d64004;
-                                border-radius: 20px;
+                        .btn-inversion {
+                            padding-left: 30px;
+                            padding-right: 30px;
+                            background-color: #262626;
+                            color: #e04709;
+                            font-weight: 500;
+                            border: 1px solid #d64004;
+                            border-radius: 20px;
 
-                                transition: all 0.5s ease-in-out;
-                                -webkit-transition: all 0.5s ease-in-out;
-                                -moz-transition: all 0.5s ease-in-out;
-                                -o-transition: all 0.5s ease-in-out;
-                            }
+                            transition: all 0.5s ease-in-out;
+                            -webkit-transition: all 0.5s ease-in-out;
+                            -moz-transition: all 0.5s ease-in-out;
+                            -o-transition: all 0.5s ease-in-out;
+                        }
 
-                            .btn-inversion:hover {
-                                background-color: #a80a0a;
-                                color: white;
-                                font-weight: 100;
-                                border: 1px solid #a80a0a;
-                            }
+                        .btn-inversion:hover {
+                            background-color: #a80a0a;
+                            color: white;
+                            font-weight: 100;
+                            border: 1px solid #a80a0a;
+                        }
                         </style>
 
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
                             <a href="ReporteContratos_FrecMensuales.php">
                                 <button class="btn btn-inversion">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
-                                        <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-bar-chart" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
                                     </svg>
                                     Reporte
                                 </button>
@@ -492,12 +460,16 @@ include('head.php');
 
 
                 <!-- Modal para Nuevo registro de pedido a proveedor -->
-                <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="nuevoRegistroModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg"> <!-- Aumentamos el tamaño para acomodar la tabla dinámica -->
+                <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-labelledby="nuevoRegistroModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <!-- Aumentamos el tamaño para acomodar la tabla dinámica -->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="nuevoRegistroModalLabel">Registrar nuevo Pedido a Proveedor</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="nuevoRegistroModalLabel">Registrar nuevo Pedido a Proveedor
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
 
                             <!-- Form -->
@@ -507,18 +479,21 @@ include('head.php');
                                     <!-- Información general del pedido (encabezado) -->
                                     <div class="mb-3">
                                         <label for="fechapedido" class="form-label">Fecha del Pedido</label>
-                                        <input type="date" class="form-control" id="fechapedido" title="Obligatorio" name="fechapedido" value="" required>
+                                        <input type="date" class="form-control" id="fechapedido" title="Obligatorio"
+                                            name="fechapedido" value="" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="fechaentrega" class="form-label">Fecha de Entrega</label>
                                         <input type="date" class="form-control" id="fechaentrega" name="fechaentrega"
-                                            title="Si contás con una fecha estimativa de arribo, colocala aquí" value="">
+                                            title="Si contás con una fecha estimativa de arribo, colocala aquí"
+                                            value="">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="idProveedor" class="form-label">Proveedor</label>
-                                        <select class="form-select" aria-label="Selector" id="selector" title="Obligatorio" name="idProveedor" required>
+                                        <select class="form-select" aria-label="Selector" id="selector"
+                                            title="Obligatorio" name="idProveedor" required>
                                             <option value="" selected>Selecciona una opción</option>
 
                                             <?php
@@ -543,48 +518,61 @@ include('head.php');
                                     </br>
 
                                     <div class="mb-3">
-                                        <label for="aclaracionesestadopedido" class="form-label">Aclaraciones sobre el estado del pedido </label>
-                                        <textarea class="form-control" id="aclaracionesestadopedido" name="aclaracionesestadopedido"
-                                            rows="2" cols="33" title="Campo opcional que permite incorporar información adicional sobre el estado del pedido"
+                                        <label for="aclaracionesestadopedido" class="form-label">Aclaraciones sobre el
+                                            estado del pedido </label>
+                                        <textarea class="form-control" id="aclaracionesestadopedido"
+                                            name="aclaracionesestadopedido" rows="2" cols="33"
+                                            title="Campo opcional que permite incorporar información adicional sobre el estado del pedido"
                                             value=""> </textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="condicionesdeentrega" class="form-label">Condiciones de entrega </label>
-                                        <textarea class="form-control" id="condicionesdeentrega" name="condicionesdeentrega"
-                                            rows="2" cols="33" title="Campo opcional que permite registrar condiciones pactadas de entrega"
+                                        <label for="condicionesdeentrega" class="form-label">Condiciones de entrega
+                                        </label>
+                                        <textarea class="form-control" id="condicionesdeentrega"
+                                            name="condicionesdeentrega" rows="2" cols="33"
+                                            title="Campo opcional que permite registrar condiciones pactadas de entrega"
                                             value=""> </textarea>
                                     </div>
 
                                     </br></br>
 
                                     <!-- Detalle del pedido -->
-                                    <h5><i class="fas fa-rocket" style="color: red; padding: 0 10px 0 10px;"></i> Detalle del pedido </h5>
+                                    <h5><i class="fas fa-rocket" style="color: red; padding: 0 10px 0 10px;"></i>
+                                        Detalle del pedido </h5>
                                     </br>
 
-                                    <div class="mb-3" style="overflow-x: auto;"> <!-- Contenedor desplazable -->
+                                    <div class="mb-3" style="overflow-x: auto;">
+                                        <!-- Contenedor desplazable -->
                                         <table class="table table-bordered" id="tablaDetalles">
                                             <thead>
                                                 <tr>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Tipo de Insumo
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Nombre
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Descripción
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Precio Unitario
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Cantidad
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Subtotal
                                                     </th>
-                                                    <th style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
+                                                    <th
+                                                        style="border: 2px solid #c7240e !important; text-align: center; background-color: #f9f9f9; ">
                                                         Acciones
                                                     </th>
                                                 </tr>
@@ -595,13 +583,15 @@ include('head.php');
                                         </table>
 
                                         </br></br>
-                                        <button type="button" class="btn btn-primary" id="btnAgregarFila">Agregar Artículo</button>
+                                        <button type="button" class="btn btn-primary" id="btnAgregarFila">Agregar
+                                            Artículo</button>
                                         </br></br></br>
                                     </div>
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
@@ -619,71 +609,91 @@ include('head.php');
     </div>
 
     <script>
-        // Efecto sobre la imagen del reporte
-        window.onload = function() {
+    // Efecto sobre la imagen del reporte
+    window.onload = function() {
 
-            const imageElement = document.querySelector('.hoverImage');
+        const imageElement = document.querySelector('.hoverImage');
 
-            if (imageElement) {
-                const handleMouseMove = (e) => {
-                    let rect = imageElement.getBoundingClientRect();
-                    let x = e.clientX - rect.left;
-                    let y = e.clientY - rect.top;
+        if (imageElement) {
+            const handleMouseMove = (e) => {
+                let rect = imageElement.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
 
-                    let dx = (x - rect.width / 2) / (rect.width / 2);
-                    let dy = (y - rect.height / 2) / (rect.height / 2);
+                let dx = (x - rect.width / 2) / (rect.width / 2);
+                let dy = (y - rect.height / 2) / (rect.height / 2);
 
-                    imageElement.style.transform = `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
-                };
+                imageElement.style.transform =
+                    `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
+            };
 
-                const handleMouseLeave = () => {
-                    imageElement.style.transform = "";
-                };
+            const handleMouseLeave = () => {
+                imageElement.style.transform = "";
+            };
 
-                imageElement.addEventListener('mousemove', handleMouseMove);
-                imageElement.addEventListener('mouseleave', handleMouseLeave);
-            }
+            imageElement.addEventListener('mousemove', handleMouseMove);
+            imageElement.addEventListener('mouseleave', handleMouseLeave);
         }
+    }
     </script>
 
-    <script>
-        let pedidoSeleccionado = null;
+    <!-- Seleccionar pedido para habilitar boton modificar -->
 
-        // Selección de fila en la Tabla de Pedidos a Proveedores al hacer clic en la misma
-        document.querySelectorAll('#tablaPedidos .pedido').forEach(row => {
-            row.addEventListener('click', () => {
-                // Desmarcar cualquier fila previamente seleccionada
-                document.querySelectorAll('.pedido').forEach(row => row.classList.remove('table-active'));
-                // Marcar la fila seleccionada
-                row.classList.add('table-active');
-                pedidoSeleccionado = row.dataset.id;
-                // Habilitar los botones
-                document.getElementById('btnModificar').disabled = false;
-                document.getElementById('btnEliminar').disabled = false;
-            });
+    <script>
+    let pedidoSeleccionado = null;
+
+    // Detectar selección de fila
+    document.querySelectorAll('#tablaPedidos .pedido').forEach(row => {
+        row.addEventListener('click', () => {
+            // Quitar selección anterior
+            document.querySelectorAll('.pedido').forEach(r => r.classList.remove('table-active'));
+
+            // Agregar nueva selección
+            row.classList.add('table-active');
+            pedidoSeleccionado = row.dataset.id;
+
+            // Habilitar botones
+            document.getElementById('btnModificar').disabled = false;
+            document.getElementById('btnEliminar').disabled = false;
         });
+    });
 
-        // Función para redirigir a la página de modificaciones con el ID del pedido seleccionado (recordá que el elemento del array ya contiene en su interior toda la información que le corresponde)
-        // CUIDADO: antes de redirigir a la página de modificaciones es necesario que se abra un modal para que el usuario pueda introducir un "ID de Pedido", lo que captura dicho valor y luego se utiliza en la página de modificaciones para el query SQL... BASARSE EN EL MODAL DE REPORTE DE DEVOLUCIONES
-        function modificarPedido() {
-            if (pedidoSeleccionado) {
-                window.location.href = 'modificarPedidoProveedor.php?id=' + pedidoSeleccionado;
-            }
+    // Enviar formulario por POST
+    function modificarPedido() {
+        if (pedidoSeleccionado) {
+            window.location.href = 'modificarPedidoProveedores.php?id=' + pedidoSeleccionado;
         }
+    }
     </script>
+
+    <!-- Estilo para remarcar bien pedido seleccionado (barra roja lateral) -->
+
+    <style>
+    tr.pedido.table-active {
+        background-color: #ffe6e6 !important;
+        /* fondo rosado claro */
+        font-weight: bold;
+        border-left: 5px solid #c7240e;
+    }
+
+    tr.separator {
+        height: 5px;
+        background-color: #dddddd;
+    }
+    </style>
 
 
     <script>
-        // Para la tabla del modal que permite registrar nuevos pedidos a proveedores
+    // Para la tabla del modal que permite registrar nuevos pedidos a proveedores
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const tablaDetalles = document.getElementById("tablaDetalles").querySelector("tbody");
-            const btnAgregarFila = document.getElementById("btnAgregarFila");
+    document.addEventListener("DOMContentLoaded", function() {
+        const tablaDetalles = document.getElementById("tablaDetalles").querySelector("tbody");
+        const btnAgregarFila = document.getElementById("btnAgregarFila");
 
-            btnAgregarFila.addEventListener("click", function() {
-                // Crear una nueva fila
-                const nuevaFila = document.createElement("tr");
-                nuevaFila.innerHTML = `
+        btnAgregarFila.addEventListener("click", function() {
+            // Crear una nueva fila
+            const nuevaFila = document.createElement("tr");
+            nuevaFila.innerHTML = `
                     <td>
                         <select name="tipoInsumo[]" class="form-select" style="min-width: 120px;" title="Obligatorio" required>
                             <option value="" selected>Selecciona una opción...</option>
@@ -716,25 +726,27 @@ include('head.php');
                         <button type="button" class="btn btn-danger btnEliminarFila">Eliminar</button>
                     </td>
                 `;
-                tablaDetalles.appendChild(nuevaFila);
+            tablaDetalles.appendChild(nuevaFila);
 
-                // Configurar el botón de eliminar fila
-                nuevaFila.querySelector(".btnEliminarFila").addEventListener("click", function() {
-                    nuevaFila.remove();
-                });
-
-                // Calcular subtotal automáticamente
-                nuevaFila.querySelector("input[name='cantidad[]']").addEventListener("input", calcularSubtotal);
-                nuevaFila.querySelector("input[name='precioUnidad[]']").addEventListener("input", calcularSubtotal);
+            // Configurar el botón de eliminar fila
+            nuevaFila.querySelector(".btnEliminarFila").addEventListener("click", function() {
+                nuevaFila.remove();
             });
 
-            function calcularSubtotal(event) {
-                const fila = event.target.closest("tr");
-                const precio = parseFloat(fila.querySelector("input[name='precioUnidad[]']").value) || 0;
-                const cantidad = parseFloat(fila.querySelector("input[name='cantidad[]']").value) || 0;
-                fila.querySelector("input[name='subtotal[]']").value = (precio * cantidad).toFixed(2);
-            }
+            // Calcular subtotal automáticamente
+            nuevaFila.querySelector("input[name='cantidad[]']").addEventListener("input",
+                calcularSubtotal);
+            nuevaFila.querySelector("input[name='precioUnidad[]']").addEventListener("input",
+                calcularSubtotal);
         });
+
+        function calcularSubtotal(event) {
+            const fila = event.target.closest("tr");
+            const precio = parseFloat(fila.querySelector("input[name='precioUnidad[]']").value) || 0;
+            const cantidad = parseFloat(fila.querySelector("input[name='cantidad[]']").value) || 0;
+            fila.querySelector("input[name='subtotal[]']").value = (precio * cantidad).toFixed(2);
+        }
+    });
     </script>
 
     <!-- Bootstrap JS -->
