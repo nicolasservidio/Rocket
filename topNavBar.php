@@ -1,3 +1,10 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+
 <div class="main-panel ">
     <div class="main-header">
         <div class="main-header-logo">
