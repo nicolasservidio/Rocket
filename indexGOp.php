@@ -39,7 +39,7 @@ include('head.php');
             <style>
                 .text-title {
                     color: rgba(136, 4, 4, 0.91) !important; 
-                    font-family: 'Segoe UI', serif;
+                    font-family: 'CameoAppearanceNF', cursive !important;
                     font-weight: 100;
                 }
                 .text-subtitle {
@@ -56,8 +56,8 @@ include('head.php');
             <div class="text-center mt-5 page-inner">
                 <h1 class="display-4 text-title">Bienvenido a Rocket</h1> <br>
                 <p class="lead text-muted text-subtitle">
-                    Optimizá la gestión del alquiler de vehículos con herramientas inteligentes destinadas a administrar la flota de vehículos, clientes, reservas y más. 
-                    Usá los accesos rápidos a cada módulo y mejora la gestión de tu negocio.
+                    Optimiza la gestión del alquiler de vehículos con herramientas inteligentes destinadas a administrar flotas, clientes, reservas y más. <br>
+                    Usa los accesos rápidos a cada módulo y mejora la gestión de tu negocio.
                 </p>
                 <hr class="my-4">
             </div>
