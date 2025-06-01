@@ -143,11 +143,11 @@ include('head.php');
 
         <!-- Botones -->
         <div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#nuevoClienteModal">
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#nuevoClienteModal">
                 <i class="fas fa-plus-circle"></i> Nuevo
             </button>
             <div>
-                <button class="btn btn-primary" id="btnModificar" onclick="modificarCliente()" disabled>Modificar Cliente</button>
+                <button class="btn btn-warning" id="btnModificar" onclick="modificarCliente()" disabled>Modificar Cliente</button>
                 <button class="btn btn-danger" id="btnEliminar" onclick="eliminarCliente()" disabled>
                     <i class="fas fa-trash-alt"></i> Eliminar
                 </button>

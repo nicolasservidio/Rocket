@@ -279,12 +279,12 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva entrega
                         </button>
 
-                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarEntrega()" disabled>
+                        <button class="btn btn-warning me-2" id="btnModificar" onclick="modificarEntrega()" disabled>
                             Modificar
                         </button>
 
                         <a href="ReporteEntregas.php">
-                            <button class="btn btn-info">
+                            <button class="btn btn-primary">
                                 Imprimir listado
                             </button>
                         </a>

@@ -242,11 +242,11 @@ include('head.php');
                 <div style="margin-top: 8%;">
                     <div class="container d-flex justify-content-center">
 
-                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
+                        <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">
                             <i class="fas fa-plus-circle"></i> Nueva
                         </button>
 
-                        <button class="btn btn-primary me-2" id="btnModificar" onclick="modificarReserva()" disabled>
+                        <button class="btn btn-warning me-2" id="btnModificar" onclick="modificarReserva()" disabled>
                             Modificar
                         </button>
 
@@ -254,7 +254,7 @@ include('head.php');
                             Eliminar
                         </button>
 
-                        <a href="ReporteReservas.php"> <button class="btn btn-info">
+                        <a href="ReporteReservas.php"> <button class="btn btn-primary">
                                 Imprimir
                             </button></a>
                     </div>

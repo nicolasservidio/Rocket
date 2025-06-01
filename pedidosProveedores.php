@@ -375,7 +375,7 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nuevo
                         </button>
 
-                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarPedido()" disabled>
+                        <button class="btn btn-warning me-2" id="btnModificar" onclick="modificarPedido()" disabled>
                             Modificar
                         </button>
 

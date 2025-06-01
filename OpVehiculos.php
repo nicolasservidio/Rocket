@@ -392,9 +392,9 @@ require_once "head.php";
 
             <br><br><br>
             <div class="d-flex justify-content-between col-8">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
-                <button type="button" class="btn btn-primary" id="btnModificar" onclick="modificarVehiculo()" disabled>Modificar</button>
-                <button type="button" class="btn btn-warning" id="btnEliminar" onclick="eliminarVehiculo()" disabled>Eliminar</button>
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
+                <button type="button" class="btn btn-warning" id="btnModificar" onclick="modificarVehiculo()" disabled>Modificar</button>
+                <button type="button" class="btn btn-danger" id="btnEliminar" onclick="eliminarVehiculo()" disabled>Eliminar</button>
             </div>
 
         </main>

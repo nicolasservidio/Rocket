@@ -285,11 +285,11 @@ include('head.php');
                             <i class="fas fa-plus-circle"></i> Nueva Devolucion
                         </button>
 
-                        <button class="btn btn-danger me-2" id="btnModificar" onclick="modificarDevolucion()" disabled>
+                        <button class="btn btn-warning me-2" id="btnModificar" onclick="modificarDevolucion()" disabled>
                             Modificar datos de Devolucion
                         </button>
 
-                        <a href="ReporteDevoluciones.php"> <button class="btn btn-info">
+                        <a href="ReporteDevoluciones.php"> <button class="btn btn-primary">
                                 Imprimir listado
                             </button></a>
                     </div>
