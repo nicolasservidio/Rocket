@@ -39,7 +39,7 @@ include('head.php');
             <style>
                 .text-title {
                     color: rgba(136, 4, 4, 0.91) !important; 
-                    font-family: 'CameoAppearanceNF', cursive !important;
+                    font-family: 'CameoAppearanceNF' !important;
                     font-weight: 100;
                 }
                 .text-subtitle {

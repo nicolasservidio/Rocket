@@ -64,6 +64,15 @@ function Iniciar_Sesion($usuario, $clave, $conexion) {
         exit();
     }
 
+    if ($_SESSION['Cargo'] == "OPERATIVO_VENTAS") {
+
+        $_SESSION['Cargo'] = 'Operativo de Ventas';
+
+        // Redireccionamiento al panel principal:
+        header('location: indexGOp.php');
+        exit();
+    }
+
 }
 
 

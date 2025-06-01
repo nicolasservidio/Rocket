@@ -262,7 +262,6 @@ require_once "head.php";
                             <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
                             <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando">Limpiar Filtros</button>
                         </div>
-                        <span class="fw-bold mt-2 mt-md-0">Cant. vehículos listados: <?php echo $CantidadVehiculos; ?></span>
                     </div>
                 </form>
 
@@ -377,7 +376,21 @@ require_once "head.php";
                     </table>
                 </div>
             </div>
-            <br><br>
+
+            <!-- Recuadro con cantidad total de registros encontrados -->
+            <style>
+                .no-btn-effect {
+                    pointer-events: none; /* Evita que se comporte como un botón */
+                    box-shadow: none !important; 
+                    cursor: default !important; /* Hace que el cursor no cambie */
+                    border: none; 
+                }
+            </style>
+            <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+                Total de registros encontrados: <?php echo $CantidadVehiculos; ?>
+            </p>
+
+            <br><br><br>
             <div class="d-flex justify-content-between col-8">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoVehiculo">Nuevo</button>
                 <button type="button" class="btn btn-primary" id="btnModificar" onclick="modificarVehiculo()" disabled>Modificar</button>
