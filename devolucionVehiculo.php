@@ -80,7 +80,7 @@ include('head.php');
 
         <?php
         include('sidebarGOp.php');
-        $tituloPagina = "<b> Devoluciones de Vehiculos </b>";
+        $tituloPagina = "DEVOLUCIONES DE VEHÍCULOS";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {

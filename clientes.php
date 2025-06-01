@@ -30,7 +30,7 @@ include('head.php');
 
         <?php
         include('sidebarGOp.php');
-        $tituloPagina = "<b> Clientes </b>";
+        $tituloPagina = "CLIENTES";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {

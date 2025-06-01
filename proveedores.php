@@ -31,7 +31,7 @@ include('head.php');
 
         <?php
         include('sidebarGOp.php');
-        $tituloPagina = "<b> Proveedores </b>";
+        $tituloPagina = "PROVEEDORES";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {

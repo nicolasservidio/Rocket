@@ -85,7 +85,7 @@ include('head.php');
 
         <?php
         include('sidebarGOp.php');
-        $tituloPagina = "<b> Pedidos a Proveedores </b>";
+        $tituloPagina = "PEDIDOS A PROVEEDORES";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {

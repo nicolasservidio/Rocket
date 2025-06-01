@@ -70,7 +70,7 @@ include('head.php');
 
         <?php
         include('sidebarGOp.php');
-        $tituloPagina = "<b> Reservas </b>";
+        $tituloPagina = "RESERVAS";
         include('topNavBar.php');
 
         if (isset($_GET['mensaje'])) {
