@@ -129,8 +129,8 @@ include('head.php');
                             <input type="date" id="retirohasta" class="form-control" name="RetiroHasta"
                                 value="<?= htmlspecialchars($filtros['retirohasta']) ?>">
                         </div>
-                    </div>
-                    <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
+                    </div> 
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mt-3" style="padding-top: 20px;">
                         <div class="d-flex flex-wrap gap-2">
                             <button type="submit" class="btn btn-info" name="BotonFiltrar" value="FiltrandoReservas">
                                 <i class="fas fa-filter"></i> Filtrar
@@ -139,7 +139,6 @@ include('head.php');
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
                         </div>
-                        <span class="fw-bold mt-2 mt-md-0">Cant. reservas listadas: <?php echo $CantidadReservas; ?></span>
                     </div>
 
                 </form>
@@ -222,6 +221,21 @@ include('head.php');
                         </tbody>
                     </table>
                 </div>
+
+                <br><br>
+
+                <!-- Recuadro con cantidad total de registros encontrados -->
+                <style>
+                    .no-btn-effect {
+                        pointer-events: none; /* Evita que se comporte como un botón */
+                        box-shadow: none !important; 
+                        cursor: default !important; /* Hace que el cursor no cambie */
+                        border: none; 
+                    }
+                </style>
+                <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+                    Total de registros encontrados: <?php echo $CantidadReservas; ?>
+                </p>
 
 
                 <!-- Botones de acción -->

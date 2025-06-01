@@ -47,7 +47,7 @@ include('head.php');
             <form action="proveedores.php" method="GET">
                 <div class="row">
                     <div class="col-md-2">
-                        <label for="cuit" class="form-label">Cuit</label>
+                        <label for="cuit" class="form-label">CUIT</label>
                         <input type="text" class="form-control" id="cuit" name="cuit"
                             value="<?= htmlspecialchars($filtros['cuit']) ?>">
                     </div>
@@ -91,7 +91,6 @@ include('head.php');
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                         <a href="Proveedores.php" class="btn btn-secondary">Limpiar Filtros</a>
                     </div>
-                    <span class="fw-bold mt-2 mt-md-0">Cant. proveedores listados: <?php echo $CantidadProveedores; ?></span>
                 </div>
 
             </form>
@@ -140,6 +139,21 @@ include('head.php');
             </table>
         </div>
 
+        <br>
+        <!-- Recuadro con cantidad total de registros encontrados -->
+        <style>
+            .no-btn-effect {
+                pointer-events: none; /* Evita que se comporte como un botón */
+                box-shadow: none !important; 
+                cursor: default !important; /* Hace que el cursor no cambie */
+                border: none; 
+            }
+        </style>
+        <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+            Total de registros encontrados: <?php echo $CantidadProveedores; ?>
+        </p>
+        <br><br>
+
         <!-- Botones -->
         <div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">
@@ -166,7 +180,7 @@ include('head.php');
                     <form action="NuevoProveedor.php" method="POST">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="cuit" class="form-label">Cuit</label>
+                                <label for="cuit" class="form-label">CUIT</label>
                                 <input type="text" class="form-control" id="cuit" name="cuit" title="El Cuit debe ser un número mayor a 0" required>
                             </div>
                             <div class="mb-3">

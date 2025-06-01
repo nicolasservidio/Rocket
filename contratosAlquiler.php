@@ -204,7 +204,6 @@ include('head.php');
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
                         </div>
-                        <span class="fw-bold mt-2 mt-md-0">Cant. contratos listados: <?php echo $CantidadContratos; ?></span>
                     </div>
 
                 </form>
@@ -309,6 +308,20 @@ include('head.php');
                         </tbody>
                     </table>
                 </div>
+
+                <br><br>
+                <!-- Recuadro con cantidad total de registros encontrados -->
+                <style>
+                    .no-btn-effect {
+                        pointer-events: none; /* Evita que se comporte como un botón */
+                        box-shadow: none !important; 
+                        cursor: default !important; /* Hace que el cursor no cambie */
+                        border: none; 
+                    }
+                </style>
+                <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+                    Total de registros encontrados: <?php echo $CantidadContratos; ?>
+                </p>
 
 
                 <!-- Botones de acción -->

@@ -243,8 +243,6 @@ include('head.php');
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
                         </div>
-                        <span class="fw-bold mt-2 mt-md-0">Cant. pedidos listados:
-                            <?php echo $CantidadPedidos; ?></span>
                     </div>
 
                 </form>
@@ -255,8 +253,7 @@ include('head.php');
                     echo "<div class='alert alert-success' role='alert' style='max-width: 97%; margin: 20px auto;'>
                      Pedido modificado correctamente.
                         </div>";
-                }
-?>
+                }?>
 
             <!-- Tabla de pedidos a proveedores -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
@@ -355,9 +352,23 @@ include('head.php');
                     </table>
                 </div>
 
+                <br><br>
+                <!-- Recuadro con cantidad total de registros encontrados -->
+                <style>
+                    .no-btn-effect {
+                        pointer-events: none; /* Evita que se comporte como un botón */
+                        box-shadow: none !important; 
+                        cursor: default !important; /* Hace que el cursor no cambie */
+                        border: none; 
+                    }
+                </style>
+                <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+                    Total de registros encontrados: <?php echo $CantidadPedidos; ?>
+                </p>
+
 
                 <!-- Botones de acción -->
-                <div style="margin-top: 8%;">
+                <div style="margin-top: 5%;">
                     <div class="container d-flex justify-content-center">
 
                         <button class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal">

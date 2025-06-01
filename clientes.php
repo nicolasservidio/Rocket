@@ -81,7 +81,6 @@ include('head.php');
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                         <a href="clientes.php" class="btn btn-secondary">Limpiar Filtros</a>
                     </div>
-                    <span class="fw-bold mt-2 mt-md-0">Cant. clientes listados: <?php echo $CantidadClientes; ?></span>
                 </div>
             </form>
         </div>
@@ -126,6 +125,21 @@ include('head.php');
                 </tbody>
             </table>
         </div>
+
+        <!-- Recuadro con cantidad total de registros encontrados -->
+        <style>
+            .no-btn-effect {
+                pointer-events: none; /* Evita que se comporte como un botón */
+                box-shadow: none !important; 
+                cursor: default !important; /* Hace que el cursor no cambie */
+                border: none; 
+            }
+        </style>
+        <p class="btn no-btn-effect" style="background-color: rgb(153, 6, 6); color: #ffffff; margin-left: 25px;">
+            Total de registros encontrados: <?php echo $CantidadClientes; ?>
+        </p>
+
+        <br><br><br>
 
         <!-- Botones -->
         <div class="d-flex justify-content-between" style="margin-left: 2%; margin-right: 2%; margin-top: 3%;">
