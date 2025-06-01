@@ -23,469 +23,386 @@ include('head.php');
 
 ?>
 
-<body>
-    <?php 
-    if ($_SESSION['Cargo'] == "Administrador" || 
-        $_SESSION['Cargo'] == "Gerente de Operaciones" ||
-        $_SESSION['Cargo'] == "Gerente Comercial" || 
-        $_SESSION['Cargo'] == "Gerente de Taller") { ?>    
+<body style="margin: 0 auto;">
 
-        <div class="wrapper">
+    <div class="wrapper">
 
-            <?php 
-            include('sidebarGOp.php');
-             $tituloPagina = "INICIO";
-            include('topNavBar.php');  
-            ?>
+        <?php 
+        include('sidebarGOp.php');
+         $tituloPagina = "INICIO";
+        include('topNavBar.php');  
+        ?>
+        
+        <div class="container">
+
+            <!-- Estilo para el mensaje de bienvenida -->
+            <style>
+                .text-title {
+                    color: rgba(136, 4, 4, 0.91) !important; 
+                    font-family: 'Segoe UI', serif;
+                    font-weight: 100;
+                }
+                .text-subtitle {
+                    color:rgb(53, 21, 11) !important; 
+                    font-family: 'Raleway', sans-serif;
+                }
+
+                .lead {
+                    font-size: 1.3rem;
+                    font-weight: 400;
+                }
+            </style>
+
+            <div class="text-center mt-5 page-inner">
+                <h1 class="display-4 text-title">Bienvenido a Rocket</h1> <br>
+                <p class="lead text-muted text-subtitle">
+                    Optimizá la gestión del alquiler de vehículos con herramientas inteligentes destinadas a administrar la flota de vehículos, clientes, reservas y más. 
+                    Usá los accesos rápidos a cada módulo y mejora la gestión de tu negocio.
+                </p>
+                <hr class="my-4">
+            </div>
+
             
+            <!-- Estilo para las tarjetas -->
+            <style>
+                .card-flip {
+                    perspective: 1000px;
+                    text-decoration: none;
+                }
+
+                .card {
+                    width: 100%;
+                    height: 250px;
+                    position: relative;
+                    transform-style: preserve-3d;
+                    transition: transform 0.5s ease;
+                }
+
+                .card-front, .card-back {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    backface-visibility: hidden;
+                }
+
+                .card-front img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+                .card-back {
+                    background: rgba(136, 4, 4, 0.91);
+                    color: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 10px;
+                    transform: rotateY(180deg);
+                }
+
+                .card-flip:hover .card {
+                    transform: rotateY(180deg);
+                }
+
+                .card-back h3 {
+                    font-family: 'Montserrat', sans-serif; 
+                }
+            </style>
+
             <div class="container">
-                <div class="page-inner">
-                    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                        
-                        
+                <div class="row justify-content-center page-inner">
+                    <!-- Tarjeta VEHÍCULOS -->
+                    <div class="col-md-4">
+                        <a href="OpVehiculos.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/vehiculos.png" class="img-fluid" alt="Vehiculos">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Vehículos</h3>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3"> 
-                            <a href="OpVehiculos.php">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                                <i class="fas fa-car"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Vehículos</p>
-                                                <h4 class="card-title"> <?php echo $CantidadVehiculos; ?> </h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
-                            </a>
-                        </div> 
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-info bubble-shadow-small">
-                                                <i class="fas fa-tint"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Rutinas de Preparación</p>
-                                                <h4 class="card-title">En construcción</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-success bubble-shadow-small">
-                                                <i class="fas fa-cogs"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Repuestos</p>
-                                                <h4 class="card-title">En construcción</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-success bubble-shadow-small">
-                                                <i class="fas fa-cubes"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Productos</p>
-                                                <h4 class="card-title">En construcción</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-icon">
-                                            <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                                <i class="far fa-check-circle"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col col-stats ms-3 ms-sm-0">
-                                            <div class="numbers">
-                                                <p class="card-category">Reportes</p>
-                                                <h4 class="card-title">3</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row">
-                                        <div class="card-title">Historial de Uso</div>
-                                        <div class="card-tools">
-                                            <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-pencil"></i>
-                                                </span>
-                                                Exportar
-                                            </a>
-                                            <a href="#" class="btn btn-label-info btn-round btn-sm">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-print"></i>
-                                                </span>
-                                                Imprimir
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-container" style="min-height: 375px">
-                                        <canvas id="statisticsChart"></canvas>
-                                    </div>
-                                    <div id="myChartLegend"></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <div class="card card-primary card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row">
-                                        <div class="card-title">Generación de Reportes</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-sm btn-label-light dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Reportes
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Operaciones</a>
-                                                    <a class="dropdown-item" href="#">Repuestos según vehículo</a>
-                                                    <a class="dropdown-item" href="#">Productos según vehículo</a>
-                                                    <!-- <a class="dropdown-item" href="#">Something else here</a> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-category">Seleccioná un tipo de reporte</div>
+                    <!-- Tarjeta CLIENTES -->
+                    <div class="col-md-4">
+                        <a href="clientes.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/clientes.png" class="img-fluid" alt="Clientes">
                                 </div>
-                                <div class="card-body pb-0">
-                                    <div class="mb-4 mt-5">
-                                        <a href="ReporteReservas.php"> <h2 style="color: white; font-weight: 100;" >Reservas de vehículos</h2> </a>
-                                        <a href="ReporteContratos.php"> <h2 style="color: white; font-weight: 100;" >Contratos de alquiler</h2> </a>
-                                        <a href="ReporteContratos_FrecMensuales.php"> <h4 style="color: white; font-weight: 100;"> Contratos por mes segmentados por estado </h4> </a>
-                                    </div>
-                                    <div class="pull-in">
-                                        <canvas id="dailySalesChart"></canvas>
-                                    </div>
+                                <div class="card-back">
+                                    <h3>Clientes</h3>
                                 </div>
                             </div>
-                            
-                            <div class="card card-round">
-                                <div class="card-body pb-0">
-                                    <div class="h1 fw-bold float-end text-primary">+5%</div>
-                                    <h2 class="mb-2"> NA </h2>
-                                    <p class="text-muted">Vehículos en preparación (En construcción) </p>
-                                    <div class="pull-in sparkline-fix">
-                                        <div id="lineChart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </a>
                     </div>
-                    <!-- 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <h4 class="card-title">Users Geolocation</h4>
-                                        <div class="card-tools">
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs">
-                                                <span class="fa fa-angle-down"></span>
+
+                    <!-- Tarjeta RESERVAS -->
+                    <div class="col-md-4">
+                        <a href="reservas.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/reserva.png" class="img-fluid" alt="Reservas">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Reservas</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center page-inner">
+                    <!-- Tarjeta CONTRATOS -->
+                    <div class="col-md-4">
+                        <a href="contratosAlquiler.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/contratos.png" class="img-fluid" alt="Contratos">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Contratos</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta ENTREGAS -->
+                    <div class="col-md-4">
+                        <a href="entregaVehiculo.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/entregas.png" class="img-fluid" alt="Entregas">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Entregas</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta DEVOLUCIONES -->
+                    <div class="col-md-4">
+                        <a href="devolucionVehiculo.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/devoluciones.png" class="img-fluid" alt="Devoluciones">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Devoluciones</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center page-inner">
+                    <!-- Tarjeta PROVEEDORES -->
+                    <div class="col-md-4">
+                        <a href="proveedores.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/proveedores.png" class="img-fluid" alt="Proveedores">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Proveedores</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta PEDIDOS A PROVEEDORES -->
+                    <div class="col-md-4">
+                        <a href="pedidosProveedores.php" class="card-flip">
+                            <div class="card">
+                                <div class="card-front">
+                                    <img src="assets/img/pedidosproveedores.png" class="img-fluid" alt="PedidosProveedores">
+                                </div>
+                                <div class="card-back">
+                                    <h3>Pedidos a Proveedores</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="page-inner">
+                <?php 
+                if ($_SESSION['Cargo'] == "Administrador" || 
+                    $_SESSION['Cargo'] == "Gerente de Operaciones" ||
+                    $_SESSION['Cargo'] == "Gerente Comercial" || 
+                    $_SESSION['Cargo'] == "Gerente de Taller") { ?> 
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card-round">
+                            <div class="card-body">
+
+                                <div class="card-head-row card-tools-still-right">
+                                    <div class="card-title">Contactos</div>
+                                    <div class="card-tools">
+                                        <div class="dropdown">
+                                            <button class="btn btn-icon btn-clean me-0" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
                                             </button>
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card">
-                                                <span class="fa fa-sync-alt"></span>
-                                            </button>
-                                            <button class="btn btn-icon btn-link btn-primary btn-xs">
-                                                <span class="fa fa-times"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <p class="card-category">
-                                        Map of the distribution of users around the world
-                                    </p>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="table-responsive table-hover table-sales">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/id.png" alt="indonesia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Indonesia</td>
-                                                            <td class="text-end">2.320</td>
-                                                            <td class="text-end">42.18%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/us.png" alt="united states" />
-                                                                </div>
-                                                            </td>
-                                                            <td>USA</td>
-                                                            <td class="text-end">240</td>
-                                                            <td class="text-end">4.36%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/au.png" alt="australia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Australia</td>
-                                                            <td class="text-end">119</td>
-                                                            <td class="text-end">2.16%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/ru.png" alt="russia" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Russia</td>
-                                                            <td class="text-end">1.081</td>
-                                                            <td class="text-end">19.65%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/cn.png" alt="china" />
-                                                                </div>
-                                                            </td>
-                                                            <td>China</td>
-                                                            <td class="text-end">1.100</td>
-                                                            <td class="text-end">20%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="flag">
-                                                                    <img src="assets/img/flags/br.png" alt="brazil" />
-                                                                </div>
-                                                            </td>
-                                                            <td>Brasil</td>
-                                                            <td class="text-end">640</td>
-                                                            <td class="text-end">11.63%</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mapcontainer">
-                                                <div id="world-map" class="w-100" style="height: 300px"></div>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Acción</a>
+                                                <a class="dropdown-item" href="#">Otra acción</a>
+                                                <a class="dropdown-item" href="#">Algo más aquí</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    -->
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-round">
-                                <div class="card-body">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <div class="card-title">Contactos</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-icon btn-clean me-0" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="card-list py-4">
 
-                                    <div class="card-list py-4">
+                                    <?php 
+                                    
+                                    $decrementoUsuarios = 6;
 
-                                        <?php 
-                                        
-                                        $decrementoUsuarios = 6;
-
-                                        for ($i= ($CantidadUsuarios - 7); $i < $CantidadUsuarios; $i++) { 
-                                                    
-                                            $ultimosSieteUsuarios = $CantidadUsuarios - $decrementoUsuarios;
-                                            
-                                            ?>
-
-                                            <div class="item-list">
-                                                <div class="avatar">
-                                                    <span class="avatar-title rounded-circle border border-white bg-primary"> 
-                                                        <?php echo substr($ListadoUsuarios[$i]['NombreUsuario'], 0, 1); ?> 
-                                                    </span>
-                                                </div>
-
-                                                <div class="info-user ms-3">
-                                                    <div class="username"> <?php echo $ListadoUsuarios[$i]['NombreUsuario']; ?> </div>
-                                                    <div class="status"> Username: <?php echo $ListadoUsuarios[$i]['Usuario']; ?> </div>
-                                                    <div class="status"> <?php echo $ListadoUsuarios[$i]['NombreCargo']; ?> </div>
-                                                </div>
-
-                                                <button class="btn btn-icon btn-link op-8 me-1">
-                                                    <i class="far fa-envelope"></i>
-                                                </button>
-
-                                                <button class="btn btn-icon btn-link btn-danger op-8">
-                                                    <i class="fas fa-bolt"></i>
-                                                </button>
-                                            </div>
-
-                                            <?php 
-                                                $decrementoUsuarios = $decrementoUsuarios - 1;
-                                            ?>
-
-                                        <?php 
-                                        } 
+                                    for ($i= ($CantidadUsuarios - 7); $i < $CantidadUsuarios; $i++) { 
+                                                
+                                        $ultimosSieteUsuarios = $CantidadUsuarios - $decrementoUsuarios;                                        
                                         ?>
 
-                                    </div>
+                                        <div class="item-list">
+                                            <div class="avatar">
+                                                <span class="avatar-title rounded-circle border border-white bg-primary"> 
+                                                    <?php echo substr($ListadoUsuarios[$i]['NombreUsuario'], 0, 1); ?> 
+                                                </span>
+                                            </div>
+
+                                            <div class="info-user ms-3">
+                                                <div class="username"> <?php echo $ListadoUsuarios[$i]['NombreUsuario']; ?> </div>
+                                                <div class="status"> Username: <?php echo $ListadoUsuarios[$i]['Usuario']; ?> </div>
+                                                <div class="status"> <?php echo $ListadoUsuarios[$i]['NombreCargo']; ?> </div>
+                                            </div>
+
+                                            <button class="btn btn-icon btn-link op-8 me-1">
+                                                <i class="far fa-envelope"></i>
+                                            </button>
+
+                                            <button class="btn btn-icon btn-link btn-danger op-8">
+                                                <i class="fas fa-bolt"></i>
+                                            </button>
+                                        </div>
+
+                                        <?php 
+                                            $decrementoUsuarios = $decrementoUsuarios - 1;
+                                        ?>
+
+                                    <?php 
+                                    } 
+                                    ?>
+
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-md-8">
-                            <div class="card card-round">
-                                <div class="card-header">
-                                    <div class="card-head-row card-tools-still-right">
-                                        <div class="card-title">Últimos vehículos registrados</div>
-                                        <div class="card-tools">
-                                            <div class="dropdown">
-                                                <button class="btn btn-icon btn-clean me-0" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
+                    <div class="col-md-8">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-head-row card-tools-still-right">
+                                    <div class="card-title">Últimos vehículos registrados</div>
+                                    <div class="card-tools">
+                                        <div class="dropdown">
+                                            <button class="btn btn-icon btn-clean me-0" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Acción</a>
+                                                <a class="dropdown-item" href="#">Otra acción</a>
+                                                <a class="dropdown-item" href="#">Algo más aquí</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
 
-                                        <!-- Tabla de vehículos -->
+                                    <!-- Tabla de vehículos -->
 
-                                        <table class="table align-items-center mb-0">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">Número de vehículo</th>
-                                                    <th scope="col" class="text-end">Fecha de Compra</th>
-                                                    <th scope="col" class="text-end">Matrícula</th>
-                                                    <th scope="col" class="text-end">Incorporación a Flota</th>
-                                                </tr>
-                                            </thead>
+                                    <table class="table align-items-center mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Número de vehículo</th>
+                                                <th scope="col" class="text-end">Fecha de Compra</th>
+                                                <th scope="col" class="text-end">Matrícula</th>
+                                                <th scope="col" class="text-end">Incorporación a Flota</th>
+                                            </tr>
+                                        </thead>
 
-                                            <tbody>
+                                        <tbody>
 
-                                                <?php 
+                                            <?php 
 
-                                                $decremento = 8;
+                                            $decremento = 8;
 
-                                                for ($i= ($CantidadVehiculos - 9); $i < $CantidadVehiculos; $i++) { 
-                                                    
-                                                    $numerovehiculo = $CantidadVehiculos - $decremento;
-                                                    
-                                                    ?>
-
-                                                    <tr>
-                                                        <th scope="row">
-                                                            <button class="btn btn-icon btn-round btn-success btn-sm me-2">
-                                                                <i class="fa fa-check"></i>
-                                                            </button>
-                                                            Vehículo #<?php echo $numerovehiculo; ?>
-                                                        </th>
-
-                                                        <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vFechaCompra'];  ?> </td>
-
-                                                        <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vMatricula'];  ?> </td>
-
-                                                        <td class="text-end">
-                                                            <span class="badge badge-success">Completado</span>
-                                                        </td>
-
-                                                    </tr>
-
-                                                    <?php 
-                                                    $decremento = $decremento - 1;
-                                                    ?>
-                                                <?php 
-                                                } 
+                                            for ($i= ($CantidadVehiculos - 9); $i < $CantidadVehiculos; $i++) { 
+                                                
+                                                $numerovehiculo = $CantidadVehiculos - $decremento;
+                                                
                                                 ?>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <button class="btn btn-icon btn-round btn-success btn-sm me-2">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                        Vehículo #<?php echo $numerovehiculo; ?>
+                                                    </th>
+
+                                                    <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vFechaCompra'];  ?> </td>
+
+                                                    <td class="text-end"> <?php echo $ListadoVehiculos[$i]['vMatricula'];  ?> </td>
+
+                                                    <td class="text-end">
+                                                        <span class="badge badge-success">Completado</span>
+                                                    </td>
+
+                                                </tr>
+
+                                                <?php 
+                                                $decremento = $decremento - 1;
+                                                ?>
+                                            <?php 
+                                            } 
+                                            ?>
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <?php 
+                } 
+                ?>
+                
             </div>
-
-            <?php require_once "foot.php"?>
-
         </div>
 
-    <?php 
-    } 
-    ?>
+        <?php require_once "foot.php"?>
+
+    </div>
 
 </body>
 

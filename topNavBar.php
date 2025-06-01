@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 <div class="main-panel ">
-    <div class="main-header" style="background-color:rgba(239, 234, 234, 0.77);">
+    <div class="main-header" style="background-color:rgba(1, 7, 20, 0.81);">
         <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
@@ -71,16 +71,15 @@ if (session_status() == PHP_SESSION_NONE) {
                                 default:
                                     $avatar = 'profile.jpg'; 
                                     break;
-                            }
-                            
+                            }                            
                             ?>
 
                             <div class="avatar-sm">
                                 <img src="assets/img/<?php echo $avatar; ?>" alt="..." class="avatar-img rounded-circle" />
                             </div>
                             <span class="profile-username">
-                                <span class="op-7">Hola,</span>
-                                <span class="fw-bold"> <?php echo $_SESSION["Nombre"]; ?> </span>
+                                <span class="op-7" style="color: white;">Hola,</span>
+                                <span class="fw-bold" style="color: white;"> <?php echo $_SESSION["Nombre"]; ?> </span>
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-user animated fadeIn">
