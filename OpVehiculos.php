@@ -102,11 +102,14 @@ if (!empty($_POST['BotonRegistrarVehiculo'])) {
     $grup = $_POST['GrupoREG'];
     $dispo = $_POST['DisponibilidadREG'];
 
-    Registrar_Vehiculo($matri, $model, $grup, $dispo, $conexion);
+    $idVehiculo = Registrar_Vehiculo($matri, $model, $grup, $dispo, $conexion);
 
-    $_POST = array();
-    header('Location: OpVehiculos.php');
-    die();
+    $mensaje = "Se registró exitosamente el vehículo de ID: {$idVehiculo} y matrícula: {$matri}.";
+    echo "<script> 
+          alert('$mensaje');
+          window.location.href = 'OpVehiculos.php';
+    </script>";
+    exit(); 
 }
 
 // SELECCIONES para combo boxes del Registro de nuevo vehículo
@@ -134,10 +137,56 @@ require_once "head.php";
 
         <main class="d-flex flex-column justify-content-center align-items-center h-100 bg-light bg-gradient p-4">
 
-            <div class="card col-10 bg-white p-4 rounded shadow mb-4">
+            <!-- Algunos efectos moderno para el form de consultas ;) -->
+            <style>
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .filtro-consultas {
+                    transition: all 0.4s ease-in-out; 
+                    border-radius: 15px; 
+                    background-color:rgb(19, 4, 2); 
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+                    animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
+                }
+
+                .filtro-consultas:hover {
+                    transform: translateY(-5px); 
+                    box-shadow: 0px 10px 20px rgba(198, 167, 31, 0.5);
+                }
+
+                .form-control {
+                    transition: all 0.3s ease-in-out;
+                    border: 1px solid;
+                }
+
+                .form-control:focus {
+                    border: 2px solid rgb(160, 4, 4); /* Resalta con dorado */
+                    box-shadow: rgba(152, 10, 10, 0.81);
+                }
+
+                .btn-filtrar {
+                    transition: transform 0.3s ease-in-out;
+                }
+
+                .btn-filtrar:hover {
+                    transform: scale(1.1); /* Botón se agranda ligeramente */
+                }
+            </style>
+
+            <div class="card col-10 bg-white p-4 rounded shadow mb-4 filtro-consultas">
                 <h4 class="text-center mb-4">Filtrar Vehículos</h4>
 
-                <form method="post">
+                <form action="OpVehiculos.php" method="post" onsubmit="scrollToTable()">
                     <div class="row">
 
                         <div class="col-md-4 mb-3">
@@ -259,16 +308,16 @@ require_once "head.php";
                     <br><br>
                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="submit" class="btn btn-primary" name="BotonFiltro" value="Filtrando">Filtrar</button>
-                            <button type="submit" class="btn btn-primary btn-danger" name="BotonDesfiltrar" value="Desfiltrando">Limpiar Filtros</button>
+                            <button type="submit" class="btn btn-black btn-filtrar" name="BotonFiltro" value="Filtrando">Filtrar</button>
+                            <button type="submit" class="btn btn-warning btn-filtrar" name="BotonDesfiltrar" value="Desfiltrando">Limpiar Filtros</button>
                         </div>
                     </div>
                 </form>
 
             </div>
 
-            <!-- Tabla de vehículos -->
-            <div class="card col-10 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
+            <!-- Listado de vehículos -->
+            <div id="tablaVehiculosContenedor" class="card col-10 bg-white p-4 rounded shadow mb-4" style="margin-top: 5%;">
                 <h4 class="text-center mb-3">Listado de Vehículos</h4> <br>
                 <div class="table-responsive" style="max-height: 700px;">
 
@@ -415,7 +464,8 @@ require_once "head.php";
 
                         <div class="mb-3">
                             <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" maxlength="7" class="form-control" name="MatriculaREG" value="" required>
+                            <input type="text" maxlength="12" class="form-control" title="Máximo de 12 caracteres."
+                                   name="MatriculaREG" value="" required>
                         </div>
                         <div class="mb-3">
                             <label for="modelo" class="form-label">Modelo</label>
@@ -432,7 +482,7 @@ require_once "head.php";
                                         echo "<option value='{$ListadoModelo[$i]['IdModelo']}' $selected>{$ListadoModelo[$i]['NombreModelo']}</option>";
                                     }
                                 } else {
-                                    echo "<option value=''>No se encontraron grupos</option>";
+                                    echo "<option value=''>No se encontraron modelos</option>";
                                 }
                                 ?>
                             </select>
@@ -481,6 +531,23 @@ require_once "head.php";
     </div>
 
     <script>
+
+        // Desplazamiento vertical al listado luego de consulta
+        function scrollToTable() {
+            localStorage.setItem('scrollToTable', 'true'); // Guardar indicador antes de enviar
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('scrollToTable') === 'true') {
+                setTimeout(() => {
+                    document.getElementById('tablaVehiculosContenedor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    localStorage.removeItem('scrollToTable'); // Limpiar indicador después del scroll
+                }, 500); 
+            }
+        });
+
+
+
         let vehiculoSeleccionado = null;
 
         // Sombreado de fila en la Tabla de Vehiculos al hacer clic en la misma
