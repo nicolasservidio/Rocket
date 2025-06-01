@@ -463,6 +463,10 @@ require_once "head.php";
         </div>
     </div>
 
+    <div>
+        <?php require_once "foot.php"; ?>
+    </div>
+
     <script>
         let vehiculoSeleccionado = null;
 
@@ -497,12 +501,9 @@ require_once "head.php";
         }
     </script>
 
-
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <div>
-        <?php require_once "foot.php"; ?>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
