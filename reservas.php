@@ -81,13 +81,59 @@ include('head.php');
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
-            <div style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #16719e; border-radius: 14px;">
+            <!-- Algunos efectos moderno para el form de consultas ;) -->
+            <style>
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .filtro-consultas {
+                    transition: all 0.4s ease-in-out; 
+                    border-radius: 15px; 
+                    background-color:rgb(19, 4, 2); 
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+                    animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
+                }
+
+                .filtro-consultas:hover {
+                    transform: translateY(-5px); 
+                    box-shadow: 0px 10px 20px rgba(198, 167, 31, 0.5);
+                }
+
+                .form-control {
+                    transition: all 0.3s ease-in-out;
+                    border: 1px solid;
+                }
+
+                .form-control:focus {
+                    border: 2px solid rgb(160, 4, 4); /* Resalta con dorado */
+                    box-shadow: rgba(152, 10, 10, 0.81);
+                }
+
+                .btn-filtrar {
+                    transition: transform 0.3s ease-in-out;
+                }
+
+                .btn-filtrar:hover {
+                    transform: scale(1.1); /* Botón se agranda ligeramente */
+                }
+            </style>
+
+            <div class="filtro-consultas" style="margin-top: 20px;margin-bottom: 80px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #16719e; border-radius: 14px;">
                 <div style='color: #0a8acf; margin-bottom: 30px;'>
                     <h3 class="fw-bold"> Reservas </h3>
                 </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" action="reservas.php" method="get">
+                <form class="row g-3" action="reservas.php" method="get" onsubmit="scrollToTable()">
 
                     <div class="col-md-2">
                         <label for="numero" class="form-label">Número de Reserva</label>
@@ -132,10 +178,10 @@ include('head.php');
                     </div> 
                     <div class="d-flex flex-wrap justify-content-between align-items-end mt-3" style="padding-top: 20px;">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="submit" class="btn btn-info" name="BotonFiltrar" value="FiltrandoReservas">
+                            <button type="submit" class="btn btn-info btn-filtrar" name="BotonFiltrar" value="FiltrandoReservas">
                                 <i class="fas fa-filter"></i> Filtrar
                             </button>
-                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
+                            <button type="submit" class="btn btn-warning btn-filtrar" name="BotonLimpiarFiltros" value="LimpiandoFiltros">
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
                         </div>
@@ -144,9 +190,11 @@ include('head.php');
                 </form>
             </div>
 
-            <!-- Tabla de reservas -->
-            <div style="margin-top: 5%; padding-bottom: 100px;">
-                <div class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
+            <div style="padding-bottom: 100px;">
+
+                <!-- Listado de reservas -->
+                <h3 class="fw-bold" style="margin-top: 5%;"> Listado de Reservas </h3>
+                <div id="tablaReservasContenedor" class="table-responsive mt-4" style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
                     <table class="table table-striped table-hover" id="tablaReservas">
                         <thead>
                             <tr>
@@ -373,6 +421,21 @@ include('head.php');
 
 
     <script>
+
+        // Desplazamiento vertical al listado luego de consulta
+        function scrollToTable() {
+            localStorage.setItem('scrollToTable', 'true'); // Guardar indicador antes de enviar
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('scrollToTable') === 'true') {
+                setTimeout(() => {
+                    document.getElementById('tablaReservasContenedor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    localStorage.removeItem('scrollToTable'); // Limpiar indicador después del scroll
+                }, 500); 
+            }
+        });
+
         let reservaSeleccionada = null;
 
         // Selección de fila en la Tabla de Reservas al hacer clic en la misma

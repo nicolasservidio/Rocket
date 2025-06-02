@@ -38,12 +38,58 @@ include('head.php');
         }
         ?>
 
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+        <!-- Algunos efectos moderno para el form de consultas ;) -->
+        <style>
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .filtro-consultas {
+                transition: all 0.4s ease-in-out; 
+                border-radius: 15px; 
+                background-color:rgb(19, 4, 2); 
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+                animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
+            }
+
+            .filtro-consultas:hover {
+                transform: translateY(-5px); 
+                box-shadow: 0px 10px 20px rgba(198, 167, 31, 0.5);
+            }
+
+            .form-control {
+                transition: all 0.3s ease-in-out;
+                border: 1px solid;
+            }
+
+            .form-control:focus {
+                border: 2px solid rgb(160, 4, 4); /* Resalta con dorado */
+                box-shadow: rgba(152, 10, 10, 0.81);
+            }
+
+            .btn-filtrar {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .btn-filtrar:hover {
+                transform: scale(1.1); /* Botón se agranda ligeramente */
+            }
+        </style>
+
+        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm filtro-consultas"
             style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
-            <h5 class="mb-4 text-secondary"><strong>Filtrar Clientes</strong></h5>
+            <h5 class="mb-4"><strong>Filtrar Clientes</strong></h5>
 
             <!-- Formulario de filtro -->
-            <form action="clientes.php" method="GET">
+            <form action="clientes.php" method="GET" onsubmit="scrollToTable()">
                 <div class="row">
                     <div class="col-md-2">
                         <label for="documento" class="form-label">Documento</label>
@@ -75,19 +121,19 @@ include('head.php');
                         <input type="text" class="form-control" id="direccion" name="direccion"
                             value="<?= htmlspecialchars($filtros['direccion']) ?>">
                     </div>
-                </div>
+                </div><br>
                 <div class="d-flex flex-wrap justify-content-between align-items-center mt-3">
                     <div class="d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                        <a href="clientes.php" class="btn btn-secondary">Limpiar Filtros</a>
+                        <button type="submit" class="btn btn-black btn-filtrar">Filtrar</button>
+                        <a href="clientes.php" class="btn btn-warning btn-filtrar">Limpiar Filtros</a>
                     </div>
                 </div>
             </form>
         </div>
 
         <!-- Sección de Listado Clientes -->
-        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
-            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <div id="tablaClientesContenedor" class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 5%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Clientes</strong></h5>
             <table class="table table-hover" id="tablaClientes">
                 <thead>
@@ -207,6 +253,21 @@ include('head.php');
     </div>
 
     <script>
+
+        // Desplazamiento vertical al listado luego de consulta
+        function scrollToTable() {
+            localStorage.setItem('scrollToTable', 'true'); // Guardar indicador antes de enviar
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('scrollToTable') === 'true') {
+                setTimeout(() => {
+                    document.getElementById('tablaClientesContenedor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    localStorage.removeItem('scrollToTable'); // Limpiar indicador después del scroll
+                }, 500); 
+            }
+        });
+
         let clienteSeleccionado = null;
 
         // Selección de cliente al hacer clic en una fila
