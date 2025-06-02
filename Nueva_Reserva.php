@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idVehiculo = $_POST['idVehiculo'];
     $fecharetiro = $_POST['fecharetiro'];
     $fechadevolucion = $_POST['fechadevolucion'];
+    $preciopordia = $_POST['PrecioPorDia'];
+    $estadocontrato = 1;
 
     // Validaciones básicas
     $errores = [];
@@ -20,10 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "El número de reserva debe ser un número mayor a 0.";
     }
     if (empty($idCliente)) {
-        $errores[] = "El nombre es obligatorio.";
+        $errores[] = "El cliente es obligatorio.";
     }
     if (empty($idVehiculo)) {
-        $errores[] = "La matricula es obligatoria.";
+        $errores[] = "La vehículo es obligatorio.";
+    }
+    if (empty($preciopordia)) {
+        $errores[] = "El precio por día es obligatorio.";
     }
     if (empty($fecharetiro)) {
         $errores[] = "La fecha de retiro es obligatoria.";
@@ -40,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($fechaRetiro > $fechaDevolucion) {
             $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
         }
+        else {
+            // Validación de duración máxima de reserva (1 mes)
+            $intervalo = $fechaRetiro->diff($fechaDevolucion);
+            if ($intervalo->days > 30) { 
+                $errores[] = "Las reservas no pueden superar 1 mes de duración.";
+            }
+        }
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -52,8 +64,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $estadocontrato = 1;
-    $preciopordia = $_POST['PrecioPorDia'];
+    // Validación de existencia del número de reserva, no se admiten duplicaciones
+
+    // Primero la conexión
+    $MiConexion = ConexionBD();
+
+    // consulta
+    $SQL_VERIFICAR = "SELECT COUNT(*) AS total FROM `reservas-vehiculos` WHERE numeroReserva = $numreserva;";
+    $rs_verificar = mysqli_query($MiConexion, $SQL_VERIFICAR);
+    $fila_verificar = mysqli_fetch_assoc($rs_verificar);
+
+    if ($fila_verificar['total'] > 0) {
+        $errores[] = "El número de reserva ya está registrado. Por favor, ingresa otro número.";
+    }
+
+    // Si hay errores, redirigir con el mensaje de error
+    if (!empty($errores)) {
+        $mensaje = implode(' ', $errores);
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'reservas.php';
+        </script>";
+        exit();
+    }
 
     // Procesamiento de las fechas
     $fechaEspanol = date_parse($fecharetiro);
@@ -82,13 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Monto total:
     $montoTotal = $diferenciaDias * $preciopordia;
 
-
-    // Conexión y consulta
-    $MiConexion = ConexionBD();
-
     
-    // Antes de insertar la reserva, necesito el ID de la sucursal en la que se encuentra el vehículo, tal como se encuentra especificado en la tabla "vehiculos"
-    
+    // Antes de insertar la reserva, necesito el ID de la sucursal en la que se encuentra el vehículo, tal como se encuentra especificado en la tabla "vehiculos"    
     $IdSucursal = array();
 
     $SQL_IdSucursal = "SELECT idSucursal FROM vehiculos WHERE idVehiculo = $idVehiculo; ";
@@ -245,7 +273,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         else {
 
-                            $mensaje = "Reserva agregada exitosamente. El contrato se encuentra asociado y en preparación.";
+                            $mensaje = "Reserva número {$numreserva} agregada exitosamente. El contrato que le corresponde se encuentra asociado y en preparación.";
+                            echo "<script> 
+                                alert('$mensaje');
+                                window.location.href = 'reservas.php?NumeroReserva={$numreserva}&MatriculaReserva=&ApellidoReserva=&NombreReserva=&DocReserva=&RetiroDesde=&RetiroHasta=&BotonFiltrar=FiltrandoReservas';
+                            </script>";
+                            exit();
                         }
                     }
                 }
@@ -253,8 +286,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Redirigir con un mensaje
-    header("Location: reservas.php?mensaje=" . urlencode($mensaje));
+    // Redirigir con un mensaje en caso de que haya ocurrido cualquiera de los errores anteriormente especificados
+    echo "<script> 
+        alert('$mensaje');
+        window.location.href = 'reservas.php';
+    </script>";
     exit();
 }
 

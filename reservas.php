@@ -200,7 +200,7 @@ include('head.php');
                                 <th style='color: #d19513;'>
                                     <h3>#</h3>
                                 </th>
-                                <th>Nro</th>
+                                <th>Número Reserva</th>
                                 <th>Apellido</th>
                                 <th>Nombre</th>
                                 <th>DNI</th>

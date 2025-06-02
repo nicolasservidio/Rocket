@@ -126,6 +126,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
         if ($fechaRetiro > $fechaDevolucion) {
             $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
         }
+        else {
+            // Validación de duración máxima de reserva (1 mes)
+            $intervalo = $fechaRetiro->diff($fechaDevolucion);
+            if ($intervalo->days > 30) { 
+                $errores[] = "Las reservas no pueden superar 1 mes de duración.";
+            }
+        }
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -133,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarReserva
         $mensajeDeError = implode(' ', $errores);
         echo "<script> 
             alert('$mensajeDeError');
-            window.location.href = 'reservas.php';
+            window.location.href = 'reservas.php?NumeroReserva={$numreserva}&MatriculaReserva=&ApellidoReserva=&NombreReserva=&DocReserva=&RetiroDesde=&RetiroHasta=&BotonFiltrar=FiltrandoReservas';
         </script>";
         exit();
     }
