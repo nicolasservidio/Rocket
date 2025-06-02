@@ -96,14 +96,58 @@ include('head.php');
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
 
-            <div
-                style="margin-bottom: 110px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
+            <!-- Algunos efectos moderno para el form de consultas ;) -->
+            <style>
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .filtro-consultas {
+                    transition: all 0.4s ease-in-out; 
+                    border-radius: 15px; 
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+                    animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
+                }
+
+                .filtro-consultas:hover {
+                    transform: translateY(-5px); 
+                    box-shadow: 0px 10px 20px rgba(198, 167, 31, 0.5);
+                }
+
+                .form-control {
+                    transition: all 0.3s ease-in-out;
+                    border: 1px solid;
+                }
+
+                .form-control:focus {
+                    border: 2px solid rgb(160, 4, 4); /* Resalta con dorado */
+                    box-shadow: rgba(152, 10, 10, 0.81);
+                }
+
+                .btn-filtrar {
+                    transition: transform 0.3s ease-in-out;
+                }
+
+                .btn-filtrar:hover {
+                    transform: scale(1.1); /* Botón se agranda ligeramente */
+                }
+            </style>
+
+            <div class="filtro-consultas" style="margin-top: 20px; margin-bottom: 50px; padding: 35px; max-width: 97%; background-color: white; border: 1px solid #c7240e; border-radius: 14px;">
                 <div style='color: #c7240e; margin-bottom: 30px;'>
                     <h3 class="fw-bold"> Pedidos a Proveedores </h3>
                 </div>
 
                 <!-- Formulario de filtros -->
-                <form class="row g-3" action="pedidosProveedores.php" method="get">
+                <form class="row g-3" action="pedidosProveedores.php" method="get" onsubmit="scrollToTable()">
 
                     <div class="col-md-2">
                         <label for="identificadorpedido" class="form-label">Identificador de Pedido</label>
@@ -234,11 +278,11 @@ include('head.php');
                     <div class="w-100"></div> <!-- salto de linea -->
                     <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
                         <div class="d-flex flex-wrap gap-2">
-                            <button type="submit" style="background-color: #c7240e; color: white;" class="btn"
+                            <button type="submit" style="background-color: #c7240e; color: white;" class="btn btn-filtrar"
                                 name="BotonFiltrar" value="FiltrandoPedidos">
                                 <i class="fas fa-filter"></i> Filtrar
                             </button>
-                            <button type="submit" class="btn btn-warning" name="BotonLimpiarFiltros"
+                            <button type="submit" class="btn btn-warning btn-filtrar" name="BotonLimpiarFiltros"
                                 value="LimpiandoFiltros">
                                 <i class="fas fa-ban"></i> Limpiar Filtros
                             </button>
@@ -255,9 +299,11 @@ include('head.php');
                         </div>";
                 }?>
 
-            <!-- Tabla de pedidos a proveedores -->
             <div style="margin-top: 5%; padding-bottom: 100px;">
-                <div class="table-responsive mt-4"
+
+                <!-- Listado de pedidos a proveedores -->
+                <h3 class="fw-bold" style="margin-top: 5%;"> Listado de Pedidos </h3>
+                <div id="tablaPedidosContenedor" class="table-responsive mt-4"
                     style="max-width: 97%; max-height: 700px; border: 1px solid #444444; border-radius: 14px;">
                     <table class="table table-striped table-hover" id="tablaPedidos">
                         <thead>
@@ -620,77 +666,91 @@ include('head.php');
     </div>
 
     <script>
-    // Efecto sobre la imagen del reporte
-    window.onload = function() {
+        // Efecto sobre la imagen del reporte
+        window.onload = function() {
 
-        const imageElement = document.querySelector('.hoverImage');
+            const imageElement = document.querySelector('.hoverImage');
 
-        if (imageElement) {
-            const handleMouseMove = (e) => {
-                let rect = imageElement.getBoundingClientRect();
-                let x = e.clientX - rect.left;
-                let y = e.clientY - rect.top;
+            if (imageElement) {
+                const handleMouseMove = (e) => {
+                    let rect = imageElement.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
 
-                let dx = (x - rect.width / 2) / (rect.width / 2);
-                let dy = (y - rect.height / 2) / (rect.height / 2);
+                    let dx = (x - rect.width / 2) / (rect.width / 2);
+                    let dy = (y - rect.height / 2) / (rect.height / 2);
 
-                imageElement.style.transform =
-                    `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
-            };
+                    imageElement.style.transform =
+                        `perspective(500px) rotateY(${dx * 5}deg) rotateX(${-dy * 5}deg)`;
+                };
 
-            const handleMouseLeave = () => {
-                imageElement.style.transform = "";
-            };
+                const handleMouseLeave = () => {
+                    imageElement.style.transform = "";
+                };
 
-            imageElement.addEventListener('mousemove', handleMouseMove);
-            imageElement.addEventListener('mouseleave', handleMouseLeave);
+                imageElement.addEventListener('mousemove', handleMouseMove);
+                imageElement.addEventListener('mouseleave', handleMouseLeave);
+            }
         }
-    }
     </script>
 
-    <!-- Seleccionar pedido para habilitar boton modificar -->
-
     <script>
-    let pedidoSeleccionado = null;
 
-    // Detectar selección de fila
-    document.querySelectorAll('#tablaPedidos .pedido').forEach(row => {
-        row.addEventListener('click', () => {
-            // Quitar selección anterior
-            document.querySelectorAll('.pedido').forEach(r => r.classList.remove('table-active'));
-
-            // Agregar nueva selección
-            row.classList.add('table-active');
-            pedidoSeleccionado = row.dataset.id;
-
-            // Habilitar botones
-            document.getElementById('btnModificar').disabled = false;
-            document.getElementById('btnEliminar').disabled = false;
-        });
-    });
-
-    // Enviar formulario por POST
-    function modificarPedido() {
-        if (pedidoSeleccionado) {
-            window.location.href = 'modificarPedidoProveedores.php?id=' + pedidoSeleccionado;
+        // Desplazamiento vertical al listado luego de consulta
+        function scrollToTable() {
+            localStorage.setItem('scrollToTable', 'true'); // Guardar indicador antes de enviar
         }
-    }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('scrollToTable') === 'true') {
+                setTimeout(() => {
+                    document.getElementById('tablaPedidosContenedor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    localStorage.removeItem('scrollToTable'); // Limpiar indicador después del scroll
+                }, 500); 
+            }
+        });
+
+        // Seleccionar pedido para habilitar boton modificar 
+        let pedidoSeleccionado = null;
+
+        // Detectar selección de fila
+        document.querySelectorAll('#tablaPedidos .pedido').forEach(row => {
+            row.addEventListener('click', () => {
+                // Quitar selección anterior
+                document.querySelectorAll('.pedido').forEach(r => r.classList.remove('table-active'));
+
+                // Agregar nueva selección
+                row.classList.add('table-active');
+                pedidoSeleccionado = row.dataset.id;
+
+                // Habilitar botones
+                document.getElementById('btnModificar').disabled = false;
+                document.getElementById('btnEliminar').disabled = false;
+            });
+        });
+
+        // Enviar formulario por POST
+        function modificarPedido() {
+            if (pedidoSeleccionado) {
+                window.location.href = 'modificarPedidoProveedores.php?id=' + pedidoSeleccionado;
+            }
+        }
     </script>
 
     <!-- Estilo para remarcar bien pedido seleccionado (barra roja lateral) -->
 
     <style>
-    tr.pedido.table-active {
-        background-color: #ffe6e6 !important;
-        /* fondo rosado claro */
-        font-weight: bold;
-        border-left: 5px solid #c7240e;
-    }
+        tr.pedido.table-active {
+            background-color: #ffe6e6 !important;
+            /* fondo rosado claro */
+            font-weight: bold;
+            border-left: 5px solid #c7240e;
+        }
 
-    tr.separator {
-        height: 5px;
-        background-color: #dddddd;
-    }
+        tr.separator {
+            height: 5px;
+            background-color: #dddddd;
+        }
     </style>
 
 

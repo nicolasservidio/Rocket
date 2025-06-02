@@ -39,12 +39,57 @@ include('head.php');
         }
         ?>
 
-        <div class="p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
-            style="margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <!-- Algunos efectos moderno para el form de consultas ;) -->
+        <style>
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .filtro-consultas {
+                transition: all 0.4s ease-in-out; 
+                border-radius: 15px; 
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+                animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
+            }
+
+            .filtro-consultas:hover {
+                transform: translateY(-5px); 
+                box-shadow: 0px 10px 20px rgba(198, 167, 31, 0.5);
+            }
+
+            .form-control {
+                transition: all 0.3s ease-in-out;
+                border: 1px solid;
+            }
+
+            .form-control:focus {
+                border: 2px solid rgb(160, 4, 4); /* Resalta con dorado */
+                box-shadow: rgba(152, 10, 10, 0.81);
+            }
+
+            .btn-filtrar {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .btn-filtrar:hover {
+                transform: scale(1.1); /* Botón se agranda ligeramente */
+            }
+        </style>
+
+        <div class="filtro-consultas p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="margin-left: 2%; margin-right: 2%; margin-top: 10%;">
             <h5 class="mb-4 text-secondary"><strong>Filtrar Proveedores</strong></h5>
 
             <!-- Formulario de filtro -->
-            <form action="proveedores.php" method="GET">
+            <form action="proveedores.php" method="GET" onsubmit="scrollToTable()">
                 <div class="row">
                     <div class="col-md-2">
                         <label for="cuit" class="form-label">CUIT</label>
@@ -88,8 +133,8 @@ include('head.php');
                 <br>
                 <div class="d-flex flex-wrap justify-content-between align-items-end mt-3">
                     <div class="d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                        <a href="Proveedores.php" class="btn btn-secondary">Limpiar Filtros</a>
+                        <button type="submit" class="btn btn-primary btn-filtrar">Filtrar</button>
+                        <a href="Proveedores.php" class="btn btn-secondary btn-filtrar">Limpiar Filtros</a>
                     </div>
                 </div>
 
@@ -97,8 +142,8 @@ include('head.php');
         </div>
 
         <!-- Sección de Listado Proveedores -->
-        <div class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
-            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 8%;">
+        <div id="tablaProveedoresContenedor" class="table-responsive p-4 mb-4 border border-secondary rounded bg-white shadow-sm"
+            style="max-width: 97%; max-height: 700px; margin-left: 2%; margin-right: 2%; margin-top: 5%;">
             <h5 class="mb-4 text-secondary"><strong>Listado Proveedores</strong></h5>
             <table class="table table-hover" id="tablaProveedores">
                 <thead>
@@ -224,6 +269,21 @@ include('head.php');
     </div>
 
     <script>
+
+        // Desplazamiento vertical al listado luego de consulta
+        function scrollToTable() {
+            localStorage.setItem('scrollToTable', 'true'); // Guardar indicador antes de enviar
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('scrollToTable') === 'true') {
+                setTimeout(() => {
+                    document.getElementById('tablaProveedoresContenedor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    localStorage.removeItem('scrollToTable'); // Limpiar indicador después del scroll
+                }, 500); 
+            }
+        });
+
         let Proveedoreseleccionado = null;
 
         // Selección de Proveedor al hacer clic en una fila

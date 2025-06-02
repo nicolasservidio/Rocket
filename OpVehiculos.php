@@ -154,7 +154,6 @@ require_once "head.php";
                 .filtro-consultas {
                     transition: all 0.4s ease-in-out; 
                     border-radius: 15px; 
-                    background-color:rgb(19, 4, 2); 
                     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
                     animation: fadeInUp 0.8s ease-in-out; /* Hace que el cuadro "aparezca suavemente" */
                 }
