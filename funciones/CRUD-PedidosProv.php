@@ -490,4 +490,179 @@ function Consulta_PedidosAProveedor($identificadorPedido, $estadoPedido, $nombre
     return $Listado;
 }
 
+
+
+
+// EMITIR LISTADO con todos los pedidos realizados a un proveedor particular
+function Listar_PedidosProveedoresSegunProveedor($conexion, $idProveedorRecibido) {
+
+    $idProveedor = $idProveedorRecibido;
+    $Listado = array();
+
+    $SQL = "SELECT pp.idPedido as ppIdPedido,
+                   pp.fechaPedido as FechaPedido,
+                   pp.fechaEntregaPedido as FechaEntrega,
+                   pp.idProveedor as ppIdProveedor,
+                   pp.idEstadoPedido as ppIdEstadoPedido,
+                   pp.aclaracionesEstadoPedido as AclaracionesEstadoPedido,
+                   pp.condicionesDeEntrega as CondicionesDeEntrega,
+                   pp.totalPedido as TotalPedido,
+
+                   dp.idDetallePedidoAProveedor as IdDetallePedido,
+                   dp.idPedido as dpIdPedido,
+                   dp.precioPorUnidad as PrecioPorUnidad,
+                   dp.cantidadUnidades as CantidadUnidades,
+                   dp.subtotal as Subtotal, 
+                   dp.idRepuestoVehiculo as dpIdRepuesto,
+                   dp.idProductoVehiculo as dpIdProducto,
+                   dp.idAccesorioVehiculo as dpIdAccesorio,
+
+                   r.idRepuesto as rIdRepuesto,
+                   r.nombreRepuesto as NombreRepuesto,
+                   r.descripcionRepuesto as DescripcionRepuesto,
+                   r.idTipoInsumo as rIdTipoInsumo,
+
+                   i.idTipoInsumo as iIdTipoInsumo,
+                   i.tipoInsumo as TipoInsumo,
+
+                   p.idProducto as pIdProducto,
+                   p.nombreProducto as NombreProducto,
+                   p.descripcionProducto as DescripcionProducto,
+                   p.idTipoInsumo as pIdTipoInsumo, 
+
+                   a.idAccesorio as aIdAccesorio,
+                   a.nombreAccesorio as NombreAccesorio,
+                   a.descripcionAccesorio as DescripcionAccesorio,
+                   a.idTipoInsumo as aIdTipoInsumo,
+
+                   pv.idProveedor as IdProveedor,
+                   pv.nombreProveedor as NombreProveedor,
+                   pv.mailProveedor as MailProveedor,
+                   pv.direccionProveedor as DireccionProveedor,
+                   pv.telefonoProveedor as TelProveedor,
+                   pv.localidadProveedor as LocalidadProveedor,
+                   pv.cuitProveedor as CuitProveedor,
+                   pv.ivaProveedor as IvaProveedor,
+
+                   e.idEstadoPedido as IdEstadoPedido, 
+                   e.estadoPedido as EstadoPedido 
+            FROM `pedido-a-proveedor` pp
+            INNER JOIN `detalle-pedidoaproveedor` dp ON pp.idPedido = dp.idPedido
+            LEFT JOIN `repuestos-vehiculos` r ON dp.idRepuestoVehiculo = r.idRepuesto
+            LEFT JOIN `productos-vehiculo` p ON dp.idProductoVehiculo = p.idProducto
+            LEFT JOIN `accesorios-vehiculos` a ON dp.idAccesorioVehiculo = a.idAccesorio
+            LEFT JOIN `tipo-insumo` i ON (i.idTipoInsumo = r.idTipoInsumo OR i.idTipoInsumo = p.idTipoInsumo OR i.idTipoInsumo = a.idTipoInsumo)
+            INNER JOIN `proveedores` pv ON pp.idProveedor = pv.idProveedor
+            INNER JOIN `estados-pedidoaproveedor` e ON pp.idEstadoPedido = e.idEstadoPedido
+            WHERE pp.idProveedor = $idProveedor 
+            ORDER BY pp.fechaPedido DESC, pp.idPedido DESC, dp.idDetallePedidoAProveedor ASC; ";
+
+    $rs = mysqli_query($conexion, $SQL);
+        
+    $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+
+        $ppIdPedido = $data['ppIdPedido'];
+        $dpIdDetalle = $data['IdDetallePedido'];
+
+        // Verificar si ya existe el pedido
+        if (!isset($Listado[$ppIdPedido])) {
+
+            $Listado[$ppIdPedido] = array(
+                'ppIdPedido' => $data['ppIdPedido'],
+                'FechaPedido' => $data['FechaPedido'],
+                'FechaEntrega' => $data['FechaEntrega'],
+
+                'EstadoPedido' => $data['EstadoPedido'],
+                'AclaracionesEstadoPedido' => $data['AclaracionesEstadoPedido'],
+                'CondicionesDeEntrega' => $data['CondicionesDeEntrega'],
+
+                'NombreProveedor' => $data['NombreProveedor'],
+                'MailProveedor' => $data['MailProveedor'],
+                'DireccionProveedor' => $data['DireccionProveedor'],
+                'TelProveedor' => $data['TelProveedor'],
+                'LocalidadProveedor' => $data['LocalidadProveedor'],
+                'CuitProveedor' => $data['CuitProveedor'],
+                'IvaProveedor' => $data['IvaProveedor'],
+
+                'TotalPedido' => $data['TotalPedido'],
+                'Detalles' => array()
+            );
+        }
+
+        // Verificar si ya existe el detalle
+        if (!isset($Listado[$ppIdPedido]['Detalles'][$dpIdDetalle])) {
+
+            // Si es repuesto
+            if ($data['iIdTipoInsumo'] == 1) {
+
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => $data['rIdRepuesto'],
+                    'NombreRepuesto' => $data['NombreRepuesto'],
+                    'DescripcionRepuesto' => $data['DescripcionRepuesto'],
+                    'IdProducto' => null,
+                    'NombreProducto' => null,
+                    'DescripcionProducto' => null,
+                    'IdAccesorio' => null,
+                    'NombreAccesorio' => null,
+                    'DescripcionAccesorio' => null,
+                    'TipoInsumo' => $data['TipoInsumo']
+                );
+            }
+
+            // Si es producto
+            elseif ($data['iIdTipoInsumo'] == 2) {
+                
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => null,
+                    'NombreRepuesto' => null,
+                    'DescripcionRepuesto' => null,
+                    'IdProducto' => $data['pIdProducto'],
+                    'NombreProducto' => $data['NombreProducto'],
+                    'DescripcionProducto' => $data['DescripcionProducto'],
+                    'IdAccesorio' => null,
+                    'NombreAccesorio' => null,
+                    'DescripcionAccesorio' => null,
+                    'TipoInsumo' => $data['TipoInsumo']
+                );
+            }
+
+            // Si es accesorio
+            elseif ($data['iIdTipoInsumo'] == 3) {
+                                 
+                $Listado[$ppIdPedido]['Detalles'][$dpIdDetalle] = array(
+                    'IdDetallePedido' => $data['IdDetallePedido'],
+                    'PrecioPorUnidad' => $data['PrecioPorUnidad'],
+                    'CantidadUnidades' => $data['CantidadUnidades'],
+                    'Subtotal' => $data['Subtotal'],
+                    'IdRepuesto' => null,
+                    'NombreRepuesto' => null,
+                    'DescripcionRepuesto' => null,
+                    'IdProducto' => null,
+                    'NombreProducto' => null,
+                    'DescripcionProducto' => null,
+                    'IdAccesorio' => $data['aIdAccesorio'],
+                    'NombreAccesorio' => $data['NombreAccesorio'],
+                    'DescripcionAccesorio' => $data['DescripcionAccesorio'],
+                    'TipoInsumo' => $data['TipoInsumo']
+                );   
+            } 
+
+        }
+
+        $i++;
+    }
+
+    return $Listado;
+}
+
+
 ?>

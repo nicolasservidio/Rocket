@@ -445,11 +445,11 @@ include('head.php');
 
                 </div>
 
-                <!-- Reportes estadísticos -->
+                <!-- Reportes -->
                 <div style="margin: auto; max-width: 95%; padding: 150px 0 5px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h2 class="mb-1 " style="padding: 0; margin: 10px 0 0 0;">
-                            <strong style="color: #a80a0a;">Reportes Estadísticos</strong>
+                            <strong style="color: #a80a0a;">Reportes</strong>
                         </h2>
                     </div>
                 </div>
@@ -475,15 +475,21 @@ include('head.php');
                 <div style="margin: auto; max-width: 95%; padding: 10px 0 40px 0;">
                     <div class="p-4 mb-4 bg-white shadow-sm" style="border-radius: 14px; margin: 0; padding: 0;">
                         <h4 class="mb-1 " style="padding: 0; margin: 30px 0 0 0;">
-                            <strong style="color: #a80a0a;">Reporte:</strong> <a
-                                href="ReporteContratos_FrecMensuales.php" style="color: black;">Contratos por mes
-                                segmentados por estado </a>
+                            <strong style="color: #a80a0a;" data-bs-toggle="modal"
+                                data-bs-target="#reportePedidosPorProveedorModal">
+                                Reporte:
+                            </strong>
+                            <a href="#" style="color: black;" data-bs-toggle="modal"
+                                data-bs-target="#reportePedidosPorProveedorModal">
+                                Pedidos según Proveedor seleccionado
+                            </a>
                         </h4>
 
-                        <a href="ReporteContratos_FrecMensuales.php" style="color: black;">
+                        <a href="#" style="color: black;" data-bs-toggle="modal"
+                            data-bs-target="#reportePedidosPorProveedorModal">
                             <div class="mb-1 hoverImageWrapper centrar" style="padding: 0; margin: 50px 0 0 0;">
-                                <img class="hoverImage" src="assets/img/reports/reporte-contratosmensualesestados.jpeg"
-                                    alt="Contratos por mes segmentados por estado"
+                                <img class="hoverImage" src="assets/img/reports/reporte-devolucionesporcliente.png"
+                                    alt="Devolucion de vehículos a cliente seleccionado"
                                     style="max-width: 99%; border-radius: 25px;">
                             </div>
                         </a>
@@ -513,7 +519,7 @@ include('head.php');
                         </style>
 
                         <div class="container d-flex justify-content-center" style="margin: 70px 0 50px 0;">
-                            <a href="ReporteContratos_FrecMensuales.php">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#reportePedidosPorProveedorModal">
                                 <button class="btn btn-inversion">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-bar-chart" viewBox="0 0 16 16">
@@ -669,6 +675,62 @@ include('head.php');
                     </div>
                 </div>
 
+                <!-- Modal para Generar reporte de pedidos a proveedores según Proveedor -->
+                <div class="modal fade" id="reportePedidosPorProveedorModal" tabindex="-1"
+                    aria-labelledby="reportePedidosPorProveedorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reportePedidosPorProveedorModalLabel">Generar reporte:
+                                    Pedidos a proveedores según Proveedor</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+
+                            <!-- Form -->
+                            <form action="ReportePedidosSegunProveedor.php" method="post">
+                                <div class="modal-body">
+
+                                    <div class="mb-3">
+                                        <label for="idProveedor" class="form-label">Seleccionar proveedor</label>
+                                        <select class="form-select" aria-label="Selector" id="selectorProveedor" name="idProveedor"
+                                            title="<?php echo $CantidadClientes ?> clientes encontrados" required>
+                                            <option value="" selected>Selecciona una opción</option>
+
+                                            <?php
+                                            // Asegurate de que $ListadoProveedores contiene datos antes de procesarlo
+                                            if (!empty($ListadoProveedores)) {
+                                                $selected = '';
+                                                for ($i = 0; $i < $CantidadProveedores; $i++) {
+                                                    // Lógica para verificar si el grupo debe estar seleccionado
+                                                    $selected = (!empty($_POST['idProveedor']) && $_POST['idProveedor'] == $ListadoProveedores[$i]['idProveedor']) ? 'selected' : '';
+                                                    echo "<option value='{$ListadoProveedores[$i]['idProveedor']}' $selected>  
+                                                        {$ListadoProveedores[$i]['nombreProveedor']} (CUIT: {$ListadoProveedores[$i]['cuitProveedor']}) 
+                                                    </option>";
+                                                }
+                                            } else {
+                                                echo "<option value=''>No se encontraron proveedores.</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <!-- 
+                                    <div class="mb-3">
+                                        <label for="numreserva" class="form-label">Número de reserva</label>
+                                        <input type="text" class="form-control" id="numreserva" name="numreserva" required>
+                                    </div>
+                                    -->
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-warning">Generar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

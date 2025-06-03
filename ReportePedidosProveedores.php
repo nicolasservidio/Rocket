@@ -85,7 +85,7 @@ include('head.php');
                                     </td>
 
                                     <td title="Estado del pedido"> 
-                                        <span class="badge badge-success"> 
+                                        <span> 
                                             <?php echo $Pedido['EstadoPedido']; ?> 
                                         </span> 
                                     </td>
