@@ -85,6 +85,25 @@ function Listar_Contratos($conexion) {
             $Listado[$i]['DireccionSucursal'] = $data['sDireccionSucursal'];
             $Listado[$i]['CiudadSucursal'] = $data['sCiudadSucursal'];
             
+            $idCon = $Listado[$i]['IdContrato'];
+            $SQL_Reserva = "SELECT r.idReserva as rIdReserva,
+                                   r.numeroReserva as rNumReserva, 
+                                   r.idContrato as rIdContrato 
+                                FROM `reservas-vehiculos` r 
+                                WHERE r.idContrato = $idCon; "; 
+
+            $reserva = mysqli_query($conexion, $SQL_Reserva);
+            $datosReserva = mysqli_fetch_array($reserva);
+
+            if (!$datosReserva) {
+                $Listado[$i]['IdReserva'] = "No existe";
+                $Listado[$i]['NumReserva'] = "No existe";
+            } 
+            else {
+                $Listado[$i]['IdReserva'] = $datosReserva['rIdReserva'];
+                $Listado[$i]['NumReserva'] = $datosReserva['rNumReserva'];
+            }
+
             $i++;
     }
 
@@ -266,7 +285,26 @@ function Consulta_Contratos($numContrato, $matricula, $apellido, $nombre, $dni, 
         $Listado[$i]['IdSucursal'] = $data['vIdSucursal'];
         $Listado[$i]['DireccionSucursal'] = $data['sDireccionSucursal'];
         $Listado[$i]['CiudadSucursal'] = $data['sCiudadSucursal'];
-            
+
+        $idCon = $Listado[$i]['IdContrato'];
+        $SQL_Reserva = "SELECT r.idReserva as rIdReserva,
+                               r.numeroReserva as rNumReserva, 
+                               r.idContrato as rIdContrato 
+                            FROM `reservas-vehiculos` r 
+                            WHERE r.idContrato = $idCon; "; 
+
+        $reserva = mysqli_query($conexion, $SQL_Reserva);
+        $datosReserva = mysqli_fetch_array($reserva);
+
+        if (!$datosReserva) {
+            $Listado[$i]['IdReserva'] = "No existe";
+            $Listado[$i]['NumReserva'] = "No existe";
+        } 
+        else {
+            $Listado[$i]['IdReserva'] = $datosReserva['rIdReserva'];
+            $Listado[$i]['NumReserva'] = $datosReserva['rNumReserva'];
+        }
+
         $i++;
     }
 

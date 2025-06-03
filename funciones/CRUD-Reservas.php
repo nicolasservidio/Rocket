@@ -193,6 +193,7 @@ function Consulta_Reservas($numReserva, $matricula, $apellido, $nombre, $dni, $r
             if (is_null($Listado[$i]['idContrato'])) {
                 $Listado[$i]['ContratoAsociado'] = "No registrado";
                 $Listado[$i]['ContratoColorAdvertencia'] = "danger";
+                $Listado[$i]['idContrato'] = "No existe";
             }
             else {
                 $Listado[$i]['ContratoAsociado'] = "Registrado";

@@ -283,6 +283,7 @@ include('head.php');
                                 <th>Precio día</th>
                                 <th>Cantidad días</th>
                                 <th>Monto total</th>
+                                <th>Ver reserva</th>
                             </tr>
                         </thead>
 
@@ -345,6 +346,16 @@ include('head.php');
                                     <td> <?php echo "{$ListadoContratos[$i]['PrecioPorDiaContrato']} US$"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['CantidadDiasContrato']} días"; ?> </td>
                                     <td> <?php echo "{$ListadoContratos[$i]['MontoTotalContrato']} US$"; ?> </td>
+                                    <td> 
+                                        <?php 
+                                            if ($ListadoContratos[$i]['IdReserva'] == "No existe") {
+                                                echo "<span class='badge badge-danger'>{$ListadoContratos[$i]['NumReserva']}</span>"; 
+                                            } 
+                                            else {
+                                                echo "<span class='badge badge-warning'><a href='reservas.php?NumeroReserva={$ListadoContratos[$i]['NumReserva']}&MatriculaReserva=&ApellidoReserva=&NombreReserva=&DocReserva=&RetiroDesde=&RetiroHasta=&BotonFiltrar=FiltrandoReservas'>Nº: {$ListadoContratos[$i]['NumReserva']}</a></span>"; 
+                                            }
+                                        ?> 
+                                    </td> 
                                 </tr>
                                 <?php $contador++; ?>
                             <?php
