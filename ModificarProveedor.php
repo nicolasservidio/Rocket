@@ -41,9 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
 
     // Redirigir después de la actualización
-    header('Location: proveedores.php');
+    $mensaje = "Proveedor actualizado exitosamente. CUIT: {$cuit}";
+    echo "<script> 
+        alert('$mensaje');
+        window.location.href = 'proveedores.php?cuit={$cuit}&nombre=&iva=&email=&telefono=&direccion=&localidad=';
+    </script>";
     exit();
 }
+
 ?>
 
 <body class="bg-light">

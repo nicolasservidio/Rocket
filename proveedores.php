@@ -226,7 +226,7 @@ include('head.php');
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="cuit" class="form-label">CUIT</label>
-                                <input type="text" class="form-control" id="cuit" name="cuit" title="El Cuit debe ser un número mayor a 0" required>
+                                <input type="text" class="form-control" id="cuit" name="cuit" title="El CUIT debe ser contener entre 8 y 12 dígitos" required>
                             </div>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre o Razon Social</label>

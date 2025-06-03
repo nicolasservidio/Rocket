@@ -21,14 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validaciones básicas
     $errores = [];
 
-    if (empty($cuit) || !is_numeric($cuit) || $cuit <= 0) {
-        $errores[] = "El cuit debe ser un número mayor a 0.";
+    if (empty($cuit) || !is_numeric($cuit) || $cuit < 10000000 || $cuit > 999999999999) {
+        $errores[] = "El cuit debe ser contener entre 8 y 12 dígitos.";
     }
-    if (empty($nombre)) {
+    if (empty($nombre) || strlen($nombre) >= 50 ) {
         $errores[] = "El nombre es obligatorio.";
     }
     if (empty($iva)) {
-        $errores[] = "El iva es obligatorio.";
+        $errores[] = "La condición frente al IVA es obligatoria.";
     }
     if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores[] = "El formato del email no es válido.";
@@ -46,7 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si hay errores, redirigir con el mensaje de error
     if (!empty($errores)) {
         $mensaje = implode(' ', $errores);
-        header("Location: proveedores.php?mensaje=" . urlencode($mensaje));
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'proveedores.php';
+        </script>";
         exit();
     }
 
@@ -61,8 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("isssiss", $cuit, $nombre, $iva, $email, $telefono, $direccion, $localidad);
 
     if ($stmt->execute()) {
-        $mensaje = "Proveedor agregado exitosamente.";
-    } else {
+        $mensaje = "Proveedor agregado exitosamente. CUIT: {$cuit}.";
+    } 
+    else {
         $mensaje = "Error al agregar Proveedor: " . $MiConexion->error;
     }
 
@@ -70,7 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $MiConexion->close();
 
     // Redirigir con un mensaje
-    header("Location: proveedores.php?mensaje=" . urlencode($mensaje));
+    echo "<script> 
+        alert('$mensaje');
+        window.location.href = 'proveedores.php?cuit={$cuit}&nombre=&iva=&email=&telefono=&direccion=&localidad=';
+    </script>";
     exit();
+
 }
 ?>
