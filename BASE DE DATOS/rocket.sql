@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2025 at 02:11 AM
+-- Generation Time: Jun 03, 2025 at 01:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -94,7 +94,7 @@ CREATE TABLE `clientes` (
   `nombreCliente` varchar(50) NOT NULL,
   `apellidoCliente` varchar(50) NOT NULL,
   `nacionalidadCliente` varchar(50) DEFAULT NULL,
-  `dniCliente` int(10) NOT NULL,
+  `dniCliente` int(12) DEFAULT NULL,
   `nroPasaporteCliente` int(11) DEFAULT NULL,
   `mailCliente` varchar(50) DEFAULT NULL,
   `telefonoCliente` int(20) DEFAULT NULL,
@@ -122,7 +122,7 @@ INSERT INTO `clientes` (`idCliente`, `nombreCliente`, `apellidoCliente`, `nacion
 (2, 'Lucia', 'HRASTE', 'Argentina', 31741578, NULL, 'lucia@hotmail.com', 214748368, 'URQUIZA', '829 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Visa LUCIA HRASTE', 2233323, '2024-11-30', NULL, 'San Cristobal', 'A', NULL),
 (3, 'Eduardo Facundo', 'Mota', 'Argentina', 38343866, NULL, 'facundo@hotmail.com', 31474836, 'SIERRA DE LA VENTANA', '828 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Visa EDUARDO FACUNDO MOTA', 8949389, '2025-07-30', NULL, 'Seguros Rivadavia', 'A', NULL),
 (4, 'Roberto', 'Sanchez', 'Argentina', 77433645, NULL, 'roberto@gmail.com', 55147483, 'CABA', '821 Av Malvinas Argentinas', 0, NULL, 'B2', NULL, NULL, NULL, NULL, NULL, 'San Cristobal', 'C', NULL),
-(5, 'Maria', 'Ricardi', 'Argentina', 33224445, NULL, 'maria@gmail.com', 31474838, 'CABA', '222 Av Malvinas Argentinas', 0, NULL, 'B2', NULL, NULL, NULL, NULL, NULL, 'Seguros Rivadavia', 'A', NULL),
+(5, 'Maria', 'Lopez', 'Argentina', 33224445, NULL, 'maria@email.com', 314748111, 'CABA', '323 Av Sarmiento', 0, NULL, 'B2', NULL, NULL, NULL, NULL, NULL, 'Seguros Rivadavia', 'A', NULL),
 (6, 'Ana', 'Smith', 'Argentina', 33244232, NULL, 'ana@gmail.com', 77474839, 'CABA', '223 Av Malvinas Argentinas', 0, NULL, 'B2', NULL, NULL, NULL, NULL, NULL, 'San Cristobal', 'A', NULL),
 (7, 'Gabriel', 'Garcia', 'Argentina', 44555999, NULL, 'gabriel@hotmail.com', 41474831, 'MAR DEL PLATA', '332 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Mastercard GABRIEL GARCIA', NULL, '2024-11-14', NULL, 'Zurich Argentina', 'B', NULL),
 (8, 'Rosa', 'Alonso', 'Argentina', 33222444, NULL, 'rosa@hotmail.com', 51474832, 'MAR DEL PLATA', '444 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Visa ROSA ALONSO', NULL, '2024-11-15', NULL, 'Seguros Rivadavia', 'D', NULL),
@@ -131,7 +131,9 @@ INSERT INTO `clientes` (`idCliente`, `nombreCliente`, `apellidoCliente`, `nacion
 (11, 'Lorena', 'Berlusconi', 'Argentina', 443332555, NULL, 'lorena@hotmail.com', 81474891, 'VILLA CARLOS PAZ', '777 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Visa LORENA BERLUSCONI', NULL, '2024-12-15', NULL, 'Zurich Argentina', 'A', NULL),
 (12, 'Nicolás', 'Servidio', 'Argentina', 33222558, NULL, 'nicolas@hotmail.com', 91474892, 'BAHIA BLANCA', '888 Av Malvinas Argentinas', 1, NULL, 'B2', NULL, 'Visa NICOLAS SERVIDIO', NULL, '2024-11-25', NULL, 'Zurich Argentina', 'A', NULL),
 (15, 'Padme', 'Amidala', NULL, 33222557, NULL, 'padme@gmail.com', 44656324, NULL, '323 Organa, Naboo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, 'Ana', 'Rossi', NULL, 33256642, NULL, 'anarossi@gmail.com', 455887241, NULL, '1498 Cuyo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(17, 'Ana', 'Rossi', NULL, 33256642, NULL, 'anarossi@gmail.com', 455887241, NULL, '1498 Cuyo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 'Eduardo', 'Perez', NULL, 829092293, NULL, 'eperez@email.com', 329393022, NULL, '52 Nicaragua', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, 'Ruben', 'Gonzales', NULL, 73782929, NULL, 'rubgon@email.com', 2147483647, NULL, '1293 Av. Libertad', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -200,8 +202,6 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (17, '2025-01-01', '2025-01-03', NULL, '2025-01-05', 1, 24, NULL, 17, 6),
 (18, '2025-01-02', '2025-01-04', NULL, NULL, 3, 1, NULL, 18, 6),
 (19, '2024-01-01', '2024-01-05', NULL, NULL, 6, 2, NULL, 19, 6),
-(20, '2024-01-02', '2024-01-07', NULL, NULL, 4, 32, NULL, 20, 6),
-(21, '2024-01-02', '2024-01-05', NULL, NULL, 5, 3, NULL, 21, 6),
 (22, '2024-01-03', '2024-01-11', NULL, NULL, 7, 35, NULL, 22, 6),
 (23, '2024-01-05', '2024-01-10', NULL, NULL, 1, 7, NULL, 23, 6),
 (24, '2024-01-05', '2024-01-10', NULL, NULL, 2, 19, NULL, 24, 6),
@@ -214,7 +214,6 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (31, '2024-01-25', '2024-01-27', NULL, NULL, 15, 23, NULL, 31, 6),
 (32, '2024-01-27', '2024-01-30', NULL, NULL, 17, 24, NULL, 32, 6),
 (33, '2024-01-27', '2024-01-29', NULL, NULL, 1, 36, NULL, 33, 6),
-(34, '2024-01-29', '2024-02-02', NULL, NULL, 2, 20, NULL, 34, 3),
 (35, '2024-02-01', '2024-02-03', NULL, NULL, 3, 2, NULL, 35, 6),
 (36, '2024-02-02', '2024-02-03', NULL, NULL, 4, 32, NULL, 36, 6),
 (37, '2024-02-03', '2024-02-05', NULL, NULL, 5, 3, NULL, 37, 6),
@@ -303,7 +302,7 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (120, '2024-08-23', '2024-08-25', NULL, NULL, 10, 36, NULL, 120, 6),
 (121, '2024-08-29', '2024-08-31', NULL, NULL, 15, 23, NULL, 121, 6),
 (122, '2024-09-05', '2024-09-09', NULL, NULL, 1, 1, NULL, 122, 6),
-(123, '2024-10-07', '2024-10-10', NULL, NULL, 15, 19, NULL, 123, 2),
+(123, '2024-10-07', '2024-10-10', '2024-10-08', '2024-10-09', 15, 19, NULL, 123, 6),
 (124, '2024-10-09', '2024-10-14', NULL, NULL, 1, 25, NULL, 124, 6),
 (125, '2024-10-16', '2024-10-19', NULL, NULL, 3, 18, NULL, 125, 6),
 (126, '2024-11-02', '2024-11-07', NULL, NULL, 12, 2, NULL, 126, 6),
@@ -314,11 +313,19 @@ INSERT INTO `contratos-alquiler` (`idContrato`, `fechaInicioContrato`, `fechaFin
 (131, '2025-01-02', '2025-01-09', NULL, NULL, 12, 19, NULL, 131, 6),
 (132, '2025-01-02', '2025-01-02', NULL, NULL, 15, 25, NULL, 132, 4),
 (134, '2025-05-23', '2025-05-28', NULL, NULL, 6, 19, NULL, 134, 2),
-(135, '2025-05-22', '2025-05-29', NULL, NULL, 12, 6, NULL, 135, 1),
+(135, '2025-05-22', '2025-05-29', NULL, NULL, 12, 6, NULL, 135, 3),
 (136, '2025-05-24', '2025-05-28', NULL, NULL, 10, 45, NULL, 136, 3),
 (137, '2025-05-23', '2025-05-29', NULL, NULL, 15, 45, NULL, 137, 6),
-(138, '2025-03-20', '2025-03-27', NULL, NULL, 12, 35, NULL, 138, 1),
-(139, '2025-03-13', '2025-03-18', '2025-03-14', '2025-03-17', 9, 44, NULL, 139, 6);
+(139, '2025-03-13', '2025-03-18', '2025-03-14', '2025-03-17', 9, 44, NULL, 139, 6),
+(140, '2025-01-01', '2025-01-06', NULL, NULL, 3, 45, NULL, 140, 6),
+(141, '2024-01-01', '2025-01-03', '2024-01-02', NULL, 7, 35, NULL, 141, 4),
+(142, '2025-04-05', '2025-04-10', NULL, NULL, 24, 7, NULL, 142, 1),
+(143, '2025-04-01', '2025-04-10', NULL, NULL, 23, 19, NULL, 143, 1),
+(144, '2025-02-10', '2025-02-15', NULL, NULL, 23, 35, NULL, 144, 1),
+(145, '2025-05-05', '2025-05-12', '2025-05-05', NULL, 23, 6, NULL, 145, 5),
+(146, '2025-05-05', '2025-05-20', NULL, NULL, 23, 30, NULL, 146, 5),
+(147, '2025-05-08', '2025-05-14', NULL, NULL, 23, 48, NULL, 147, 1),
+(148, '2025-05-12', '2025-05-18', NULL, NULL, 24, 2, NULL, 148, 1);
 
 -- --------------------------------------------------------
 
@@ -383,8 +390,6 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 (17, 80, 2, 160, NULL, 'El estado ha sido modificado', NULL, NULL),
 (18, 90.6, 2, 181.2, NULL, NULL, NULL, NULL),
 (19, 55, 4, 220, NULL, 'El estado ha sido modificado', NULL, NULL),
-(20, 61, 5, 305, NULL, 'El estado ha sido modificado', NULL, NULL),
-(21, 73.2, 3, 219.6, NULL, 'El estado ha sido modificado', NULL, NULL),
 (22, 89, 8, 712, NULL, 'El estado ha sido modificado', NULL, NULL),
 (23, 48.61, 5, 243.05, NULL, 'El estado ha sido modificado', NULL, NULL),
 (24, 58.43, 5, 292.15, NULL, 'El estado ha sido modificado', NULL, NULL),
@@ -397,7 +402,6 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 (31, 75, 2, 150, NULL, 'El estado ha sido modificado', NULL, NULL),
 (32, 89.3, 3, 267.9, NULL, 'El estado ha sido modificado', NULL, NULL),
 (33, 89, 2, 178, NULL, 'El estado ha sido modificado', NULL, NULL),
-(34, 73, 4, 292, NULL, 'El estado ha sido modificado', NULL, NULL),
 (35, 46.8, 2, 93.6, NULL, 'El estado ha sido modificado', NULL, NULL),
 (36, 70, 1, 70, NULL, 'El estado ha sido modificado', NULL, NULL),
 (37, 79.3, 2, 158.6, NULL, 'El estado ha sido modificado', NULL, NULL),
@@ -497,11 +501,19 @@ INSERT INTO `detalle-contratos` (`idDetalleContrato`, `precioPorDiaContrato`, `c
 (131, 45, 7, 315, NULL, 'El estado ha sido modificado', NULL, NULL),
 (132, 55, 0, 0, NULL, 'El estado ha sido modificado', NULL, NULL),
 (134, 101.12, 5, 505.6, NULL, 'El estado ha sido modificado', NULL, NULL),
-(135, 81.5, 7, 570.5, NULL, NULL, NULL, NULL),
+(135, 81.5, 7, 570.5, NULL, 'El estado ha sido modificado', NULL, NULL),
 (136, 55.6, 4, 222.4, NULL, 'El estado ha sido modificado', NULL, NULL),
 (137, 71.7, 6, 430.2, NULL, 'El estado ha sido modificado', NULL, NULL),
-(138, 88.1, 7, 616.7, NULL, NULL, NULL, NULL),
-(139, 55.71, 5, 278.55, NULL, 'El estado ha sido modificado', NULL, NULL);
+(139, 55.71, 5, 278.55, NULL, 'El estado ha sido modificado', NULL, NULL),
+(140, 40, 5, 200, NULL, 'El estado ha sido modificado', NULL, NULL),
+(141, 40, 368, 14720, NULL, 'El estado ha sido modificado', NULL, NULL),
+(142, 75, 5, 375, NULL, NULL, NULL, NULL),
+(143, 47.2, 9, 424.8, NULL, NULL, NULL, NULL),
+(144, 67.1, 5, 335.5, NULL, NULL, NULL, NULL),
+(145, 78.1, 7, 546.7, NULL, 'El estado ha sido modificado', NULL, NULL),
+(146, 71.4, 15, 1071, NULL, 'El estado ha sido modificado', NULL, NULL),
+(147, 61.3, 6, 367.8, NULL, 'El estado ha sido modificado', NULL, NULL),
+(148, 55, 6, 330, NULL, 'El estado ha sido modificado', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -547,7 +559,16 @@ INSERT INTO `detalle-pedidoaproveedor` (`idDetallePedidoAProveedor`, `idPedido`,
 (20, 9, 45, 10, 450, 11, NULL, NULL),
 (21, 9, 23.2, 4, 92.8, 12, NULL, NULL),
 (22, 10, 125, 1, 125, NULL, NULL, 7),
-(23, 10, 13.2, 10, 132, NULL, NULL, 8);
+(23, 10, 13.2, 10, 132, NULL, NULL, 8),
+(24, 11, 11.5, 3, 34.5, 13, NULL, NULL),
+(25, 11, 23, 5, 115, NULL, 4, NULL),
+(26, 12, 550, 1, 550, 14, NULL, NULL),
+(27, 13, 1000, 1, 1000, 15, NULL, NULL),
+(28, 14, 1240, 1, 1240, 16, NULL, NULL),
+(29, 15, 1300, 1, 1300, 17, NULL, NULL),
+(30, 16, 982, 3, 2946, 18, NULL, NULL),
+(31, 17, 1200, 1, 1200, 19, NULL, NULL),
+(32, 18, 700, 3, 2100, 20, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -590,7 +611,8 @@ INSERT INTO `devoluciones-vehiculos` (`idDevolucion`, `fechaDevolucion`, `horaDe
 (13, '2024-08-30', '21:52', 'Sin cambios', 'Sin aclaraciones necesarias', 'Cubiertas por el usuario', 0, 0, 15, 121, NULL, NULL, 'S'),
 (14, '2025-03-17', '11:11', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 9, 139, NULL, NULL, 'N'),
 (15, '2025-01-05', '10:24', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 100, 1, 17, NULL, NULL, 'S'),
-(16, '2024-11-14', '14:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 6, 128, NULL, NULL, 'N');
+(16, '2024-11-14', '14:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 6, 128, NULL, NULL, 'N'),
+(17, '2024-10-09', '09:00', 'Sin cambios', 'Sin aclaraciones', 'Ninguna', 0, 0, 15, 123, NULL, NULL, 'S');
 
 -- --------------------------------------------------------
 
@@ -650,7 +672,10 @@ INSERT INTO `entregas-vehiculos` (`idEntrega`, `fechaEntrega`, `horaEntrega`, `i
 (17, '2025-05-23', '15:11', 15, 137),
 (18, '2025-04-10', '04:29', 5, 127),
 (19, '2024-08-30', '19:00', 15, 121),
-(20, '2025-03-14', '09:08', 9, 139);
+(20, '2025-03-14', '09:08', 9, 139),
+(21, '2024-01-02', '08:00', 7, 141),
+(22, '2025-05-05', '08:00', 23, 145),
+(23, '2024-10-08', '08:00', 15, 123);
 
 -- --------------------------------------------------------
 
@@ -862,15 +887,23 @@ CREATE TABLE `pedido-a-proveedor` (
 --
 
 INSERT INTO `pedido-a-proveedor` (`idPedido`, `fechaPedido`, `fechaEntregaPedido`, `idProveedor`, `idEstadoPedido`, `aclaracionesEstadoPedido`, `condicionesDeEntrega`, `totalPedido`) VALUES
-(1, '2024-11-01', '2024-11-05', 4, 1, 'Ninguna', '5 de noviembre a las 8 AM en puerta, previo aviso telefónico', 2400),
+(1, '2024-11-01', '2024-11-05', 4, 3, 'Ninguna', '5 de noviembre a las 8 AM en puerta, previo aviso telefónico', 2400),
 (2, '2024-11-01', '2024-11-11', 4, 1, '', '', 7612.38),
 (3, '2024-11-03', '2024-11-08', 11, 1, '', '', 188),
 (4, '2024-11-12', '2024-11-26', 9, 6, 'Pedido se retrasó 2 días previo aviso', '', 331.1),
 (6, '2024-12-03', '2024-12-06', 1, 1, 'Ninguna', 'Llega con antelación previo aviso', 279.8),
-(7, '2024-11-20', '2024-11-23', 8, 1, 'Cambio varias veces a pendiente', 'Buenas', 90),
+(7, '2024-11-20', '2024-11-23', 8, 5, 'Cambio varias veces a pendiente', 'Buenas', 90),
 (8, '2024-12-04', '2024-12-07', 6, 1, 'Ninguna', 'Las mejores', 4036),
-(9, '2025-01-01', '2025-01-05', 8, 1, 'Ninguna de relevancia', 'Ir a buscar a negocio', 542.8),
-(10, '2025-12-04', '2025-12-04', 9, 1, 'Sin aclaraciones', 'Hacen llamado previo', 257);
+(9, '2025-01-01', '2025-02-05', 8, 2, 'Ninguna de relevancia', 'Ir a buscar a negocio', 542.8),
+(10, '2025-12-04', '2025-12-04', 9, 1, 'Sin aclaraciones', 'Hacen llamado previo', 257),
+(11, '2025-06-01', '2025-06-05', 4, 6, 'Ninguno [Bloqueado para devolución]', 'Buscar en sucursal', 149.5),
+(12, '2025-01-01', '2025-07-01', 11, 1, 'ninguna', 'ninguna', 550),
+(13, '2025-01-01', '2025-01-20', 19, 3, 'Se decidió cancelarlo por tardanza en la gestión', 'Se canceló antes de la entrega', 1000),
+(14, '2025-01-01', '2025-07-01', 19, 1, 'Ninguna aclaración', 'Las comunes', 1240),
+(15, '2025-01-01', '2025-05-01', 19, 7, 'Se retrasó varias veces, llegó con defectos, se optó por devolver', 'Mala', 1300),
+(16, '2025-06-01', '2025-06-27', 2, 6, 'El pedido se encuentra en camino y será recibido el 27 de junio [Bloqueado para devolución] ', 'Se recibe en instalaciones de la empresa', 2946),
+(17, '2025-01-01', '2025-02-01', 11, 1, '', '', 1200),
+(18, '2025-01-01', '2025-02-01', 19, 1, '', '', 2100);
 
 -- --------------------------------------------------------
 
@@ -913,7 +946,8 @@ CREATE TABLE `productos-vehiculo` (
 INSERT INTO `productos-vehiculo` (`idProducto`, `nombreProducto`, `descripcionProducto`, `cantidadEnDeposito`, `precioProducto`, `estadoProducto`, `idTipoInsumo`, `idProveedor`, `vehiculosDestinatarios`) VALUES
 (1, 'Limpiador de llantas REVIGAL', 'Bajo precio', 1, 11, 'Aún no recibido', 2, 11, NULL),
 (2, 'Cera marca VONIXX', 'Calidad elevada', 3, 22.3, 'Aún no recibido', 2, 9, NULL),
-(3, 'Guantes de microfibra genéricos', 'Paquete con 40 unidades', 1, 25, 'Aún no recibido', 2, 1, NULL);
+(3, 'Guantes de microfibra genéricos', 'Paquete con 40 unidades', 1, 25, 'Aún no recibido', 2, 1, NULL),
+(4, 'Aceite', 'Marca XKXK', 5, 23, 'Aún no recibido', 2, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -948,7 +982,8 @@ INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `mailProveedor`, `d
 (8, 'InsumOsCar SA', 'insumos-oscar@oscar.com', '88176 Guemes', 'Cordoba Capital, Argentina', 888299927166, 88165353511, 'Responsable Inscripto', NULL),
 (9, 'TechnoVehiculos SA', 'proveedor@techonvehiculos.com', '1020 Guemes', 'Cordoba Capital, Argentina', 9991828888, 99100938777, 'Responsable Inscripto', NULL),
 (11, 'TuVehiculo SA', 'proveedores@tvsa.com', '8389 Cuyo', 'CABA, Argentina', 8822228889, 99922200002, 'Responsable Inscripto', NULL),
-(14, 'Proveedor SA', 'provedorsa@gmail.com', '1999 Alem', 'Bahía Blanca', 54545999, 878888, 'Responsable Inscripto', NULL);
+(14, 'Proveedor SA', 'provedorsa@gmail.com', '1999 Alem', 'Bahía Blanca', 54545999, 878888, 'Responsable Inscripto', NULL),
+(19, 'Nuevo Proveedor', 'nuevopro@email.com', '32 Nicaragua', 'Córdoba', 83892111, 88281111, 'Responsable Inscripto', NULL);
 
 -- --------------------------------------------------------
 
@@ -985,7 +1020,15 @@ INSERT INTO `repuestos-vehiculos` (`idRepuesto`, `nombreRepuesto`, `descripcionR
 (9, 'Alternador marca BMW', 'Gama alta', 3, 901, 'Aún no recibido', 1, 6, NULL, NULL),
 (10, 'Rótulas de suspensión marca LEMFÖRDER', 'Gama media', 10, 99.9, 'Aún no recibido', 1, 6, NULL, NULL),
 (11, 'Bujías marca NGK', 'Genéricas', 10, 45, 'Aún no recibido', 1, 8, NULL, NULL),
-(12, 'Filtros de aceite marca PURFLUX', 'alta calidad, tecnología de plegado Chevron para mayor área de filtración, diseño compacto y ligero, y compromiso con la protección ambiental', 4, 23.2, 'Aún no recibido', 1, 8, NULL, NULL);
+(12, 'Filtros de aceite marca PURFLUX', 'alta calidad, tecnología de plegado Chevron para mayor área de filtración, diseño compacto y ligero, y compromiso con la protección ambiental', 4, 23.2, 'Aún no recibido', 1, 8, NULL, NULL),
+(13, 'Correas', 'Ninguna', 3, 11.5, 'Aún no recibido', 1, 4, NULL, NULL),
+(14, 'motor', 'jkdlj', 1, 550, 'Aún no recibido', 1, 11, NULL, NULL),
+(15, 'motor', 'jkfdljf', 1, 1000, 'Aún no recibido', 1, 19, NULL, NULL),
+(16, 'Motor', 'Ninguna descripción', 1, 1240, 'Aún no recibido', 1, 19, NULL, NULL),
+(17, 'motor', 'jdklsj', 1, 1300, 'Aún no recibido', 1, 19, NULL, NULL),
+(18, 'Motor', 'Motor genérico', 3, 982, 'Aún no recibido', 1, 2, NULL, NULL),
+(19, 'Motor', '', 1, 1200, 'Aún no recibido', 1, 11, NULL, NULL),
+(20, 'Motor', '', 3, 700, 'Aún no recibido', 1, 19, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1020,7 +1063,7 @@ INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, 
 (6, 10, '2024-11-01', '2024-11-07', '2024-11-10', 20, 3, 60, 11, NULL, NULL, 3),
 (7, 15, '2024-11-29', '2024-11-20', '2024-11-23', 20, 3, 60, 6, NULL, NULL, 24),
 (8, 1, '2025-05-25', '2024-11-12', '2024-11-16', 20, 4, 80, 10, NULL, NULL, 42),
-(9, 3, '2024-11-01', '2024-11-15', '2024-11-18', 20, 3, 60, 11, NULL, NULL, 2),
+(9, 3, '2025-06-02', '2024-11-15', '2024-11-19', 20, 4, 80, 11, NULL, NULL, 2),
 (10, 2, '2024-11-01', '2024-11-22', '2024-11-25', 20, 3, 60, 1, NULL, NULL, 2),
 (14, 22, '2024-11-30', '2024-12-03', '2024-12-05', 20, 4, 80, 4, NULL, NULL, 2),
 (17, 4, '2024-12-04', '2024-12-17', '2024-12-23', 20.5, 3, 61.5, 7, NULL, NULL, 19),
@@ -1035,8 +1078,8 @@ INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, 
 (27, 27, '2024-12-07', '2024-12-11', '2024-12-27', 90, 16, 1440, 6, 14, 4, 19),
 (28, 28, '2024-12-07', '2024-12-14', '2025-01-04', 50, 21, 1050, 12, 15, 4, 36),
 (29, 29, '2024-12-07', '2025-01-02', '2025-01-04', 90.6, 2, 181.2, 3, 18, 1, 1),
-(30, 30, '2024-12-07', '2024-01-02', '2024-01-07', 61, 5, 305, 4, 20, 4, 32),
-(31, 31, '2024-12-07', '2024-01-02', '2024-01-05', 73.2, 3, 219.6, 5, 21, 1, 3),
+(30, 30, '2024-12-07', '2024-01-02', '2024-01-07', 61, 5, 305, 4, NULL, 4, 32),
+(31, 31, '2024-12-07', '2024-01-02', '2024-01-05', 73.2, 3, 219.6, 5, NULL, 1, 3),
 (32, 32, '2024-12-07', '2024-01-03', '2024-01-11', 89, 8, 712, 7, 22, 4, 35),
 (33, 33, '2024-12-07', '2024-01-05', '2024-01-10', 48.61, 5, 243.05, 1, 23, 2, 7),
 (34, 34, '2024-12-07', '2024-01-05', '2024-01-10', 58.43, 5, 292.15, 2, 24, 4, 19),
@@ -1049,7 +1092,7 @@ INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, 
 (41, 41, '2024-12-07', '2024-01-25', '2024-01-27', 75, 2, 150, 15, 31, 1, 23),
 (42, 42, '2024-12-07', '2024-01-27', '2024-01-30', 89.3, 3, 267.9, 17, 32, 1, 24),
 (43, 43, '2024-12-07', '2024-01-27', '2024-01-29', 89, 2, 178, 1, 33, 4, 36),
-(44, 44, '2024-12-07', '2024-01-29', '2024-02-02', 73, 4, 292, 2, 34, 3, 20),
+(44, 44, '2024-12-07', '2024-01-29', '2024-02-02', 73, 4, 292, 2, NULL, 3, 20),
 (45, 45, '2024-12-07', '2024-02-01', '2024-02-03', 46.8, 2, 93.6, 3, 35, 2, 2),
 (46, 46, '2024-12-07', '2024-02-02', '2024-02-03', 70, 1, 70, 4, 36, 4, 32),
 (47, 47, '2024-12-07', '2024-02-03', '2024-02-05', 79.3, 2, 158.6, 5, 37, 1, 3),
@@ -1145,7 +1188,10 @@ INSERT INTO `reservas-vehiculos` (`idReserva`, `numeroReserva`, `fechaReserva`, 
 (137, 139, '2024-12-07', '2024-11-07', '2024-11-10', 125, 3, 375, 5, 127, 1, 23),
 (138, 140, '2024-12-07', '2024-11-12', '2024-11-14', 125, 2, 250, 6, 128, 1, 24),
 (139, 141, '2024-12-07', '2024-11-13', '2024-11-15', 135, 2, 270, 11, 129, 1, 24),
-(140, 142, '2025-04-05', '2025-01-02', '2025-01-09', 45, 7, 315, 12, 131, 4, 19);
+(140, 142, '2025-04-05', '2025-01-02', '2025-01-09', 45, 7, 315, 12, 131, 4, 19),
+(142, 143, '2025-06-02', '2025-04-05', '2025-04-11', 75, 6, 450, 24, 142, 2, 23),
+(143, 145, '2025-06-02', '2025-02-10', '2025-02-15', 67.1, 5, 335.5, 23, 144, 4, 35),
+(145, 146, '2025-06-03', '2025-05-12', '2025-05-18', 55, 6, 330, 24, 148, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1258,10 +1304,10 @@ INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `anio`, `fechaCompr
 (1, 'AB468FG', 'Rojo', 2010, NULL, NULL, '5453543', 'aaaaaa888888bbbbb', 4, 5, 'S', 'S', 'S', NULL, '20051 km al 2024-05-06', 'N', 6, 8, 13, 1),
 (2, 'AA070DE', 'Negro', 2013, NULL, NULL, '5545', 'aaaaaa888888ccccc', 4, 5, 'N', 'S', 'S', NULL, '251 km al 2024-05-06', 'S', 1, 4, 12, 2),
 (3, 'AC340FY', 'Negro', 2018, NULL, 7439, '54224', 'aaaaaa888888ddddd', 4, 4, 'N', 'S', 'S', NULL, 'No medido', 'S', 2, 7, 12, 1),
-(6, 'ADCS', 'Negro', 2015, NULL, NULL, '545', 'aaaaaa888888eeeee', 2, 5, 'N', 'S', 'S', NULL, '927 km al 2024-05-06', 'S', 5, 3, 6, 4),
+(6, 'ADCS', 'Negro', 2015, NULL, NULL, '545', 'aaaaaa888888eeeee', 2, 5, 'N', 'S', 'S', NULL, '927 km al 2024-05-06', 'S', 5, 3, 6, 2),
 (7, 'HWUW9', 'Gris', 2012, NULL, NULL, '7575', 'aaaaaa888888fffff', 4, 4, 'N', 'S', 'S', NULL, 'No medido', 'S', 3, 4, 7, 2),
 (18, 'HH667S', 'Negro', 2020, NULL, NULL, '586', 'aaaaaa888888ggggg', 2, 2, 'S', 'S', 'N', NULL, '839 km al 2024-05-06', 'S', 7, 9, 4, 3),
-(19, 'FFFDAS', 'Negro', 2022, NULL, NULL, '475', 'aaaaaa888888hhhhh', 4, 5, 'S', 'S', 'S', NULL, '35728 km al 2024-05-06', 'S', 3, 9, 7, 5),
+(19, 'FFFDAS', 'Negro', 2022, NULL, NULL, '475', 'aaaaaa888888hhhhh', 4, 5, 'S', 'S', 'S', NULL, '35728 km al 2024-05-06', 'S', 3, 9, 7, 2),
 (20, 'ASASA3', 'Rojo', 2021, NULL, NULL, '57775', 'aaaaaa888888iiiii', 2, 2, 'N', 'N', 'S', NULL, '3290 km al 2024-05-06', 'S', 10, 9, 1, 3),
 (21, 'HABN32', 'Blanco', 2015, '2024-10-01', 15393.8, '57475', 'bbbbbb888888bbbbb', 4, 4, 'N', 'N', 'S', NULL, '6051 km al 2024-05-06', 'S', 8, 9, 2, 2),
 (23, 'JHGP77F', 'Amarillo', NULL, '2024-10-02', NULL, '57474', 'bbbbbb888888ccccc', 4, 4, 'N', 'S', 'N', NULL, '3211 km al 2024-05-06', 'S', 8, 4, 10, 5),
@@ -1277,7 +1323,10 @@ INSERT INTO `vehiculos` (`idVehiculo`, `matricula`, `color`, `anio`, `fechaCompr
 (39, 'Z83KAJE', NULL, NULL, '2025-05-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 9, 9, 9, 3),
 (42, '11ARNOK', 'Naranja', 2023, '2025-01-01', 13001.4, 'AJ8329KLNE902930LKNE', '999JNANANA828NN', 4, 4, 'N', 'S', 'S', 'Adquirido nuevo, sin defectos.', '200 km al 2025-02-02', 'S', 6, 8, 9, 5),
 (44, 'KN82CHA', 'Amarillo', 2021, '2024-02-02', 9032.4, 'HJKA920PPPP929999', 'NHAHHAKEJEJ77777', 2, 2, 'S', 'S', 'S', 'No se adquirió 0K y presenta algunos defectos en carrocería', '4554km al 04-04-2024', 'S', 5, 5, 11, 2),
-(45, 'zzzzzz', NULL, NULL, '2025-05-10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 1, 9, 12, 2);
+(45, 'zzzzzz', 'Amarillo', 2017, '2025-05-10', 23000, '3890283902', '3892833992', 4, 5, 'N', 'S', 'S', 'Ninguna', '0', 'S', 1, 9, 12, 5),
+(47, '123456789kln', NULL, NULL, '2025-06-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 4, 9, 2, 3),
+(48, '123456789kln', NULL, NULL, '2025-06-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'S', 4, 9, 3, 3),
+(49, '123456789k', NULL, NULL, '2025-06-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 2, 9, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -1567,7 +1616,7 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `combustibles`
@@ -1579,7 +1628,7 @@ ALTER TABLE `combustibles`
 -- AUTO_INCREMENT for table `contratos-alquiler`
 --
 ALTER TABLE `contratos-alquiler`
-  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `idContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `cuentas-clientes`
@@ -1591,19 +1640,19 @@ ALTER TABLE `cuentas-clientes`
 -- AUTO_INCREMENT for table `detalle-contratos`
 --
 ALTER TABLE `detalle-contratos`
-  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `idDetalleContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `detalle-pedidoaproveedor`
 --
 ALTER TABLE `detalle-pedidoaproveedor`
-  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idDetallePedidoAProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `devoluciones-vehiculos`
 --
 ALTER TABLE `devoluciones-vehiculos`
-  MODIFY `idDevolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idDevolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `empleados`
@@ -1615,7 +1664,7 @@ ALTER TABLE `empleados`
 -- AUTO_INCREMENT for table `entregas-vehiculos`
 --
 ALTER TABLE `entregas-vehiculos`
-  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idEntrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `estados-contratos`
@@ -1669,7 +1718,7 @@ ALTER TABLE `modelos`
 -- AUTO_INCREMENT for table `pedido-a-proveedor`
 --
 ALTER TABLE `pedido-a-proveedor`
-  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `preparaciones-vehiculos`
@@ -1681,25 +1730,25 @@ ALTER TABLE `preparaciones-vehiculos`
 -- AUTO_INCREMENT for table `productos-vehiculo`
 --
 ALTER TABLE `productos-vehiculo`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `repuestos-vehiculos`
 --
 ALTER TABLE `repuestos-vehiculos`
-  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idRepuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `reservas-vehiculos`
 --
 ALTER TABLE `reservas-vehiculos`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `sucursales`
@@ -1723,7 +1772,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `vehiculos`
 --
 ALTER TABLE `vehiculos`
-  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `vendedores`
