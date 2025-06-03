@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pedido = $resultado->fetch_assoc();
 
     if (strpos($pedido['aclaracionesEstadoPedido'], '[Bloqueado para devolución]') !== false) {
-        echo "<script>alert('Este pedido ya tiene bloqueada la devolución.'); window.location.href = 'pedidosProveedores.php';</script>";
+        echo "<script>alert('Este pedido ya tiene bloqueada la devolución.'); window.location.href = 'pedidosProveedores.php?Identificador-Pedido={$idPedido}&Estado-Pedido=&Nombre-Proveedor=&CUIT-Proveedor=&IVA-Proveedor=&Localidad-Proveedor=&Direccion-Proveedor=&Precio-Unitario=&Cantidad-Producto=&MontoTotal-Pedido=&Tipo-Insumo=&Nombre-Insumo=&Descripcion-Insumo=&FechaPedido-Desde=&FechaPedido-Hasta=&FechaEntrega-Desde=&FechaEntrega-Hasta=&BotonFiltrar=FiltrandoPedidos';</script>";
         exit();
     }
 

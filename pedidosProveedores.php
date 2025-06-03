@@ -334,7 +334,25 @@ include('head.php');
                                 <td><b>ID: <?= $Pedido['ppIdPedido'] ?></b></td>
                                 <td><?= $Pedido['FechaPedido'] ?></td>
                                 <td><?= $Pedido['FechaEntrega'] ?></td>
-                                <td><span class="badge badge-success"><?= $Pedido['EstadoPedido'] ?></span></td>
+                                <td>
+                                    <?php
+                                    // Definir los colores según el estado del pedido
+                                    $coloresEstados = [
+                                        "Pendiente" => "badge-secondary",
+                                        "Confirmado" => "badge-primary",
+                                        "Cancelado" => "badge-danger",
+                                        "En Preparación" => "badge-warning",
+                                        "Enviado" => "badge-info",
+                                        "Entregado" => "badge-success",
+                                        "Devuelto" => "badge-danger"
+                                    ];
+                                    
+                                    // Obtener la clase de color correspondiente
+                                    $claseEstado = $coloresEstados[$Pedido['EstadoPedido']] ?? "badge-secondary"; 
+                                    ?>
+
+                                    <span class="badge <?= $claseEstado ?>"><?= $Pedido['EstadoPedido'] ?></span>
+                                </td>
                                 <td><?= $Pedido['AclaracionesEstadoPedido'] ?></td>
                                 <td><?= $Pedido['CondicionesDeEntrega'] ?></td>
                                 <td>
