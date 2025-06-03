@@ -87,11 +87,6 @@ include('head.php');
         include('sidebarGOp.php');
         $tituloPagina = "PEDIDOS A PROVEEDORES";
         include('topNavBar.php');
-
-        if (isset($_GET['mensaje'])) {
-            echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
-        }
-
         ?>
 
         <div class="container" style="margin-top: 10%; margin-left: 1%; margin-right: 1%;">
@@ -818,6 +813,23 @@ include('head.php');
             fila.querySelector("input[name='subtotal[]']").value = (precio * cantidad).toFixed(2);
         }
     });
+    </script>
+
+    <script>
+        // Para validar con JS que se agrega por lo menos 1 artículo en el modal para registrar nuevo pedido a proveedor
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const formularioPedido = document.querySelector("#nuevoRegistroModal form"); // Selección más precisa
+
+            formularioPedido.addEventListener("submit", function (event) {
+                let filas = document.querySelectorAll("#tablaDetalles tbody tr").length;
+
+                if (filas === 0) {
+                    alert("Debe agregar al menos un artículo al pedido.");
+                    event.preventDefault(); // Detiene el envío del formulario
+                }
+            });
+        });
     </script>
 
     <!-- Bootstrap JS -->
