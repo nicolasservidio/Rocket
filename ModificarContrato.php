@@ -116,6 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
         if ($fechaRetiro > $fechaDevolucion) {
             $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
         }
+        else {
+            // Validación de duración máxima de contrato (1 mes)
+            $intervalo = $fechaRetiro->diff($fechaDevolucion);
+            if ($intervalo->days > 30) { 
+                $errores[] = "Los contratos no pueden superar 1 mes de duración.";
+            }
+        }
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -123,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || !empty($_POST['BotonModificarContrat
         $mensajeDeError = implode(' ', $errores);
         echo "<script> 
             alert('$mensajeDeError');
-            window.location.href = 'contratosAlquiler.php';
+            window.location.href = 'contratosAlquiler.php?NumeroContrato={$idContrato}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&PrecioDiaContrato=&CantidadDiasContrato=&MontoTotalContrato=&RetiroDesde=&RetiroHasta=&DevolucionDesde=&DevolucionHasta=&BotonFiltrar=FiltrandoContratos'; 
         </script>";
         exit();
     }

@@ -147,7 +147,7 @@ include('head.php');
                 <form class="row g-3" action="contratosAlquiler.php" method="get" onsubmit="scrollToTable()">
 
                     <div class="col-md-2">
-                        <label for="numero" class="form-label">Número</label>
+                        <label for="numero" class="form-label">Número de Contrato</label>
                         <input type="text" class="form-control" id="numero" name="NumeroContrato"
                             value="<?= htmlspecialchars($filtros['numero']) ?>">
                     </div>
@@ -266,7 +266,7 @@ include('head.php');
                                     <h3>#</h3>
                                 </th>
                                 <th>Estado Contrato</th>
-                                <th>Contrato</th>
+                                <th>Número Contrato</th>
                                 <th title="Fecha de inicio del contrato. No corresponde necesariamente con la fecha de entrega del vehículo.">
                                     Inicio Contrato
                                 </th>
@@ -479,9 +479,6 @@ include('head.php');
                                 </button>
                             </a>
                         </div>
-
-
-
 
                     </div>
                 </div>

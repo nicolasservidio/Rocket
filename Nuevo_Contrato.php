@@ -40,6 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($fechaRetiroValidacion > $fechaDevolucionValidacion) {
             $errores[] = "La fecha de retiro no puede ser posterior a la fecha de devolución.";
         }
+        else {
+            // Validación de duración máxima de contrato (1 mes)
+            $intervalo = $fechaRetiroValidacion->diff($fechaDevolucionValidacion);
+            if ($intervalo->days > 30) { 
+                $errores[] = "Los contratos no pueden superar 1 mes de duración.";
+            }
+        }
     }
 
     // Si hay errores, redirigir con el mensaje de error
@@ -158,6 +165,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $numeroContratoMensaje = $numeroContrato['idContrato'];
 
                 $mensaje = "Transacción completada exitosamente. Contrato número {$numeroContratoMensaje}. Retiro: {$fecharetiroIngles}. Devolución: {$fechadevolucionIngles}. Precio por día: {$preciopordia} USD (a {$diferenciaDias} días). Monto total: {$montoTotal} USD.";
+                echo "<script> 
+                    alert('$mensaje');
+                    window.location.href = 'contratosAlquiler.php?NumeroContrato={$numeroContratoMensaje}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&PrecioDiaContrato=&CantidadDiasContrato=&MontoTotalContrato=&RetiroDesde=&RetiroHasta=&DevolucionDesde=&DevolucionHasta=&BotonFiltrar=FiltrandoContratos';
+                </script>";
+                exit();
             }
         } 
     }
