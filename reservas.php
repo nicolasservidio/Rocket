@@ -257,7 +257,20 @@ include('head.php');
                                     <td>
                                         <span class="badge badge-<?php echo $ListadoReservas[$i]['ContratoColorAdvertencia']; ?>">
                                             <?php echo $ListadoReservas[$i]['ContratoAsociado']; ?>
+                                        </span><br><br>
+                                        <span>Ver contrato: </span>
+                                        <span class='badge badge-warning'> 
+                                            <?php
+                                            if ($ListadoReservas[$i]['idContrato'] == "No existe") {
+                                                echo $ListadoReservas[$i]['idContrato']; 
+                                            } 
+                                            else {
+                                                echo "<a href='contratosAlquiler.php?NumeroContrato={$ListadoReservas[$i]['idContrato']}&MatriculaContrato=&ApellidoContrato=&NombreContrato=&DocContrato=&EstadoContrato=&PrecioDiaContrato=&CantidadDiasContrato=&MontoTotalContrato=&RetiroDesde=&RetiroHasta=&DevolucionDesde=&DevolucionHasta=&BotonFiltrar=FiltrandoContratos'>ID: {$ListadoReservas[$i]['idContrato']}</a>"; 
+                                            } 
+                                            ?>
                                         </span>
+
+                                        
                                     </td>
                                 </tr>
                                 <?php $contador++; ?>

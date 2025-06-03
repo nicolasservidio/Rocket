@@ -59,6 +59,7 @@ function Listar_Reservas($conexion) {
             if (is_null($Listado[$i]['idContrato'])) {
                 $Listado[$i]['ContratoAsociado'] = "No registrado";
                 $Listado[$i]['ContratoColorAdvertencia'] = "danger";
+                $Listado[$i]['idContrato'] = "No existe";
             }
             else {
                 $Listado[$i]['ContratoAsociado'] = "Registrado";
