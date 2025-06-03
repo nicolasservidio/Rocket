@@ -58,35 +58,37 @@ function obtenerNombre($conexion, $tabla, $idCampo, $id, $nombreCampo) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Modificar Pedido</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        .form-container {
-            margin-top: 10%;
-            margin-left: 1%;
-            max-width: 98%;
-            background-color: white;
-            border: 1px solid #444444;
-            border-radius: 14px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 2rem;
-        }
-        h2, h4 {
-            color: #6c757d; /* text-secondary color */
-            font-weight: 700;
-        }
-        label.form-label {
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body class="bg-light">
-    <div style="min-height: 100%">
-        <div class="wrapper">
-            <?php include('sidebarGOp.php'); include('topNavBar.php'); ?>
+
+<body class="bg-light" style="margin: 0 auto;">
+    <div>
+        <div class="wrapper" style="min-height: 100%; margin-bottom: 100px;">
+            
+            <?php 
+            
+            include('sidebarGOp.php'); 
+            include('topNavBar.php'); 
+            
+            ?>
+
+            <style>
+                .form-container {
+                    margin-top: 10%;
+                    margin-left: 1%;
+                    max-width: 98%;
+                    background-color: white;
+                    border: 1px solid #444444;
+                    border-radius: 14px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    padding: 2rem;
+                }
+                h2, h4 {
+                    color: #6c757d; /* text-secondary color */
+                    font-weight: 700;
+                }
+                label.form-label {
+                    font-weight: 500;
+                }
+            </style>
 
             <div class="form-container">
 
@@ -200,9 +202,19 @@ function obtenerNombre($conexion, $tabla, $idCampo, $id, $nombreCampo) {
                     </form>
                 <?php endif; ?>
 
-            </div>            
+            </div> 
+            
+            <div style="margin-top: 100px;">
+                <?php require_once "foot.php"; ?>
+            </div>
+
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
 
