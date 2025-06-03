@@ -16,13 +16,23 @@ if (isset($_GET['id'])) {
     $stmt->execute();
 
     // Verificar si la eliminación fue exitosa
+    $mensaje = "";
     if ($stmt->affected_rows > 0) {
         // Redirigir al listado de proveedors con un mensaje de éxito
-        header('Location: proveedores.php?mensaje=El proveedor ha sido eliminado correctamente.');
+        $mensaje = "El proveedor ha sido eliminado exitosamente. ID: {$idProveedor}.";
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'proveedores.php';
+        </script>";
         exit();
-    } else {
+    } 
+    else {
         // Si no se eliminó ningún registro, mostrar un mensaje de error
-        header('Location: proveedores.php?mensaje=Error al eliminar el proveedor.');
+        $mensaje = "Error al eliminar el proveedor. ID: {$idProveedor}.";
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'proveedores.php';
+        </script>";
         exit();
     }
 } 

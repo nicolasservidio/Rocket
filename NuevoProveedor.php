@@ -53,9 +53,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Conexión y consulta
+    // Conexión y consultas
     $MiConexion = ConexionBD();
 
+    // Validación de existencia del CUIT en la base de datos
+    $SQL_VERIFICAR = "SELECT COUNT(*) AS total FROM proveedores WHERE cuitProveedor = ?";
+    $stmt_verificar = $MiConexion->prepare($SQL_VERIFICAR);
+    $stmt_verificar->bind_param("i", $cuit);
+    $stmt_verificar->execute();
+    $resultado_verificar = $stmt_verificar->get_result();
+    $fila_verificar = $resultado_verificar->fetch_assoc();
+
+    if ($fila_verificar['total'] > 0) {
+        $errores[] = "El CUIT ya está registrado en el sistema. Por favor, ingresa otro.";
+    }
+
+    $stmt_verificar->close();
+
+    // Si hay errores, redirigir con el mensaje de error
+    if (!empty($errores)) {
+        $mensaje = implode(' ', $errores);
+        echo "<script> 
+            alert('$mensaje');
+            window.location.href = 'proveedores.php';
+        </script>";
+        exit();
+    }
+
+    // registro del nuevo proveedor
     $query = "INSERT INTO proveedores (cuitProveedor, nombreProveedor, ivaProveedor, mailProveedor, telefonoProveedor, direccionProveedor, localidadProveedor) 
               VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $MiConexion->prepare($query);

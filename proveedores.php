@@ -33,10 +33,6 @@ include('head.php');
         include('sidebarGOp.php');
         $tituloPagina = "PROVEEDORES";
         include('topNavBar.php');
-
-        if (isset($_GET['mensaje'])) {
-            echo '<div class="alert alert-info" role="alert">' . $_GET['mensaje'] . '</div>';
-        }
         ?>
 
         <!-- Algunos efectos moderno para el form de consultas ;) -->
